@@ -1,0 +1,59 @@
+TestBeforeCaseError:
+  ParallelRoles: true
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "var_greater"
+    TEST_VAR_NUMBERS: 5
+  Precases:
+    - DesktopPreCaseError
+  Actions:
+    - Type: command
+      Role: command1
+      Value: echo $VAR_1
+    - Type: command
+      Role: command1
+      Value: echo $VAR_1
+
+# HELPER CASES
+
+DesktopPreCaseError:
+  Aftercases:
+    - AfterCase
+  ParallelRoles: true
+  Actions:
+  - Type: case
+    Value: DesktopCaseError
+    Role: $AND_CLI_MAINROLE$
+
+DesktopCaseError:
+  ParallelRoles: true
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+  - Type: click
+    Role: desktopChrome
+    Condition:
+      - Value: 3
+        Operation: visible
+        Result: true
+        Raise: true
+    Strategy: id
+    CheckTime: 5
+    Id: false_id
+  - Type: sleep
+    Time: 2
+  - Type: case
+    Value: DesktopCaseError
+    Role: $AND_CLI_MAINROLE$
+
+AfterCase:
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+

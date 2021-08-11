@@ -1,0 +1,92 @@
+
+TestPostCallNotNumberError:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: post_call
+      File_Response: record.mov
+      Role: command1
+      Url: http://admin:admin@10.11.52.29:8116/file
+      Body: { "file": "./movieexport.mov" }
+      Asserts:
+        - Type: code
+          Value: "404"
+
+TestPostCallWrongCodeError:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: post_call
+      File_Response: record.mov
+      Role: command1
+      Url: http://admin:admin@10.11.52.29:8116/file
+      Body: { "file": "./movieexport.mov" }
+      Asserts:
+        - Type: code
+          Value: 400
+
+TestPostCallSuccess:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: post_call
+      File_Response: record.mov
+      Role: command1
+      Url: http://admin:admin@10.11.52.29:8116/file
+      Body: { "file": "./movieexport.mov" }
+      Asserts:
+        - Type: code
+          Value: 404
+
+TestGetCallSuccess:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: get_call
+      Role: command1
+      Url: http://10.11.52.29:9096/token?grant_type=client_credentials&client_id=Facebook&client_secret=MessengerRoomsParole20200!&scope=all
+      Greps:
+        - match: access_token
+          var: TOKEN
+      Asserts:
+        - Type: code
+          Value: 200 
+
+TestGetCallWrongCodeError:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: get_call
+      Role: command1
+      Url: http://10.11.52.29:9096/token?grant_type=client_credentials&client_id=Facebook&client_secret=MessengerRoomsParole20200!&scope=all
+      Greps:
+        - match: access_token
+          var: TOKEN
+      Asserts:
+        - Type: code
+          Value: 400
+
+TestAssertsError:
+  Roles:
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "something goes here"
+  Actions:
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: contain
+          Var: TEST_VAR
+          Value: something
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: contain
+          Var: TEST_VAR
+          Value: NOT

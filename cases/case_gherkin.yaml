@@ -1,0 +1,117 @@
+TestCommandSleep:
+  ParallelRoles: true
+  Step: I run the command sleep
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: command
+      Value: sleep 3
+
+TestCommandSleepNotParallel:
+  Step: I run the command sleep not parallel
+  Roles:
+    - Role: command1,command2
+      App: command
+  Actions:
+    - Type: command
+      Role: command1,command2
+      Value: sleep 3
+
+TestCommandEcho:
+  Step: I run the command echo
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: command
+      Role: command1
+      Value: echo $VAR_1
+
+TestStepError:  
+  Step: I run a step that raises an error      
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR_NUMBERS: 8
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: n_var_eq_n 
+          Var: TEST_VAR_NUMBERS
+          Value: 8  
+
+CaseWithImageError:
+  Step: I run a step that takes a screenshot on fail
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+  - Type: click
+    Role: desktopChrome
+    Strategy: id
+    CheckTime: 5
+    Id: false_id
+          
+# End to End CASES
+
+TestCommandE2E:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Given: I run the command sleep
+    - Then: I run the command echo
+      Vars:
+        VAR_1: Custom Var
+
+TestCommandE2EError:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Given: I run the command sleep
+    - And: I run the command echo
+      Vars:
+        VAR_1: Custom Var
+    - And: I run the command sleep
+    - Then: I run a step that raises an error
+
+TestCommandE2EParallel:
+  ParallelRoles: true
+  Roles:
+    - Role: command1,command2
+      App: command
+  Actions:
+    - Given: I run the command sleep
+      Role: command1,command2
+    - Then: I run the command echo
+      Vars:
+        VAR_1: Custom Var
+
+TestCommandE2ENotParallel:
+  ParallelRoles: false
+  Roles:
+    - Role: command1,command2
+      App: command
+  Actions:
+    - Given: I run the command sleep not parallel
+    - Then: I run the command echo
+      Vars:
+        VAR_1: Custom Var
+
+TestE2EScreenshotError:
+  ParallelRoles: false
+  Roles:
+    - Role: command1,command2
+      App: command
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    - Given: I run the command sleep not parallel
+    - Then: I run a step that takes a screenshot on fail

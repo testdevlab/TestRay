@@ -1,0 +1,107 @@
+CaseConditionVisible:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+  - Type: click
+    Role: desktopChrome
+    Strategy: id
+    Id: false_id
+    Condition:
+      - Value: 2
+        Operation: visible
+        Raise: false
+        Result: true
+
+CaseConditionVisibleError: # This one fails at Condition Level
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+  - Type: click
+    Role: desktopChrome
+    Strategy: id
+    Id: false_id
+    Condition:
+      - Value: 2
+        Operation: visible
+        Raise: true
+        Result: true
+
+CaseConditionVisibleFalseError: # This one fails at click action level, not in the Condition
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+  - Type: click
+    Role: desktopChrome
+    Strategy: id
+    Id: false_id
+    Condition:
+      - Value: 2
+        Operation: visible
+        Raise: true
+        Result: false
+
+CaseConditionVisibleForError: # This one fails at Click Level
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+  - Type: click
+    Role: desktopChrome
+    Strategy: id
+    Id: false_id
+    Condition:
+      - Value: 5
+        Operation: visible_for
+        Raise: true
+        Result: false
+
+CaseConditionVisibleForConditionError: # This one fails at Condition Level
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+  - Type: click
+    Role: desktopChrome
+    Strategy: id
+    Id: false_id
+    Condition:
+      - Value: 5
+        Operation: visible_for
+        Raise: true
+        Result: true
+
+CaseConditionVisibleFor: # This one fails at Condition Level
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+  - Type: click
+    Role: desktopChrome
+    Strategy: css
+    Id: body
+    Condition:
+      - Value: 2
+        Operation: visible_for
+        Raise: true
+        Result: true

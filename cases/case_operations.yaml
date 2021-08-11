@@ -1,0 +1,146 @@
+CaseOperationSum:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: operation
+      Role: command1
+      Operation: 3+5
+      ExpectedResult: 8
+      ResultVar: Result
+    - Type: command
+      Role: command1
+      Value: echo $Result
+
+CaseOperationMultiplication:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: operation
+      Role: command1
+      Operation: 3*5
+      ExpectedResult: 15
+      ResultVar: Result
+    - Type: command
+      Role: command1
+      Value: echo $Result
+
+CaseOperationDivision:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: operation
+      Role: command1
+      Operation: 3/5
+      ExpectedResult: 0.6
+      ResultVar: Result
+    - Type: command
+      Role: command1
+      Value: echo $Result
+
+CaseOperationPower:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: operation
+      Role: command1
+      Operation: 3**5
+      ExpectedResult: 243
+      ResultVar: Result
+    - Type: command
+      Role: command1
+      Value: echo $Result
+
+CaseOperationAll:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: operation
+      Role: command1
+      Operation: 3+5*3+(3+5)**2+4/2
+      ExpectedResult: 84
+      ResultVar: Result
+    - Type: command
+      Role: command1
+      Value: echo $Result
+
+CaseOperationError:
+  Roles:
+    - Role: command1
+      App: command
+  Vars:
+    Operation: 3+5*3+(3+5)**2+4/2
+  Actions:
+    - Type: operation
+      Role: command1
+      Operation: $AND_CLI_Operation$
+      ExpectedResult: 83 # It should be 84
+      ResultVar: Result
+    - Type: command
+      Role: command1
+      Value: echo $Result
+
+CaseOperationConcatenate:
+  Roles:
+    - Role: command1
+      App: command
+  Vars:
+    Var_1: Hey
+    Var_2: " how are you"
+  Actions:
+    - Type: operation
+      Role: command1
+      Operation: "'$AND_CLI_Var_1$'+'$AND_CLI_Var_2$'"
+      ExpectedResult: $AND_CLI_Var_1$$AND_CLI_Var_2$
+      ResultVar: Result
+    - Type: command
+      Role: command1
+      Value: echo $Result
+
+CaseOperationNotValidError:
+  Roles:
+    - Role: command1
+      App: command
+  Vars:
+    Var_1: Hey.
+    Var_2: " how are you"
+  Actions:
+    - Type: operation
+      Role: command1
+      Operation: $AND_CLI_Var_1$+$AND_CLI_Var_2$
+      ExpectedResult: $AND_CLI_Var_1$$AND_CLI_Var_2$
+      ResultVar: Result
+    - Type: command
+      Role: command1
+      Value: echo $Result
+
+CaseOperationOther:
+  Roles:
+    - Role: command1
+      App: command
+  Vars:
+  Actions:
+    - Type: operation
+      Role: command1
+      Operation: "'textlength'.size"
+      ExpectedResult: 10
+    - Type: operation
+      Role: command1
+      Operation: "[1,3,5].max"
+      ExpectedResult: 5 
+    - Type: operation
+      Role: command1
+      Operation: "[1,3,5].min"
+      ExpectedResult: 1 
+    - Type: operation
+      Role: command1
+      Operation: "1 > 0"
+      ExpectedResult: true 
+    - Type: operation
+      Role: command1
+      Operation: "1 < 0"
+      ExpectedResult: false

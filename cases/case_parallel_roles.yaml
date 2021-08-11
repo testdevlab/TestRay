@@ -1,0 +1,66 @@
+# should be executed sequentially
+# for command1, command2, command1
+TestSequentialRolesSeparateActions:
+  Roles:
+  - Role: command1
+    App: command
+  - Role: command2
+    App: command
+  Actions:
+  - Type: sleep
+    Time: 5
+  - Type: sleep
+    Role: command2
+    Time: 5
+  - Type: sleep
+    Time: 5
+
+# should be executed in parallel
+TestParallelRolesSeparateActions:
+  ParallelRoles: true
+  Roles:
+  - Role: command1,command2
+    App: command
+  Actions:
+  - Type: sleep
+    Role: command1
+    Time: 5
+  - Type: sleep
+    Role: command2
+    Time: 5
+
+# should be executed sequentially
+TestParallelRolesSeparateActionsSync:
+  ParallelRoles: true
+  Roles:
+  - Role: command1,command2
+    App: command
+  Actions:
+  - Type: sleep
+    Role: command1
+    Time: 5
+  - Type: sync
+  - Type: sleep
+    Role: command2
+    Time: 5
+
+# should be executed sequentially
+TestSequentialRolesSameAction:
+  Roles:
+  - Role: command1,command2
+    App: command
+  Actions:
+  - Type: sleep
+    Role: command1,command2
+    Time: 5
+
+# should be executed in parallel
+TestParallelRolesSameAction:
+  ParallelRoles: true
+  Roles:
+  - Role: command1,command2
+    App: command
+  Actions:
+  - Type: sleep
+    Role: command1,command2
+    Time: 5
