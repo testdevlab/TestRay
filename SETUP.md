@@ -1,13 +1,5 @@
 # TestRay Setup - Overview
-The TestRay framework is the primary automation framework used in the A/V department. Its key properties include the following:
-1. Written in Ruby
-2. Works on Mac (Intel/M1) and Windows
-3. Supports web automation (Selenium)
-4. Supports Android, iOS, Windows and Mac app automation (Appium)
-5. Allows testing multiple simultaneous users across all the above platforms
-6. Uses YAML-based test cases
-
-This document aims to describe the full setup procedure for this framework, in three sections:
+This document aims to describe the full setup procedure for TestRay, in three sections:
 1. Installing prerequisites for TestRay
 2. Installing TestRay
 3. Installing optional prerequisites for specific test platforms
@@ -15,7 +7,6 @@ This document aims to describe the full setup procedure for this framework, in t
 (This is because TestRay is partially modular - you do not need to install software for platforms that you do not need to automate.)
 Installations are provided either as a link, or as a command that should be run in the terminal (or PowerShell on Windows).
 Also note that some steps differ depending on the computer on which you want to install TestRay (Windows or Mac). In order to distinguish these, icons will be used:
-
 
     ⊞ - this indicates a step that is specific to installations on Windows
     ⌘ - this indicates a step that is specific to installations on Mac
@@ -85,37 +76,39 @@ First you need to install some common prerequisites, regardless of the platform 
             gem uninstall eventmachine
             gem install eventmachine --platform ruby
 
-        Video Analysis
-        Skip this section if you do not need to do video analysis.
-        ffmpeg
-            ⌘ brew install ffmpeg
-            ⊞ https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip
-                Make a folder in your user directory called av-applications/ffmpeg
-                Open the zip file and move all the contents (directories bin/doc/presets) to the new folder
-                Start menu -> type 'path' -> Edit the system environment variables -> Environment Variables… -> section User variables -> select Path -> Edit -> New
-                Paste C:\Users\[your username]\av-applications\ffmpeg\bin
-                Save with OK -> OK -> OK
-                Check that ffmpeg is installed by opening a new terminal/Powershell window and running ffmpeg -version
-            If you plan to use ffmpeg to record the computer screen and launch TestRay using a CI tool (like TeamCity or Jenkins), this action may get stuck. One solution is to additionally install Java 8 and temporarily delete the Java 11 folder when registering the computer with the CI tool.
-        Java 8 installations:
+### Video Analysis
+Skip this section if you do not need to do video analysis.
+    ffmpeg
+    
+        ⌘ brew install ffmpeg
+        ⊞ https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip
+            Make a folder in your user directory called av-applications/ffmpeg
+            Open the zip file and move all the contents (directories bin/doc/presets) to the new folder
+            Start menu -> type 'path' -> Edit the system environment variables -> Environment Variables… -> section User variables -> select Path -> Edit -> New
+            Paste C:\Users\[your username]\av-applications\ffmpeg\bin
+            Save with OK -> OK -> OK
+            Check that ffmpeg is installed by opening a new terminal/Powershell window and running ffmpeg -version
+        If you plan to use ffmpeg to record the computer screen and launch TestRay using a CI tool (like TeamCity or Jenkins), this action may get stuck. One solution is to additionally install Java 8 and temporarily delete the Java 11 folder when registering the computer with the CI tool.
 
-        Audio Analysis
-        Skip this section if you do not need to do audio analysis.
-        sox
-            ⌘ brew install sox
-            ⊞ https://sourceforge.net/projects/sox/files/sox/14.4.2/sox-14.4.2-win32.exe
-                Start menu -> type 'path' -> Edit the system environment variables -> Environment Variables… -> section System variables -> select Path -> Edit -> New
-                Paste C:\Program Files (x86)\sox-14-4-2
-                Save with OK -> OK -> OK
-                Unfortunately, unlike the Mac version, the Windows version of sox does not include handling for .mp3 files, which you may need for spectrogram generation. You can add this support with the following steps:
-                Download the two files at https://drive.google.com/drive/folders/1FipUjNGpzHaWgimstxjA7YcE6NmxpLVr 
-                Paste the files in the sox install directory (C:\Program Files (x86)\sox-14-4-2)
-                Check that sox is installed by opening a new terminal/Powershell window and running sox --version
+### Audio Analysis
+Skip this section if you do not need to do audio analysis.
+    sox
+    
+        ⌘ brew install sox
+        ⊞ https://sourceforge.net/projects/sox/files/sox/14.4.2/sox-14.4.2-win32.exe
+            Start menu -> type 'path' -> Edit the system environment variables -> Environment Variables… -> section System variables -> select Path -> Edit -> New
+            Paste C:\Program Files (x86)\sox-14-4-2
+            Save with OK -> OK -> OK
+            Unfortunately, unlike the Mac version, the Windows version of sox does not include handling for .mp3 files, which you may need for spectrogram generation. You can add this support with the following steps:
+            Download the two files at https://drive.google.com/drive/folders/1FipUjNGpzHaWgimstxjA7YcE6NmxpLVr 
+            Paste the files in the sox install directory (C:\Program Files (x86)\sox-14-4-2)
+            Check that sox is installed by opening a new terminal/Powershell window and running sox --version
 
 ### Network Analysis
 
 Skip this section if you do not need to do network analysis.
     Wireshark: 
+    
         ⌘ brew install --cask wireshark
             nano ~/.zshrc -> scroll to the bottom and paste the following:
             export PATH=$PATH:/Applications/Wireshark.app/Contents/MacOS/
@@ -127,13 +120,11 @@ Skip this section if you do not need to do network analysis.
             Check that Wireshark (specifically, tshark) is installed by opening a new terminal/Powershell window and running tshark -v
 
 
-### Installing TestRay
+## Installing TestRay
 
 You can clone this project and the use:
 
         rake install
-
-
 
 ## Prerequisites: Test Platforms
 
@@ -142,9 +133,10 @@ Now you can install optional prerequisites, depending on your tested target plat
 ### Running Web Tests
 
 Chrome - https://www.google.com/chrome/
-Other Chromium-based browsers are probably fine too, but have not been tested
+    Other Chromium-based browsers are probably fine too, but have not been tested
 
-#### chromedriver
+chromedriver
+
     ⌘ brew install --cask chromedriver
     ⊞ https://chromedriver.chromium.org/downloads - select depending on your Chrome version
 
@@ -163,6 +155,7 @@ Other Chromium-based browsers are probably fine too, but have not been tested
 #### Running Android Tests
 
 Android Studio - https://developer.android.com/studio
+
     ⌘ After installing and opening the app, it will open a Setup Wizard
 
         Select Custom install type
@@ -194,7 +187,7 @@ Android Studio - https://developer.android.com/studio
         Run adb devices - you should see the connected device and its UDID (identification number/string), for example, 1cd982880d027ece. The device should now also show up if you run testray android list_devices.
         If you require the phone to be connected over the network:
         adb -s <UDID> tcpip 5555
-        adb connect <phone IP>:5555, for example, adb connect 172.16.113.201:5555
+        adb connect <phone IP>:5555, for example, adb connect 192.168.0.1:5555
         Unplug the phone from the computer
         adb devices - the previous UDID should now be replaced with the IP of the phone
 
@@ -223,8 +216,3 @@ Drag and drop the Xcode Helper application to the app list in the System Prefere
 
 In Windows Settings, open Update & Security -> For developers -> switch to Developer Mode -> Yes
 You may also need to first start PowerShell as an administrator before running your tests
-
-
-
-#### Developing Tests
-
