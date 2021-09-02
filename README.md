@@ -5,14 +5,15 @@ TestRay is a Ruby gem used to run YAML-based automation tests, using Selenium an
 
 ## Index
 1. [Installation](#installation)
-2. [Configuration and Steps](#conf_steps)
-3. [Usage](#usage)
-4. [Writing Steps](#writing_steps)
-5. [Creating Config File for Apps and Devices](#conf_file_app_dev)
-6. [Create Test Case](#test_case)
-7. [Vars](#vars)
-8. [Roles](#roles)
-9. [Action Types](#actions)
+2. [TestRay Examples](#examples)
+3. [Configuration and Steps](#conf_steps)
+4. [Usage](#usage)
+5. [Writing Steps](#writing_steps)
+6. [Creating Config File for Apps and Devices](#conf_file_app_dev)
+7. [Create Test Case](#test_case)
+8. [Vars](#vars)
+9. [Roles](#roles)
+10. [Action Types](#actions)
 
 
 ## <a id="installation"></a>Installation
@@ -35,6 +36,17 @@ Another way to install master is to download this project and use `rake install`
 
 If you do not need the full YAML test suite alongside TestRay, and have set up the prerequisites, you can install TestRay on its own like so:
 <pre>rake install</pre>
+
+## <a id="examples"></a>TestRay Examples
+
+There is a folder `examples` that contains different use cases for TestRay. The basic one, with most of the possible roles and cases is under `examples/tests` folder. In order to execute this tests you can either download this folder into your project as a template, or directly clone TestRay Project and navigate to the folder:
+
+<pre>
+cd examples/tests
+testray execute TestAssertsGreaterError
+</pre>
+
+In this previous example we are executing `TestAssertsGreaterError` case which is under `examples/tests/cases/case_asserts.yaml`. More about the folder extructure, configuration and steps in the next section.
 
 ## <a id="conf_steps"></a>Configuration and Steps
 
