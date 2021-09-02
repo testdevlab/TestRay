@@ -68,8 +68,8 @@ The two above functionalities in TestRay are provided by ideviceinstaller and id
 2. Set up the dependencies - install ideviceinstaller through Homebrew by running `brew install ideviceinstaller`
 3. Uninstall ideviceinstaller by running `brew uninstall ideviceinstaller`
 4. Download the ideviceinstaller source code: `git clone https://github.com/libimobiledevice/ideviceinstaller.git`
-5. Open src/ideviceinstaller.c in your favorite text editor (like VS Code)
-6. You need to change 3 lines of code, by just replacing CFBundleVersion with c:
+5. Open `src/ideviceinstaller.c` in your favorite text editor (like VS Code)
+6. You need to change 3 lines of code, by just replacing CFBundleVersion with CFBundleShortVersionString:
 
         Line 127: CFBundleVersion -> CFBundleShortVersionString
         Line 142: CFBundleVersion -> CFBundleShortVersionString
@@ -79,31 +79,29 @@ The two above functionalities in TestRay are provided by ideviceinstaller and id
 8. In the terminal, open the ideviceinstaller directory
 9. Run the following 3 commands:
 
-        ./autogen.sh
+    a) `./autogen.sh`
 
-    You may receive the following error:
-    The fix now depends on where your Homebrew is installed - run where brew.
-        If you get /usr/local/bin/brew, run these:
+	    You may receive the following error:
+	    The fix now depends on where your Homebrew is installed - run where brew.
+		If you get /usr/local/bin/brew, run these:
 
-	    export PATH="/usr/local/opt/openssl/bin:$PATH"
-	    export LD_LIBRARY_PATH="/usr/local/opt/openssl/lib:$LD_LIBRARY_PATH"
-	    export CPATH="/usr/local/opt/openssl/include:$CPATH"
-	    export LIBRARY_PATH="/usr/local/opt/openssl/lib:$LIBRARY_PATH"
-	    export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
+		    export PATH="/usr/local/opt/openssl/bin:$PATH"
+		    export LD_LIBRARY_PATH="/usr/local/opt/openssl/lib:$LD_LIBRARY_PATH"
+		    export CPATH="/usr/local/opt/openssl/include:$CPATH"
+		    export LIBRARY_PATH="/usr/local/opt/openssl/lib:$LIBRARY_PATH"
+		    export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
 
-	If you get /opt/homebrew/bin/brew, run these:
+		If you get /opt/homebrew/bin/brew, run these:
 
-            export PATH="/opt/homebrew/opt/openssl/bin:$PATH"
-            export LD_LIBRARY_PATH="/opt/homebrew/opt/openssl/lib:$LD_LIBRARY_PATH"
-            export CPATH="/opt/homebrew/opt/openssl/include:$CPATH"
-            export LIBRARY_PATH="/opt/homebrew/opt/openssl/lib:$LIBRARY_PATH"
-            export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig"
+		    export PATH="/opt/homebrew/opt/openssl/bin:$PATH"
+		    export LD_LIBRARY_PATH="/opt/homebrew/opt/openssl/lib:$LD_LIBRARY_PATH"
+		    export CPATH="/opt/homebrew/opt/openssl/include:$CPATH"
+		    export LIBRARY_PATH="/opt/homebrew/opt/openssl/lib:$LIBRARY_PATH"
+		    export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig"
 
-    Then run the autogen command again, it should work fine.
+	    Then run the autogen command again, it should work fine.
 
-            make
-            sudo make install (enter your password if required)
-10. Confirm that ideviceinstaller was successfully installed by running `ideviceinstaller -v:`
-
-### Developing Tests
-
+    b) `make`
+    
+    c) `sudo make install` (enter your password if required)
+10. Confirm that ideviceinstaller was successfully installed by running `ideviceinstaller -v`
