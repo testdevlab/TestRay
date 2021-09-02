@@ -1,0 +1,53 @@
+SetExample1:
+  Cases:
+    - Case: TestCommands
+      Vars:
+        VAR_1: KJAKSJ
+      SetupCommands:
+        - 'echo "command 1"'
+        - 'echo "command 2"'
+    - Case: TestCommands
+      Vars:
+        VAR_1: fasdkjfh
+
+SetExample2Error:
+  Cases:
+    - Case: TestCommands
+      Vars:
+        VAR_1: KJAKSJ
+      SetupCommands:
+        - 'echo "command 1"'
+        - 'echo "command 2"'
+        - "kill -9 $(ps -A | grep 'appium' | awk '{print $1}')"
+    - Case: TestGetCallWrongCodeError
+      Vars:
+        VAR_1: fasdkjfh
+
+SetExampleCucumber:
+  Cases:
+    - Case: TestCommandE2E
+    - Case: TestCommandE2EError
+    - Case: TestCommandE2EParallel
+    - Case: TestCommandE2ENotParallel
+    - Case: TestCommandE2E
+
+SetExampleEnv1:
+  Environment: Mark1
+  Cases:
+    - Case: TestEnvironment0
+
+SetExampleEnv2:
+  Cases:
+    - Case: TestEnvironment0
+    - Case: TestEnvironment0
+      Environment: Mark1
+
+SetTestVarLoadingOrder:
+  Environment: InheritedVar
+  Vars:
+    VAR_1: HEY2
+  Cases:
+    - Case: TestVarLoadingOrder
+      Environment: InheritedVar
+      Vars:
+        VAR_1: HEY6

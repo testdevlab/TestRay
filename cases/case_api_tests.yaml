@@ -1,0 +1,49 @@
+TestGetCallSuccess:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: get_call
+      Role: command1
+      Url: http://google.com
+      Greps:
+        - match: access_token
+          var: TOKEN
+      Asserts:
+        - Type: code
+          Value: 200 
+
+TestGetCallWrongCodeError:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: get_call
+      Role: command1
+      Url: http://google.com
+      Greps:
+        - match: access_token
+          var: TOKEN
+      Asserts:
+        - Type: code
+          Value: 400
+
+TestAssertsError:
+  Roles:
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "something goes here"
+  Actions:
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: contain
+          Var: TEST_VAR
+          Value: something
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: contain
+          Var: TEST_VAR
+          Value: NOT

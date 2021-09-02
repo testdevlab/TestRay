@@ -1,0 +1,193 @@
+CaseIfTrue:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+
+
+CaseIfFalse:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+  - Type: click
+    Role: desktopChrome
+    Strategy: id
+    CheckTime: 5
+    Id: false_id
+
+CaseElse:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: wait_for
+    Role: desktopChrome
+    Strategy: css
+    Id: '[name="btnK"]'
+
+TestElseIfTrue:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: if
+    If_Cases: 
+      - If_Case: CaseIfTrue
+      - If_Case: CaseIfTrue
+    Else_Case: CaseElse
+
+TestElseIfFalse:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: if
+    If_Cases:
+      - If_Case: CaseIfFalse
+      - If_Case: CaseIfTrue
+    Else_Case: CaseElse
+
+TestElse:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: if
+    If_Cases:
+      - If_Case: CaseIfFalse
+    Else_Case: CaseElse
+
+TestIfDo:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: if
+    If_Cases:
+      - If_Case: CaseIfTrue
+        Do_Case: CaseIfTrue
+    Else_Case: CaseElse
+
+TestIfDoNoElse:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: if
+    If_Cases:
+      - If_Case: CaseIfFalse
+        Do_Case: CaseIfTrue
+
+TestIfDoRaise:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: if
+    If_Cases:
+      - If_Case: CaseIfTrue
+        Do_Case: CaseIfFalse
+    Else_Case: CaseElse
+
+CaseIfTrue_2:
+  ParallelRoles: true
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+
+
+CaseIfFalse_2:
+  ParallelRoles: true
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+  - Type: click
+    Role: desktopChrome
+    Strategy: id
+    CheckTime: 5
+    Id: false_id
+
+CaseElse_2:
+  ParallelRoles: true
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: wait_for
+    Role: desktopChrome
+    Strategy: css
+    Id: '[name="btnK"]'
+
+TestElseIfTrue_2:
+  ParallelRoles: true
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: if
+    If_Cases: 
+      - If_Case: CaseIfTrue
+      - If_Case: CaseIfTrue
+    Else_Case: CaseElse
+
+TestElseIfFalse_2:
+  ParallelRoles: true
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: if
+    If_Cases:
+      - If_Case: CaseIfFalse
+      - If_Case: CaseIfTrue
+    Else_Case: CaseElse
+
+TestElse_2:
+  ParallelRoles: true
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: if
+    If_Cases:
+      - If_Case: CaseIfFalse
+    Else_Case: CaseElse
+
+TestIfDo_2:
+  ParallelRoles: true
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: if
+    If_Cases:
+      - If_Case: CaseIfTrue
+        Do_Case: CaseIfTrue
+    Else_Case: CaseElse
+
+TestIfDoRaise_2:
+  ParallelRoles: true
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: if
+    If_Cases:
+      - If_Case: CaseIfTrue
+        Do_Case: CaseIfFalse
+    Else_Case: CaseElse

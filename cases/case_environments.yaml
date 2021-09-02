@@ -1,0 +1,151 @@
+TestEnvironment0: # LOAD ENVIRONMENT USING --env Mark1 flag or In Sets
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: command
+      Role: command1
+      Value: echo $VAR_1
+    - Type: command
+      Role: command1
+      Value: echo $VAR_2
+    - Type: command
+      Role: command1
+      Value: echo $VAR_3
+    - Type: command
+      Role: command1
+      Value: echo $VAR_4
+    - Type: command
+      Role: command1
+      Value: echo $VAR_5
+    - Type: command
+      Role: command1
+      Value: echo $VAR_6
+
+TestEnvironment1:
+  Environment: 
+    - Mark1
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: command
+      Role: command1
+      Value: echo $VAR_1
+    - Type: command
+      Role: command1
+      Value: echo $VAR_2
+    - Type: command
+      Role: command1
+      Value: echo $VAR_3
+    - Type: command
+      Role: command1
+      Value: echo $VAR_4
+    - Type: command
+      Role: command1
+      Value: echo $VAR_5
+    - Type: command
+      Role: command1
+      Value: echo $VAR_6
+
+TestEnvironment2:
+  Environment: 
+    - Inherited1
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: command
+      Role: command1
+      Value: echo $VAR_3
+    - Type: command
+      Role: command1
+      Value: echo $VAR_4
+    - Type: command
+      Role: command1
+      Value: echo $VAR_5
+    - Type: command
+      Role: command1
+      Value: echo $VAR_6
+
+
+TestEnvironment3:
+  Environment: 
+    - InheritedVar
+    - Inherited1
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: command
+      Role: command1
+      Value: echo $VAR_1
+    - Type: command
+      Role: command1
+      Value: echo $VAR_5
+    - Type: command
+      Role: command1
+      Value: echo $VAR_6
+
+TestEnvironment4:
+  Environment: 
+    - Inherited1
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: command
+      Role: command1
+      Value: echo $VAR_1 # SOULDNT PRINT ANYTHING
+    - Type: command
+      Role: command1
+      Value: echo $VAR_5
+    - Type: command
+      Role: command1
+      Value: echo $VAR_6
+
+TestEnvironment5:
+  Environment: 
+    - VarOverWriten
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: command
+      Role: command1
+      Value: echo $VAR_3
+    - Type: command
+      Role: command1
+      Value: echo $VAR_4
+    - Type: command
+      Role: command1
+      Value: echo $VAR_5
+    - Type: command
+      Role: command1
+      Value: echo $VAR_6
+
+TestVarLoadingOrder:
+  Environment: InheritedVar
+  Vars:
+    VAR_1: HEY4
+  Roles:
+  - Role: command1
+    App: command
+  Actions:
+    - Type: case
+      Value: TestVarLoadingOrder2
+      Vars:
+        VAR_1: HEY9
+
+TestVarLoadingOrder2:
+  Environment: InheritedVar
+  Vars:
+    VAR_1: HEY8
+  Roles:
+  - Role: command1
+    App: command
+  Actions:
+    - Type: command
+      Value: echo $AND_CLI_VAR_1$
+      Vars:
+        VAR_1: HEY10

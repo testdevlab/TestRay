@@ -1,0 +1,401 @@
+TestAssertsGreaterError:
+  Roles:
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "var_greater"
+    TEST_VAR_NUMBERS: 5
+  Actions:
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: gt
+          Var: TEST_VAR_NUMBERS
+          Value: 9
+
+TestAssertsEqualNumber:
+  Roles:
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "var_eq_n"
+    TEST_VAR_NUMBERS: 3
+  Actions:
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: eq
+          Var: TEST_VAR_NUMBERS
+          Value: 3
+
+TestAssertsGreaterNo:
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "var_less"
+    TEST_VAR_NUMBERS: 5
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: gt
+          Var: TEST_VAR_NUMBERS
+          Value: 3
+
+TestAssertsGreaterNoError:
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "var_less"
+    TEST_VAR_NUMBERS: 2
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: gt
+          Var: TEST_VAR_NUMBERS
+          Value: 3
+
+TestAssertsEqualOrGreater:
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "var_eq_n"
+    TEST_VAR_NUMBERS: 4
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: ge 
+          Var: TEST_VAR_NUMBERS
+          Value: 3
+
+TestAssertsEqualOrGreaterEqual: 
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "var_eq_n"
+    TEST_VAR_NUMBERS: 4
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: ge 
+          Var: TEST_VAR_NUMBERS
+          Value: 4         
+
+TestAssertsEqualOrGreaterError:
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "var_eq_n"
+    TEST_VAR_NUMBERS: 4
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: ge 
+          Var: TEST_VAR_NUMBERS
+          Value: 5
+
+TestAssertsVarEqualError:
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "n_vareq"
+    TEST_VAR_NUMBERS: 2
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: eq 
+          Var: TEST_VAR_NUMBERS
+          Value: 8          
+   
+TestAssertsVarEqual:
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "n_vareq"
+    TEST_VAR_NUMBERS: 8
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: eq 
+          Var: TEST_VAR_NUMBERS
+          Value: 8                  
+
+TestVarContainError:           
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "contain"
+    TEST_VAR_NUMBERS: 8
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: n_contain 
+          Var: TEST_VAR_NUMBERS
+          Value: 8  
+
+TestVarContainNumberError:           
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "contain"
+    TEST_VAR_NUMBERS: 2
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: n_contain 
+          Var: TEST_VAR_NUMBERS
+          Value: 8            
+
+#not equal number lower lower or equal
+
+TestNotEqualNumberError:         
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "n_var_eq_n"
+    TEST_VAR_NUMBERS: 8
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: ne 
+          Var: TEST_VAR_NUMBERS
+          Value: 8     
+
+TestNotEqualNumber:         
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "n_var_eq_n"
+    TEST_VAR_NUMBERS: 2
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: ne 
+          Var: TEST_VAR_NUMBERS
+          Value: 8 
+
+TestEqualNumberError:         
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "var_eq_n"
+    TEST_VAR_NUMBERS: 2
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: eq 
+          Var: TEST_VAR_NUMBERS
+          Value: 8     
+
+TestEqualNumber:         
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "var_eq_n"
+    TEST_VAR_NUMBERS: 8
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: eq 
+          Var: TEST_VAR_NUMBERS
+          Value: 8   
+
+TestLowerOrEqualNumber:         
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "var_less"
+    TEST_VAR_NUMBERS: 2
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: le 
+          Var: TEST_VAR_NUMBERS
+          Value: 4             
+
+TestLowerOrEqualNumberError:         
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "var_less"
+    TEST_VAR_NUMBERS: 7
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: le 
+          Var: TEST_VAR_NUMBERS
+          Value: 6     
+          
+TestBrowserAssertError:         
+  Roles: 
+    - Role: desktopChrome
+      App: desktop
+  Vars:
+    TEST_VAR: "var_less"
+    TEST_VAR_NUMBERS: 7
+  Actions: 
+    - Type: assert
+      Role: desktopChrome
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: le 
+          Var: TEST_VAR_NUMBERS
+          Value: 6 
+
+
+TestAssertLowerOrEqual:         
+  Roles: 
+    - Role: command1
+      App: command
+  Vars:
+    TEST_VAR: "var_lower_equal"
+    TEST_VAR_NUMBERS: 5
+  Actions: 
+    - Type: assert
+      Role: command1
+      Asserts: 
+        - Type: contain
+          Var: TEST_VAR
+          Value: var
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: le 
+          Var: TEST_VAR_NUMBERS
+          Value: 5              

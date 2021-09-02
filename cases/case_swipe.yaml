@@ -1,0 +1,22 @@
+SwipeElementsTest:
+  ParallelRoles: true
+  Vars:
+    USER: localAndroid
+  Roles: 
+    - Role: $AND_CLI_USER$
+      App: PlayStore
+  Actions:
+  - Type: click
+    Role: $AND_CLI_USER$
+    Strategy: xpath
+    Id: '//*[@text="Top charts"]'
+  - Type: swipe_elements
+    Role: $AND_CLI_USER$
+    Element1:
+      Strategy: xpath
+      Id: '//android.support.v7.widget.RecyclerView/android.view.ViewGroup[5]'
+    Element2:
+      Strategy: xpath
+      Id: '//android.support.v7.widget.RecyclerView/android.view.ViewGroup[1]'
+  - Type: sleep
+    Time: 5

@@ -1,0 +1,78 @@
+GrepCommandTest:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+  - Type: command
+    Role: command1
+    Value: cat cases/case_greps.yaml
+    Greps: 
+      - var: GREPPED_CONTENT
+        match: "cat cases/(.*)"
+
+GrepCommandTestWithRemove:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+  - Type: command
+    Role: command1
+    Value: cat cases/case_greps.yaml
+    Greps: 
+      - var: GREPPED_CONTENT
+        match: "cat cases/(.*)"
+        remove: cat cases/
+
+GrepUrlTest:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+  - Type: get_url
+    Role: desktopChrome
+    Greps: 
+      - var: GREPPED_CONTENT
+        match: "google.com/(.*)"
+
+GrepUrlTestWithRemove:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+  - Type: get_url
+    Role: desktopChrome
+    Greps: 
+      - var: GREPPED_CONTENT
+        match: "google.com/(.*)"
+        remove: google.com/
+
+GrepUrlTestMultiple:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+    - Role: command1
+      App: command
+  Actions:
+  - Type: navigate
+    Role: desktopChrome
+    Value: http://google.com
+  - Type: get_url
+    Role: desktopChrome
+    Greps: 
+      - var: GREPPED_CONTENT
+        match: "www.(.*)"
+      - var: GREPPED_CONTENT_2
+        match: "www.(.*)"
+        remove: www.
+  - Type: command
+    Role: command1
+    Value: echo $GREPPED_CONTENT
+  - Type: command
+    Role: command1
+    Value: echo $GREPPED_CONTENT_2

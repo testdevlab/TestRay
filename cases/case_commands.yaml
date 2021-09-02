@@ -1,0 +1,47 @@
+TestCommands:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: command
+      Role: command1
+      Value: sleep 3
+    - Type: command
+      Role: command1
+      Value: echo $VAR_1
+
+TestCommandError:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: command
+      Role: command1
+      Value: exit 1
+      Raise: true
+
+TestCommandDetached:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+    - Type: command
+      Role: command1
+      Value: echo HELLO
+      Detach: true
+
+TestCommandGreps:
+  Roles:
+    - Role: command1
+      App: command
+  Actions:
+  - Type: command
+    Role: command1
+    Value: echo "Print Case"
+    Greps: 
+      - var: GREPPED_CONTENT
+        match: "Print (.*)"
+        remove: Print
+      - var: GREPPED_CONTENT_2
+        match: "echo (.*)"
+        remove: echo

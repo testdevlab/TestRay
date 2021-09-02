@@ -1,0 +1,85 @@
+ParallelCaseAndRoleA:
+  ParallelRoles: true
+  Actions:
+  - Type: sleep
+    Time: 5
+  - Type: sleep
+    Time: 5
+
+ParallelCaseNotRoleB:
+  Actions:
+  - Type: sleep
+    Role: command2
+    Time: 5
+  - Type: sleep
+    Role: command2
+    Time: 5
+
+ParallelCaseAndRoleC:
+  ParallelRoles: true
+  Actions:
+  - Type: sleep
+    Time: 5
+  - Type: sleep
+    Time: 5
+
+# first case should be fully parallel for all 3 roles
+# other cases should run sequentially one after another
+TestNoParallelCases:
+  Roles:
+  - Role: command1,command2,command3
+    App: command
+  Actions:
+  - Type: case
+    Value: ParallelCaseAndRoleA
+    Role: $AND_CLI_MAINROLE$
+  - Type: case
+    Value: ParallelCaseAndRoleA
+    Role: command1
+  - Type: case
+    Value: ParallelCaseNotRoleB
+  - Type: case
+    Value: ParallelCaseAndRoleC
+    Role: command2
+
+# first 2 cases should all run in parallel (3+1 threads)
+# once either of the 2 cases finish, 3rd starts, then 4th
+TestTwoParallelCases:
+  ParallelCases: 2
+  Roles:
+  - Role: command1,command2,command3
+    App: command
+  Actions:
+  - Type: case
+    Value: ParallelCaseAndRoleA
+    Role: $AND_CLI_MAINROLE$
+  - Type: case
+    Value: ParallelCaseAndRoleA
+    Role: command1
+  - Type: case
+    Value: ParallelCaseNotRoleB
+  - Type: case
+    Value: ParallelCaseAndRoleC
+    Role: command2
+
+# first case should only run by itself
+# second and third case should run in parallel
+# once case 2 or 3 finishes, 4th starts
+TestTwoParallelCasesWithSync:
+  ParallelCases: 2
+  Roles:
+  - Role: command1,command2,command3
+    App: command
+  Actions:
+  - Type: case
+    Value: ParallelCaseAndRoleA
+    Role: $AND_CLI_MAINROLE$
+  - Type: sync
+  - Type: case
+    Value: ParallelCaseAndRoleA
+    Role: command1
+  - Type: case
+    Value: ParallelCaseNotRoleB
+  - Type: case
+    Value: ParallelCaseAndRoleC
+    Role: command2
