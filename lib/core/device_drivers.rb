@@ -128,13 +128,16 @@ class SeleniumDriver
     @url = url
   end
 
-  # merge case and/or config capabilities/options for Chrome
-  def merge_chrome_ops(config_caps, case_caps)
+  # merge case and/or config capabilities/options
+  def merge_ops(browser, config_caps, case_caps)
     config_caps = {} unless config_caps
     case_caps = {} unless case_caps
-    config_ops = (config_caps["chromeOptions"] ? config_caps["chromeOptions"] : {})
-    case_ops = (case_caps["chromeOptions"] ? case_caps["chromeOptions"] : {})
-    return config_ops if case_ops.empty?
+    config_ops = (config_caps[browser] ? config_caps[browser] : {})
+    case_ops = (case_caps[browser] ? case_caps[browser] : {})
+    if case_ops.empty?
+      log_info("#{browser}: #{config_ops}")
+      return config_ops 
+    end
     config_args, case_args = config_ops["args"], case_ops["args"]
     config_prefs, case_prefs = config_ops["prefs"], case_ops["prefs"]
   
@@ -165,8 +168,13 @@ class SeleniumDriver
       final_ops["prefs"] = config_prefs.merge(case_prefs)
     end
   
-    log_info("Chrome Options: #{final_ops}")
+    log_info("#{browser}: #{final_ops}")
     return final_ops
+  end
+
+  # merge case and/or config capabilities/options for Chrome
+  def merge_chrome_ops(config_caps, case_caps)
+    return merge_ops("chromeOptions", config_caps, case_caps)
   end
 
   # build the Chrome driver, given a set of options
@@ -187,6 +195,33 @@ class SeleniumDriver
       )
       driver = Selenium::WebDriver.for(
         :remote, url: @url, desired_capabilities: remoteChromeOptions,
+      )
+    end
+    return driver
+  end
+
+  # merge case and/or config capabilities/options for Firefox
+  def merge_firefox_ops(config_caps, case_caps)
+    return merge_ops("firefoxOptions", config_caps, case_caps)
+  end
+
+  # build the Firefox driver, given a set of options
+  def build_firefox_driver(firefox_ops)
+    if @url.nil?
+      localFirefoxOptions = Selenium::WebDriver::Firefox::Options.new(
+        options: firefox_ops,
+      )
+      driver = Selenium::WebDriver.for(
+        :firefox, options: localFirefoxOptions
+      )
+    else
+      # remote selenium grid
+      log_debug("Selenium Server URL: #{@url}")
+      remoteFirefoxOptions = Selenium::WebDriver::Remote::Capabilities.firefox(
+        firefox_ops,
+      )
+      driver = Selenium::WebDriver.for(
+        :remote, url: @url, desired_capabilities: remoteFirefoxOptions,
       )
     end
     return driver

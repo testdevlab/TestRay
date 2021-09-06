@@ -45,8 +45,19 @@ class Device
     return if @application == "command"
     if @application == "desktop" # Selenium
       driverclass = SeleniumDriver.new(@url)
-      full_ops = driverclass.merge_chrome_ops(@config_caps, @case_caps)
-      @driver = driverclass.build_chrome_driver(full_ops)
+      base_caps = case @app_details["Browser"]
+        when "chrome"
+          full_ops = driverclass.merge_chrome_ops(@config_caps, @case_caps)
+          @driver = driverclass.build_chrome_driver(full_ops)
+        when "firefox" 
+          puts @case_caps
+          full_ops = driverclass.merge_firefox_ops(@config_caps, @case_caps)
+          @driver = driverclass.build_firefox_driver(full_ops)
+        else 
+          full_ops = driverclass.merge_chrome_ops(@config_caps, @case_caps)
+          @driver = driverclass.build_chrome_driver(full_ops)
+      end
+
     else # Appium
       @udid = convert_value(@udid)
       if @url.nil? # local Appium - need to create server too
