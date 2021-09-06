@@ -13,6 +13,8 @@ Devices:
   - role: command1,command2,command3
   - role: desktopChrome,desktopChrome1
     browser: chrome
+  - role: desktopFirefox
+    browser: firefox
 # ANDROID
   - role: localAndroid
     platform: Android

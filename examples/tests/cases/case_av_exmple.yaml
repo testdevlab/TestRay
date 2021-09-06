@@ -1,0 +1,20 @@
+TestBrowserFirefoxAV:         
+  Roles: 
+    - Role: desktopFirefox
+      Capabilities:
+        firefoxOptions:
+          prefs:
+            media.navigator.streams.fake: true
+            media.navigator.permission.disabled: true
+      App: desktop
+  Actions: 
+    - Type: navigate
+      Role: desktopFirefox
+      Value: https://webcamtests.com/
+    - Type: click
+      Strategy: id
+      Role: desktopFirefox
+      Id: webcam-launcher
+    - Type: sleep
+      Time: 10
+    
