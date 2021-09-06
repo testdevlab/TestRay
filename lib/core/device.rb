@@ -49,13 +49,12 @@ class Device
         when "chrome"
           full_ops = driverclass.merge_chrome_ops(@config_caps, @case_caps)
           @driver = driverclass.build_chrome_driver(full_ops)
-        when "firefox" 
-          puts @case_caps
+        when "firefox"
           full_ops = driverclass.merge_firefox_ops(@config_caps, @case_caps)
           @driver = driverclass.build_firefox_driver(full_ops)
         else 
-          full_ops = driverclass.merge_chrome_ops(@config_caps, @case_caps)
-          @driver = driverclass.build_chrome_driver(full_ops)
+          raise "Chosen browser is \"#{@app_details["Browser"]}\" which is not " + 
+          "in the list of available browsers: chrome,firefox"
       end
 
     else # Appium
