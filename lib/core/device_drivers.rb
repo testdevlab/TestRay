@@ -226,4 +226,29 @@ class SeleniumDriver
     end
     return driver
   end
+
+  def merge_safari_ops(config_caps, case_caps)
+    return merge_ops("safariOptions", config_caps, case_caps)
+  end
+
+  def build_safari_driver(safari_ops)
+    if @url.nil?
+      localSafariOptions = Selenium::WebDriver::Safari::Options.new(
+        options: safari_ops,
+      )
+      driver = Selenium::WebDriver.for(
+        :safari, options: localSafariOptions
+      )
+    else
+      # remote selenium grid
+      log_debug("Selenium Server URL: #{@url}")
+      remoteSafariOptions = Selenium::WebDriver::Remote::Capabilities.safari(
+        safari_ops,
+      )
+      driver = Selenium::WebDriver.for(
+        :remote, url: @url, desired_capabilities: remoteSafariOptions,
+      )
+    end
+    return driver
+  end
 end
