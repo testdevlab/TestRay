@@ -12,11 +12,11 @@ TestBrowserFirefoxAV:
       App: desktop
   Actions:
     - Type: navigate
-      Role: desktopEdge
+      Role: desktopFirefox
       Value: https://webcamtests.com/
     - Type: click
       Strategy: id
-      Role: desktopEdge
+      Role: desktopFirefox
       Id: webcam-launcher
     - Type: sleep
       Time: 10
