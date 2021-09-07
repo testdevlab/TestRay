@@ -228,6 +228,7 @@ class SeleniumDriver
   end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   def merge_safari_ops(config_caps, case_caps)
     return merge_ops("safariOptions", config_caps, case_caps)
   end
@@ -255,6 +256,8 @@ class SeleniumDriver
 
 =======
 >>>>>>> 8cbfd1b (Test version)
+=======
+>>>>>>> 8cbfd1b (Test version)
   # merge case and/or config capabilities/options for Edge
   def merge_edge_ops(config_caps, case_caps)
     return merge_ops("edgeOptions", config_caps, case_caps)
@@ -270,11 +273,8 @@ class SeleniumDriver
         :edge, options: localEdgeOptions
       )
     else
-<<<<<<< HEAD
-=======
       # remote selenium grid
       log_debug("Selenium Server URL: #{@url}")
->>>>>>> 8cbfd1b (Test version)
       remoteEdgeOptions = Selenium::WebDriver::Remote::Capabilities.edge(
         "ms:edgeOptions" => edge_ops,
       )
