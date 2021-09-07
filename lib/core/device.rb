@@ -52,12 +52,21 @@ class Device
         when "firefox"
           full_ops = driverclass.merge_firefox_ops(@config_caps, @case_caps)
           @driver = driverclass.build_firefox_driver(full_ops)
+<<<<<<< HEAD
         when "safari"
           full_ops = driverclass.merge_safari_ops(@config_caps, @case_caps)
           @driver = driverclass.build_safari_driver(full_ops)
+<<<<<<< HEAD
         when "edge"
           full_ops = driverclass.merge_edge_ops(@config_caps, @case_caps)
           @driver = driverclass.build_edge_driver(full_ops)
+=======
+=======
+        when "edge"
+          full_ops = driverclass.merge_edge_ops(@config_caps, @case_caps)
+          @driver = driverclass.build_edge_driver(full_ops)
+>>>>>>> 8cbfd1b (Test version)
+>>>>>>> 2eda172 (Rebased on master)
         else 
           raise "Chosen browser is \"#{@app_details["Browser"]}\" which is not " + 
           "in the list of available browsers: chrome,firefox,safari,edge"

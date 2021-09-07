@@ -250,7 +250,6 @@ class SeleniumDriver
       )
     end
     return driver
-  end
 
   # merge case and/or config capabilities/options for Edge
   def merge_edge_ops(config_caps, case_caps)
@@ -267,8 +266,6 @@ class SeleniumDriver
         :edge, options: localEdgeOptions
       )
     else
-      # remote selenium grid
-      log_debug("Selenium Server URL: #{@url}")
       remoteEdgeOptions = Selenium::WebDriver::Remote::Capabilities.edge(
         "ms:edgeOptions" => edge_ops,
       )
