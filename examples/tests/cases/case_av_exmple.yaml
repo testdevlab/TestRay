@@ -1,8 +1,31 @@
-TestBrowserFirefoxAV:         
+# TestBrowserFirefoxAV:         
+#   Roles: 
+#     - Role: desktopFirefox
+#       Capabilities:
+#         firefoxOptions:
+#           prefs:
+#             media.navigator.streams.fake: true
+#             media.navigator.permission.disabled: true
+#             media.autoplay.default: 0
+#             media.autoplay.ask-permission: false
+#             media.autoplay.enabled.user-gestures-needed: false
+#       App: desktop
+#   Actions:    
+#     - Type: navigate
+#       Role: desktopFirefox
+#       Value: https://webcamtests.com/
+#     - Type: click
+#       Strategy: id
+#       Role: desktopFirefox
+#       Id: webcam-launcher
+#     - Type: sleep
+#       Time: 10
+    
+TestBrowserEdgeAV:         
   Roles: 
-    - Role: desktopFirefox
+    - Role: desktopEdge
       Capabilities:
-        firefoxOptions:
+        edgeOptions:
           prefs:
             media.navigator.streams.fake: true
             media.navigator.permission.disabled: true
@@ -12,12 +35,11 @@ TestBrowserFirefoxAV:
       App: desktop
   Actions:    
     - Type: navigate
-      Role: desktopFirefox
+      Role: desktopEdge
       Value: https://webcamtests.com/
     - Type: click
       Strategy: id
-      Role: desktopFirefox
+      Role: desktopEdge
       Id: webcam-launcher
     - Type: sleep
       Time: 10
-    
