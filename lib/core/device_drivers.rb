@@ -267,7 +267,7 @@ class SeleniumDriver
       )
     else
       remoteEdgeOptions = Selenium::WebDriver::Remote::Capabilities.edge(
-        "ms:edgeOptions" => edge_ops,
+        "se:ieOptions" => edge_ops,
       )
       driver = Selenium::WebDriver.for(
         :remote, url: @url, desired_capabilities: remoteEdgeOptions,
