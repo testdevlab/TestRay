@@ -218,7 +218,7 @@ class SeleniumDriver
       # remote selenium grid
       log_debug("Selenium Server URL: #{@url}")
       remoteFirefoxOptions = Selenium::WebDriver::Remote::Capabilities.firefox(
-        firefox_ops,
+        "moz:firefoxOptions" => firefox_ops,
       )
       driver = Selenium::WebDriver.for(
         :remote, url: @url, desired_capabilities: remoteFirefoxOptions,
