@@ -23,8 +23,8 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "thor"
   spec.add_runtime_dependency "nokogiri"
-  spec.add_runtime_dependency "appium_lib_core", "~> 5.0.0.beta4"
   spec.add_runtime_dependency "appium_lib", "~> 11.2.1custom"
+  #spec.add_runtime_dependency "appium_lib_core", "~> 5.0.0.beta4"
   spec.add_runtime_dependency "httparty"
   spec.add_runtime_dependency "json"
   spec.add_runtime_dependency "rest-client"
