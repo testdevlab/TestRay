@@ -275,7 +275,7 @@ class SeleniumDriver
       log_debug("Selenium Server URL: #{@url}")
 >>>>>>> 8cbfd1b (Test version)
       remoteEdgeOptions = Selenium::WebDriver::Remote::Capabilities.edge(
-        "se:ieOptions" => edge_ops,
+        "ms:edgeOptions" => edge_ops,
       )
       driver = Selenium::WebDriver.for(
         :remote, url: @url, desired_capabilities: remoteEdgeOptions,
