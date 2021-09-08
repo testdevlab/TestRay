@@ -26,12 +26,15 @@ TestBrowserEdgeAV:
     - Role: desktopEdge
       Capabilities:
         edgeOptions:
-          prefs:
-            media.navigator.streams.fake: true
-            media.navigator.permission.disabled: true
-            media.autoplay.default: 0
-            media.autoplay.ask-permission: false
-            media.autoplay.enabled.user-gestures-needed: false
+          args:
+            - --use-fake-device-for-media-stream
+            - --use-fake-ui-for-media-stream
+          # prefs:
+          #   media.navigator.streams.fake: true
+          #   media.navigator.permission.disabled: true
+          #   media.autoplay.default: 0
+          #   media.autoplay.ask-permission: false
+          #   media.autoplay.enabled.user-gestures-needed: false
       App: desktop
   Actions:    
     - Type: navigate

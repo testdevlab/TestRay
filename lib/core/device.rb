@@ -57,7 +57,7 @@ class Device
           @driver = driverclass.build_edge_driver(full_ops)
         else 
           raise "Chosen browser is \"#{@app_details["Browser"]}\" which is not " + 
-          "in the list of available browsers: chrome,firefox"
+          "in the list of available browsers: chrome,firefox,edge"
       end
 
     else # Appium
