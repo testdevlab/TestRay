@@ -14,7 +14,7 @@ end
 def load_case_specific_parameters(case_name, steps, parent_setup_params)
   load_env_and_vars(parent_setup_params)
   load_env_and_vars(steps)
-  load_env_and_vars(parent_setup_params)
+  load_env_and_vars_no_commands(parent_setup_params)
   execute_setupcommands(parent_setup_params)
   if parent_setup_params.key?("Log") && !parent_setup_params["Log"].empty?
     logfile_name = parent_setup_params["Log"]
@@ -165,6 +165,11 @@ def load_env_and_vars(structure)
   load_vars(structure)
 end
 
+def load_env_and_vars_no_commands(structure)
+  load_environment(structure["Environment"], false) if structure.key?("Environment")
+  load_vars(structure)
+end
+
 # Load the specified vars into the environment
 def load_vars(structure)
   if structure.key?("Vars")
@@ -176,7 +181,7 @@ def load_vars(structure)
 end
 
 # Load an environment, which is a set of environment variables
-def load_environment(wanted_envs)
+def load_environment(wanted_envs, setup_commands=true)
   return if wanted_envs.nil? || wanted_envs == "" 
   if wanted_envs.is_a? Array
     wanted_envs.each do |wanted_env|
@@ -193,9 +198,9 @@ def load_environment(wanted_envs)
       load_environment(inh_env)
     end
   end
-  log_info("Loading environment '#{wanted_envs}'")
+  log_info("Loading environment '#{wanted_envs}'") if setup_commands
   load_vars(envs[wanted_envs])
-  if envs[wanted_envs]["SetupCommands"]
+  if envs[wanted_envs]["SetupCommands"] && setup_commands
     for command in envs[wanted_envs]["SetupCommands"] do 
       if ENV["LOG_LEVEL"] == "error"
         system(command, out: File::NULL, err: $stderr)
