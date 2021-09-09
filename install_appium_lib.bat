@@ -30,9 +30,6 @@ if %found%=="yes" (
         echo Rubocop is missing... installing
         gem install rubocop
     )
-    rake install
-    cd ..
-    rmdir /s /q "ruby_lib"
 )
 git clone https://github.com/EinarsNG/ruby_lib.git
 cd ruby_lib
