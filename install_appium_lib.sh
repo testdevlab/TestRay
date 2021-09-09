@@ -22,6 +22,13 @@ else
 		cd ..
 		rm -r ruby_lib
 	else
-		echo Install Rubocop first: gem install rubocop
+		read -r -p "Rubocop not found. Would you like to install it? (y/N): " response
+		if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
+		then
+			gem install rubocop
+		else
+			echo "Rubocop is required for this script for build appium_lib"
+			exit
+		fi
 	fi
 fi
