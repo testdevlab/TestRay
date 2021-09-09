@@ -172,7 +172,7 @@ end
 
 # Load the specified vars into the environment
 def load_vars(structure)
-  if structure.key?("Vars")
+  if structure.key?("Vars") && structure["Vars"]
     structure["Vars"].each do |key, value|
       log_debug("Adding var: #{key} = #{convert_value(value)}")
       ENV[key] = convert_value(value)
