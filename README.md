@@ -712,7 +712,7 @@ There are a lot of operations, look at https://github.com/project-eutopia/keisan
 
     - Type: operation
       Operation: 3+5*3+(3+5)**2+4/2
-      ExpetedResult: 84 # (Optional)
+      ExpectedResult: 84 # (Optional)
       ResultVar: Result # (Optional) You can later use the var like $AND_CLI_Result$ since Result becomes an Environment Variable
 
 Operation examples:
