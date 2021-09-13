@@ -1,4 +1,6 @@
 TestEnvironment0: # LOAD ENVIRONMENT USING --env Mark1 flag or In Sets
+  Vars:
+    TEST: TEST
   Roles:
     - Role: command1
       App: command

@@ -23,8 +23,12 @@ Devices:
 #VARS
 
 Environments:
+  SleepEnv:
+    SetupCommands:
+      - sleep 2
   Mark1:
     Vars:
+      ENV1: ENV1
       VAR_1: VAR_1
       VAR_2: VAR_2
     SetupCommands:

@@ -35,6 +35,10 @@ SetExampleEnv1:
   Environment: Mark1
   Cases:
     - Case: TestEnvironment0
+      SetupCommands:
+        - Sleep 5
+      Vars:
+        ENV1: $AND_CLI_TEST$
 
 SetExampleEnv2:
   Cases:
