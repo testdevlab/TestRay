@@ -12,10 +12,12 @@ end
 
 # Load data specific to an individual case
 def load_case_specific_parameters(case_name, steps, parent_setup_params)
-  load_env_and_vars(parent_setup_params)
-  load_env_and_vars(steps)
-  load_env_and_vars_no_commands(parent_setup_params)
-  execute_setupcommands(parent_setup_params)
+  # testRay Sets Environments have been load already
+  load_env_and_vars(parent_setup_params) # Loads environment vars and commands for main case
+  load_env_and_vars(steps) # Loads case Vars and setup commands
+  load_env_and_vars(parent_setup_params, false) # Loads environment vars so that cases vars 
+                                                # can fill the information for Env vars with $AND_CLI$ wrappers
+  execute_setupcommands(parent_setup_params) # Runs the setup command for the TestRay Set file specific case commands
   if parent_setup_params.key?("Log") && !parent_setup_params["Log"].empty?
     logfile_name = parent_setup_params["Log"]
   else
@@ -160,13 +162,8 @@ end
 ### Methods that load environment variables
 ########################################################
 
-def load_env_and_vars(structure)
-  load_environment(structure["Environment"]) if structure.key?("Environment")
-  load_vars(structure)
-end
-
-def load_env_and_vars_no_commands(structure)
-  load_environment(structure["Environment"], false) if structure.key?("Environment")
+def load_env_and_vars(structure, setup_commands=true)
+  load_environment(structure["Environment"], setup_commands) if structure.key?("Environment")
   load_vars(structure)
 end
 
@@ -198,7 +195,11 @@ def load_environment(wanted_envs, setup_commands=true)
       load_environment(inh_env)
     end
   end
-  log_info("Loading environment '#{wanted_envs}'") if setup_commands
+  if setup_commands
+    log_info("Loading environment '#{wanted_envs}'") 
+  else
+    log_info("Loading vars for '#{wanted_envs}'") 
+  end
   load_vars(envs[wanted_envs])
   if envs[wanted_envs]["SetupCommands"] && setup_commands
     for command in envs[wanted_envs]["SetupCommands"] do 
