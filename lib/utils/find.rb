@@ -179,6 +179,7 @@ def get_window_handle(identifier, scenario, window_number = -1, timeout = 30)
         powershell_output = execute_powershell("(Get-Process #{identifier}).MainWindowHandle")
       end
       window_handles=sanitize_powershell_window_handles(powershell_output)
+      log_info("Window handle retrieved: #{window_handles}")
       
       if window_handles[window_number].to_i.positive?
         log_info('Found window handle: ', window_handles[window_number].to_i.to_s(16), '')
