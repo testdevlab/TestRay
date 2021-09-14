@@ -75,7 +75,7 @@ module TestRay
       cases = load_case_files()
       parent_setup_params = {
         "Log" => options[:log_file],
-        "Environment" => options[:environment],
+        "Environment" => options[:env],
       }
       run_single_case(cases, case_name, parent_setup_params, options)
     end

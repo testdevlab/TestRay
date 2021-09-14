@@ -57,7 +57,8 @@ end
 # Main case must have all roles defined at the top - no need to check actions
 def check_case_roles_apps(case_steps)
   found_roles = []
-  valid_apps = $config["Apps"].keys + ["browser", "command", "desktop"]
+  extra_apps = $config["Apps"] ? $config["Apps"].keys : [] 
+  valid_apps = extra_apps + ["browser", "command", "desktop"]
   case_steps["Roles"].each do |case_role_set|
     convert_value(case_role_set["Role"]).split(",").each do |case_role|
       found = false

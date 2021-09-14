@@ -1456,14 +1456,14 @@ class Device
 
     # NEW WINDOW HANDLE
     window_number = -1 # Set  default Window number 
-    window_number = action['WindowNumber'] if action['WindowNumber'] # Override window number if specified
+    window_number = convert_value(action['WindowNumber']) if action['WindowNumber'] # Override window number if specified
     time = 30 # Set default timeout value
-    time = action['Time'] if action['Time'] # Override timeout if specified
+    time = convert_value(action['Time']) if action['Time'] # Override timeout if specified
     window_handle = 0
     if action['WindowTitle']
-      window_handle = get_window_handle(action['WindowTitle'], 'title', window_number, time)
+      window_handle = get_window_handle(convert_value(action['WindowTitle']), 'title', window_number, time)
     elsif action['Application']
-      window_handle = get_window_handle(action['Application'], 'app', window_number, time)
+      window_handle = get_window_handle(convert_value(action['Application']), 'app', window_number, time)
     else
       log_warn('No WindowTitle or Application specified for reload_driver_with_new_window_handle call')
       return
