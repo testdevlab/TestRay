@@ -169,17 +169,15 @@ def get_window_handle(identifier, scenario, window_number = -1, timeout = 30)
       powershell_output = nil
       case scenario
       when 'app' # Find window by app name
-        log_info("Getting window for app: #{identifier}")
         powershell_output = execute_powershell("(Get-Process #{identifier}).MainWindowHandle")
       when 'title' # Find window by window title
-        log_info("Getting window with title: #{identifier}")
         powershell_output = execute_powershell("Get-Process | Where-Object {$_.MainWindowTitle -like \"#{identifier}\"} | Select-Object MainWindowHandle")
       else # Default option, find by app name
         log_warn('No scenario provided, defaulting to searching for window by app name')
         powershell_output = execute_powershell("(Get-Process #{identifier}).MainWindowHandle")
       end
       window_handles=sanitize_powershell_window_handles(powershell_output)
-      log_info("Window handle retrieved: #{window_handles[window_number]}")
+      log_info("Window handle retrieved for #{scenario} = '#{identifier}': #{window_handles[window_number]}")
       
       if window_handles[window_number].to_i.positive?
         log_info('Found window handle: ', window_handles[window_number].to_i.to_s(16), '')
