@@ -1,0 +1,19 @@
+TestBrowserEdgeAV:         
+  Roles: 
+    - Role: desktopEdge
+      Capabilities:
+        edgeOptions:
+          args:
+            - --use-fake-device-for-media-stream
+            - --use-fake-ui-for-media-stream
+      App: desktop
+  Actions:    
+    - Type: navigate
+      Role: desktopEdge
+      Value: https://webcamtests.com/
+    - Type: click
+      Strategy: id
+      Role: desktopEdge
+      Id: webcam-launcher
+    - Type: sleep
+      Time: 10

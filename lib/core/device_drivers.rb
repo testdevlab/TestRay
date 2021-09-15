@@ -265,13 +265,36 @@ class SeleniumDriver
         :ie, options: localIEOptions
       )
     else
-      # remote selenium grid
-      log_debug("Selenium Server URL: #{@url}")
       remoteIEOptions = Selenium::WebDriver::Remote::Capabilities.ie(
         "se:ieOptions" => ie_ops,
       )
       driver = Selenium::WebDriver.for(
         :remote, url: @url, desired_capabilities: remoteIEOptions,
+      )
+    end
+    return driver
+  end
+  
+  def merge_edge_ops(config_caps, case_caps)
+    return merge_ops("edgeOptions", config_caps, case_caps)
+  end
+
+  def build_edge_driver(safari_ops)
+    if @url.nil?
+      localEdgeOptions = Selenium::WebDriver::Edge::Options.new(
+        options: edge_ops,
+      )
+      driver = Selenium::WebDriver.for(
+        :edge, options: localEdgeOptions
+      )
+    else
+      # remote selenium grid
+      log_debug("Selenium Server URL: #{@url}")
+      remoteSafariOptions = Selenium::WebDriver::Remote::Capabilities.edge(
+        edge_ops,
+      )
+      driver = Selenium::WebDriver.for(
+        :remote, url: @url, desired_capabilities: remoteEdgeOptions,
       )
     end
     return driver

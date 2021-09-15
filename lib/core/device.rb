@@ -58,9 +58,12 @@ class Device
         when "ie"
           full_ops = driverclass.merge_ie_ops(@config_caps, @case_caps)
           @driver = driverclass.build_ie_driver(full_ops)
+        when "edge"
+          full_ops = driverclass.merge_edge_ops(@config_caps, @case_caps)
+          @driver = driverclass.build_edge_driver(full_ops)
         else 
           raise "Chosen browser is \"#{@app_details["Browser"]}\" which is not " + 
-          "in the list of available browsers: chrome,firefox,safari,ie"
+          "in the list of available browsers: chrome,firefox,safari,ie,edge"
       end
 
     else # Appium
