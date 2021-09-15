@@ -279,7 +279,7 @@ class SeleniumDriver
     return merge_ops("edgeOptions", config_caps, case_caps)
   end
 
-  def build_edge_driver(safari_ops)
+  def build_edge_driver(edge_ops)
     if @url.nil?
       localEdgeOptions = Selenium::WebDriver::Edge::Options.new(
         options: edge_ops,
@@ -290,7 +290,7 @@ class SeleniumDriver
     else
       # remote selenium grid
       log_debug("Selenium Server URL: #{@url}")
-      remoteSafariOptions = Selenium::WebDriver::Remote::Capabilities.edge(
+      remoteEdgeOptions = Selenium::WebDriver::Remote::Capabilities.edge(
         edge_ops,
       )
       driver = Selenium::WebDriver.for(
