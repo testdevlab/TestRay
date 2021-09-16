@@ -2,7 +2,7 @@ TestBrowserIEAV:
   Roles: 
     - Role: desktopIE
       Capabilities:
-        firefoxOptions:
+        edgeOptions:
           prefs:
             media.navigator.streams.fake: true
             media.navigator.permission.disabled: true
