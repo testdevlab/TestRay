@@ -264,7 +264,7 @@ class SeleniumDriver
       driver = Selenium::WebDriver.for(
         :ie, options: localIEOptions
       )
-    elsetest
+    else
       # remote selenium grid
       log_debug("Selenium Server URL: #{@url}")
       remoteIEOptions = Selenium::WebDriver::Remote::Capabilities.ie(
