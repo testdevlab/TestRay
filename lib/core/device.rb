@@ -196,7 +196,7 @@ class Device
       else
         log_info("Role '#{@role}': Stopping Selenium driver... ", no_date=false, _print=true)
         @driver.close
-        #@driver.quit
+        @driver.quit
       end
       log_info("Done!\n", no_date=true, _print=true)
     rescue => e
