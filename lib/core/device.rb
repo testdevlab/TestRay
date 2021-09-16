@@ -418,7 +418,7 @@ class Device
 
     if error && !action["NoRaise"]
       path = take_error_screenshot()
-      raise "#{@role}: Element '#{convert_value(action["Id"])}': #{error.message}\nError Screenshot: #{path}"
+      raise "#{@role}: Element '#{action["Id"]}': #{error.message}\nError Screenshot: #{path}"
     end
   end
 
