@@ -251,4 +251,29 @@ class SeleniumDriver
     end
     return driver
   end
+
+  def merge_ie_ops(config_caps, case_caps)
+    return merge_ops("ieOptions", config_caps, case_caps)
+  end
+
+  def build_ie_driver(ie_ops)
+    if @url.nil?
+      localIEOptions = Selenium::WebDriver::IE::Options.new(
+        options: ie_ops,
+      )
+      driver = Selenium::WebDriver.for(
+        :ie, options: localIEOptions
+      )
+    elsetest
+      # remote selenium grid
+      log_debug("Selenium Server URL: #{@url}")
+      remoteIEOptions = Selenium::WebDriver::Remote::Capabilities.ie(
+        "se:ieOptions" => ie_ops,
+      )
+      driver = Selenium::WebDriver.for(
+        :remote, url: @url, desired_capabilities: remoteIEOptions,
+      )
+    end
+    return driver
+  end
 end
