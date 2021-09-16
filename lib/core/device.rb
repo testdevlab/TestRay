@@ -1459,7 +1459,7 @@ class Device
 
     # NEW WINDOW HANDLE
     window_number = -1 # Set  default Window number 
-    window_number = convert_value(action['WindowNumber']) if action['WindowNumber'] # Override window number if specified
+    window_number = convert_value(action['WindowNumber']).to_i if action['WindowNumber'] # Override window number if specified
     time = 30 # Set default timeout value
     time = convert_value(action['Time']) if action['Time'] # Override timeout if specified
     window_handle = 0
