@@ -16,7 +16,7 @@
 5) Troubleshooting:
     If there there is an error with first line like this:
         "Unable to load the EventMachine C extension; To use the pure-ruby reactor, require 'em/pire_ruby'"
-            Then head over to C:\Ruby{version}-x64\lib\ruby\gems\{version}\gems\eventmachine-1.2.7\lib
+            Then head over to C:\Ruby{version}-x64\lib\ruby\gems\{version}\gems\eventmachine-1.2.7-x64-mingw32\lib
             and edit file called eventmachine.rb by adding: require "em/pure_ruby" in the first line
     If there is an error: "... stack level too deep ..." or an error saying that testray cant find the gemfile
         Then head over to C:\Ruby{version}-x64\bin
