@@ -15,13 +15,7 @@ fi
 if [[ -z $(which git) || -z $(which gem) || -z $(which rake) ]]; then
 	echo "git, gem and rake must be present on the system"
 else
-	if [[ -n $(gem list | grep rubocop) ]]; then
-		git clone https://github.com/EinarsNG/ruby_lib.git
-		cd ruby_lib
-		rake install
-		cd ..
-		rm -r ruby_lib
-	else
+	if [[ -z $(gem list | grep rubocop) ]]; then
 		read -r -p "Rubocop not found. Would you like to install it? (y/N): " response
 		if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
 		then
@@ -31,4 +25,9 @@ else
 			exit
 		fi
 	fi
+	git clone https://github.com/EinarsNG/ruby_lib.git
+	cd ruby_lib
+	rake install
+	cd ..
+	rm -r ruby_lib
 fi
