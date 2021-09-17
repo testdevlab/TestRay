@@ -40,26 +40,3 @@ TestBrowserSafariAV:
       Id: webcam-launcher
     - Type: sleep
       Time: 10
-    
-TestBrowserIEAV:         
-  Roles: 
-    - Role: desktopIE
-      Capabilities:
-        ieOptions:
-          prefs:
-            media.navigator.streams.fake: true
-            media.navigator.permission.disabled: true
-            media.autoplay.default: 0
-            media.autoplay.ask-permission: false
-            media.autoplay.enabled.user-gestures-needed: false
-      App: desktop
-  Actions:    
-    - Type: navigate
-      Role: desktopIE
-      Value: https://webcamtests.com/
-    - Type: click
-      Strategy: id
-      Role: desktopIE
-      Id: webcam-launcher
-    - Type: sleep
-      Time: 10
