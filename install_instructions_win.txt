@@ -1,0 +1,26 @@
+1) You need to install git, rake and rubocop:
+    git: https://git-scm.com/downloads
+    rake and rubocop: gem install rake && gem install rubocop
+2) Run ./install_appium_lib.bat
+    in case of any issues these are the commands that need to be executed:
+        git clone https://github.com/EinarsNG/ruby_lib.git
+        cd ruby_lib
+        rake install
+        * to remove ruby_lib directory which will no longer be needed*
+            cd ..
+            rmdir /s /q "ruby_lib"
+3) Run rake install (within the testray directory itself)
+    in case of long installs you can try this alternative:
+        rake build && gem install pkg\testray-1.0.0.gem
+4) Try to run testray
+5) Troubleshooting:
+    If there there is an error with first line like this:
+        "Unable to load the EventMachine C extension; To use the pure-ruby reactor, require 'em/pire_ruby'"
+            Then head over to C:\Ruby{version}-x64\lib\ruby\gems\{version}\gems\eventmachine-1.2.7\lib
+            and edit file called eventmachine.rb by adding: require "em/pure_ruby" in the first line
+    If there is an error: "... stack level too deep ..." or an error saying that testray cant find the gemfile
+        Then head over to C:\Ruby{version}-x64\bin
+        and edit file called testray by removing everything except the first line and adding these two lines
+        after the first one:
+            require "testray"
+            TestRay::CLI.start(ARGV)
