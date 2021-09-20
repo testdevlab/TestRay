@@ -227,8 +227,6 @@ class SeleniumDriver
     return driver
   end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   def merge_safari_ops(config_caps, case_caps)
     return merge_ops("safariOptions", config_caps, case_caps)
   end
@@ -254,10 +252,6 @@ class SeleniumDriver
     return driver
   end
 
-=======
->>>>>>> 8cbfd1b (Test version)
-=======
->>>>>>> 8cbfd1b (Test version)
   # merge case and/or config capabilities/options for Edge
   def merge_edge_ops(config_caps, case_caps)
     return merge_ops("edgeOptions", config_caps, case_caps)
