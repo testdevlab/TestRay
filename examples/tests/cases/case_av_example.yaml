@@ -1,42 +1,22 @@
-# TestBrowserFirefoxAV:         
-#   Roles: 
-#     - Role: desktopFirefox
-#       Capabilities:
-#         firefoxOptions:
-#           prefs:
-#             media.navigator.streams.fake: true
-#             media.navigator.permission.disabled: true
-#             media.autoplay.default: 0
-#             media.autoplay.ask-permission: false
-#             media.autoplay.enabled.user-gestures-needed: false
-#       App: desktop
-#   Actions:    
-#     - Type: navigate
-#       Role: desktopFirefox
-#       Value: https://webcamtests.com/
-#     - Type: click
-#       Strategy: id
-#       Role: desktopFirefox
-#       Id: webcam-launcher
-#     - Type: sleep
-#       Time: 10
-    
-TestBrowserEdgeAV:         
+TestBrowserFirefoxAV:         
   Roles: 
-    - Role: desktopEdge
+    - Role: desktopFirefox
       Capabilities:
-        edgeOptions:
-          args:
-            - --use-fake-device-for-media-stream
-            - --use-fake-ui-for-media-stream
+        firefoxOptions:
+          prefs:
+            media.navigator.streams.fake: true
+            media.navigator.permission.disabled: true
+            media.autoplay.default: 0
+            media.autoplay.ask-permission: false
+            media.autoplay.enabled.user-gestures-needed: false
       App: desktop
   Actions:    
     - Type: navigate
-      Role: desktopEdge
+      Role: desktopFirefox
       Value: https://webcamtests.com/
     - Type: click
       Strategy: id
-      Role: desktopEdge
+      Role: desktopFirefox
       Id: webcam-launcher
     - Type: sleep
       Time: 10
@@ -60,26 +40,4 @@ TestBrowserSafariAV:
       Id: webcam-launcher
     - Type: sleep
       Time: 10
-
-TestBrowserFirefoxAV:         
-  Roles: 
-    - Role: desktopFirefox
-      Capabilities:
-        firefoxOptions:
-          prefs:
-            media.navigator.streams.fake: true
-            media.navigator.permission.disabled: true
-            media.autoplay.default: 0
-            media.autoplay.ask-permission: false
-            media.autoplay.enabled.user-gestures-needed: false
-      App: desktop
-  Actions:    
-    - Type: navigate
-      Role: desktopFirefox
-      Value: https://webcamtests.com/
-    - Type: click
-      Strategy: id
-      Role: desktopFirefox
-      Id: webcam-launcher
-    - Type: sleep
-      Time: 10
+    
