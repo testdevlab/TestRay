@@ -251,6 +251,7 @@ class SeleniumDriver
       )
     end
     return driver
+  end
 
 =======
 >>>>>>> 8cbfd1b (Test version)
