@@ -237,16 +237,39 @@ class SeleniumDriver
         options: safari_ops,
       )
       driver = Selenium::WebDriver.for(
-        :safari, options: localSafariOptions
+        :safari, options: localSafariOptions)
+    else
+      remoteSafariOptions = Selenium::WebDriver::Remote::Capabilities.safari(
+          safari_ops,
+        )
+      driver = Selenium::WebDriver.for(         
+        :remote, url: @url, desired_capabilities: remoteSafariOptions,
+      )
+    end
+    return driver
+  end
+  # merge case and/or config capabilities/options for Edge
+  def merge_edge_ops(config_caps, case_caps)
+    return merge_ops("edgeOptions", config_caps, case_caps)
+  end
+
+  # build the Edge driver, given a set of options
+  def build_edge_driver(edge_ops)
+    if @url.nil?
+      localEdgeOptions = Selenium::WebDriver::Edge::Options.new(
+        options: edge_ops,
+      )
+      driver = Selenium::WebDriver.for(
+        :edge, options: localEdgeOptions
       )
     else
       # remote selenium grid
       log_debug("Selenium Server URL: #{@url}")
-      remoteSafariOptions = Selenium::WebDriver::Remote::Capabilities.safari(
-        safari_ops,
+      remoteEdgeOptions = Selenium::WebDriver::Remote::Capabilities.edge(
+        "ms:edgeOptions" => edge_ops,
       )
       driver = Selenium::WebDriver.for(
-        :remote, url: @url, desired_capabilities: remoteSafariOptions,
+        :remote, url: @url, desired_capabilities: remoteEdgeOptions,
       )
     end
     return driver
