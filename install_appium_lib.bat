@@ -11,7 +11,7 @@ if %found%=="yes" (
         set delete=yes
     )
     if "%delete%"=="no" (
-        echo ruby_lib folder must be deleted in from the temp folder for the script for proceed
+        echo ruby_lib folder must be deleted in from the current folder for the script for proceed
     ) else (
         rmdir /s /q "ruby_lib"
     )
