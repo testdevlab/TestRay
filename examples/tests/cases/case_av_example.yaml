@@ -1,0 +1,62 @@
+TestBrowserFirefoxAV:         
+  Roles: 
+    - Role: desktopFirefox
+      Capabilities:
+        firefoxOptions:
+          prefs:
+            media.navigator.streams.fake: true
+            media.navigator.permission.disabled: true
+            media.autoplay.default: 0
+            media.autoplay.ask-permission: false
+            media.autoplay.enabled.user-gestures-needed: false
+      App: desktop
+  Actions:    
+    - Type: navigate
+      Role: desktopFirefox
+      Value: https://webcamtests.com/
+    - Type: click
+      Strategy: id
+      Role: desktopFirefox
+      Id: webcam-launcher
+    - Type: sleep
+      Time: 10
+      
+TestBrowserSafariAV:         
+  Roles: 
+    - Role: desktopSafari
+      Capabilities:
+        safariOptions:
+          prefs:
+            media.navigator.streams.fake: true
+            media.navigator.permission.disabled: true
+      App: desktop
+  Actions: 
+    - Type: navigate
+      Role: desktopSafari
+      Value: https://webcamtests.com/
+    - Type: click
+      Strategy: id
+      Role: desktopSafari
+      Id: webcam-launcher
+    - Type: sleep
+      Time: 10
+    
+TestBrowserEdgeAV:         
+  Roles: 
+    - Role: desktopEdge
+      Capabilities:
+        edgeOptions:
+          args:
+            - --use-fake-device-for-media-stream
+            - --use-fake-ui-for-media-stream
+      App: desktop
+  Actions:    
+    - Type: navigate
+      Role: desktopEdge
+      Value: https://webcamtests.com/
+    - Type: click
+      Strategy: id
+      Role: desktopEdge
+      Id: webcam-launcher
+    - Type: sleep
+      Time: 10

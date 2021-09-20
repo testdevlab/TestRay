@@ -26,14 +26,14 @@ if %found%=="yes" (
         )
     )
 
-@REM     if %rubocop%=="no" (
-@REM         echo Rubocop is missing... installing
-@REM         gem install rubocop
-@REM     )
-@REM     rake install
-@REM     cd ..
-@REM     rmdir /s /q "ruby_lib"
-@REM )
+    if "%rubocop%"=="no" (
+        echo Rubocop is missing... installing
+        gem install rubocop
+    )
+    rake install
+    cd ..
+    rmdir /s /q "ruby_lib"
+)
 git clone https://github.com/EinarsNG/ruby_lib.git
 cd ruby_lib
 rake install
