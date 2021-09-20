@@ -905,6 +905,7 @@ class Device
       if id.is_a?(String)
         begin
           id = convert_value(id)
+          locator_strategy = convert_value(locator_strategy)
           try += 1
           el = nil
           if index
@@ -928,7 +929,7 @@ class Device
         id.each do |locator|
           locator = convert_value(locator)
           begin
-            el = @driver.find_element(locator_strategy[i], locator)
+            el = @driver.find_element(convert_value(locator_strategy[i]), locator)
             return el
           rescue => e
             exception = e
@@ -1070,8 +1071,8 @@ class Device
   #   Value
   #   Time
   def wait_for_attribute(action)
-    locator_strategy = action["Strategy"]
-    id, att, value = action["Id"], action["Attribute"], action["Value"]
+    locator_strategy = convert_value(action["Strategy"])
+    id, att, value = convert_value(action["Id"]), convert_value(action["Attribute"]), convert_value(action["Value"])
     default_wait_time = (action["Time"] ? action["Time"] : @timeout)
     exception = ""
     start = Time.now
@@ -1106,7 +1107,7 @@ class Device
   end
 
   def add_cookie(action)
-    @driver.manage.add_cookie :name => action["Name"], :value => action["Value"]
+    @driver.manage.add_cookie :name => convert_value(action["Name"]), :value => convert_value(action["Value"])
   end
 
   def wait_for_page_to_load(action)
@@ -1164,7 +1165,7 @@ class Device
     start = Time.now
     while (Time.now - start) < default_wait_time
       begin
-        el = @driver.find_element(action["Strategy"], action["Id"])
+        el = @driver.find_element(convert_value(action["Strategy"]), convert_value(action["Id"]))
         return true if action["Value"]
         sleep 0.2
       rescue => e
@@ -1181,12 +1182,12 @@ class Device
   #   Id
   #   Time
   def wait_not_visible(action)
-    id = action["Id"]
+    id = convert_value(action["Id"])
     default_wait_time = (action["Time"] ? action["Time"] : @timeout)
     start = Time.now
     while (Time.now - start) < default_wait_time
       begin
-        el = @driver.find_element(action["Strategy"], id)
+        el = @driver.find_element(convert_value(action["Strategy"]), id)
         log_info("#{@role}: Element '#{id}' is still visible, waiting ...")
         sleep(0.1)
       rescue => e
