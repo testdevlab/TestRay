@@ -4,7 +4,7 @@ for /f %%i in ('dir /b') do (
     if "%%~ni"=="ruby_lib" set found=yes
 )
 if %found%=="yes" (
-    echo ruby_lib found in the temp folder which is interfering with the install script... would you like to delete it?
+    echo ruby_lib found in the current folder which is interfering with the install script... would you like to delete it?
     set /p answer="Delete (y/N)?: "
     set delete=no
     if /i "%answer%" EQU "y" (

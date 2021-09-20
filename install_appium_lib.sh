@@ -30,8 +30,4 @@ else
 	rake install
 	cd ..
 	rm -r ruby_lib
-<<<<<<< HEAD
 fi
-=======
-fi
->>>>>>> 3f50145 (Fixed a logic error in the linux shell script)
