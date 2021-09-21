@@ -285,8 +285,7 @@ class SeleniumDriver
         options: edge_ops,
       )
       driver = Selenium::WebDriver.for(
-        :edge
-        # :edge, options: localEdgeOptions
+        :edge, options: localEdgeOptions
       )
     else
       # remote selenium grid
