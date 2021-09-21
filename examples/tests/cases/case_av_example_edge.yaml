@@ -1,13 +1,12 @@
-TestBrowserEdgeAV:         
-  Roles: 
+TestBrowserEdgeAV:
+  Roles:
     - Role: desktopEdge
       Capabilities:
         edgeOptions:
-          args:
-            - --use-fake-device-for-media-stream
-            - --use-fake-ui-for-media-stream
+          prefs:
+            media.navigator.streams.fake: true
       App: desktop
-  Actions:    
+  Actions:
     - Type: navigate
       Role: desktopEdge
       Value: https://webcamtests.com/
