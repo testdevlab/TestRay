@@ -5,18 +5,18 @@ TestBrowserIEInput:
   Actions:
     - Type: navigate
       Role: desktopIE
-      Value: https://ultimateqa.com/filling-out-forms/
+      Value: https://www.globalsqa.com/samplepagetest/
     - Type: click
       Strategy: id
       Role: desktopIE
-      Id: et_pb_contact_name_0
+      Id: g2599-name
     - Type: send_keys
       Value: This is a name
     - Type: click
       Strategy: id
       Role: desktopIE
-      Id: et_pb_contact_message_0
+      Id: g2599-email
     - Type: send_keys
-      Value: This is a message
+      Value: email@example.com
     - Type: sleep
       Time: 10
