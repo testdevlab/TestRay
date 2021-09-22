@@ -35,7 +35,7 @@ TestBrowserSafariAV:
       Role: desktopSafari
       Value: https://webcamtests.com/
     - Type: click
-      Strategy: id
+      Strategy: xpath
       Role: desktopSafari
       Id: webcam-launcher
     - Type: sleep
