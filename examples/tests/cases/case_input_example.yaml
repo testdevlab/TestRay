@@ -1,0 +1,22 @@
+TestBrowserIEAV:
+  Roles:
+    - Role: desktopIE
+      App: desktop
+  Actions:
+    - Type: navigate
+      Role: desktopIE
+      Value: http://demo.automationtesting.in/Register.html
+    - Type: click
+      Strategy: xpath
+      Role: desktopIE
+      Id: //input[@ng-model='FirstName']
+    - Type: send_keys
+      Value: FirstName
+    - Type: click
+      Strategy: xpath
+      Role: desktopIE
+      Id: //input[@ng-model='LastName']
+    - Type: send_keys
+      Value: LastName
+    - Type: sleep
+      Time: 10
