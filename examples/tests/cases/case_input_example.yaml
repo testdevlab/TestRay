@@ -1,22 +1,22 @@
-TestBrowserIEAV:
+TestBrowserIEInput:
   Roles:
     - Role: desktopIE
       App: desktop
   Actions:
     - Type: navigate
       Role: desktopIE
-      Value: http://demo.automationtesting.in/Register.html
+      Value: https://ultimateqa.com/filling-out-forms/
     - Type: click
-      Strategy: xpath
+      Strategy: id
       Role: desktopIE
-      Id: //input[@ng-model='FirstName']
+      Id: et_pb_contact_name_0
     - Type: send_keys
-      Value: FirstName
+      Value: This is a name
     - Type: click
-      Strategy: xpath
+      Strategy: id
       Role: desktopIE
-      Id: //input[@ng-model='LastName']
+      Id: et_pb_contact_message_0
     - Type: send_keys
-      Value: LastName
+      Value: This is a message
     - Type: sleep
       Time: 10
