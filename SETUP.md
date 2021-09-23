@@ -154,6 +154,16 @@ chromedriver
         Open System Preferences -> Security & Privacy -> General -> Allow Anyway
         Rerun the previous command - a new warning should pop up. Press Open and the command should execute
 
+Edge driver for non-chromium edge
+
+    ⊞ open Powershell and write this command:
+
+        <pre>
+        DISM.exe /Online /Add-Capability /CapabilityName:Microsoft.WebDriver~~~~0.0.1.0
+        </pre>
+
+        Admin priviledges may be needed. After installation there is no need to add the driver to the path.
+
 #### Running Android Tests
 
 Android Studio - https://developer.android.com/studio
@@ -217,11 +227,3 @@ Drag and drop the Xcode Helper application to the app list in the System Prefere
 
 In Windows Settings, open Update & Security -> For developers -> switch to Developer Mode -> Yes
 You may also need to first start PowerShell as an administrator before running your tests
-
-To install the Edge webdriver (non-chromium) open Powershell and write this command:
-
-<pre>
-DISM.exe /Online /Add-Capability /CapabilityName:Microsoft.WebDriver~~~~0.0.1.0
-</pre>
-
-Admin priviledges may be needed. After installation there is no need to add the driver to the path.
