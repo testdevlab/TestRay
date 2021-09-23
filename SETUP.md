@@ -154,7 +154,7 @@ chromedriver
         Open System Preferences -> Security & Privacy -> General -> Allow Anyway
         Rerun the previous command - a new warning should pop up. Press Open and the command should execute
 
-Edge driver for non-chromium edge
+Edge driver for the non-chromium version
 
     ⊞ open Powershell and write this command:
         DISM.exe /Online /Add-Capability /CapabilityName:Microsoft.WebDriver~~~~0.0.1.0
