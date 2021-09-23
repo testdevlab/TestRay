@@ -19,10 +19,11 @@ Devices:
     browser: safari
   - role: desktopIE
     browser: ie
-# ANDROID
+  - role: desktopEdge
+    browser: edge
+  # ANDROID
   - role: localAndroid
     platform: Android
-
 
 #VARS
 
@@ -64,4 +65,3 @@ Environments:
     Inherit:
       - Inherited1
       - Inherited2
-  

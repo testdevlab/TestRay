@@ -1,5 +1,5 @@
-TestBrowserFirefoxAV:         
-  Roles: 
+TestBrowserFirefoxAV:
+  Roles:
     - Role: desktopFirefox
       Capabilities:
         firefoxOptions:
@@ -10,7 +10,7 @@ TestBrowserFirefoxAV:
             media.autoplay.ask-permission: false
             media.autoplay.enabled.user-gestures-needed: false
       App: desktop
-  Actions:    
+  Actions:
     - Type: navigate
       Role: desktopFirefox
       Value: https://webcamtests.com/
@@ -20,9 +20,9 @@ TestBrowserFirefoxAV:
       Id: webcam-launcher
     - Type: sleep
       Time: 10
-      
-TestBrowserSafariAV:         
-  Roles: 
+
+TestBrowserSafariAV:
+  Roles:
     - Role: desktopSafari
       Capabilities:
         safariOptions:
@@ -30,7 +30,7 @@ TestBrowserSafariAV:
             media.navigator.streams.fake: true
             media.navigator.permission.disabled: true
       App: desktop
-  Actions: 
+  Actions:
     - Type: navigate
       Role: desktopSafari
       Value: https://webcamtests.com/

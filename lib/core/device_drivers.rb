@@ -276,4 +276,29 @@ class SeleniumDriver
     end
     return driver
   end
+  
+  def merge_edge_ops(config_caps, case_caps)
+    return merge_ops("edgeOptions", config_caps, case_caps)
+  end
+
+  def build_edge_driver(edge_ops)
+    if @url.nil?
+      localEdgeOptions = Selenium::WebDriver::Edge::Options.new(
+        options: edge_ops,
+      )
+      driver = Selenium::WebDriver.for(
+        :edge, options: localEdgeOptions
+      )
+    else
+      # remote selenium grid
+      log_debug("Selenium Server URL: #{@url}")
+      remoteEdgeOptions = Selenium::WebDriver::Remote::Capabilities.edge(
+        "ms:edgeOptions" => edge_ops,
+      )
+      driver = Selenium::WebDriver.for(
+        :remote, url: @url, desired_capabilities: remoteEdgeOptions,
+      )
+    end
+    return driver
+  end
 end

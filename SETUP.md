@@ -1,5 +1,7 @@
 # TestRay Setup - Overview
+
 This document aims to describe the full setup procedure for TestRay, in three sections:
+
 1. Installing prerequisites for TestRay
 2. Installing TestRay
 3. Installing optional prerequisites for specific test platforms
@@ -10,7 +12,6 @@ Also note that some steps differ depending on the computer on which you want to 
 
     ⊞ - this indicates a step that is specific to installations on Windows
     ⌘ - this indicates a step that is specific to installations on Mac
-
 
 ## Prerequisites: TestRay
 
@@ -23,12 +24,12 @@ First you need to install some common prerequisites, regardless of the platform 
         Check that brew is installed by opening a new terminal window and running brew -v
     ⌘ Optional but suggested for convenience
         wget: brew install wget
-        oh-my-zsh: sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" 
+        oh-my-zsh: sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
         iTerm2: brew install --cask iterm2
         You can now use iTerm2 as a substitute for the terminal.
         Visual Studio Code: https://code.visualstudio.com/
     Java 11
-    
+
     Only for M1 macs: You may be prompted to install Rosetta, install that first
 
     After installation you need to add the path for the JAVA_HOME environmental variable:
@@ -39,7 +40,7 @@ First you need to install some common prerequisites, regardless of the platform 
         export PATH=$PATH:$JAVA_HOME
         export PATH=$PATH:$JAVA_HOME/bin
 
-        Save and exit nano with Ctrl+X -> Y	
+        Save and exit nano with Ctrl+X -> Y
     ⊞ Start menu -> type 'path' -> Edit the system environment variables -> Environment Variables… -> section System variables -> New
         Variable name: JAVA_HOME
         Variable value: C:\Program Files\Java\jdk-11.0.10
@@ -77,9 +78,10 @@ First you need to install some common prerequisites, regardless of the platform 
             gem install eventmachine --platform ruby
 
 ### Video Analysis
+
 Skip this section if you do not need to do video analysis.
-    ffmpeg
-    
+ffmpeg
+
         ⌘ brew install ffmpeg
         ⊞ https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip
             Make a folder in your user directory called av-applications/ffmpeg
@@ -91,24 +93,25 @@ Skip this section if you do not need to do video analysis.
         If you plan to use ffmpeg to record the computer screen and launch TestRay using a CI tool (like TeamCity or Jenkins), this action may get stuck. One solution is to additionally install Java 8 and temporarily delete the Java 11 folder when registering the computer with the CI tool.
 
 ### Audio Analysis
+
 Skip this section if you do not need to do audio analysis.
-    sox
-    
+sox
+
         ⌘ brew install sox
         ⊞ https://sourceforge.net/projects/sox/files/sox/14.4.2/sox-14.4.2-win32.exe
             Start menu -> type 'path' -> Edit the system environment variables -> Environment Variables… -> section System variables -> select Path -> Edit -> New
             Paste C:\Program Files (x86)\sox-14-4-2
             Save with OK -> OK -> OK
             Unfortunately, unlike the Mac version, the Windows version of sox does not include handling for .mp3 files, which you may need for spectrogram generation. You can add this support with the following steps:
-            Download the two files at https://drive.google.com/drive/folders/1FipUjNGpzHaWgimstxjA7YcE6NmxpLVr 
+            Download the two files at https://drive.google.com/drive/folders/1FipUjNGpzHaWgimstxjA7YcE6NmxpLVr
             Paste the files in the sox install directory (C:\Program Files (x86)\sox-14-4-2)
             Check that sox is installed by opening a new terminal/Powershell window and running sox --version
 
 ### Network Analysis
 
 Skip this section if you do not need to do network analysis.
-    Wireshark: 
-    
+Wireshark:
+
         ⌘ brew install --cask wireshark
             nano ~/.zshrc -> scroll to the bottom and paste the following:
             export PATH=$PATH:/Applications/Wireshark.app/Contents/MacOS/
@@ -118,7 +121,6 @@ Skip this section if you do not need to do network analysis.
             Paste C:\Program Files\Wireshark
             Save with OK -> OK -> OK
             Check that Wireshark (specifically, tshark) is installed by opening a new terminal/Powershell window and running tshark -v
-
 
 ## Installing TestRay
 
@@ -133,7 +135,7 @@ Now you can install optional prerequisites, depending on your tested target plat
 ### Running Web Tests
 
 Chrome - https://www.google.com/chrome/
-    Other Chromium-based browsers are probably fine too, but have not been tested
+Other Chromium-based browsers are probably fine too, but have not been tested
 
 chromedriver
 
@@ -151,6 +153,13 @@ chromedriver
 
         Open System Preferences -> Security & Privacy -> General -> Allow Anyway
         Rerun the previous command - a new warning should pop up. Press Open and the command should execute
+
+Edge driver for the non-chromium version
+
+    ⊞ open Powershell and write this command:
+        DISM.exe /Online /Add-Capability /CapabilityName:Microsoft.WebDriver~~~~0.0.1.0
+
+    Admin priviledges may be needed. After installation there is no need to add the driver to the path.
 
 #### Running Android Tests
 
@@ -190,7 +199,6 @@ Android Studio - https://developer.android.com/studio
         adb connect <phone IP>:5555, for example, adb connect 192.168.0.1:5555
         Unplug the phone from the computer
         adb devices - the previous UDID should now be replaced with the IP of the phone
-
 
 #### Running iOS Tests
 
