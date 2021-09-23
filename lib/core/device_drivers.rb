@@ -265,6 +265,8 @@ class SeleniumDriver
         :ie, options: localIEOptions
       )
     else
+      # remote selenium grid
+      log_debug("Selenium Server URL: #{@url}")
       remoteIEOptions = Selenium::WebDriver::Remote::Capabilities.ie(
         "se:ieOptions" => ie_ops,
       )
