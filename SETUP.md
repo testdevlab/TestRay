@@ -157,12 +157,9 @@ chromedriver
 Edge driver for non-chromium edge
 
     ⊞ open Powershell and write this command:
-
-        <pre>
         DISM.exe /Online /Add-Capability /CapabilityName:Microsoft.WebDriver~~~~0.0.1.0
-        </pre>
 
-        Admin priviledges may be needed. After installation there is no need to add the driver to the path.
+    Admin priviledges may be needed. After installation there is no need to add the driver to the path.
 
 #### Running Android Tests
 
