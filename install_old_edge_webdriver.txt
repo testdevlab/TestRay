@@ -1,3 +1,0 @@
-Run this command in powershell:
-    DISM.exe /Online /Add-Capability /CapabilityName:Microsoft.WebDriver~~~~0.0.1.0
-It automatically adds the driver to the path so there is not need to do it manually.
