@@ -40,4 +40,3 @@ TestBrowserSafariAV:
       Id: webcam-launcher
     - Type: sleep
       Time: 10
-    

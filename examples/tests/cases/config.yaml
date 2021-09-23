@@ -17,6 +17,8 @@ Devices:
     browser: firefox
   - role: desktopSafari
     browser: safari
+  - role: desktopIE
+    browser: ie
 # ANDROID
   - role: localAndroid
     platform: Android

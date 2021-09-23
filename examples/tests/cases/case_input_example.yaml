@@ -1,0 +1,22 @@
+TestBrowserIEInput:
+  Roles:
+    - Role: desktopIE
+      App: desktop
+  Actions:
+    - Type: navigate
+      Role: desktopIE
+      Value: https://www.globalsqa.com/samplepagetest/
+    - Type: click
+      Strategy: id
+      Role: desktopIE
+      Id: g2599-name
+    - Type: send_keys
+      Value: This is a name
+    - Type: click
+      Strategy: id
+      Role: desktopIE
+      Id: g2599-email
+    - Type: send_keys
+      Value: email@example.com
+    - Type: sleep
+      Time: 10
