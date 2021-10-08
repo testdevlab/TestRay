@@ -60,28 +60,29 @@ TestRay is additionally able to support two specific actions for iOS:
 
 If your tests do not require either of these actions, you can freely skip this part.
 
-The two above functionalities in TestRay are provided by ideviceinstaller and idevicescreenshot, respectively. However, by default ideviceinstaller returns the internal app build number (which differs from the App Store version), whereas the current release version 1.3.0 of idevicescreenshot does not fully support iOS 14. We will fix both of these issues.
+The two above functionalities in TestRay are provided by `ideviceinstaller` and `idevicescreenshot`, respectively. However, by default `ideviceinstaller` returns the internal app build number (which differs from the App Store version), whereas the current release version 1.3.0 of `idevicescreenshot` does not fully support iOS 14+. We will fix both of these issues.
 
-1. Install the latest libimobiledevice directly from the Github repo - this will fix idevicescreenshot:
-    `brew unlink libimobiledevice` (in case you have it installed)
-    `brew install libimobiledevice --HEAD`
-2. Set up the dependencies - install ideviceinstaller through Homebrew by running `brew install ideviceinstaller`
-3. Uninstall ideviceinstaller by running `brew uninstall ideviceinstaller`
-4. Download the ideviceinstaller source code: `git clone https://github.com/libimobiledevice/ideviceinstaller.git`
-5. Open `src/ideviceinstaller.c` in your favorite text editor (like VS Code)
-6. You need to change 3 lines of code, by just replacing CFBundleVersion with CFBundleShortVersionString:
+### Version number retrieval
+1. Set up the dependencies - install `ideviceinstaller` through Homebrew by running `brew install ideviceinstaller`
+2. Uninstall `ideviceinstaller` by running `brew uninstall ideviceinstaller`
+3. Download the `ideviceinstaller` source code: `git clone https://github.com/libimobiledevice/ideviceinstaller.git`
+4. Open `src/ideviceinstaller.c` in your favorite text editor (like VS Code)
+5. You need to change 3 lines of code, by just replacing `CFBundleVersion` with `CFBundleShortVersionString`:
 
         Line 127: CFBundleVersion -> CFBundleShortVersionString
         Line 142: CFBundleVersion -> CFBundleShortVersionString
         Line 784: CFBundleVersion -> CFBundleShortVersionString
 
-7. Save the file
-8. In the terminal, open the ideviceinstaller directory
-9. Run the following 3 commands:
+6. Save the file
+7. In the terminal, open the `ideviceinstaller` directory
+8. Run the following 3 commands:
 
     a) `./autogen.sh`
 
 	    You may receive the following error:
+	    
+	    	Package 'openssl', required by 'libimobiledevice-1.0', not found
+	    
 	    The fix now depends on where your Homebrew is installed - run where brew.
 		If you get /usr/local/bin/brew, run these:
 
@@ -104,4 +105,38 @@ The two above functionalities in TestRay are provided by ideviceinstaller and id
     b) `make`
     
     c) `sudo make install` (enter your password if required)
-10. Confirm that ideviceinstaller was successfully installed by running `ideviceinstaller -v`
+9. Confirm that `ideviceinstaller` was successfully installed by running `ideviceinstaller -v` - should be 1.1.2
+
+
+### Taking a screenshot
+The goal here is to download a newer version of `libimobiledevice`, <u>but not the very latest one</u>, as it includes some breaking changes.
+1. Download the source code of `libimobiledevice`, from the revision before the breaking changes: https://github.com/libimobiledevice/libimobiledevice/archive/24abbb9450c723617e10a6843978aa04a576523e.zip
+2. Unzip the archive
+3. In the terminal, open the `libimobiledevice-24abbb9450c723617e10a6843978aa04a576523e` directory
+4. Run the following 3 commands:
+
+    a) `./autogen.sh`
+
+	    You may receive the following error:
+	    
+	    	configure: error: OpenSSL support explicitly requested but OpenSSL could not be found
+	    
+	    The fix now depends on where your Homebrew is installed - run where brew.
+		If you get /usr/local/bin/brew, run these:
+
+		    export PATH="/usr/local/opt/openssl/bin:$PATH"
+		    export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
+
+		If you get /opt/homebrew/bin/brew, run these:
+
+		    export PATH="/opt/homebrew/opt/openssl/bin:$PATH"
+		    export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl/lib/pkgconfig"
+
+	    Then run the autogen command again, it should work fine.
+
+    b) `make`
+    
+    c) `sudo make install` (enter your password if required)
+9. Confirm that the correct `idevicescreenshot` was successfully installed by running `idevicescreenshot -v` - should be 1.3.1
+
+
