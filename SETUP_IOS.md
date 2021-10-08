@@ -63,6 +63,7 @@ If your tests do not require either of these actions, you can freely skip this p
 The two above functionalities in TestRay are provided by `ideviceinstaller` and `idevicescreenshot`, respectively. However, by default `ideviceinstaller` returns the internal app build number (which differs from the App Store version), whereas the current release version 1.3.0 of `idevicescreenshot` does not fully support iOS 14+. We will fix both of these issues.
 
 ### Version number retrieval
+The goal here is to download the source code and make a couple modifications before installing it.
 1. Set up the dependencies - install `ideviceinstaller` through Homebrew by running `brew install ideviceinstaller`
 2. Uninstall `ideviceinstaller` by running `brew uninstall ideviceinstaller`
 3. Download the `ideviceinstaller` source code: `git clone https://github.com/libimobiledevice/ideviceinstaller.git`
