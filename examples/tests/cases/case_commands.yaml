@@ -8,6 +8,7 @@ TestCommands:
       Value: sleep 3
     - Type: command
       Role: command1
+      RunType: capture
       Value: echo $VAR_1
 
 TestCommandError:

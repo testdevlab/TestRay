@@ -21,6 +21,28 @@ TestBrowserFirefoxAV:
     - Type: sleep
       Time: 10
 
+TestBrowserChromeAV:
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - use-fake-ui-for-media-stream
+            - use-fake-device-for-media-stream
+            - no-sandbox
+            - disable-gpu
+      App: desktop
+  Actions:
+    - Type: navigate
+      Role: desktopChrome
+      Value: https://webcamtests.com/
+    - Type: click
+      Strategy: id
+      Role: desktopChrome
+      Id: webcam-launcher
+    - Type: sleep
+      Time: 10
+
 TestBrowserSafariAV:
   Roles:
     - Role: desktopSafari

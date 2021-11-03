@@ -92,6 +92,7 @@ class Device
   #   Detach
   def command(action)
     command, greps, detach, log = action["Value"], action["Greps"], action["Detach"], action["Log"]
+    run_type = action["RunType"]
     raise "Command Value cannot be empty!" unless command
     command = convert_udid(command, @udid)
     command = convert_value(command)
@@ -99,20 +100,27 @@ class Device
     log_info("#{@role}: running command: #{command}")
     output = ""
     if detach
-      if ENV["LOG_LEVEL"] == "debug" || OS.windows?
+      if ENV["LOG_LEVEL"] == "debug" || OS.windows? || action["Debug"]
         pid = spawn(command)
       else
         pid = spawn(command, [:out, :err]=>"/dev/null")
       end
     else
-      Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
-        exit_status = wait_thr.value
-        unless exit_status.success?
-          path = take_error_screenshot unless "command" == @application
-          screenshot_error = (path ? "\nError Screenshot: #{path}" : "")
-          raise "#{@role}: failed command '#{command}'#{screenshot_error}" if action["Raise"]
+      if run_type == "capture"
+        stdout, stderr, status = Open3.capture3(command)
+        output = stdout + stderr
+      elsif run_type == "ruby"
+        `#{command}`
+      else
+        Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
+          exit_status = wait_thr.value
+          unless exit_status.success?
+            path = take_error_screenshot unless ["adb", "command"].include?(@application)
+            screenshot_error = (path ? "\nError Screenshot: #{path}" : "")
+            raise "#{@role}: failed command '#{command}'#{screenshot_error}" if action["Raise"]
+          end
+          output = stdout.read + stderr.read
         end
-        output = stdout.read + stderr.read
       end
     end
 
