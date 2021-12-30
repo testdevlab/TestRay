@@ -37,6 +37,11 @@ class Device
     @config_caps = config_caps
     @case_caps = case_caps
     @options = options
+    @driver = nil
+  end
+
+  def get_driver_tr
+    @driver
   end
 
   # assemble the full capabilities for the device,
@@ -275,7 +280,7 @@ class Device
                                           !res
       video_type = action["Video_Type"] ? action["Video_Type"] : "h264"
       if @platform == "iOS"
-        log_info("Video configuration: video_type -> #{video_type}, " +
+        log_info("#{@role}: Video configuration: video_type -> #{video_type}, " +
         "video_fps -> #{fps}, video_quality -> #{video_quality}")
         timeout = action["Time"] ? action["Time"] : "260"
         @driver.start_recording_screen(
@@ -293,12 +298,12 @@ class Device
         if !res.include?("x")
           log_info("resolution format is wrong: #{res}. " +
                  "Should be: [width]x[height]") if !res.include?("x")
-          log_info("Starting recording with default resolution, time_limit: #{timeout}, bit_rate: #{bitrate}")
+          log_info("#{@role}: Starting recording with default resolution, time_limit: #{timeout}, bit_rate: #{bitrate}")
 
-          @driver.start_recording_screen time_limit: timeout, bit_rate: bitrate
+          @driver.start_recording_screen_a time_limit: timeout, bit_rate: bitrate
         else
-          log_info("Starting recording with #{res} resolution, time_limit: #{timeout}, bit_rate: #{bitrate}")
-          @driver.start_recording_screen(
+          log_info("#{@role}: Starting recording with #{res} resolution, time_limit: #{timeout}, bit_rate: #{bitrate}")
+          @driver.start_recording_screen_a(
             video_size: "#{res}",
             time_limit: timeout,
             bit_rate: bitrate,
@@ -306,7 +311,7 @@ class Device
         end
       else
         log_info("Starting recording with default resolution, time_limit: #{timeout}, bit_rate: #{bitrate}")
-        @driver.start_recording_screen time_limit: timeout, bit_rate: bitrate
+        @driver.start_recording_screen_a(time_limit: timeout, bit_rate: bitrate) 
       end
     else
       video_quality = action["Video_Quality"] ?

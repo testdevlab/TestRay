@@ -8,6 +8,35 @@ require "os"
 class Android
   @@no_adb = OS.windows? ? "not recognized" : "not found"
 
+  def self.initialise_appium_commands
+    # Since android and iOS share the same command for recording, when using both 
+    # in the same test the method gets overwritten and some parameters are missing
+    Appium::Core::Device.extend_webdriver_with_forwardable
+    Appium::Core::Device.add_endpoint_method(:start_recording_screen_a) do
+      def start_recording_screen_a(remote_path: nil, user: nil, pass: nil, method: 'PUT',
+        file_field_name: nil, form_fields: nil, headers: nil, force_restart: nil,
+        video_size: nil, time_limit: '180', bit_rate: nil, bug_report: nil)
+        option = ::Appium::Core::Base::Device::ScreenRecord.new(
+        remote_path: remote_path, user: user, pass: pass, method: method,
+        file_field_name: file_field_name, form_fields: form_fields, headers: headers,
+        force_restart: force_restart
+        ).upload_option
+
+        option[:videoSize] = video_size unless video_size.nil?
+        option[:timeLimit] = time_limit
+        option[:bitRate] = bit_rate unless bit_rate.nil?
+
+        unless bug_report.nil?
+          raise 'bug_report should be true or false' unless [true, false].member?(bug_report)
+
+          option[:bugReport] = bug_report
+        end
+
+        execute(:start_recording_screen, {}, { options: option })
+      end
+    end
+  end
+
   # Detect locally connected Android devices, once
   def self.detect_devices_once
     log_debug("Detecting connected Android devices...")

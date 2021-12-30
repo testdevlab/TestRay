@@ -34,8 +34,8 @@ class DeviceHandler
         else
           @devices[case_role]       = device
         end
-        @server_port += 1
-        @driver_port += 1
+        @server_port += 2
+        @driver_port += 2
       end
     end
 
@@ -150,6 +150,7 @@ class DeviceHandler
   # Launch Appium drivers for all roles using them
   # (roles with Selenium drivers already have the drivers launched)
   def start_drivers
+    Android.initialise_appium_commands
     begin
       retries ||= 1
       threads = []
