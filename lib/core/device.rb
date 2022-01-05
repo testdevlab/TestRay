@@ -351,7 +351,7 @@ class Device
   #   Height
   #   Width
   def end_record(action)
-    name, height, width = action["Value"], convert_value(action["Height"]), convert_value(action["Width"])
+    name, height, width = convert_value(action["Value"]), convert_value(action["Height"]), convert_value(action["Width"])
     if @udid
       if @options && !@options.empty? && @options["screenPercentage"] && !@options["screenPercentage"].empty? &&
          @options["resolution"].include?("x") &&
