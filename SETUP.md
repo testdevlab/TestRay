@@ -60,7 +60,7 @@ First you need to install some common prerequisites, regardless of the platform 
     * ⊞ https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-2.7.2-1/rubyinstaller-devkit-2.7.2-1-x64.exe
     * ⌘ Install `gnupg` -> `rvm` -> Ruby:
         * `brew install gnupg`
-        * `gpg --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB`
+        * `gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB`
         * `\curl -sSL https://get.rvm.io | bash -s stable`
         * Check that `rvm` is installed by opening a new terminal window and running `rvm -v`
         * `rvm install 2.7.3; rvm default --use 2.7.3`
