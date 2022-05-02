@@ -853,8 +853,14 @@ class Device
   #   Value
   def switch_frame(action)
     index = action["Value"]
-    log_info("#{@role}: Switching to frame: #{index}")
-    if index == "parent"
+    el = wait_for(action)
+    if el
+      log_info("#{@role}: Switching to frame element: #{action["Strategy"]}:#{action["Id"]}")
+      index = el
+    else
+      log_info("#{@role}: Switching to frame: #{index}")
+    end
+    if el == nil && index == "parent"
       @driver.switch_to.default_content
     else
       begin
