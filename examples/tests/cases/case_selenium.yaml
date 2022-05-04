@@ -1,0 +1,32 @@
+TestSwitchFrame:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    - Type: navigate
+      Value: https://www.testdevlab.com/
+    - Type: switch_frame
+      Strategy: id
+      Id: "intercom-frame"
+
+TestSwitchFrameError:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    - Type: navigate
+      Value: https://www.testdevlab.com/
+    - Type: switch_frame
+
+TestSwitchFrameId:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    - Type: navigate
+      Value: https://www.testdevlab.com/
+    - Type: wait_for
+      Strategy: id
+      Id: "intercom-frame"
+    - Type: switch_frame
+      Value: "intercom-frame"
