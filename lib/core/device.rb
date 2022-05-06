@@ -242,12 +242,38 @@ class Device
     @driver.get(url)
   end
 
-  def close_app(action = nil)
-    @driver.close_app
+  # closes the app specified by the Android app package / iOS bundle ID
+  # defaults to the app under test if AppID is not provided
+  # Accepts:
+  #   AppID (optional)
+  def close_app(action)
+    app_id = action["AppID"]
+    if app_id
+      if @platform == "iOS"
+        @driver.execute_script('mobile: terminateApp', {'bundleId': app_id})
+      elsif @platform == "Android"
+        @driver.terminate_app(app_id)
+      end
+    else
+      @driver.close_app
+    end
   end
 
-  def launch_app(action = nil)
-    @driver.launch_app
+  # launches the app specified by the Android app package / iOS bundle ID
+  # defaults to the app under test if AppID is not provided
+  # Accepts:
+  #   AppID (optional)
+  def launch_app(action)
+    app_id = action["AppID"]
+    if app_id
+      if @platform == "iOS"
+        @driver.execute_script('mobile: launchApp', {'bundleId': app_id})
+      elsif @platform == "Android"
+        @driver.activate_app(app_id)
+      end
+    else
+      @driver.launch_app
+    end
   end
 
   # starts recording test execution. Whole desktop is recorded if 'udid' is not
