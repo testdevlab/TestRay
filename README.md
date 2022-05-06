@@ -546,6 +546,8 @@ You can also set different Strategies and Ids as in the `click` Type. Greps expl
 
 ### <a id="close_app"></a>close_app (Mobile)
 
+Closes the app and leaves it running in the background.
+
 	- Type: close_app
       Role: role1
 
