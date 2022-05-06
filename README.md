@@ -524,6 +524,11 @@ You can also set different Strategies and Ids as in the `click` Type. Greps expl
 
 ### <a id="switch_window"></a>switch_window
 ### <a id="switch_frame"></a>switch_frame
+  - Type: switch_frame
+    Strategy: css (Only if Value isn't declared)
+    Id: "[name='iFrameName']" (Only if Value isn't declared)
+    Value: Iframe_ID (Only if Strategy and Id aren't declared)
+
 ### <a id="maximize"></a>maximize
 ### <a id="minimize"></a>minimize
 ### <a id="submit"></a>submit

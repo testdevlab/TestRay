@@ -884,8 +884,19 @@ class Device
   #   Value
   def switch_frame(action)
     index = action["Value"]
-    log_info("#{@role}: Switching to frame: #{index}")
-    if index == "parent"
+    if action["Id"] && action["Strategy"]
+      el = wait_for(action)
+      if el
+        log_info("#{@role}: Switching to frame element: #{action["Strategy"]}:#{action["Id"]}")
+        index = el
+      else
+        raise "\n#{@role}: Element '#{action["Strategy"]}:#{action["Id"]}' could not be found"
+      end
+    end
+    if !index
+      raise "#{@role}: you must specify Value or Strategy + Id for switch_frame type!"
+    end
+    if el == nil && index == "parent"
       @driver.switch_to.default_content
     else
       begin
