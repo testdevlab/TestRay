@@ -546,6 +546,8 @@ You can also set different Strategies and Ids as in the `click` Type. Greps expl
 
 ### <a id="close_app"></a>close_app (Mobile)
 
+Closes the app and leaves it running in the background.
+
 	- Type: close_app
       Role: role1
 
@@ -553,6 +555,13 @@ You can also set different Strategies and Ids as in the `click` Type. Greps expl
 
 	- Type: launch_app
       Role: role1
+      Value: com.android.vending (Optional - Android app package / iOS bundle ID)
+
+### <a id="terminate_app"></a>terminate_app
+
+	- Type: terminate_app
+      Role: role1
+      Value: com.apple.Preferences (Optional - Android app package / iOS bundle ID)
 
 ### <a id="start_record/end_record"></a>start_record/end_record (Mobile)
 
@@ -629,7 +638,6 @@ It works simillar as click, but it holds the pressing. The labels and options th
 if `X` and `Y` are not provided then middle of the screen is clicked.
 
 ### <a id="clipboard"></a>clipboard
-### <a id="terminate_app"></a>terminate_app
 ### <a id="notifications"></a>notifications
 ### <a id="back"></a>back
 

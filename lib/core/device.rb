@@ -242,12 +242,43 @@ class Device
     @driver.get(url)
   end
 
+  # closes the currently opened app and puts it in the background
   def close_app(action = nil)
-    @driver.close_app
+    @driver.background_app(-1)
   end
 
-  def launch_app(action = nil)
-    @driver.launch_app
+  # launches the app specified by the Android app package / iOS bundle ID
+  # defaults to the app under test if Value is not provided
+  # Accepts:
+  #   Value (optional)
+  def launch_app(action)
+    app_id = action["Value"]
+    if app_id
+      if @platform == "iOS"
+        @driver.execute_script('mobile: launchApp', {'bundleId': app_id})
+      elsif @platform == "Android"
+        @driver.activate_app(app_id)
+      end
+    else
+      @driver.launch_app
+    end
+  end
+
+  # closes the app specified by the Android app package / iOS bundle ID
+  # defaults to the app under test if Value is not provided
+  # Accepts:
+  #   Value (optional)
+  def terminate_app(action)
+    app_id = action["Value"]
+    if app_id
+      if @platform == "iOS"
+        @driver.execute_script('mobile: terminateApp', {'bundleId': app_id})
+      elsif @platform == "Android"
+        @driver.terminate_app(app_id)
+      end
+    else
+      @driver.close_app
+    end
   end
 
   # starts recording test execution. Whole desktop is recorded if 'udid' is not
@@ -997,15 +1028,6 @@ class Device
 
   def minimize(action = nil)
     @driver.manage.window.minimize
-  end
-
-  # Accepts:
-  #   Value
-  def terminate_app(action)
-    begin
-      @driver.terminate_app action["Value"]
-    rescue => e
-    end
   end
 
   # Accepts:
