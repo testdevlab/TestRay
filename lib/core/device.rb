@@ -835,7 +835,12 @@ class Device
 
   # parses and saves the source code for currect page.
   def get_source(action)
-    source = @driver.get_source
+    source = nil
+    begin
+      source = @driver.get_source
+    rescue => e 
+      source = @driver.page_source
+    end
     File.write("./page_source.xml", source)
   end
 

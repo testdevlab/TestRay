@@ -30,3 +30,12 @@ TestSwitchFrameId:
       Id: "intercom-frame"
     - Type: switch_frame
       Value: "intercom-frame"
+
+TestGetSource:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    - Type: navigate
+      Value: https://www.testdevlab.com/
+    - Type: get_source
