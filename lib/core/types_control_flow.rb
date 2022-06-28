@@ -2,13 +2,13 @@
 module ControlFlowTypes
   # execute a case
   def case_handler(action, _case)
-    run(action["Value"], get_parent_params(action))
-    log_info("Finished case #{action["Value"]}, resuming parent case #{_case}")
+    run(convert_value(action["Value"]), get_parent_params(action))
+    log_info("Finished case #{convert_value(action["Value"])}, resuming parent case #{_case}")
   end
 
   # execute a case that can be run in parallel with another case
   def parallel_case_handler(action, case_threads, max_parallel_cases)
-    case_name = action["Value"]
+    case_name = convert_value(action["Value"])
     unless case_threads.empty?
       alive_threads = case_threads.keys.each.map {|t| t.alive?}.length
       if max_parallel_cases <= alive_threads
