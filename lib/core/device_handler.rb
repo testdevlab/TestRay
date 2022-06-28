@@ -79,15 +79,20 @@ class DeviceHandler
     url, udid, options = setup_path_to_device(config_device)
 
     # Get capabilities from config and case, and replace existing udid if it is provided
+    @server_port = convert_value(config_device["serverPort"]).to_i if config_device.key?("serverPort")
     config_caps = {}
     if config_device.key?("capabilities") && !config_device["capabilities"].nil?
       config_caps = convert_yaml(config_device["capabilities"])
       log_info("Role '#{case_role}': Adding capabilities from config: #{config_caps}")
       udid = config_caps["udid"] if config_caps.key?("udid")
+      @driver_port = config_caps["systemPort"].to_i if config_caps.key?("systemPort")
+      @driver_port = config_caps["wdaLocalPort"].to_i if config_caps.key?("wdaLocalPort")
     end
     if !case_caps.empty?
       log_info("Role '#{case_role}': Adding capabilities from case: #{case_caps}")
       udid = case_caps["udid"] if case_caps.key?("udid")
+      @driver_port = case_caps["systemPort"].to_i if case_caps.key?("systemPort")
+      @driver_port = case_caps["wdaLocalPort"].to_i if case_caps.key?("wdaLocalPort")
     end
 
     # Create virtual device for the role
