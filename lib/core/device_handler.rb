@@ -5,7 +5,7 @@ class DeviceHandler
 
   def initialize(case_role_sets)
     @timeout = $config["Timeout"] ? $config["Timeout"] : 10
-    @server_port = 4727
+    @server_port = ENV.has_key?('serverPort') ? ENV['serverPort'].to_i : 4727
     @driver_port = 8205
     @devices = {}
     create_devices(case_role_sets)
@@ -85,11 +85,13 @@ class DeviceHandler
       log_info("Role '#{case_role}': Adding capabilities from config: #{config_caps}")
       udid = config_caps["udid"] if config_caps.key?("udid")
       @driver_port = config_caps["systemPort"].to_i if config_caps.key?("systemPort")
-      @server_port = config_caps["wdaLocalPort"].to_i if config_caps.key?("wdaLocalPort")
+      @driver_port = config_caps["wdaLocalPort"].to_i if config_caps.key?("wdaLocalPort")
     end
     if !case_caps.empty?
       log_info("Role '#{case_role}': Adding capabilities from case: #{case_caps}")
       udid = case_caps["udid"] if case_caps.key?("udid")
+      @driver_port = case_caps["systemPort"].to_i if case_caps.key?("systemPort")
+      @driver_port = case_caps["wdaLocalPort"].to_i if case_caps.key?("wdaLocalPort")
     end
 
     # Create virtual device for the role
