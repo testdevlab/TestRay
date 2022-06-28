@@ -5,7 +5,7 @@ class DeviceHandler
 
   def initialize(case_role_sets)
     @timeout = $config["Timeout"] ? $config["Timeout"] : 10
-    @server_port = ENV.has_key?('serverPort') ? ENV['serverPort'].to_i : 4727
+    @server_port = 4727
     @driver_port = 8205
     @devices = {}
     create_devices(case_role_sets)
@@ -79,6 +79,7 @@ class DeviceHandler
     url, udid, options = setup_path_to_device(config_device)
 
     # Get capabilities from config and case, and replace existing udid if it is provided
+    @server_port = convert_value(config_device["serverPort"]).to_i if config_device.key?("serverPort")
     config_caps = {}
     if config_device.key?("capabilities") && !config_device["capabilities"].nil?
       config_caps = convert_yaml(config_device["capabilities"])
