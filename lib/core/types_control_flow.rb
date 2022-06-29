@@ -73,8 +73,8 @@ module ControlFlowTypes
     if_succeeded = false
     action["If_Cases"].each do |if_case|
       raise "If_Case is not declared in group: #{if_case}" unless if_case.key?("If_Case")
-      if_case_name = if_case["If_Case"]
-      do_case_name = if_case.key?("Do_Case") ? if_case["Do_Case"] : nil
+      if_case_name = convert_value(if_case["If_Case"])
+      do_case_name = if_case.key?("Do_Case") ? convert_value(if_case["Do_Case"]) : nil
       begin
         run(if_case_name, get_parent_params(action))
         if_succeeded = true
@@ -91,7 +91,7 @@ module ControlFlowTypes
       end
     end
     if !if_succeeded && action.key?("Else_Case") && !action["Else_Case"].nil?
-      else_case_name = action["Else_Case"]
+      else_case_name = convert_value(action["Else_Case"])
       run(else_case_name, get_parent_params(action))
       log_info("Finished case #{else_case_name}, resuming parent case #{_case}")
     end
