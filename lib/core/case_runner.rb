@@ -41,7 +41,7 @@ class CaseRunner
     if steps["Precases"]
       steps["Precases"].each do |pre_case|
         begin
-          run(pre_case)
+          run(convert_value(pre_case))
         rescue => e
           log_warn("Pre-Case '#{pre_case}' Error: #{e.message}")
         end
@@ -55,7 +55,7 @@ class CaseRunner
       if steps["Aftercases"]
         steps["Aftercases"].each do |after_case|
           begin
-            run(after_case)
+            run(convert_value(after_case))
           rescue => e
             log_warn("After Case '#{after_case}' Error: #{e.message}")
           end
@@ -76,7 +76,7 @@ class CaseRunner
     if steps["Aftercases"]
       steps["Aftercases"].each do |after_case|
         begin
-          run(after_case)
+          run(convert_value(after_case))
         rescue => e
           log_warn("After Case '#{after_case}' Error: #{e.message}")
         end
