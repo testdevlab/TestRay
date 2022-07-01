@@ -1547,7 +1547,7 @@ class Device
     action["Asserts"].each do |assert|
       raise "#{@role}: 'Asserts' section requires attributes 'Type', 'Var', " +
             "'Value'!" if assert.values_at("Type", "Var", "Value").include?(nil)
-      src_var = convert_value(assert["Var"])
+      src_var = ENV[convert_value(assert["Var"])]
       cmp_var = assert["Value"].is_a?(Numeric) ? assert["Value"] : convert_value(assert["Value"])
       op = assert["Type"].downcase
     
