@@ -56,8 +56,8 @@ class CaseRunner
         steps["Aftercases"].each do |after_case|
           begin
             run(convert_value(after_case))
-          rescue => e
-            log_warn("After Case '#{after_case}' Error: #{e.message}")
+          rescue => e_after
+            log_warn("After Case '#{after_case}' Error: #{e_after.message}")
           end
         end
       end
