@@ -714,10 +714,63 @@ You can access any var throgout the code by using the wrapper `$AND_CLI_*$`, in 
 
 
 ### <a id="write_file"></a>write_file
+
+This type is meant for writing files:
+
+	- Type: write_file
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Value: Specific Value Text
+    Name: name_of_the_file.txt # default is name.txt
+    Folder: /Path/To/Folder # default is project directory `.`
+
+
 ### <a id="get_timestamp"></a>get_timestamp
+
+This type retrieves de UTC timestamp when it is executed, and you can write it in a specific file or to specific variable:
+
+	- Type: get_timestamp
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Format: Date_Format -> DDMMYY -> check https://www.ibm.com/docs/en/zos/2.4.0?topic=functions-strftime-convert-formatted-time
+    File: name_of_the_file.txt # relative or full path to the file to write the date (Use when Var is not used)
+    Var: Variable_Name -> Variable to set with the current timestamp (Use when File is not used)
+
 ### <a id="set_env_var"></a>set_env_var
+
+This type sets a Variable to a specific value.
+
+	- Type: set_env_var
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Value: Value
+    Var: Variable_Name
+
 ### <a id="sleep"></a>sleep
+
+This type stops the execution for the amount of time specifyied for the role that is written.
+
+	- Type: sleep
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Time: 10
+
 ### <a id="assert"></a>assert
+
+There are different types of asserts that you can perform with testray and the variables.
+
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: contain/n_contain/eq/ne/le/gt/ge
+          Var: TEST_VAR_NUMBERS
+          Value: 8  
+
+<pre>
+contain: "Var" value contains the value within "Value"
+n_contain: "Var" value does NOT contain the value within "Value"
+eq: "Var" value is equal to the value within "Value"
+ne: "Var" value is NOT equal to the value within "Value"
+le: "Var" value is lower or equal to the value within "Value"
+gt: "Var" value is greater than the value within "Value"
+ge: "Var" value is greater or equal to the value within "Value"
+</pre>
 
 ### <a id="operation"></a>operation
 
