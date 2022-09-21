@@ -526,14 +526,14 @@ You can also set different Strategies and Ids as in the `click` Type. Greps expl
 
 Switches to the provided window index.
 
-  - Type: switch_window
+	- Type: switch_window
     Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
     Value: 2 # (It is a number, and it will check if that window number exists)
     CheckTime: 10 # (For how long it will check that the windows exist)
 
 ### <a id="switch_frame"></a>switch_frame
 
-  - Type: switch_frame
+	- Type: switch_frame
     Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
     Strategy: css (Only if Value isn't declared)
     Id: "[name='iFrameName']" (Only if Value isn't declared)
@@ -543,7 +543,7 @@ Switches to the provided window index.
 
 Maximizes the current window.
 
-  - Type: maximize
+	- Type: maximize
     Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
     Width: 1000 (Optional)
     Height: 1000 (Optional)
@@ -552,7 +552,7 @@ Maximizes the current window.
 
 Minimizes the current window.
 
-  - Type: minimize
+	- Type: minimize
     Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
 
 ### <a id="submit"></a>submit
