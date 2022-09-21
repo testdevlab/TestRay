@@ -527,33 +527,33 @@ You can also set different Strategies and Ids as in the `click` Type. Greps expl
 Switches to the provided window index.
 
 	- Type: switch_window
-    Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
-    Value: 2 # (It is a number, and it will check if that window number exists)
-    CheckTime: 10 # (For how long it will check that the windows exist)
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Value: 2 # (It is a number, and it will check if that window number exists)
+	  CheckTime: 10 # (For how long it will check that the windows exist)
 
 ### <a id="switch_frame"></a>switch_frame
 
 	- Type: switch_frame
-    Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
-    Strategy: css (Only if Value isn't declared)
-    Id: "[name='iFrameName']" (Only if Value isn't declared)
-    Value: Iframe_ID (Only if Strategy and Id aren't declared)
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Strategy: css (Only if Value isn't declared)
+	  Id: "[name='iFrameName']" (Only if Value isn't declared)
+	  Value: Iframe_ID (Only if Strategy and Id aren't declared)
 
 ### <a id="maximize"></a>maximize
 
 Maximizes the current window.
 
 	- Type: maximize
-    Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
-    Width: 1000 (Optional)
-    Height: 1000 (Optional)
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Width: 1000 (Optional)
+	  Height: 1000 (Optional)
 
 ### <a id="minimize"></a>minimize
 
 Minimizes the current window.
 
 	- Type: minimize
-    Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
 
 ### <a id="submit"></a>submit
 
@@ -595,7 +595,7 @@ It adds a cookie to the current browser.
 
 ### <a id="set_orientation"></a>set_orientation (Mobile)
 
-	- Type: set_orientation
+    - Type: set_orientation
       Role: role1
       Value: landscape/portrait
 
@@ -603,18 +603,18 @@ It adds a cookie to the current browser.
 
 Closes the app and leaves it running in the background.
 
-	- Type: close_app
+    - Type: close_app
       Role: role1
 
 ### <a id="launch_app"></a>launch_app (Mobile)
 
-	- Type: launch_app
+    - Type: launch_app
       Role: role1
       Value: com.android.vending (Optional - Android app package / iOS bundle ID)
 
 ### <a id="terminate_app"></a>terminate_app
 
-	- Type: terminate_app
+    - Type: terminate_app
       Role: role1
       Value: com.apple.Preferences (Optional - Android app package / iOS bundle ID)
 
@@ -622,10 +622,10 @@ Closes the app and leaves it running in the background.
 
     - Type: start_record
       Bitrate: 3000000 (Recording Bitrate - optional - Android)
-	    Resolution: 1200x900 (Optional - Android)
-	    FPS: 30 (Optional - iOS)
-	    Video_Type: h264 (Optional - iOS)
-	    Video_Quality: medium (Optional - iOS)
+      Resolution: 1200x900 (Optional - Android)
+      FPS: 30 (Optional - iOS)
+      Video_Type: h264 (Optional - iOS)
+      Video_Quality: medium (Optional - iOS)
       Role: role1
       Time: "180" (Timeout - optional)
 
