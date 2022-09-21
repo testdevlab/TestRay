@@ -459,17 +459,17 @@ You can also set different Strategies and Ids as in the `click` Type. Greps expl
   	- Type: get_attribute
       Strategy: id/css/xpath/uiautomator/class_chain/predicate
       Id: //div[contains(text(), "http")]
-	  Condition:
-        - Value: 3
-          Operation: visible
-          Result: true
-	  Greps:
-		- var: SOME_VAR
-		  attr: value (Mandatory)
-		  condition: nempty (Optional)
-		  remove: google.com/ (Optional)
-		  match: "google.com(.*)"
-	  NoRaise: false/true (Default - false -> will rise error on fail)
+      Condition:
+          - Value: 3
+            Operation: visible
+            Result: true
+      Greps:
+      - var: SOME_VAR
+        attr: value (Mandatory)
+        condition: nempty (Optional)
+        remove: google.com/ (Optional)
+        match: "google.com(.*)"
+	    NoRaise: false/true (Default - false -> will rise error on fail)
 
 You can also set different Strategies and Ids as in the `click` Type. Greps explained in `command` Type and Condition explained in [Conditions](#condition) Section.
 
@@ -523,18 +523,73 @@ You can also set different Strategies and Ids as in the `click` Type. Greps expl
 	  NoRaise: false/true (Default - false -> will rise error on fail)
 
 ### <a id="switch_window"></a>switch_window
+
+Switches to the provided window index.
+
+  - Type: switch_window
+    Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+    Value: 2 # (It is a number, and it will check if that window number exists)
+    CheckTime: 10 # (For how long it will check that the windows exist)
+
 ### <a id="switch_frame"></a>switch_frame
+
   - Type: switch_frame
+    Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
     Strategy: css (Only if Value isn't declared)
     Id: "[name='iFrameName']" (Only if Value isn't declared)
     Value: Iframe_ID (Only if Strategy and Id aren't declared)
 
 ### <a id="maximize"></a>maximize
+
+Maximizes the current window.
+
+  - Type: maximize
+    Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+    Width: 1000 (Optional)
+    Height: 1000 (Optional)
+
 ### <a id="minimize"></a>minimize
+
+Minimizes the current window.
+
+  - Type: minimize
+    Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+
 ### <a id="submit"></a>submit
+
+It only works with forms on web pages, so make sure to point to the form element
+
+	- Type: submit
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+	  Condition:
+		- Value: 5 (Time in seconds)
+			Operation: visible
+			Result: true
+	  NoRaise: false/true (Default - false -> will rise error on fail)
+
 ### <a id="click_js"></a>click_js
+It is a different way to click on an element, but it uses Javascript interface.
+
+	- Type: click_js
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+	  Condition:
+		- Value: 5 (Time in seconds)
+			Operation: visible
+			Result: true
+	  NoRaise: false/true (Default - false -> will rise error on fail)
+
 ### <a id="add_cookie"></a>add_cookie
 
+It adds a cookie to the current browser.
+
+	- Type: add_cookie
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Name: cookie_name
+	  Value: Value
 
 ## Only Mobile
 
@@ -567,10 +622,10 @@ Closes the app and leaves it running in the background.
 
     - Type: start_record
       Bitrate: 3000000 (Recording Bitrate - optional - Android)
-	  Resolution: 1200x900 (Optional - Android)
-	  FPS: 30 (Optional - iOS)
-	  Video_Type: h264 (Optional - iOS)
-	  Video_Quality: medium (Optional - iOS)
+	    Resolution: 1200x900 (Optional - Android)
+	    FPS: 30 (Optional - iOS)
+	    Video_Type: h264 (Optional - iOS)
+	    Video_Quality: medium (Optional - iOS)
       Role: role1
       Time: "180" (Timeout - optional)
 
@@ -638,9 +693,30 @@ It works simillar as click, but it holds the pressing. The labels and options th
 if `X` and `Y` are not provided then middle of the screen is clicked.
 
 ### <a id="clipboard"></a>clipboard
+
+Gets the clipboard value from the device and assigns it to some Var using Greps.
+
+  	- Type: clipboard
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Greps:
+        - var: SOME_VAR
+          condition: nempty (Optional)
+          remove: google.com/ (Optional)
+          match: "google.com(.*)"
+
 ### <a id="notifications"></a>notifications
+
+Opens notifications var (Only Android)
+
+  	- Type: notifications
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+
 ### <a id="back"></a>back
 
+Works as pressing the button `back` on the phone to go to the previous screen.
+
+  	- Type: back
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
 
 ## API
 
