@@ -796,8 +796,8 @@ This type is meant for writing files:
 	- Type: write_file
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
 	  Value: Specific Value Text
-    Name: name_of_the_file.txt # default is name.txt
-    Folder: /Path/To/Folder # default is project directory `.`
+	  Name: name_of_the_file.txt # default is name.txt
+	  Folder: /Path/To/Folder # default is project directory `.`
 
 
 ### <a id="get_timestamp"></a>get_timestamp
@@ -807,8 +807,8 @@ This type retrieves de UTC timestamp when it is executed, and you can write it i
 	- Type: get_timestamp
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
 	  Format: Date_Format -> DDMMYY -> check https://www.ibm.com/docs/en/zos/2.4.0?topic=functions-strftime-convert-formatted-time
-    File: name_of_the_file.txt # relative or full path to the file to write the date (Use when Var is not used)
-    Var: Variable_Name -> Variable to set with the current timestamp (Use when File is not used)
+	  File: name_of_the_file.txt # relative or full path to the file to write the date (Use when Var is not used)
+	  Var: Variable_Name -> Variable to set with the current timestamp (Use when File is not used)
 
 ### <a id="set_env_var"></a>set_env_var
 
@@ -817,7 +817,7 @@ This type sets a Variable to a specific value.
 	- Type: set_env_var
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
 	  Value: Value
-    Var: Variable_Name
+	  Var: Variable_Name
 
 ### <a id="sleep"></a>sleep
 
