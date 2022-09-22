@@ -163,7 +163,7 @@ end
 ########################################################
 
 def load_env_and_vars(structure, setup_commands=true)
-  load_environment(convert_value(structure["Environment"]), setup_commands) if structure.key?("Environment")
+  load_environment(structure["Environment"], setup_commands) if structure.key?("Environment")
   load_vars(structure)
 end
 
