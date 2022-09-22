@@ -1199,11 +1199,11 @@ class Device
 
   # Accepts:
   #   Time
-  def collection_visible_for(collection)
+  def collection_visible_for(action)
     time = (action["Time"] ? action["Time"] : @timeout)
     start = Time.now
     while (Time.now - start) < time
-      collection.each do |element|
+      action["Elements"].each do |element|
         element["Time"] = 0.2
         self.wait_for(element)
       end

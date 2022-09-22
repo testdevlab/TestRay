@@ -480,17 +480,102 @@ You can also set different Strategies and Ids as in the `click` Type. Greps expl
 	  Value: context
 
 ### <a id="get_current_context"></a>get_current_context
+
+  	- Type: get_current_context
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Greps:
+      - var: SOME_VAR
+        attr: value (Mandatory)
+        condition: nempty (Optional)
+        remove: "" (Optional)
+        match: "(.*)"
+
 ### <a id="get_contexts"></a>get_contexts
+
+Prints all the available contexts
+
+  	- Type: get_contexts
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+
 ### <a id="get_source"></a>get_source
+
+Gets the page source from the web or mobile app and writes it in `./page_source.xml`
+
+  	- Type: get_source
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+
 ### <a id="set_network"></a>set_network
+
+    - Type: set_network
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Condition: {offline: false, latency: 5, download_throughput: 2000, upload_throughput: 2000}
+
 ### <a id="scroll_to"></a>scroll_to
+
+It uses JavaScript to do the scroll within a webpage by using the injection of this method: `arguments[0].scrollIntoView(#{options});`. For it to work, you need to specify an element, and there is an optional `Options` value, which will default to `true`.
+
+    - Type: scroll_to
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Strategy: id/css/xpath/uiautomator/class_chain/predicate
+      Id: //div[contains(text(), "http")]
+      Options: true (optional)
+
+
 ### <a id="screenshot"></a>screenshot
+Takes a screenshot of the Role device in use. You can specify to take screenshots in an interval, for a specific period of time (Optional). You can specify wether to use the same file name or use timestamps `Overwrite`.
+
+    - Type: screenshot
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Interval:
+        For: 10
+        Every: 1
+      Overwrite: False
+
 ### <a id="wait_for_attribute"></a>wait_for_attribute
+
+    - Type: wait_for_attribute
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Strategy: id/css/xpath/uiautomator/class_chain/predicate
+      Id: //div[contains(text(), "http")]
+      Attribute: Name
+      Value: Some_Name
+
+
 ### <a id="visible_for"></a>visible_for
-### <a id="visible_for_not_raise"></a>visible_for_not_raise
+
+    - Type: visible_for
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Strategy: id/css/xpath/uiautomator/class_chain/predicate
+      Id: //div[contains(text(), "http")]
+      Time: 10
+
 ### <a id="wait_for_page_to_load"></a>wait_for_page_to_load
+
+    - Type: wait_for_page_to_load
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Time: 10
+
 ### <a id="collection_visible_for"></a>collection_visible_for
+
+    - Type: collection_visible_for
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Elements:
+        - Strategy: id/css/xpath/uiautomator/class_chain/predicate
+          Id: //div[contains(text(), "http")]
+          Time: 10
+        - Strategy: id/css/xpath/uiautomator/class_chain/predicate
+          Id: //div[contains(text(), "http")]
+          Time: 10
+
 ### <a id="wait_not_visible"></a>wait_not_visible
+
+Waits until the element specified is not visible.
+
+    - Type: wait_not_visible
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Strategy: id/css/xpath/uiautomator/class_chain/predicate
+      Id: //div[contains(text(), "http")]
+      Time: 10
 
 ## Only Browser
 
