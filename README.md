@@ -953,13 +953,13 @@ Operation examples:
 
 ### <a id="condition"></a>Conditions
 
-  - Type: wait_for/click/send_keys/press/... Anything that calls an element by `Strategy:Id` labels
-    Strategy: id/css/xpath/uiautomator/class_chain/predicate
-    Id: //div[contains(text(), "http")]
-    Condition:
-      - Value: 5 # Time in seconds for the condition to fullfil (or not)
-        Result: true/false # If you expect the condition to be true or false
-        Operation: visible/eq/neq/visible_for
-        Raise: true/false # If you want the condition to raise an error
+    - Type: wait_for/click/send_keys/press/... Anything that calls an element by `Strategy:Id` labels
+      Strategy: id/css/xpath/uiautomator/class_chain/predicate
+      Id: //div[contains(text(), "http")]
+      Condition:
+        - Value: 5 # Time in seconds for the condition to fullfil (or not)
+          Result: true/false # If you expect the condition to be true or false
+          Operation: visible/eq/neq/visible_for
+          Raise: true/false # If you want the condition to raise an error
 
 
