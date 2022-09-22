@@ -459,17 +459,17 @@ You can also set different Strategies and Ids as in the `click` Type. Greps expl
   	- Type: get_attribute
       Strategy: id/css/xpath/uiautomator/class_chain/predicate
       Id: //div[contains(text(), "http")]
-	  Condition:
-        - Value: 3
-          Operation: visible
-          Result: true
-	  Greps:
-		- var: SOME_VAR
-		  attr: value (Mandatory)
-		  condition: nempty (Optional)
-		  remove: google.com/ (Optional)
-		  match: "google.com(.*)"
-	  NoRaise: false/true (Default - false -> will rise error on fail)
+      Condition:
+          - Value: 3
+            Operation: visible
+            Result: true
+      Greps:
+      - var: SOME_VAR
+        attr: value (Mandatory)
+        condition: nempty (Optional)
+        remove: google.com/ (Optional)
+        match: "google.com(.*)"
+	    NoRaise: false/true (Default - false -> will rise error on fail)
 
 You can also set different Strategies and Ids as in the `click` Type. Greps explained in `command` Type and Condition explained in [Conditions](#condition) Section.
 
@@ -480,17 +480,102 @@ You can also set different Strategies and Ids as in the `click` Type. Greps expl
 	  Value: context
 
 ### <a id="get_current_context"></a>get_current_context
+
+  	- Type: get_current_context
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Greps:
+      - var: SOME_VAR
+        attr: value (Mandatory)
+        condition: nempty (Optional)
+        remove: "" (Optional)
+        match: "(.*)"
+
 ### <a id="get_contexts"></a>get_contexts
+
+Prints all the available contexts
+
+  	- Type: get_contexts
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+
 ### <a id="get_source"></a>get_source
+
+Gets the page source from the web or mobile app and writes it in `./page_source.xml`
+
+  	- Type: get_source
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+
 ### <a id="set_network"></a>set_network
+
+    - Type: set_network
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Condition: {offline: false, latency: 5, download_throughput: 2000, upload_throughput: 2000}
+
 ### <a id="scroll_to"></a>scroll_to
+
+It uses JavaScript to do the scroll within a webpage by using the injection of this method: `arguments[0].scrollIntoView(#{options});`. For it to work, you need to specify an element, and there is an optional `Options` value, which will default to `true`.
+
+    - Type: scroll_to
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Strategy: id/css/xpath/uiautomator/class_chain/predicate
+      Id: //div[contains(text(), "http")]
+      Options: true (optional)
+
+
 ### <a id="screenshot"></a>screenshot
+Takes a screenshot of the Role device in use. You can specify to take screenshots in an interval, for a specific period of time (Optional). You can specify wether to use the same file name or use timestamps `Overwrite`.
+
+    - Type: screenshot
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Interval:
+        For: 10
+        Every: 1
+      Overwrite: False
+
 ### <a id="wait_for_attribute"></a>wait_for_attribute
+
+    - Type: wait_for_attribute
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Strategy: id/css/xpath/uiautomator/class_chain/predicate
+      Id: //div[contains(text(), "http")]
+      Attribute: Name
+      Value: Some_Name
+
+
 ### <a id="visible_for"></a>visible_for
-### <a id="visible_for_not_raise"></a>visible_for_not_raise
+
+    - Type: visible_for
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Strategy: id/css/xpath/uiautomator/class_chain/predicate
+      Id: //div[contains(text(), "http")]
+      Time: 10
+
 ### <a id="wait_for_page_to_load"></a>wait_for_page_to_load
+
+    - Type: wait_for_page_to_load
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Time: 10
+
 ### <a id="collection_visible_for"></a>collection_visible_for
+
+    - Type: collection_visible_for
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Elements:
+        - Strategy: id/css/xpath/uiautomator/class_chain/predicate
+          Id: //div[contains(text(), "http")]
+          Time: 10
+        - Strategy: id/css/xpath/uiautomator/class_chain/predicate
+          Id: //div[contains(text(), "http")]
+          Time: 10
+
 ### <a id="wait_not_visible"></a>wait_not_visible
+
+Waits until the element specified is not visible.
+
+    - Type: wait_not_visible
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Strategy: id/css/xpath/uiautomator/class_chain/predicate
+      Id: //div[contains(text(), "http")]
+      Time: 10
 
 ## Only Browser
 
@@ -523,24 +608,79 @@ You can also set different Strategies and Ids as in the `click` Type. Greps expl
 	  NoRaise: false/true (Default - false -> will rise error on fail)
 
 ### <a id="switch_window"></a>switch_window
+
+Switches to the provided window index.
+
+	- Type: switch_window
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Value: 2 # (It is a number, and it will check if that window number exists)
+	  CheckTime: 10 # (For how long it will check that the windows exist)
+
 ### <a id="switch_frame"></a>switch_frame
-  - Type: switch_frame
-    Strategy: css (Only if Value isn't declared)
-    Id: "[name='iFrameName']" (Only if Value isn't declared)
-    Value: Iframe_ID (Only if Strategy and Id aren't declared)
+
+	- Type: switch_frame
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Strategy: css (Only if Value isn't declared)
+	  Id: "[name='iFrameName']" (Only if Value isn't declared)
+	  Value: Iframe_ID (Only if Strategy and Id aren't declared)
 
 ### <a id="maximize"></a>maximize
+
+Maximizes the current window.
+
+	- Type: maximize
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Width: 1000 (Optional)
+	  Height: 1000 (Optional)
+
 ### <a id="minimize"></a>minimize
+
+Minimizes the current window.
+
+	- Type: minimize
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+
 ### <a id="submit"></a>submit
+
+It only works with forms on web pages, so make sure to point to the form element
+
+	- Type: submit
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+	  Condition:
+		- Value: 5 (Time in seconds)
+			Operation: visible
+			Result: true
+	  NoRaise: false/true (Default - false -> will rise error on fail)
+
 ### <a id="click_js"></a>click_js
+It is a different way to click on an element, but it uses Javascript interface.
+
+	- Type: click_js
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+	  Condition:
+		- Value: 5 (Time in seconds)
+			Operation: visible
+			Result: true
+	  NoRaise: false/true (Default - false -> will rise error on fail)
+
 ### <a id="add_cookie"></a>add_cookie
 
+It adds a cookie to the current browser.
+
+	- Type: add_cookie
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Name: cookie_name
+	  Value: Value
 
 ## Only Mobile
 
 ### <a id="set_orientation"></a>set_orientation (Mobile)
 
-	- Type: set_orientation
+    - Type: set_orientation
       Role: role1
       Value: landscape/portrait
 
@@ -548,18 +688,18 @@ You can also set different Strategies and Ids as in the `click` Type. Greps expl
 
 Closes the app and leaves it running in the background.
 
-	- Type: close_app
+    - Type: close_app
       Role: role1
 
 ### <a id="launch_app"></a>launch_app (Mobile)
 
-	- Type: launch_app
+    - Type: launch_app
       Role: role1
       Value: com.android.vending (Optional - Android app package / iOS bundle ID)
 
 ### <a id="terminate_app"></a>terminate_app
 
-	- Type: terminate_app
+    - Type: terminate_app
       Role: role1
       Value: com.apple.Preferences (Optional - Android app package / iOS bundle ID)
 
@@ -567,10 +707,10 @@ Closes the app and leaves it running in the background.
 
     - Type: start_record
       Bitrate: 3000000 (Recording Bitrate - optional - Android)
-	  Resolution: 1200x900 (Optional - Android)
-	  FPS: 30 (Optional - iOS)
-	  Video_Type: h264 (Optional - iOS)
-	  Video_Quality: medium (Optional - iOS)
+      Resolution: 1200x900 (Optional - Android)
+      FPS: 30 (Optional - iOS)
+      Video_Type: h264 (Optional - iOS)
+      Video_Quality: medium (Optional - iOS)
       Role: role1
       Time: "180" (Timeout - optional)
 
@@ -638,9 +778,30 @@ It works simillar as click, but it holds the pressing. The labels and options th
 if `X` and `Y` are not provided then middle of the screen is clicked.
 
 ### <a id="clipboard"></a>clipboard
+
+Gets the clipboard value from the device and assigns it to some Var using Greps.
+
+  	- Type: clipboard
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Greps:
+        - var: SOME_VAR
+          condition: nempty (Optional)
+          remove: google.com/ (Optional)
+          match: "google.com(.*)"
+
 ### <a id="notifications"></a>notifications
+
+Opens notifications var (Only Android)
+
+  	- Type: notifications
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+
 ### <a id="back"></a>back
 
+Works as pressing the button `back` on the phone to go to the previous screen.
+
+  	- Type: back
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
 
 ## API
 
@@ -714,10 +875,63 @@ You can access any var throgout the code by using the wrapper `$AND_CLI_*$`, in 
 
 
 ### <a id="write_file"></a>write_file
+
+This type is meant for writing files:
+
+	- Type: write_file
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Value: Specific Value Text
+	  Name: name_of_the_file.txt # default is name.txt
+	  Folder: /Path/To/Folder # default is project directory `.`
+
+
 ### <a id="get_timestamp"></a>get_timestamp
+
+This type retrieves de UTC timestamp when it is executed, and you can write it in a specific file or to specific variable:
+
+	- Type: get_timestamp
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Format: Date_Format -> DDMMYY -> check https://www.ibm.com/docs/en/zos/2.4.0?topic=functions-strftime-convert-formatted-time
+	  File: name_of_the_file.txt # relative or full path to the file to write the date (Use when Var is not used)
+	  Var: Variable_Name -> Variable to set with the current timestamp (Use when File is not used)
+
 ### <a id="set_env_var"></a>set_env_var
+
+This type sets a Variable to a specific value.
+
+	- Type: set_env_var
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Value: Value
+	  Var: Variable_Name
+
 ### <a id="sleep"></a>sleep
+
+This type stops the execution for the amount of time specifyied for the role that is written.
+
+	- Type: sleep
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Time: 10
+
 ### <a id="assert"></a>assert
+
+There are different types of asserts that you can perform with testray and the variables.
+
+    - Type: assert
+      Role: command1
+      Asserts:
+        - Type: contain/n_contain/eq/ne/le/gt/ge
+          Var: TEST_VAR_NUMBERS
+          Value: 8  
+
+<pre>
+contain: "Var" value contains the value within "Value"
+n_contain: "Var" value does NOT contain the value within "Value"
+eq: "Var" value is equal to the value within "Value"
+ne: "Var" value is NOT equal to the value within "Value"
+le: "Var" value is lower or equal to the value within "Value"
+gt: "Var" value is greater than the value within "Value"
+ge: "Var" value is greater or equal to the value within "Value"
+</pre>
 
 ### <a id="operation"></a>operation
 
@@ -739,13 +953,13 @@ Operation examples:
 
 ### <a id="condition"></a>Conditions
 
-  - Type: wait_for/click/send_keys/press/... Anything that calls an element by `Strategy:Id` labels
-    Strategy: id/css/xpath/uiautomator/class_chain/predicate
-    Id: //div[contains(text(), "http")]
-    Condition:
-      - Value: 5 # Time in seconds for the condition to fullfil (or not)
-        Result: true/false # If you expect the condition to be true or false
-        Operation: visible/eq/neq/visible_for
-        Raise: true/false # If you want the condition to raise an error
+    - Type: wait_for/click/send_keys/press/... Anything that calls an element by `Strategy:Id` labels
+      Strategy: id/css/xpath/uiautomator/class_chain/predicate
+      Id: //div[contains(text(), "http")]
+      Condition:
+        - Value: 5 # Time in seconds for the condition to fullfil (or not)
+          Result: true/false # If you expect the condition to be true or false
+          Operation: visible/eq/neq/visible_for
+          Raise: true/false # If you want the condition to raise an error
 
 
