@@ -228,7 +228,7 @@ class Device
   end
 
   # starts an Appium server.
-  def start_server
+  def start_server(action = nil)
     @server.start if @server
   end
 
