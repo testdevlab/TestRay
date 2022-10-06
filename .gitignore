@@ -5,6 +5,7 @@
 /doc/
 /spec/reports/
 /tmp/
+examples/tests/appium_logs/
 node_modules
 pkg
 Reports

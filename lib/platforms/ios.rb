@@ -7,11 +7,10 @@ class Ios
     idevices = `xcrun xctrace list devices 2>&1`
     log_abort "Xcode is not installed or configured!" if idevices.include?("error")
     idevices.split("\n").each do |device|
-      break if device.include?("Simulator")
       next unless device.include?(") (")
       device_list = device.split("(")
       name = device_list[0].strip
-      udid = device_list[2].split(")")[0]
+      udid = device_list.last().split(")")[0]
       devices.append([name, udid])
     end
     return devices
