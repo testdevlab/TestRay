@@ -1,0 +1,10 @@
+# CALL ONLY THESE METHODS
+
+iOSTestExample:
+  Roles:
+    - Role: localiOS
+      App: Settings
+  Actions:
+    - Type: click
+      Strategy: accessibility_id
+      Id: Developer
