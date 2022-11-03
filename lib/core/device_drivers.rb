@@ -60,11 +60,15 @@ class AppiumDriver
     # assemble basic capabilities for Mac
   def build_mac_caps
     app = @app_details.key?("MacAppName") ? @app_details["MacAppName"] : @app
-    return {
+    caps = {
       "platformName" => "Mac",
-      "app" => app,
-      "forceMjsonwp" => true,
+      "app" => app, # For old Mac driver
     }
+    if @app_details.key?("MacDriver")
+      caps.merge!({"automationName" => @app_details["MacDriver"]})
+      caps.merge!({"bundleId" => @app_details["MacBundleId"]}) if @app_details.key?("MacBundleId")
+    end
+    return caps
   end
 
   # assemble basic capabilities for Windows

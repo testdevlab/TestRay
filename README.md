@@ -106,6 +106,8 @@ Apps:
     WinPath: C:\Users\user\AppData\Local\Programs\SomeApp\SomeApp.exe
     UWPAppName: SOMEAPP.1234567890ABC_defghijklmnop!App
     MacAppName: com.someapp
+    MacDriver: Mac2
+    MacBundleId: somebundleid
 </pre>
 
 This will add all the necessary capabilities to run on iOS, MacOS, Windows and Android

@@ -76,7 +76,10 @@ class Device
       if @url.nil? # local Appium - need to create server too
         @server = AppiumServer.new(@role, @udid, @server_port)
         server_port = @server.start
-        @url = "http://localhost:#{server_port}/wd/hub"
+        appium_version = `appium -v`
+        log_info("Detected Appium version: #{appium_version[0]}")
+        @url = "http://localhost:#{server_port}"
+        @url += "/wd/hub" if appium_version[0] == "1"
       end
       driverclass = AppiumDriver.new(@device_name, @driver_port, @udid, @app_details, @url)
       base_caps = case @platform
@@ -225,7 +228,7 @@ class Device
   end
 
   # starts an Appium server.
-  def start_server
+  def start_server(action = nil)
     @server.start if @server
   end
 
@@ -313,7 +316,7 @@ class Device
       if @platform == "iOS"
         log_info("#{@role}: Video configuration: video_type -> #{video_type}, " +
         "video_fps -> #{fps}, video_quality -> #{video_quality}")
-        timeout = action["Time"] ? action["Time"] : "260"
+        timeout = action["Time"] ? convert_value(action["Time"]).to_f : "260"
         @driver.start_recording_screen(
           video_type: video_type,
           time_limit: timeout,
@@ -323,7 +326,7 @@ class Device
         return
       end
 
-      timeout = action["Time"] ? action["Time"] : "600"
+      timeout = action["Time"] ? convert_value(action["Time"]).to_f : "600"
 
       if res && !res.empty?
         if !res.include?("x")
@@ -349,7 +352,7 @@ class Device
         action["Video_Quality"] :
         "faster"
 
-      timeout = action["Time"] ? action["Time"] : "180"
+      timeout = action["Time"] ? convert_value(action["Time"]).to_f : "180"
       res = action["Resolution"] ? action["Resolution"] : "1080x720"
 
       advanced = {
@@ -441,7 +444,7 @@ class Device
            "error #{(now - start_error)}") if action["CheckTime"]
     error = nil
 
-    wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
+    wait_time = (action["CheckTime"] ? convert_value(action["CheckTime"]).to_f : @timeout)
 
     while (Time.now - start) < wait_time
       begin
@@ -452,12 +455,27 @@ class Device
         error = e
       end
       begin
-        if !(action["OffsetX"].nil? && action["OffsetY"].nil?)
-          @driver.action.move_to(el, action["OffsetX"], action["OffsetY"])
-            .click
-            .perform
+        if @app_details["MacDriver"] == "Mac2"
+          if !(action["OffsetX"].nil? && action["OffsetY"].nil?)
+            @driver.execute_script('macos: click', {
+              #"elementId": el["identifier"], # identifier	Element's accessibility identifier. Could be empty	'identifier' from https://github.com/appium/appium-mac2-driver
+              "x": el["frame"]["x"] + el["frame"]["width"]/2 + action["OffsetX"],
+              "y": el["frame"]["y"] + el["frame"]["height"]/2 + action["OffsetY"]
+            })
+          else
+            @driver.execute_script('macos: click', {
+              #"elementId": el["identifier"], # identifier	Element's accessibility identifier. Could be empty	'identifier' from https://github.com/appium/appium-mac2-driver  
+              "x": el["frame"]["x"] + el["frame"]["width"]/2,
+              "y": el["frame"]["y"] + el["frame"]["height"]/2
+            })
+          end
         else
-          el.click
+          if !(action["OffsetX"].nil? && action["OffsetY"].nil?)
+            @driver.action.move_to(el, action["OffsetX"], action["OffsetY"]).perform
+            @driver.action.click.perform
+          else
+            el.click
+          end
         end
         log_info("Time for click: #{Time.now - start}s") if action["CheckTime"]
         return
@@ -508,7 +526,7 @@ class Device
            "error #{(now - start_error)}") if action["CheckTime"]
     error = nil
 
-    wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
+    wait_time = (action["CheckTime"] ? convert_value(action["CheckTime"]).to_f : @timeout)
 
     while (Time.now - start) < wait_time
       begin
@@ -554,7 +572,7 @@ class Device
            "error #{(now - start_error)}") if action["CheckTime"]
     error = nil
 
-    wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
+    wait_time = (action["CheckTime"] ? convert_value(action["CheckTime"]).to_f : @timeout)
 
     while (Time.now - start) < wait_time
       begin
@@ -864,7 +882,7 @@ class Device
   #   CheckTime
   def switch_window(action)
     index = action["Value"]
-    wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
+    wait_time = (action["CheckTime"] ? convert_value(action["CheckTime"]).to_f : @timeout)
     start = Time.now
     found = false
     while (Time.now - start) < wait_time
@@ -959,8 +977,8 @@ class Device
       return unless check_condition(action)
     end
 
-    wait_time = (action["Time"] ? action["Time"] : @timeout)
-    wait_time = (action["CheckTime"] ? action["CheckTime"] : wait_time)
+    wait_time = (action["Time"] ? convert_value(action["Time"]).to_f : @timeout)
+    wait_time = (action["CheckTime"] ? convert_value(action["CheckTime"]).to_f : wait_time)
     index = action["Index"]
 
     exception = ""
@@ -1129,7 +1147,7 @@ class Device
   def wait_for_attribute(action)
     locator_strategy = convert_value(action["Strategy"])
     id, att, value = convert_value(action["Id"]), convert_value(action["Attribute"]), convert_value(action["Value"])
-    default_wait_time = (action["Time"] ? action["Time"] : @timeout)
+    default_wait_time = (action["Time"] ? convert_value(action["Time"]).to_f : @timeout)
     exception = ""
     start = Time.now
 
@@ -1154,7 +1172,7 @@ class Device
   # Accepts:
   #   Time
   def visible_for(action)
-    time = (action["Time"] ? action["Time"] : @timeout)
+    time = (action["Time"] ? convert_value(action["Time"]).to_f : @timeout)
     start = Time.now
     while (Time.now - start) < time.to_f
       action["Time"] = 0.2
@@ -1167,7 +1185,7 @@ class Device
   end
 
   def wait_for_page_to_load(action)
-    action["Time"] = (action["Time"] ? action["Time"] : 10)
+    action["Time"] = (action["Time"] ? convert_value(action["Time"]).to_f : 10)
     wait = Selenium::WebDriver::Wait.new(:timeout => action["Time"])
     wait.until {@driver.execute_script('var browserState = document.readyState; return browserState;') == "complete" }
   end
@@ -1176,7 +1194,7 @@ class Device
   # Time
   # Value
   def visible_for_not_raise(action)
-    time = (action["Time"] ? action["Time"] : @timeout)
+    time = (action["Time"] ? convert_value(action["Time"]).to_f : @timeout)
     start = Time.now
     value = action["Value"]
     action["Value"] = true
@@ -1200,7 +1218,7 @@ class Device
   # Accepts:
   #   Time
   def collection_visible_for(action)
-    time = (action["Time"] ? action["Time"] : @timeout)
+    time = (action["Time"] ? convert_value(action["Time"]).to_f : @timeout)
     start = Time.now
     while (Time.now - start) < time
       action["Elements"].each do |element|
@@ -1217,7 +1235,7 @@ class Device
   #   Time
   #   Value
   def visible(action)
-    default_wait_time = (action["Time"] ? action["Time"] : 0.2)
+    default_wait_time = (action["Time"] ? convert_value(action["Time"]).to_f : 0.2)
     start = Time.now
     while (Time.now - start) < default_wait_time
       begin
@@ -1239,7 +1257,7 @@ class Device
   #   Time
   def wait_not_visible(action)
     id = convert_value(action["Id"])
-    default_wait_time = (action["Time"] ? action["Time"] : @timeout)
+    default_wait_time = (action["Time"] ? convert_value(action["Time"]).to_f : @timeout)
     start = Time.now
     while (Time.now - start) < default_wait_time
       begin
@@ -1288,7 +1306,7 @@ class Device
   # Prints and Writes timestamp with given format
   def get_timestamp(action)
     format_t = convert_value(action["Format"])
-    time = Time.now.utc.strftime(format_t)
+    time = Time.now.strftime(format_t)
     log_info("Timestamp is: #{time}")
     if action["File"]
       file = File.open(convert_value(action["File"]), "w")
@@ -1378,7 +1396,7 @@ class Device
   # used in transport performance tests
   def state_checker(action)
     strategy, idlist, message, app = action["Strategy"], action["Id"], action["Message"], action["App"]
-    default_wait_time = (action["Time"] ? action["Time"] : @timeout)
+    default_wait_time = (action["Time"] ? convert_value(action["Time"]).to_f : @timeout)
     $network_state = 0
     
     filename = File.join(convert_value(action["Path"]), "network_states.csv")
