@@ -163,7 +163,7 @@ end
 ########################################################
 
 def load_env_and_vars(structure, setup_commands=true)
-  load_environment(convert_value(structure["Environment"]), setup_commands) if structure.key?("Environment")
+  load_environment(structure["Environment"], setup_commands) if structure.key?("Environment")
   load_vars(structure)
 end
 
@@ -186,6 +186,7 @@ def load_environment(wanted_envs, setup_commands=true)
     end
     return
   end
+  wanted_envs = convert_value(wanted_envs)
   envs = $config["Environments"]
   return unless envs
   log_abort "Could not find environment '#{wanted_envs}'!" unless envs.key? wanted_envs
