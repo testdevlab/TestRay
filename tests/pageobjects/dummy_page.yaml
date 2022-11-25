@@ -1,0 +1,4 @@
+webcamtest_page:
+  testmycam_button: 'webcam-launcher'
+  check_webcam_link: '//header/nav/ul/li/a[text() = \"Check Webcam\"]'
+  detect_resolution_link: '//header/nav/ul/li/a[text() = \"Detect Resolution\"]'
