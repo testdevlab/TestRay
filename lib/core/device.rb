@@ -428,6 +428,7 @@ class Device
   #   OffsetY
   #   NoRaise
   def click(action)
+    action = convert_value_pageobjects(action);
     start = Time.now
     return unless wait_for(action)
 
@@ -481,6 +482,7 @@ class Device
   #   CheckTime
   #   NoRaise
   def tap_by_coord(action)
+    action = convert_value_pageobjects(action);
     el = wait_for(action)
     el_location = el.location
     log_info("#{@role}: element coordinates: x -> #{el_location.x}, y -> #{el_location.y}")
@@ -495,6 +497,7 @@ class Device
   #   CheckTime
   #   NoRaise
   def press(action)
+    action = convert_value_pageobjects(action);
     start = Time.now
     return unless wait_for(action)
 
@@ -541,6 +544,7 @@ class Device
   #   CheckTime
   #   NoRaise
   def click_and_hold(action)
+    action = convert_value_pageobjects(action);
     start = Time.now
     return unless wait_for(action)
 
@@ -584,6 +588,7 @@ class Device
   #   Id
   #   Value
   def send_keys(action)
+    action = convert_value_pageobjects(action);
     value = action["Value"]
     el = nil
     value = value.gsub("$AND_ROLE$", @role) if value && value.is_a?(String) && value.include?("$AND_ROLE$")
@@ -630,6 +635,7 @@ class Device
   #   Strategy
   #   Id
   def clear_field(action) 
+    action = convert_value_pageobjects(action);
     el = nil
     el = wait_for(action) if (!action["Actions"] && action["Strategy"])
     start = Time.now
@@ -653,6 +659,7 @@ class Device
   #   Strategy
   #   Id
   def swipe_up(action)
+    action = convert_value_pageobjects(action);
     el = wait_for(action)
     el_location = el.location
     opts = {
@@ -668,6 +675,7 @@ class Device
   #   Strategy
   #   Id
   def swipe_down(action)
+    action = convert_value_pageobjects(action);
     el = wait_for(action)
     el_location = el.location
 
@@ -790,6 +798,7 @@ class Device
   #   Attribute
   #   Value
   def set_attribute(action)
+    action = convert_value_pageobjects(action);
     el = wait_for(action)
 
     attribute = convert_value(action["Attribute"])
@@ -806,6 +815,7 @@ class Device
   #   Id
   #   Attribute
   def remove_attribute(action)
+    action = convert_value_pageobjects(action);
     el = wait_for(action)
 
     attribute = convert_value(action["Attribute"])
@@ -917,6 +927,7 @@ class Device
   #   Id
   #   Greps
   def get_text(action)
+    action = convert_value_pageobjects(action);
     greps = action["Greps"] ? action["Greps"] : []
     el = wait_for(action)
     return unless el
@@ -954,6 +965,7 @@ class Device
   #   Time or CheckTime
   #   Condition
   def wait_for(action)
+    action = convert_value_pageobjects(action);
     locator_strategy, id = action["Strategy"], action["Id"]
     if action["Condition"]
       return unless check_condition(action)
@@ -1127,6 +1139,7 @@ class Device
   #   Value
   #   Time
   def wait_for_attribute(action)
+    action = convert_value_pageobjects(action);
     locator_strategy = convert_value(action["Strategy"])
     id, att, value = convert_value(action["Id"]), convert_value(action["Attribute"]), convert_value(action["Value"])
     default_wait_time = (action["Time"] ? action["Time"] : @timeout)
@@ -1217,6 +1230,7 @@ class Device
   #   Time
   #   Value
   def visible(action)
+    action = convert_value_pageobjects(action);
     default_wait_time = (action["Time"] ? action["Time"] : 0.2)
     start = Time.now
     while (Time.now - start) < default_wait_time
@@ -1238,6 +1252,7 @@ class Device
   #   Id
   #   Time
   def wait_not_visible(action)
+    action = convert_value_pageobjects(action);
     id = convert_value(action["Id"])
     default_wait_time = (action["Time"] ? action["Time"] : @timeout)
     start = Time.now

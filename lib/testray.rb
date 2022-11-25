@@ -19,6 +19,8 @@ module TestRay
       true
     end
 
+    $pageobjects = load_pageobject_files()
+
     desc "execute_help", "help for creating an testray project"
     option :types,
            :desc => "Show Action Types",
