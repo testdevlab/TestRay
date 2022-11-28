@@ -282,6 +282,33 @@ Roles are ALWAYS defined at the begining of the cases. You have to write always 
       App: SomeApp
 </pre>
 
+## <a id="pageobjectmodel"></a>Page Object Model
+
+In order to have a more redable and reusable UI test script we have added a functionality to implement a Page Object Model approach. This approach allows users to define page objects yaml files to store all web page/app element locators and easily access them by using a more comprehensive identifier in the tests. 
+
+First, create a folder `page_objects` then create a yaml file that represents a page of the app to be automated. After that add all the page elements needed to the file as below:
+
+<pre>
+webcamtest_page:
+  testmycam_button: 'webcam-launcher'
+  check_webcam_link: '//header/nav/ul/li/a[text() = \"Check Webcam\"]'
+  detect_resolution_link: '//header/nav/ul/li/a[text() = \"Detect Resolution\"]'
+</pre>
+
+You can then access the page elements from any test by using the wrapper `$PAGE.YOUR_PAGE.YOUR_ELEMENT$`
+
+<pre>
+Actions:
+    - Type: navigate
+      Role: desktopChrome
+      Value: https://webcamtests.com/
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.webcamtest_page.check_webcam_link$
+      Greps:
+          - var: check_webcam_text
+            match: "Check Webcam"
+</pre>
 
 ## <a id="actions"></a>Action Types
 

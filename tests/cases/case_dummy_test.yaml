@@ -8,14 +8,14 @@ TestBrowserChromeAV:
             - use-fake-device-for-media-stream
             - no-sandbox
             - disable-gpu
-      App: desktop
+      App: "desktop"
   Actions:
     - Type: navigate
       Role: desktopChrome
       Value: https://webcamtests.com/
     - Type: get_text
       Strategy: xpath
-      Id : $page.webcamtest_page.check_webcam_link$
+      Id : $PAGE.webcamtest_page.check_webcam_link$
       Greps:
           - var: check_webcam_text
             match: "Check Webcam"
@@ -28,6 +28,6 @@ TestBrowserChromeAV:
     - Type: click
       Strategy: id
       Role: desktopChrome
-      Id: $page.webcamtest_page.testmycam_button$
+      Id: $PAGE.webcamtest_page.testmycam_button$
     - Type: sleep
       Time: 10

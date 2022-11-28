@@ -89,14 +89,14 @@ def load_case_files()
 end
 
 
-# Load all the YAML pageobject files, matched by pageobjects/**/page*.yaml
+# Load all the YAML pageobject files, matched by page_objects/**/page*.yaml
 def load_pageobject_files()
   pageobject_name_files = {}
   pageobjects = {}
   begin
-    Dir.glob("pageobjects/*.yaml").each do |filename|
+    Dir.glob("page_objects/*.yaml").each do |filename|
       pageobjectfile_path = File.join(Dir.getwd(), filename)
-      log_debug("Found case file: #{pageobjectfile_path}")
+      log_debug("Found page object file: #{pageobjectfile_path}")
       yaml_file = YAML.load_file(pageobjectfile_path)
       next unless yaml_file
       pageobjects.merge!(yaml_file)
@@ -115,18 +115,18 @@ def load_pageobject_files()
       end
     end
   rescue => e
-    log_abort("Could not load case files!\n#{e.message}")
+    log_abort("Could not load pageobject files!\n#{e.message}")
   end
 
   # check for duplicates
   found_duplicates = false
   pageobject_name_files.each do |pageobject_name, files|
     next if files.length == 1
-    log_error("Found #{files.length} declarations for case " +
-              "'#{case_name}'! Check files: #{files}")
+    log_error("Found #{files.length} declarations for page object " +
+              "'#{pageobject_name}'! Check files: #{files}")
     found_duplicates = true
   end
-  log_abort("Encountered duplicate cases!") if found_duplicates
+  log_abort("Encountered duplicate pageobject!") if found_duplicates
 
   return pageobjects
 end

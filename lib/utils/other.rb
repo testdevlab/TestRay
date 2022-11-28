@@ -48,13 +48,13 @@ end
 def convert_value_pageobjects(value)
   return "" if value.nil?
   value_s = Marshal.load(Marshal.dump(value.to_s))
-  if value_s.include?("$page.")
-    if !value_s.split("$page.")[1] ||
-       !value_s.split("$page.")[1].include?("$")
+  if value_s.include?("$PAGE.")
+    if !value_s.split("$PAGE.")[1] ||
+       !value_s.split("$PAGE.")[1].include?("$")
       raise "Variable: #{value_s} contains a malformed testray variable!"
     end
-    po_var = "$page." + value_s.split("$page.")[1].split("$")[0] + "$"
-    page  = value_s.split("$page.")[1].split("$")[0].split(".");   
+    po_var = "$PAGE." + value_s.split("$PAGE.")[1].split("$")[0] + "$"
+    page  = value_s.split("$PAGE.")[1].split("$")[0].split(".");   
     locator_value = $pageobjects[page[0]][page[1]]
     begin
       value_s.gsub!(po_var, locator_value)
