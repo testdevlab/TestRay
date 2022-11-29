@@ -31,4 +31,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'screen-recorder', "1.4.0"
   spec.add_runtime_dependency "colorize"
   spec.add_runtime_dependency "keisan"
+  spec.add_runtime_dependency "ffi"
 end

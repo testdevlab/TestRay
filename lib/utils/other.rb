@@ -44,6 +44,28 @@ def convert_value(value)
   return value_s
 end
 
+# Method to change page object variables for their value 
+def convert_value_pageobjects(value)
+  return "" if value.nil?
+  value_s = Marshal.load(Marshal.dump(value.to_s))
+  if value_s.include?("$PAGE.")
+    if !value_s.split("$PAGE.")[1] ||
+       !value_s.split("$PAGE.")[1].include?("$")
+      raise "Variable: #{value_s} contains a malformed testray variable!"
+    end
+    po_var = "$PAGE." + value_s.split("$PAGE.")[1].split("$")[0] + "$"
+    page  = value_s.split("$PAGE.")[1].split("$")[0].split(".");   
+    locator_value = $pageobjects[page[0]][page[1]]
+    begin
+      value_s.gsub!(po_var, locator_value)
+    rescue => e
+      value_s.gsub!(po_var, "")
+    end
+    return YAML.load(value_s.gsub('=>', ':'))
+  end
+  return value
+end
+
 def convert_udid(value, udid)
   return "" if value == nil
   if value.include?("$AND_CLI_UDID$")

@@ -1,0 +1,72 @@
+Apps:
+  Chrome:
+    Package: com.android.chrome
+  PlayStore:
+    Package: com.android.vending
+    Activity: com.android.vending.AssetBrowserActivity
+  Settings:
+    iOSBundle: com.apple.Preferences
+
+chromeDriverPath: chromedriver
+
+Timeout: 15
+
+Devices:
+  - role: command1,command2,command3
+  - role: desktopChrome,desktopChrome1
+    browser: chrome
+  - role: desktopFirefox
+    browser: firefox
+  - role: desktopSafari
+    browser: safari
+  - role: desktopIE
+    browser: ie
+  - role: desktopEdge
+    browser: edge
+  # ANDROID
+  - role: localAndroid
+    platform: Android
+  # IOS
+  - role: localiOS
+    platform: iOS
+
+#VARS
+
+Environments:
+  SleepEnv:
+    SetupCommands:
+      - sleep 2
+  Mark1:
+    Vars:
+      ENV1: ENV1
+      VAR_1: VAR_1
+      VAR_2: VAR_2
+    SetupCommands:
+      - echo Hello
+    Inherit:
+      - Inherited1
+  Mark2:
+    Inherit:
+      - InheritedVar
+  Inherited1:
+    Vars:
+      VAR_3: VAR_3
+      VAR_4: VAR_4
+    Inherit:
+      - Inherited2
+  Inherited2:
+    Vars:
+      VAR_5: VAR_5
+      VAR_6: VAR_6
+    SetupCommands:
+      - echo Hello
+  InheritedVar:
+    Vars:
+      VAR_1: HEY1
+  VarOverWriten:
+    Vars:
+      VAR_3: VAR_1 # Should Remain as it's the child
+      VAR_4: VAR_2 # Should Remain as it's the child
+    Inherit:
+      - Inherited1
+      - Inherited2

@@ -17,7 +17,7 @@ def load_case_specific_parameters(case_name, steps, parent_setup_params)
   load_env_and_vars(steps) # Loads case Vars and setup commands
   load_env_and_vars(parent_setup_params, false) # Loads environment vars so that cases vars 
                                                 # can fill the information for Env vars with $AND_CLI$ wrappers
-  execute_setupcommands(parent_setup_params) # Runs the setup command for the TestRay Set file specific case commands
+  execute_setupcommands(parent_setup_params) # Runs the setup command for the TestRay Set file specific case commands 
   if parent_setup_params.key?("Log") && !parent_setup_params["Log"].empty?
     logfile_name = parent_setup_params["Log"]
   else
@@ -86,6 +86,49 @@ def load_case_files()
   log_abort("Encountered duplicate cases!") if found_duplicates
 
   return cases
+end
+
+
+# Load all the YAML pageobject files, matched by page_objects/**/page*.yaml
+def load_pageobject_files()
+  pageobject_name_files = {}
+  pageobjects = {}
+  begin
+    Dir.glob("page_objects/*.yaml").each do |filename|
+      pageobjectfile_path = File.join(Dir.getwd(), filename)
+      log_debug("Found page object file: #{pageobjectfile_path}")
+      yaml_file = YAML.load_file(pageobjectfile_path)
+      next unless yaml_file
+      pageobjects.merge!(yaml_file)
+
+      # gather the case names to identify duplicates
+      File.open(pageobjectfile_path, "r") do |file|
+        # find words with no preceding spaces and a succeeding colon (= case names)
+        pageobjects_names = file.read.scan(/(?:\n|^)(\w+):/).flatten
+        for pageobject_name in pageobjects_names
+          if pageobject_name_files.key?(pageobject_name)
+            pageobject_name_files[pageobject_name].append(filename)
+          else
+            pageobject_name_files[pageobject_name] = [filename]
+          end
+        end
+      end
+    end
+  rescue => e
+    log_abort("Could not load pageobject files!\n#{e.message}")
+  end
+
+  # check for duplicates
+  found_duplicates = false
+  pageobject_name_files.each do |pageobject_name, files|
+    next if files.length == 1
+    log_error("Found #{files.length} declarations for page object " +
+              "'#{pageobject_name}'! Check files: #{files}")
+    found_duplicates = true
+  end
+  log_abort("Encountered duplicate pageobject!") if found_duplicates
+
+  return pageobjects
 end
 
 # Load all the YAML set files, matched by sets/**/set*.yaml
