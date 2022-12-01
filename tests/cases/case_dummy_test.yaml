@@ -1,4 +1,6 @@
 TestBrowserChromeAV:
+  Environment:
+    - Settings 
   Roles:
     - Role: desktopChrome
       Capabilities:
@@ -12,22 +14,22 @@ TestBrowserChromeAV:
   Actions:
     - Type: navigate
       Role: desktopChrome
-      Value: https://webcamtests.com/
-    - Type: get_text
-      Strategy: xpath
-      Id : $PAGE.webcamtest_page.check_webcam_link$
-      Greps:
-          - var: check_webcam_text
-            match: "Check Webcam"
-    - Type: assert
-      Role: desktopChrome
-      Asserts: 
-        - Type: eq
-          Var: check_webcam_text
-          Value: "Check Webcam"      
-    - Type: click
-      Strategy: id
-      Role: desktopChrome
-      Id: $PAGE.webcamtest_page.testmycam_button$
-    - Type: sleep
-      Time: 10
+      Value: $CARE_PLATFORM_URL
+    # - Type: get_text
+    #   Strategy: xpath
+    #   Id : $PAGE.webcamtest_page.check_webcam_link$
+    #   Greps:
+    #       - var: check_webcam_text
+    #         match: "Check Webcam"
+    # - Type: assert
+    #   Role: desktopChrome
+    #   Asserts: 
+    #     - Type: eq
+    #       Var: check_webcam_text
+    #       Value: "Check Webcam"      
+    # - Type: click
+    #   Strategy: id
+    #   Role: desktopChrome
+    #   Id: $PAGE.webcamtest_page.testmycam_button$
+    # - Type: sleep
+    #   Time: 10

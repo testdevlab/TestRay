@@ -1,11 +1,7 @@
 Apps:
-  Chrome:
-    Package: com.android.chrome
-  PlayStore:
-    Package: com.android.vending
-    Activity: com.android.vending.AssetBrowserActivity
   Settings:
-    iOSBundle: com.apple.Preferences
+    iOSBundle: com.apple.Preferences #com.eastwaterleasing.neveraloneb2b
+
 
 chromeDriverPath: chromedriver
 
@@ -14,7 +10,7 @@ Timeout: 15
 Devices:
   - role: command1,command2,command3
   - role: desktopChrome,desktopChrome1
-    browser: chrome
+    browser: chrome    
   - role: desktopFirefox
     browser: firefox
   - role: desktopSafari
@@ -29,6 +25,10 @@ Devices:
   # IOS
   - role: localiOS
     platform: iOS
+    capabilities:
+      deviceName: "iPad Pro (12.9-inch) (5th generation) Simulator (15.5)"
+      udid: "D017D231-AAF1-4050-946B-B9FC0838D146"
+      newCommandTimeout: 30
 
 #VARS
 
