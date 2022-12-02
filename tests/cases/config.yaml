@@ -1,5 +1,5 @@
 Apps:
-  Settings:
+  NeverAlone:
     iOSBundle: com.eastwaterleasing.neveraloneb2b  
 
 chromeDriverPath: chromedriver

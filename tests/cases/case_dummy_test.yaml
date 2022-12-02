@@ -9,7 +9,9 @@ DummyTest:
             - use-fake-device-for-media-stream
             - no-sandbox
             - disable-gpu
-      App: desktop          
+      App: desktop   
+    # - Role: localiOS
+    #   App: NeverAlone      
   Actions:
     - Type: navigate
       Role: desktopChrome
