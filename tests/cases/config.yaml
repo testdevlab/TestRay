@@ -21,8 +21,8 @@ Devices:
   - role: localiOS
     platform: iOS
     capabilities:
-      deviceName: "iPad Pro (12.9-inch) (5th generation) Simulator (15.5)" #THIS DEVICE CAN BE UPDATED BY YOUR DEVICE
-      udid: "D017D231-AAF1-4050-946B-B9FC0838D146" #THIS UDID CAN BE UPDATEDED WITH YOUR DEVICE UDID 
+      deviceName:  "Apple’s iPad (15.5)" #"iPad Pro (12.9-inch) (5th generation) Simulator (15.5)" #THIS DEVICE CAN BE UPDATED BY YOUR DEVICE
+      udid: "00008101-001510200E04001E" #"D017D231-AAF1-4050-946B-B9FC0838D146" #THIS UDID CAN BE UPDATEDED WITH YOUR DEVICE UDID 
       newCommandTimeout: 30
 
 #VARS

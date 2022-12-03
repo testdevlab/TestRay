@@ -10,9 +10,14 @@ DummyTest:
             - no-sandbox
             - disable-gpu
       App: desktop   
-    # - Role: localiOS
-    #   App: NeverAlone      
+    - Role: localiOS
+      App: NeverAlone      
   Actions:
+    - Type: send_keys
+      Role: localiOS
+      Strategy: xpath
+      Id: //*[contains(.,'Enter Email')]
+      Value: "asdasds"
     - Type: navigate
       Role: desktopChrome
       Value: $AND_CLI_care_platform_url$
