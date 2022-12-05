@@ -31,7 +31,7 @@ TestBrowserChromeAV:
             - use-fake-device-for-media-stream
             - no-sandbox
             - disable-gpu
-      App: desktop
+      App: "desktop"
   Actions:
     - Type: navigate
       Role: desktopChrome

@@ -1,19 +1,13 @@
 Apps:
-  Chrome:
-    Package: com.android.chrome
-  PlayStore:
-    Package: com.android.vending
-    Activity: com.android.vending.AssetBrowserActivity
-  Settings:
-    iOSBundle: com.apple.Preferences
+  NeverAlone:
+    iOSBundle: com.eastwaterleasing.neveraloneb2b  
 
 chromeDriverPath: chromedriver
-
 Timeout: 15
 
 Devices:
   - role: command1,command2,command3
-  - role: desktopChrome,desktopChrome1
+  - role: desktopChrome,desktopChrome1   
     browser: chrome
   - role: desktopFirefox
     browser: firefox
@@ -23,50 +17,69 @@ Devices:
     browser: ie
   - role: desktopEdge
     browser: edge
-  # ANDROID
-  - role: localAndroid
-    platform: Android
   # IOS
   - role: localiOS
     platform: iOS
+    capabilities:
+      deviceName:  "Apple’s iPad (15.5)" #"iPad Pro (12.9-inch) (5th generation) Simulator (15.5)" #THIS DEVICE CAN BE UPDATED BY YOUR DEVICE
+      udid: "00008101-001510200E04001E" #"D017D231-AAF1-4050-946B-B9FC0838D146" #THIS UDID CAN BE UPDATEDED WITH YOUR DEVICE UDID 
+      newCommandTimeout: 30
 
 #VARS
-
 Environments:
-  SleepEnv:
-    SetupCommands:
-      - sleep 2
-  Mark1:
+  Settings:
     Vars:
-      ENV1: ENV1
-      VAR_1: VAR_1
-      VAR_2: VAR_2
-    SetupCommands:
-      - echo Hello
-    Inherit:
-      - Inherited1
-  Mark2:
-    Inherit:
-      - InheritedVar
-  Inherited1:
-    Vars:
-      VAR_3: VAR_3
-      VAR_4: VAR_4
-    Inherit:
-      - Inherited2
-  Inherited2:
-    Vars:
-      VAR_5: VAR_5
-      VAR_6: VAR_6
-    SetupCommands:
-      - echo Hello
-  InheritedVar:
-    Vars:
-      VAR_1: HEY1
-  VarOverWriten:
-    Vars:
-      VAR_3: VAR_1 # Should Remain as it's the child
-      VAR_4: VAR_2 # Should Remain as it's the child
-    Inherit:
-      - Inherited1
-      - Inherited2
+      care_platform_url: https://care-platform-qa.chs-ds.com/
+      employee_health_url: https://employee-health-portal-qa.chs-ds.com/
+      backend_qa_url: https://never-alone-backend-qa.chs-ds.com/
+      facility_ahc: alpha health center
+      facility_bhc:  beta health center
+      facility_bhc:  charlie health center
+#Onboarder users      
+      onboarder_user1: add_your_info
+      onboarder_user1_pwd: add_your_info
+      onboarder_user2: add_your_info
+      onboarder_user2_pwd: add_your_info
+#Carepartmer users
+      carepartner_user1: csanchez@neural.com.do
+      carepartner_user1_pwd: e0fa218d6a41284ccb842d52a25c3750
+      carepartner_user2: add_your_info
+      carepartner_user2_pwd: add_your_info
+#Provider users      
+      provider_user1: add_your_info
+      provider_user1_pwd: add_your_info
+      provider_user2: add_your_info
+      provider_user2_pwd: add_your_info
+#Admin users      
+      admin_user1: add_your_info
+      admin_user1_pwd: add_your_info
+      admin_user2: add_your_info
+      admin_user2_pwd: add_your_info
+#Admin on call users      
+      admincall_user1: add_your_info
+      admincall_user1_pwd: add_your_info
+      admincall_user2: add_your_info
+      admincall_user2_pwd: add_your_info
+#Senior users    
+      senior_user1: add_your_info
+      senior_user1_pwd: add_your_info
+      senior_user2: add_your_info
+      senior_user2_pwd: add_your_info
+#Facility devices users   
+      facility_devices_user1: add_your_info
+      facility_devices_user1_pwd: add_your_info
+      facility_devices_user2: add_your_info
+      facility_devices_user2_pwd: add_your_info  
+#Employee users    
+      employee_user1: add_your_info
+      employee_user1_pwd: add_your_info
+      employee_user1_name: add_your_info
+      employee_user1_lastname: add_your_info
+      employee_user1_dob: add_your_info
+      employee_user1_card_member_id: add_your_info
+      employee_user2: add_your_info
+      employee_user2_pwd: add_your_info
+      employee_user2_card_member_id: add_your_info
+      employee_user2_name: add_your_info
+      employee_user2_lastname: add_your_info
+      employee_user2_dob: add_your_info
