@@ -1,0 +1,9 @@
+TerminateApp:
+  Environment: Settings 
+  Roles:
+    - Role: localiOS
+      App: NeverAlone      
+  Actions:
+    - Type: terminate_app
+      Role: localiOS
+      Value: com.eastwaterleasing.neveraloneb2b

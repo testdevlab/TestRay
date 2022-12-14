@@ -247,6 +247,11 @@ class Device
     @driver.background_app(-1)
   end
 
+  # hides keyboard (available on iOS)
+  def hide_keyboard(action = nil)
+    @driver.hide_keyboard
+  end
+
   # launches the app specified by the Android app package / iOS bundle ID
   # defaults to the app under test if Value is not provided
   # Accepts:
@@ -487,6 +492,13 @@ class Device
     el_location = el.location
     log_info("#{@role}: element coordinates: x -> #{el_location.x}, y -> #{el_location.y}")
     action = Appium::TouchAction.new(@driver).press(x: el_location.x, y: el_location.y).wait(600).release.perform
+  end
+
+  # taps on an element, only mobile.
+  def tap(action)
+    action = convert_value_pageobjects(action);
+    el = wait_for(action)
+    action = Appium::TouchAction.new(@driver).tap(element: el).release.perform
   end
 
   # presses on the provided element. Uses Appium's TouchAction.

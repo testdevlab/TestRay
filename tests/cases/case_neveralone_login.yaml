@@ -1,0 +1,32 @@
+# CXTB-219
+LoginTest:
+  Environment: Settings
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone      
+  Actions:
+    # Open the Never Alone app and click on Provision Device button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.never_alone_login.provision_device_btn$
+    # Fill in the email and password fields with credentials.
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.never_alone_login.email_input$
+      Value: $AND_CLI_senior_user1$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.never_alone_login.password_input$
+      Value: $AND_CLI_senior_user1_pwd$
+    - Type: hide_keyboard
+      Role: localiOS
+    # Click on the Log In button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.never_alone_login.login_btn$
+    # Verify that the user has successfully logged in.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.never_alone_login.schedule_label$

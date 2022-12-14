@@ -4,5 +4,3 @@ care_platform_login_page:
   login_button: //button[text() = 'Log In']
 verify_account_page:
   email_button: //button[text() = 'Email']
-never_alone:
-  email_input: //XCUIElementTypeTextField[@name='Enter Email']
