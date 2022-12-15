@@ -1,0 +1,146 @@
+CarePartnerLogin:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    - Type: navigate
+      Role: desktopChrome
+      Value: https://care-platform-qa.chs-ds.com/login
+    - Type: maximize
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_login.email_input$
+      Value: $AND_CLI_carepartner_user1$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_login.password_input$
+      Value: $AND_CLI_carepartner_user1_pwd$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_login.login_button$
+    - Type: sleep
+      Time: 2
+    - Type: if
+      If_Cases:
+      - If_Case: VerifyEmail
+
+VerifyEmail:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.verify_account.email_button$
+
+#CXTB-214
+TestHomePage:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - use-fake-ui-for-media-stream
+            - use-fake-device-for-media-stream
+            - no-sandbox
+            - disable-gpu
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: CarePartnerLogin
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform.page_title$
+      Condition:
+      - Value: 2
+        Operation: visible
+        Result: true
+  #Checking Home page and navigation
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.care_platform.page_title$
+      Greps:
+        - var: HOME_TITLE
+          match: "Call Queue"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: eq
+          Var: HOME_TITLE
+          Value: "Call Queue"
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform.navigation_participant$
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.care_platform.page_title$
+      Greps:
+        - var: HOME_TITLE
+          match: "Participants"
+      Asserts:
+        - Type: eq
+          Var: HOME_TITLE
+          Value: "Participants"
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform.navigation_followup$
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.care_platform.page_title$
+      Greps:
+        - var: HOME_TITLE
+          match: "Follow-up*"
+      Asserts:
+        - Type: eq
+          Var: HOME_TITLE
+          Value: "Follow-up Tickets"
+  #Checking Header elements
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.app_logo$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.app_time$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.user_toggle_input$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.user_dropdown_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.headset_icon$
+  #Checking options in the user drop-down
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+    - Type: wait_for
+      Strategy: xpath
+  #Status
+      Id: $PAGE.care_platform_header.status_menu_header$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_available_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_away_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_insession_button$
+    - Type: wait_for
+      Strategy: xpath
+  #Other options
+      Id: $PAGE.care_platform_header.account_menu_header$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.help_menu_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.myaccount_menu_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.logout_menu_button$
+
