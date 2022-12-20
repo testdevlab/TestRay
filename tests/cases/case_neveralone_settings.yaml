@@ -1,0 +1,142 @@
+# CXTB-33
+VerifyMyDetailsSettingsPageElementsTest:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+    # Click on the Settings icon in app header.
+    - Type: get_timestamp
+      Format: "%A, %B %d"
+      Var: TODAY_DATE
+    - Type: xpath_concat
+      First_part: (//XCUIElementTypeOther[starts-with(@name
+      Quote_part: $AND_CLI_TODAY_DATE$
+      Last_part: )])[last()]/following-sibling::XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]
+      ResultVar: SETTINGS_ICON
+    - Type: click
+      Strategy: xpath
+      Id: $AND_CLI_SETTINGS_ICON$
+    # Verify that the page shows the following sub pages:
+    # My Details
+    # Wi-fi
+    # Text Message Alerts
+    # Screen Brightness
+    # Sound
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.my_details_tab$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.wifi_tab$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.text_message_alerts_tab$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.screen_brightness_tab$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.sound_tab$
+    # Verify that the default view is "My Details" page.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.first_name_field$
+    # Verify that the right side displays name, email, address and phone number as read-only.
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.first_name_field$
+      Attribute: enabled
+      Value: "false"
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.last_name_field$
+      Attribute: enabled
+      Value: "false"
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.email_field$
+      Attribute: enabled
+      Value: "false"
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.address_line1_field$
+      Attribute: enabled
+      Value: "false"
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.address_line2_field$
+      Attribute: enabled
+      Value: "false"
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.city_field$
+      Attribute: enabled
+      Value: "false"
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.state_field$
+      Attribute: enabled
+      Value: "false"
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.zip_code_field$
+      Attribute: enabled
+      Value: "false"
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.country_field$
+      Attribute: enabled
+      Value: "false"
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.phone_number_field$
+      Attribute: enabled
+      Value: "false"
+    #Verify that the fields are not empty
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.first_name_field$
+      Attribute: value
+      ResultVar: FIRST_NAME_VALUE
+    - Type: operation
+      Operation: "'$AND_CLI_FIRST_NAME_VALUE$'.size > 0"
+      ResultVar: IS_FIRST_NAME_NOT_EMPTY
+    - Type: assert
+      Role: localiOS
+      Asserts:
+        - Type: eq
+          Var: IS_FIRST_NAME_NOT_EMPTY
+          Value: 'true'
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.last_name_field$
+      Attribute: value
+      ResultVar: LAST_NAME_VALUE
+    - Type: operation
+      Operation: "'$AND_CLI_LAST_NAME_VALUE$'.size > 0"
+      ResultVar: IS_LAST_NAME_NOT_EMPTY
+    - Type: assert
+      Role: localiOS
+      Asserts:
+        - Type: eq
+          Var: IS_LAST_NAME_NOT_EMPTY
+          Value: 'true'
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.never_alone_settings.email_field$
+      Attribute: value
+      ResultVar: EMAIL_VALUE
+    - Type: operation
+      Operation: "'$AND_CLI_EMAIL_VALUE$'.size > 0"
+      ResultVar: IS_EMAIL_NOT_EMPTY
+    - Type: assert
+      Role: localiOS
+      Asserts:
+        - Type: eq
+          Var: IS_EMAIL_NOT_EMPTY
+          Value: 'true'

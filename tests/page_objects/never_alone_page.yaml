@@ -1,0 +1,27 @@
+never_alone_login:
+  logging_you_in_label: //XCUIElementTypeStaticText[@name='Logging you in...']
+  provision_device_btn: //XCUIElementTypeOther[@name='Provision Device']
+  email_input: //XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  password_input: //XCUIElementTypeSecureTextField[@name='RNE__Input__text-input']
+  login_btn: (//XCUIElementTypeOther[@name='Log In'])[last()]
+  schedule_label: //XCUIElementTypeStaticText[@name='Schedule']
+  
+never_alone_home:
+  schedule_label: //XCUIElementTypeStaticText[@name='Schedule']
+
+never_alone_settings:
+  my_details_tab: (//XCUIElementTypeOther[contains(@name, 'My Details')])[2]
+  wifi_tab: (//XCUIElementTypeOther[contains(@name, 'Wi-fi')])[2]
+  text_message_alerts_tab: (//XCUIElementTypeOther[contains(@name, 'Text Message Alerts')])[2]
+  screen_brightness_tab: (//XCUIElementTypeOther[contains(@name, 'Screen Brightness')])[2]
+  sound_tab: (//XCUIElementTypeOther[contains(@name, 'Sound')])[2]
+  first_name_field: //XCUIElementTypeOther[@name='First Name']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  last_name_field: //XCUIElementTypeOther[@name='Last Name']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  email_field: //XCUIElementTypeOther[@name='Email']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  address_line1_field: //XCUIElementTypeOther[@name='Address Line 1']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  address_line2_field: //XCUIElementTypeOther[@name='Address Line 2']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  city_field: //XCUIElementTypeOther[@name='City']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  state_field: //XCUIElementTypeOther[@name='State']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  zip_code_field: //XCUIElementTypeOther[@name='Zip Code']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  country_field: //XCUIElementTypeOther[@name='Country']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  phone_number_field: //XCUIElementTypeOther[@name='Phone Number']//XCUIElementTypeTextField[@name='RNE__Input__text-input']

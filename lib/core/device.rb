@@ -1668,4 +1668,30 @@ class Device
   end 
 end
 
+# returns an string with an xpath that needs to have some single quotes inside expression.
+# Accepts:
+#  First_part
+#  Quote_part
+#  Last_part
+#  ResultVar
+# *NOTE*: commas at the end will be ignored due to translation of the values
+def xpath_concat(action)
+  first_part = convert_value(action["First_part"])
+  quote_part = convert_value(action["Quote_part"])
+  last_part = convert_value(action["Last_part"])
+
+  result = "#{first_part}, '#{quote_part}'#{last_part}" #added , in the variable due to value translation of the framework
+  ENV[convert_value(action["ResultVar"])] = result.to_s
+end
+
+# returns the attribute of the element in a variable
+def return_element_attribute(action)
+  el = wait_for(action)
+  return unless el
+
+  attr_value = el.attribute(action["Attribute"])
+  log_info("Element attribute is " + attr_value.to_s)
+  ENV[convert_value(action["ResultVar"])] = attr_value.to_s
+end
+
 # END OF DEVICE CLASS
