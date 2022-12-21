@@ -1,7 +1,0 @@
-never_alone_login:
-  logging_you_in_label: //XCUIElementTypeStaticText[@name='Logging you in...']
-  provision_device_btn: //XCUIElementTypeOther[@name='Provision Device']
-  email_input: //XCUIElementTypeTextField[@name='RNE__Input__text-input']
-  password_input: //XCUIElementTypeSecureTextField[@name='RNE__Input__text-input']
-  login_btn: (//XCUIElementTypeOther[@name='Log In'])[last()]
-  schedule_label: //XCUIElementTypeStaticText[@name='Schedule']
