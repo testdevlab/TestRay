@@ -12,6 +12,7 @@ care_platform:
   page_title: //h3
   navigation_participant: //nav//div[contains(text(),'Participants')]
   navigation_followup: //nav//div[contains(text(),'Follow-up')]
+  navigation_home: //nav//div[contains(text(),'Home')]
 care_platform_header:
   app_logo: //header//div[@class='app-header-logo']/img
   app_time: //header//time
@@ -22,6 +23,7 @@ care_platform_header:
   status_available_button: //header//nav/button[contains(.,'Available')]
   status_away_button: //header//nav/button[contains(.,'Away')]
   status_insession_button: //header//nav/button[contains(.,'In Session')]
+  status_indicator: //header//button[contains(@class,'user-dropdown-toggle')]/div[contains(@class,'has-status')]
   account_menu_header: //header//nav//div[contains(text(),'Account')]
   help_menu_button: //header//nav//button[contains(.,'Help')]
   myaccount_menu_button: //header//nav//button[contains(.,'My Account')]

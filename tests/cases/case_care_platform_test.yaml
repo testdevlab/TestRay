@@ -34,7 +34,7 @@ VerifyEmail:
       Strategy: xpath
       Id: $PAGE.verify_account.email_button$
 
-#CXTB-214
+#CXTB-214: Validating Home elements
 TestHomePage:
   Environment: Settings 
   Roles:
@@ -144,3 +144,133 @@ TestHomePage:
       Strategy: xpath
       Id: $PAGE.care_platform_header.logout_menu_button$
 
+#CXTB-223: Validating changes of status (Not in Call)
+TestStatusDropdown_NotInCall:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - use-fake-ui-for-media-stream
+            - use-fake-device-for-media-stream
+            - no-sandbox
+            - disable-gpu
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: CarePartnerLogin
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform.page_title$
+      Condition:
+      - Value: 2
+        Operation: visible
+        Result: true
+  #Status
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_menu_header$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_available_button$
+  #Changing status to away
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_away_button$
+  #Navigating to participants page
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform.navigation_participant$
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.care_platform.page_title$
+      Greps:
+        - var: HOME_TITLE
+          match: "Participants"
+      Asserts:
+        - Type: eq
+          Var: HOME_TITLE
+          Value: "Participants"
+  #Checking indicator is set to Away status
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Greps:
+        - var: STATUS_VAR
+          attr: class
+          condition: nempty
+          match: "(.*)has-status(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: STATUS_VAR
+          Value: "is-empty"
+  #Trying to change status to In Session (shouldn't let you do it manually)
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_insession_button$
+    - Type: click_js
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_insession_button$
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform.navigation_followup$
+  #Verifying the status indicator didn't change to In Session
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Greps:
+        - var: STATUS_VAR
+          attr: class
+          condition: nempty
+          match: "(.*)has-status(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: STATUS_VAR
+          Value: "is-empty"
+  #Changing status back to available
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_menu_header$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_available_button$
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform.navigation_followup$
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.care_platform.page_title$
+      Greps:
+        - var: HOME_TITLE
+          match: "Follow-up*"
+      Asserts:
+        - Type: eq
+          Var: HOME_TITLE
+          Value: "Follow-up Tickets"
+  #Checking the status indicator correspond to Available
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Greps:
+        - var: STATUS_VAR
+          attr: class
+          condition: nempty
+          match: "(.*)has-status(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: STATUS_VAR
+          Value: "is-green"
