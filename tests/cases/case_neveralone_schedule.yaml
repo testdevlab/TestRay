@@ -1,0 +1,28 @@
+# CXTB-10: Full Schedule display
+VerifyFullScheduleDisplay:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+  # Navigate to the Schedule page.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.never_alone_home.full_schedule_btn$
+    - Type: get_timestamp
+      Format: "%A %B %d"
+      Var: TODAY_DATE
+  # Verify that the Full Schedule page loaded as expected.
+    - Type: xpath_concat
+      First_part: (//XCUIElementTypeStaticText[starts-with(@name
+      Quote_part: $AND_CLI_TODAY_DATE$
+      Last_part: ')])[last()]'
+      ResultVar: TODAY_DATE_SCHEDULE
+    - Type: wait_for
+      Strategy: xpath
+      Id: $AND_CLI_TODAY_DATE_SCHEDULE$
+# **/XCUIElementTypeOther[`label BEGINSWITH 'Today'`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[`enabled == 1 AND visible == 0 AND accessible == 1`]
