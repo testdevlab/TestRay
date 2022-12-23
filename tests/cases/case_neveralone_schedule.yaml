@@ -17,6 +17,7 @@ VerifyFullScheduleDisplay:
       Format: "%A %B %d"
       Var: TODAY_DATE
   # Verify that the Full Schedule page loaded as expected.
+  ##TODO: deprecate this method
     - Type: xpath_concat
       First_part: (//XCUIElementTypeStaticText[starts-with(@name
       Quote_part: $AND_CLI_TODAY_DATE$
@@ -25,4 +26,6 @@ VerifyFullScheduleDisplay:
     - Type: wait_for
       Strategy: xpath
       Id: $AND_CLI_TODAY_DATE_SCHEDULE$
-# **/XCUIElementTypeOther[`label BEGINSWITH 'Today'`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[`enabled == 1 AND visible == 0 AND accessible == 1`]
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.never_alone_schedule.left_arrow_schedule$
