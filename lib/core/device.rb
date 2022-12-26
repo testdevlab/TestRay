@@ -6,6 +6,7 @@ require "os"
 require "keisan"
 require "selenium-webdriver"
 require "screen-recorder"
+require "date"
 require_relative "rest_api"
 require_relative "appium_server"
 require_relative "device_drivers"
@@ -1317,6 +1318,34 @@ class Device
     format_t = convert_value(action["Format"])
     time = Time.now.utc.strftime(format_t)
     log_info("Timestamp is: #{time}")
+    if action["File"]
+      file = File.open(convert_value(action["File"]), "w")
+      file.write(time)
+      file.close
+    elsif action["Var"]
+      ENV[convert_value(action["Var"])] = time
+    end
+  end
+
+  # Prints and Writes yesterday's date with given format
+  def get_yesterday_date(action)
+    format_t = convert_value(action["Format"])
+    time = Date.today.prev_day.strftime(format_t)
+    log_info("Yesterday's date is: #{time}")
+    if action["File"]
+      file = File.open(convert_value(action["File"]), "w")
+      file.write(time)
+      file.close
+    elsif action["Var"]
+      ENV[convert_value(action["Var"])] = time
+    end
+  end
+
+  # Prints and Writes tomorrow's date with given format
+  def get_tomorrow_date(action)
+    format_t = convert_value(action["Format"])
+    time = (Date.today + 1).strftime(format_t)
+    log_info("Tomorrow's date is: #{time}")
     if action["File"]
       file = File.open(convert_value(action["File"]), "w")
       file.write(time)

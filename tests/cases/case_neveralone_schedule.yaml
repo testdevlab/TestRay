@@ -27,7 +27,40 @@ VerifyFullScheduleDisplay:
         - Type: contain
           Var: TODAY_DATE_SCHEDULE
           Value: $AND_CLI_TODAY_DATE$
-    # Click on the left Arrow and verify that the date changes and the page updates to show the day prior.
+    # Click on the left arrow and verify that the date changes and the page updates to show the day prior.
     - Type: click
       Strategy: class_chain
       Id: $PAGE.never_alone_schedule.left_arrow_schedule$
+    - Type: get_yesterday_date
+      Format: "%A %B %d"
+      Var: YESTERDAY_DATE
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.never_alone_schedule.schedule_date_label$
+      Attribute: value
+      ResultVar: YESTERDAY_DATE_SCHEDULE
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: YESTERDAY_DATE_SCHEDULE
+          Value: $AND_CLI_YESTERDAY_DATE$
+      # Click on the right arrow twice and verify that the date changes and the page updates to show the day prior.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.never_alone_schedule.right_arrow_schedule$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.never_alone_schedule.right_arrow_schedule$
+    - Type: get_tomorrow_date
+      Format: "%A %B %d"
+      Var: TOMORROW_DATE
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.never_alone_schedule.schedule_date_label$
+      Attribute: value
+      ResultVar: TOMORROW_DATE_SCHEDULE
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: TOMORROW_DATE_SCHEDULE
+          Value: $AND_CLI_TOMORROW_DATE$
