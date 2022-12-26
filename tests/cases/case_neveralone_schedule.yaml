@@ -17,15 +17,17 @@ VerifyFullScheduleDisplay:
       Format: "%A %B %d"
       Var: TODAY_DATE
   # Verify that the Full Schedule page loaded as expected.
-  ##TODO: deprecate this method
-    - Type: xpath_concat
-      First_part: (//XCUIElementTypeStaticText[starts-with(@name
-      Quote_part: $AND_CLI_TODAY_DATE$
-      Last_part: ')])[last()]'
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.never_alone_schedule.schedule_date_label$
+      Attribute: value
       ResultVar: TODAY_DATE_SCHEDULE
-    - Type: wait_for
-      Strategy: xpath
-      Id: $AND_CLI_TODAY_DATE_SCHEDULE$
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: TODAY_DATE_SCHEDULE
+          Value: $AND_CLI_TODAY_DATE$
+    # Click on the left Arrow and verify that the date changes and the page updates to show the day prior.
     - Type: click
       Strategy: class_chain
       Id: $PAGE.never_alone_schedule.left_arrow_schedule$
