@@ -64,3 +64,17 @@ VerifyFullScheduleDisplay:
         - Type: contain
           Var: TOMORROW_DATE_SCHEDULE
           Value: $AND_CLI_TOMORROW_DATE$
+    # Click the button "Today" and veirfy that page refreshed, showing today’s date and schedule.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.never_alone_schedule.today_btn$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.never_alone_schedule.schedule_date_label$
+      Attribute: value
+      ResultVar: TODAY_DATE_SCHEDULE
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: TODAY_DATE_SCHEDULE
+          Value: $AND_CLI_TODAY_DATE$
