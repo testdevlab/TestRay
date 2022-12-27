@@ -2,22 +2,26 @@ care_platform_login:
   email_input: email
   password_input: password
   login_button: //button[text() = 'Log In']
+
 verify_account:
   verify_modal_title: //*[@id='dialogs']//h4[contains(text(),'Verify Your Account')]
   email_button: //button[contains(text(),'Email')]
   goback_button: //button[contains(.,'Go Back')]
   resendcode_button: //button[contains(.,'Resend Code')]
   trust_checkbox: //*[@id='saveDevice']
+
 care_platform:
   page_title: //h3
   navigation_participant: //nav//div[contains(text(),'Participants')]
   navigation_followup: //nav//div[contains(text(),'Follow-up')]
   navigation_home: //nav//div[contains(text(),'Home')]
+
 care_platform_header:
   app_logo: //header//div[@class='app-header-logo']/img
   app_time: //header//time
   user_toggle_input: //header//div[@class='radio-toggle']//input
   user_dropdown_button: //header//div[contains(@class,'user-dropdown')]/button
+  dropdown_username: //header//div[@class='user-dropdown-name']
   headset_icon: //header//button/span[@class='icon-headset']
   status_menu_header: //header//nav//div[contains(text(),'Status')]
   status_available_button: //header//nav/button[contains(.,'Available')]
@@ -28,3 +32,14 @@ care_platform_header:
   help_menu_button: //header//nav//button[contains(.,'Help')]
   myaccount_menu_button: //header//nav//button[contains(.,'My Account')]
   logout_menu_button: //header//nav//button[contains(.,'Log Out')]
+
+myaccount_info:
+  modal_title: //*[@id='modals']//h4[contains(text(),'My account')]
+  close_modal_button: //*[@id="modals"]//button[contains(text(),'Close')]
+  firstname_input: //input[@id='firstName']
+  email_input: //input[@id='email']
+  phone_input: //*[@id='phone']
+  phone_error_message: //*[@id='modals']//div[contains(text(),'Please enter a valid contact number')]
+  save_changes_button: //*[@id='modals']//button[text()='Save Changes']
+  cancel_button: //*[@id='modals']//button[text()='Cancel']
+  success_alert_msg: //div[@class='Toastify']//div[contains(text(),'Account info updated')]
