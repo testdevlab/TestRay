@@ -248,6 +248,7 @@ class Device
     @driver.background_app(-1)
   end
 
+  #add to documentation
   # hides keyboard (available on iOS)
   def hide_keyboard(action = nil)
     @driver.hide_keyboard
@@ -495,6 +496,7 @@ class Device
     action = Appium::TouchAction.new(@driver).press(x: el_location.x, y: el_location.y).wait(600).release.perform
   end
 
+  #add to documentation
   # taps on an element, only mobile.
   def tap(action)
     action = convert_value_pageobjects(action);
@@ -1326,7 +1328,23 @@ class Device
       ENV[convert_value(action["Var"])] = time
     end
   end
+  
+  #add to documentation
+  # Prints and Writes local timestamp with given format
+  def get_local_timestamp(action)
+    format_t = convert_value(action["Format"])
+    time = Time.now.getlocal.strftime(format_t)
+    log_info("Timestamp is: #{time}")
+    if action["File"]
+      file = File.open(convert_value(action["File"]), "w")
+      file.write(time)
+      file.close
+    elsif action["Var"]
+      ENV[convert_value(action["Var"])] = time
+    end
+  end
 
+  #add to documentation
   # Prints and Writes yesterday's date with given format
   def get_yesterday_date(action)
     format_t = convert_value(action["Format"])
@@ -1341,11 +1359,26 @@ class Device
     end
   end
 
+  #add to documentation
   # Prints and Writes tomorrow's date with given format
   def get_tomorrow_date(action)
     format_t = convert_value(action["Format"])
     time = (Date.today + 1).strftime(format_t)
     log_info("Tomorrow's date is: #{time}")
+    if action["File"]
+      file = File.open(convert_value(action["File"]), "w")
+      file.write(time)
+      file.close
+    elsif action["Var"]
+      ENV[convert_value(action["Var"])] = time
+    end
+  end
+   #add to documentation
+   # returns now time -5 minutes
+   def get_past_timestamp(action)
+    format_t = convert_value(action["Format"])
+    time = (Time.now.getlocal - 5*60).strftime(format_t)
+    log_info("Timestamp - 5 minute is: #{time}")
     if action["File"]
       file = File.open(convert_value(action["File"]), "w")
       file.write(time)
@@ -1697,6 +1730,7 @@ class Device
   end 
 end
 
+#deprecate/delete this method
 # returns an string with an xpath that needs to have some single quotes inside expression.
 # Accepts:
 #  First_part
@@ -1713,6 +1747,7 @@ def xpath_concat(action)
   ENV[convert_value(action["ResultVar"])] = result.to_s
 end
 
+#add to documentation
 # returns the attribute of the element in a variable
 def return_element_attribute(action)
   el = wait_for(action)
