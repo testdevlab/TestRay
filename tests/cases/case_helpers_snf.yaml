@@ -1,24 +1,4 @@
-TerminateApp:
-  Environment: Settings 
-  Roles:
-    - Role: localiOS
-      App: NeverAlone      
-  Actions:
-    - Type: terminate_app
-      Role: localiOS
-      Value: com.eastwaterleasing.neveraloneb2b
-      
-LaunchApp:
-  Environment: Settings 
-  Roles:
-    - Role: localiOS
-      App: NeverAlone      
-  Actions:
-    - Type: launch_app
-      Role: localiOS
-      Value: com.eastwaterleasing.neveraloneb2b
-
-LoginNeverAloneHelper:
+LoginSNFHelper:
   Environment: Settings
   Roles:
     - Role: localiOS
@@ -32,11 +12,11 @@ LoginNeverAloneHelper:
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.never_alone_login.email_input$
-      Value: $AND_CLI_senior_user1$
+      Value: $AND_CLI_facility_devices_user1$
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.never_alone_login.password_input$
-      Value: $AND_CLI_senior_user1_pwd$
+      Value: $AND_CLI_facility_devices_user1_pwd$
     - Type: hide_keyboard
       Role: localiOS
     # Click on the Log In button.
@@ -46,4 +26,4 @@ LoginNeverAloneHelper:
     # Verify that the user has successfully logged in.
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.never_alone_home.schedule_label$
+      Id: $PAGE.snf_home.new_request_btn$
