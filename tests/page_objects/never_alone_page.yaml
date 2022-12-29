@@ -25,3 +25,17 @@ never_alone_settings:
   zip_code_field: //XCUIElementTypeOther[@name='Zip Code']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
   country_field: //XCUIElementTypeOther[@name='Country']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
   phone_number_field: //XCUIElementTypeOther[@name='Phone Number']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+
+never_alone_incoming_call:
+  answer_call_button: //XCUIElementTypeButton[@name='Answer Call']
+  ignore_call_button: //XCUIElementTypeButton[@name='Ignore Call']
+
+never_alone_call:
+  end_call_button: (//XCUIElementTypeOther[contains(@name,'End Call')])[last()]
+  mute_call_button: (//XCUIElementTypeOther[contains(@name,'Microphone')])[last()]
+  
+never_alone_post_call_survey:
+  great_answer_button: //XCUIElementTypeOther[@name='Great']
+  ok_answer_button: //XCUIElementTypeOther[@name='Ok']
+  bad_answer_button: //XCUIElementTypeOther[@name='Bad']
+  to_home_button: //XCUIElementTypeOther[@name='To Home']

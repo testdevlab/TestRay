@@ -1,0 +1,29 @@
+providers_home_page:
+  table : email
+  follow_up_calls: (//div[contains(text(),'Follow-up')])[last()]
+  missed_calls_text: (//div[contains(text(),'Missed Call')])[last()]
+  medical_transfer_calls: (//div[contains(text(),'Medical Transfer')])[last()]
+  scheduled_calls: (//div[contains(text(),'Scheduled Call')])[last()]
+  on_demand_calls: (//div[contains(text(),'On Demand Call')])[last()]
+  datetime: //time
+  time_dropdown: //div[div[contains(text(),'Time')]]//button
+  time_all_option: //div[div[contains(text(),'Time')]]//button[contains(text(),'All')]
+  last_medical_transfer_row: (//div[contains(text(),'Medical Transfer')])[last()]
+  last_on_demand_row: (//div[contains(text(),'On Demand Call')])[last()]
+  facilities_navigation: //a//div[contains(text(),'Facilities')]
+
+providers_facilities_page:
+  alpha_center_td: //tr//td[contains(text(),'$AND_CLI_facility_devices_user1_number$')]
+  call_portal_btn: //button[text()='Call Portal']
+
+providers_call_queue_page:
+  end_call_btn: //button[span[text()='End Call']]
+  call_device_btn: //button[text()='Call Device']
+  subject_input: //div[label[text()='Subject']]//input
+  details_textarea: //div[label[text()='Details']]//textarea
+  complete_session_btn: //button[text()='Complete Session']
+  no_radiobtn: //label[input[@name='resolved'][@value='false']]
+  reason_last_option: //option[last()]
+  time_follow_up_two_days_radiobtn: //label[input[@name='followUpTime'][@value=48]]
+  submit_session_btn: //button[@type='submit']
+

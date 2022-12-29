@@ -43,3 +43,45 @@ myaccount_info:
   save_changes_button: //*[@id='modals']//button[text()='Save Changes']
   cancel_button: //*[@id='modals']//button[text()='Cancel']
   success_alert_msg: //div[@class='Toastify']//div[contains(text(),'Account info updated')]
+
+care_platform_logout_modal:
+  stay_on_shift_button: //button[contains(text(),'Stay On Shift')]
+  go_off_shift_button: //button[contains(text(),'Go Off Shift')]
+  cancel_logout_button: //button[contains(@class,'button-ghost')] 
+
+care_platform_participant:
+  senior_1_td: //td[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
+  call_portal_btn: //button[text()='Call Portal']
+
+care_platform_call_portal:
+  category_select: category
+  create_event_btn: //button[text()='Create Event']
+  teleheath_appointment_option: //option[@value='telehealthAppointment']
+  subject_input: //div[label[text()='Subject']]//input
+  date_container: //div[@class='react-datepicker__input-container']
+  today_date_date_picker: //div[@aria-current='date']
+  start_time_picker: startTime
+  end_time_picker: endTime
+  next_btn: //button[text()='Next']
+  urgent_patient_matter_select: priorityLevel
+  urgent_patient_matter_yes_option: //option[text()='Yes']
+  reason_for_request_select: reasonForRequest
+  reason_for_request_covid_options: //option[text()='COVID-19 concerns']
+  symptoms_start_input_container: react-datepicker__input-container
+  submit_create_event_btn: //button[text()='Create Event'][@type='submit']
+  call_participant_btn: //button[text()='Call Participant']
+  medical_transfer_btn: //button[span[text()='Medical']]
+  leave_call_btn: //button[span/span[@class='icon-phone-end']]
+  submit_btn: //button[text()='Submit']
+  complete_session_btn: //button[text()='Complete Session']
+  issue_resolved_yes_radiobutton: //label[input[@name='resolved'][@value='true']]
+  non_medical_radiobtn: //label[input[@name='kind'][@value='non-med']]
+  category_select: category
+  medical_question_option: //option[@value='medicalQuestion']
+  subcategory_select: subcategory
+  located_provider_option: //option[@value='locatedProvider']
+  submit_and_exit_session_button: //button[contains(text(),'Submit and Exit Session')]
+
+care_platform_notifications:
+  call_completed_notification: //div[text()='Call completed']
+  event_created_notification: //div[text()='Event created']

@@ -1,0 +1,2 @@
+snf_home:
+  new_request_btn: //XCUIElementTypeButton[@name='New Request']

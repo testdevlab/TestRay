@@ -1176,6 +1176,42 @@ class Device
             "#{default_wait_time} seconds \nException: #{exception}\nError Screenshot: #{path}"
   end
 
+  # add to documentation readme
+  # waits for the element to have a specific JS property value.
+  # Accepts:
+  #   Strategy
+  #   Id
+  #   Property
+  #   Value
+  #   Time
+  def wait_for_property(action)
+    action = convert_value_pageobjects(action);
+    locator_strategy = convert_value(action["Strategy"])
+    id, prop, value = convert_value(action["Id"]), convert_value(action["Property"]), convert_value(action["Value"])
+    default_wait_time = (action["Time"] ? action["Time"] : @timeout)
+    exception = ""
+    start = Time.now
+
+    while (Time.now - start) < default_wait_time
+      begin
+        el = @driver.find_element(locator_strategy, id)
+        elprop = el.property(prop)
+        if elprop.to_s == value.to_s
+          log_info("Property: #{prop} matched Value: #{value.to_s}")
+          return el
+        end
+      rescue => e
+        exception = e
+        sleep(0.1)
+      end
+    end
+
+    path = take_error_screenshot()
+    raise "\n#{@role}: Element '#{locator_strategy}:#{id}' does not have " +
+            "property #{prop} = #{value} after " +
+            "#{default_wait_time} seconds \nException: #{exception}\nError Screenshot: #{path}"
+  end
+
   # Accepts:
   #   Time
   def visible_for(action)
