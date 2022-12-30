@@ -1811,6 +1811,7 @@ def verify_event_went_to_bottom(action)
     raise "EventName cannot be null."
   end
 
+  sleep(1) #somehow this sleep prevents the events var from being empty. 
   events = @driver.find_elements(convert_value(action["Strategy"]), convert_value(action["Id"]))
 
   if events.nil? || events.empty?
