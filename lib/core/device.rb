@@ -1794,4 +1794,38 @@ def return_element_attribute(action)
   ENV[convert_value(action["ResultVar"])] = attr_value.to_s
 end
 
+# Returns a variable with a unique name using timestamps at the end
+# i.e. method receives "Hey" and then returns "Hey <timestamp>"
+def generate_unique_name(action)
+  name = convert_value(action["Name"])
+  unique_name = "#{name} #{Time.now.utc.strftime("%d%m%y%H%M%S")}"
+  ENV[convert_value(action["ResultVar"])] = unique_name
+end
+
+# Custom method to verify that an event on Never Alone went to the bottom after its time has passed.
+def verify_event_went_to_bottom(action)
+  action = convert_value_pageobjects(action);
+  event_name = convert_value(action["EventName"])
+
+  if event_name.nil? || event_name.empty?
+    raise "EventName cannot be null."
+  end
+
+  events = @driver.find_elements(convert_value(action["Strategy"]), convert_value(action["Id"]))
+
+  event_labels = []
+  events.each do |event|
+    attr_value = event.attribute("label")
+    log_info("Found element label: #{attr_value}")
+    event_labels.push(attr_value)
+  end
+
+  if event_labels.last().include? event_name
+    log_info("#{event_name} was at the bottom of the Schedules!")
+  else
+    raise "#{event_name} was not at the bottom of the Schedules!"
+  end
+  
+end
+
 # END OF DEVICE CLASS
