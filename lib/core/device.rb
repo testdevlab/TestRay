@@ -1813,6 +1813,10 @@ def verify_event_went_to_bottom(action)
 
   events = @driver.find_elements(convert_value(action["Strategy"]), convert_value(action["Id"]))
 
+  if events.nil? || events.empty?
+    raise "Event elements collection cannot be null."
+  end
+
   event_labels = []
   events.each do |event|
     attr_value = event.attribute("label")
@@ -1825,7 +1829,7 @@ def verify_event_went_to_bottom(action)
   else
     raise "#{event_name} was not at the bottom of the Schedules!"
   end
-  
+
 end
 
 # END OF DEVICE CLASS

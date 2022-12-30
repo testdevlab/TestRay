@@ -8,7 +8,7 @@ never_alone_login:
   
 never_alone_home:
   schedule_label: //XCUIElementTypeStaticText[@name='Schedule']
-  full_schedule_btn: (//XCUIElementTypeButton[contains(@name, 'Full Schedule')])[last()]
+  full_schedule_btn: "**/XCUIElementTypeButton[`label CONTAINS 'Full Schedule'`][-1]"
 
 never_alone_settings:
   my_details_tab: (//XCUIElementTypeOther[contains(@name, 'My Details')])[2]
@@ -40,6 +40,10 @@ never_alone_post_call_survey:
   ok_answer_button: //XCUIElementTypeOther[@name='Ok']
   bad_answer_button: //XCUIElementTypeOther[@name='Bad']
   to_home_button: //XCUIElementTypeOther[@name='To Home']
+
+never_alone_appointment_modal:
+  reschedule_btn: "**/XCUIElementTypeButton[`label == 'Reschedule'`]"
+  close_btn: "**/XCUIElementTypeButton[`label CONTAINS 'Close'`]"
 
 never_alone_schedule:
   schedule_date_label: "**/XCUIElementTypeOther[`label BEGINSWITH 'Today' AND label ENDSWITH 'Calendar'`]/**/XCUIElementTypeStaticText"
