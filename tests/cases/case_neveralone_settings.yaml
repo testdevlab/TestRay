@@ -1,5 +1,5 @@
-# CXTB-33
-VerifyMyDetailsSettingsPageElementsTest:
+# CXTB-33: “My Details” Settings Page is Present and Populated
+TestVerifyMyDetailsSettingsPageElements:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
@@ -11,16 +11,11 @@ VerifyMyDetailsSettingsPageElementsTest:
   Actions:
     # Click on the Settings icon in app header.
     - Type: get_timestamp
-      Format: "%A, %B %d"
+      Format: "%A, %B%e"
       Var: TODAY_DATE
-    - Type: xpath_concat
-      First_part: (//XCUIElementTypeOther[starts-with(@name
-      Quote_part: $AND_CLI_TODAY_DATE$
-      Last_part: )])[last()]/following-sibling::XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]
-      ResultVar: SETTINGS_ICON
     - Type: click
       Strategy: xpath
-      Id: $AND_CLI_SETTINGS_ICON$
+      Id: $PAGE.never_alone_home.settings_icon$
     # Verify that the page shows the following sub pages:
     # My Details
     # Wi-fi

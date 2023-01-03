@@ -9,6 +9,7 @@ never_alone_login:
 never_alone_home:
   schedule_label: //XCUIElementTypeStaticText[@name='Schedule']
   full_schedule_btn: "**/XCUIElementTypeButton[`label CONTAINS 'Full Schedule'`][-1]"
+  settings_icon: (//XCUIElementTypeOther[starts-with(@name, '$AND_CLI_TODAY_DATE$')])[last()]/following-sibling::XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]
 
 never_alone_settings:
   my_details_tab: (//XCUIElementTypeOther[contains(@name, 'My Details')])[2]

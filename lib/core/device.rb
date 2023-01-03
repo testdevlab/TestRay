@@ -1766,23 +1766,6 @@ class Device
   end 
 end
 
-#deprecate/delete this method
-# returns an string with an xpath that needs to have some single quotes inside expression.
-# Accepts:
-#  First_part
-#  Quote_part
-#  Last_part
-#  ResultVar
-# *NOTE*: commas at the end will be ignored due to translation of the values
-def xpath_concat(action)
-  first_part = convert_value(action["First_part"])
-  quote_part = convert_value(action["Quote_part"])
-  last_part = convert_value(action["Last_part"])
-
-  result = "#{first_part}, '#{quote_part}'#{last_part}" #added , in the variable due to value translation of the framework
-  ENV[convert_value(action["ResultVar"])] = result.to_s
-end
-
 #add to documentation
 # returns the attribute of the element in a variable
 def return_element_attribute(action)
@@ -1811,7 +1794,6 @@ def verify_event_went_to_bottom(action)
     raise "EventName cannot be null."
   end
 
-  sleep(1) #somehow this sleep prevents the events var from being empty. 
   events = @driver.find_elements(convert_value(action["Strategy"]), convert_value(action["Id"]))
 
   if events.nil? || events.empty?
