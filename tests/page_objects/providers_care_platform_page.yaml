@@ -11,6 +11,7 @@ providers_home_page:
   last_medical_transfer_row: (//div[contains(text(),'Medical Transfer')])[last()]
   last_on_demand_row: (//div[contains(text(),'On Demand Call')])[last()]
   facilities_navigation: //a//div[contains(text(),'Facilities')]
+  employees_navitagion: //a//div[contains(text(),'Employees')]
 
 providers_facilities_page:
   alpha_center_td: //tr//td[contains(text(),'$AND_CLI_facility_devices_user1_number$')]
