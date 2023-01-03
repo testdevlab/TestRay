@@ -452,7 +452,7 @@ TestStatusNotOnActiveCallForProviders:
     - Role: desktopChrome
       App: desktop
   Actions:
-      # Login to the Care Platform app with Care Partners account
+      # Login to the Care Platform app with Providers account
     - Type: case
       Value: ProvidersCarePlatformLogin
       # Status
@@ -487,7 +487,7 @@ TestStatusNotOnActiveCallForProviders:
         - Type: contain
           Var: STATUS_VAR
           Value: "is-empty"
- #Trying to change status to In Session (shouldn't let you do it manually)
+      # Trying to change status to In Session (shouldn't let you do it manually)
     - Type: click
       Strategy: xpath
       Id : $PAGE.care_platform_header.user_dropdown_button$
@@ -501,7 +501,7 @@ TestStatusNotOnActiveCallForProviders:
     - Type: click
       Strategy: xpath
       Id : $PAGE.providers_home_page.employees_navitagion$
-  #Verifying the status indicator didn't change to In Session
+      # Verifying the status indicator didn't change to In Session
     - Type: get_attribute
       Strategy: xpath
       Id: $PAGE.care_platform_header.status_indicator$
@@ -515,7 +515,7 @@ TestStatusNotOnActiveCallForProviders:
         - Type: contain
           Var: STATUS_VAR
           Value: "is-empty"
-  #Changing status back to available
+      # Changing status back to available
     - Type: click
       Strategy: xpath
       Id : $PAGE.care_platform_header.user_dropdown_button$
@@ -538,7 +538,7 @@ TestStatusNotOnActiveCallForProviders:
         - Type: eq
           Var: HOME_TITLE
           Value: "Employees"
-  #Checking the status indicator correspond to Available
+      # Checking the status indicator correspond to Available
     - Type: get_attribute
       Strategy: xpath
       Id: $PAGE.care_platform_header.status_indicator$
