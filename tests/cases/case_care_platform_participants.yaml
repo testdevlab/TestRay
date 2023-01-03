@@ -1,0 +1,83 @@
+#CXTB-228 Create Follow-Up Ticket for Participant
+TestCreateFollowUpTicket:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - use-fake-ui-for-media-stream
+            - use-fake-device-for-media-stream
+            - no-sandbox
+            - disable-gpu
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: CarePartnerLogin
+  #Go to participants
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform.navigation_participant$
+  #Select first participant in the list
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_1_row$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_1_row$
+  #Go to follow-up tickets tab
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_tab_button$
+  #Click on Create Ticket
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.create_ticket_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.create_ticket_button$
+  #Fill Create Ticket's form
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_subject_input$
+      Value: Automated test
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_kind_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.kind_medical_appointment_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_assigned_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.assigned_option_2$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_date_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.current_date_option$
+  #Save form
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.save_ticket_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.save_ticket_button$
+  #Wait for notification
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.new_ticket_notification$
+  #Check new Follow-up ticket is among the others
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.new_ticket_subject$
+    - Type: get_timestamp
+      Format: "%m/%d/%Y"
+      Var: TODAYS_DATE
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.new_ticket_date$
