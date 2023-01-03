@@ -1,39 +1,3 @@
-CarePartnerLogin:
-  Roles:
-    - Role: desktopChrome
-      App: desktop
-  Actions:
-    - Type: navigate
-      Role: desktopChrome
-      Value: https://care-platform-qa.chs-ds.com/login
-    - Type: maximize
-    - Type: send_keys
-      Strategy: id
-      Id: $PAGE.care_platform_login.email_input$
-      Value: $AND_CLI_carepartner_user1$
-    - Type: send_keys
-      Strategy: id
-      Id: $PAGE.care_platform_login.password_input$
-      Value: $AND_CLI_carepartner_user1_pwd$
-    - Type: click
-      Strategy: xpath
-      Role: desktopChrome
-      Id: $PAGE.care_platform_login.login_button$
-    - Type: sleep
-      Time: 2
-    - Type: if
-      If_Cases:
-      - If_Case: VerifyEmail
-
-VerifyEmail:
-  Roles:
-    - Role: desktopChrome
-      App: desktop
-  Actions:
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.verify_account.email_button$
-
 #CXTB-214: Validating Home elements
 TestHomePage:
   Environment: Settings 
