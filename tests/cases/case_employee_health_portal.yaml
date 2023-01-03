@@ -1,0 +1,58 @@
+#CXTB-216: Verify Sign Up Process for New Elegible DependentUsers
+TestSignUpNewDependent:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - use-fake-ui-for-media-stream
+            - use-fake-device-for-media-stream
+            - no-sandbox
+            - disable-gpu
+      App: "desktop"
+  Actions:
+    - Type: navigate
+      Role: desktopChrome
+      Value: https://employee-health-portal-qa.chs-ds.com/login
+    - Type: maximize
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.sign_up_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.sign_up_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.first_name_input$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.first_name_input$
+      Value: Luna
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.last_name_input$
+      Value: Guzmanone
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.email_input$
+      Value: dguzman@neural.com.do
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.email_confirmation_input$
+      Value: dguzman@neural.com.do
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.phone_input$
+      Value: 8095357353
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.dateofbirth_input$
+      Value: 2007-08-07
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.member_id_input$
+      Value: 128521CCD
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.agree_checkbox$

@@ -1,0 +1,19 @@
+EmployeeHealthPortalGoSignUp:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:      
+    - Type: maximize
+    - Type: navigate
+      Role: desktopChrome
+      Value: $AND_CLI_employee_health_url$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.sign_up_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.sign_up_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.first_name_input$

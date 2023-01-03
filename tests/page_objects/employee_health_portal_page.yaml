@@ -1,0 +1,14 @@
+employee_health_login_page:
+  sign_up_button: //div[@class='login-screen-form']//button[text()='Sign Up']
+
+employee_health_signup_page:
+  first_name_input: //input[@id='firstName']
+  last_name_input: //input[@id='lastName']
+  email_input: //input[@id='email']
+  email_confirmation_input: //input[@id='emailConfirmation']
+  phone_input: //input[@id='phone']
+  dateofbirth_input: //input[@id='dateOfBirth']
+  member_id_input: //input[@id='memberIdentifier']
+  agree_checkbox: //input[@id='emailAgreement']
+  submit_button: //button[text()='Submit']
+  back_login_button: //button[contains(text(),'Login')]
