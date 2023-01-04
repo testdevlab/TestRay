@@ -89,15 +89,17 @@ Environments:
       facility_devices_user2_pwd: add_your_info  
       facility_devices_user2_number: add_your_info
 #Employee users    
-      employee_user1: add_your_info
-      employee_user1_pwd: add_your_info
-      employee_user1_name: add_your_info
-      employee_user1_lastname: add_your_info
-      employee_user1_dob: add_your_info
-      employee_user1_card_member_id: add_your_info
+      employee_user1: dguzman+employee1@neural.com.do
+      employee_user1_pwd: Pochonga1!
+      employee_user1_name: Debbie
+      employee_user1_lastname: Guzmanone
+      employee_user1_dob: "1951-06-19"
+      employee_user1_card_member_id: 128521CCD
+      employee_user1_phone_number: "8095357353"
       employee_user2: add_your_info
       employee_user2_pwd: add_your_info
       employee_user2_card_member_id: add_your_info
       employee_user2_name: add_your_info
       employee_user2_lastname: add_your_info
       employee_user2_dob: add_your_info
+      employee_user2_phone_number:

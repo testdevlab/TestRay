@@ -12,47 +12,90 @@ TestSignUpNewDependent:
             - disable-gpu
       App: "desktop"
   Actions:
-    - Type: navigate
-      Role: desktopChrome
-      Value: https://employee-health-portal-qa.chs-ds.com/login
-    - Type: maximize
+  #Go to Employee Health Portal, then to Sign Up
+    - Type: case
+      Value: EmployeeHealthPortalGoSignUp
+  #Go back to Login
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.back_login_button$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.employee_health_login_page.sign_up_button$
+      Id: $PAGE.employee_health_login_page.log_in_button$
+  #Return to Sign Up
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_login_page.sign_up_button$
-    - Type: wait_for
+  #Click on Submit without the data required
+    - Type: click
       Strategy: xpath
-      Id: $PAGE.employee_health_signup_page.first_name_input$
+      Id: $PAGE.employee_health_signup_page.submit_button$
+  #Check alert messages on required fields
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.employee_health_signup_page.first_name_alert$
+      Greps:
+        - var: ALERT_MESSAGE
+          match: "(.*)first name(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ALERT_MESSAGE
+          Value: "Please enter your first name."
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.employee_health_signup_page.last_name_alert$
+      Greps:
+        - var: ALERT_MESSAGE
+          match: "(.*)last name(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ALERT_MESSAGE
+          Value: "Please enter your last name."
+  #Filling the form
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.employee_health_signup_page.first_name_input$
-      Value: Luna
+      Value: $AND_CLI_employee_user1_name$
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.employee_health_signup_page.last_name_input$
-      Value: Guzmanone
+      Value: $AND_CLI_employee_user1_lastname$
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.employee_health_signup_page.email_input$
-      Value: dguzman@neural.com.do
+      Value: $AND_CLI_employee_user1$
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.employee_health_signup_page.email_confirmation_input$
-      Value: dguzman@neural.com.do
+      Value: $AND_CLI_employee_user1$
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.employee_health_signup_page.phone_input$
-      Value: 8095357353
+      Value: $AND_CLI_employee_user1_phone_number$
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.employee_health_signup_page.dateofbirth_input$
-      Value: 2007-08-07
+      Value: $AND_CLI_employee_user1_dob$
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.employee_health_signup_page.member_id_input$
-      Value: 128521CCD
+      Value: $AND_CLI_employee_user1_card_member_id$
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_signup_page.agree_checkbox$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.submit_button$
+  #Check there's a Thank You modal
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.confirmation_modal.thanks_title$  
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.confirmation_modal.close_modal_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.log_in_button$
+

@@ -1,14 +1,24 @@
 employee_health_login_page:
   sign_up_button: //div[@class='login-screen-form']//button[text()='Sign Up']
+  log_in_button: //div[@class='login-screen']//form/button[text()='Log In']
 
 employee_health_signup_page:
   first_name_input: //input[@id='firstName']
+  first_name_alert: //label[@for='firstName']/following-sibling::div//div[contains(@class,'red')]
   last_name_input: //input[@id='lastName']
+  last_name_alert: //label[@for='lastName']/following-sibling::div//div[contains(@class,'red')]
   email_input: //input[@id='email']
   email_confirmation_input: //input[@id='emailConfirmation']
   phone_input: //input[@id='phone']
   dateofbirth_input: //input[@id='dateOfBirth']
   member_id_input: //input[@id='memberIdentifier']
-  agree_checkbox: //input[@id='emailAgreement']
+  agree_checkbox: //span[@class='input-checkbox-label']
   submit_button: //button[text()='Submit']
   back_login_button: //button[contains(text(),'Login')]
+  page_title: //span[@class='input-checkbox-label']
+
+confirmation_modal:
+  thanks_title: //*[@id='dialogs']//h4[text()='Thank You']
+  email_address: //*[@id='dialogs']//p/strong/text()
+  close_modal_button: //*[@id='dialogs']//button
+
