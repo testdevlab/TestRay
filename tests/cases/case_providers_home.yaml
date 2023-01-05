@@ -444,3 +444,111 @@ TestHomePageListingView:
         Var: follow_up_text
         Value: "Follow-up"
         raise: true
+
+# CXTB-231 Status Drop-down Options - Not on Active Call
+TestStatusNotOnActiveCallForProviders:
+  Environment: Settings  
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+      # Login to the Care Platform app with Providers account
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+      # Status
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_menu_header$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_available_button$
+      # Changing status to away
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_away_button$
+      # Navigate to Facilities
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.facilities_navigation$
+      # Checking indicator is set to Away status
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Greps:
+        - var: STATUS_VAR
+          attr: class
+          condition: nempty
+          match: "(.*)has-status(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: STATUS_VAR
+          Value: "is-empty"
+      # Trying to change status to In Session (shouldn't let you do it manually)
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_insession_button$
+    - Type: click_js
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_insession_button$
+      # Navigate to Employees
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.providers_home_page.employees_navitagion$
+      # Verifying the status indicator didn't change to In Session
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Greps:
+        - var: STATUS_VAR
+          attr: class
+          condition: nempty
+          match: "(.*)has-status(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: STATUS_VAR
+          Value: "is-empty"
+      # Changing status back to available
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_menu_header$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_available_button$
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.providers_home_page.employees_navitagion$
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.care_platform.page_title$
+      Greps:
+        - var: HOME_TITLE
+          match: "Employees*"
+      Asserts:
+        - Type: eq
+          Var: HOME_TITLE
+          Value: "Employees"
+      # Checking the status indicator correspond to Available
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Greps:
+        - var: STATUS_VAR
+          attr: class
+          condition: nempty
+          match: "(.*)has-status(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: STATUS_VAR
+          Value: "is-green"
