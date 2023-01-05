@@ -6,6 +6,7 @@ require "os"
 require "keisan"
 require "selenium-webdriver"
 require "screen-recorder"
+require "date"
 require_relative "rest_api"
 require_relative "appium_server"
 require_relative "device_drivers"
@@ -247,6 +248,7 @@ class Device
     @driver.background_app(-1)
   end
 
+  #add to documentation
   # hides keyboard (available on iOS)
   def hide_keyboard(action = nil)
     @driver.hide_keyboard
@@ -494,6 +496,7 @@ class Device
     action = Appium::TouchAction.new(@driver).press(x: el_location.x, y: el_location.y).wait(600).release.perform
   end
 
+  #add to documentation
   # taps on an element, only mobile.
   def tap(action)
     action = convert_value_pageobjects(action);
@@ -1361,6 +1364,65 @@ class Device
       ENV[convert_value(action["Var"])] = time
     end
   end
+  
+  #add to documentation
+  # Prints and Writes local timestamp with given format
+  def get_local_timestamp(action)
+    format_t = convert_value(action["Format"])
+    time = Time.now.getlocal.strftime(format_t)
+    log_info("Timestamp is: #{time}")
+    if action["File"]
+      file = File.open(convert_value(action["File"]), "w")
+      file.write(time)
+      file.close
+    elsif action["Var"]
+      ENV[convert_value(action["Var"])] = time
+    end
+  end
+
+  #add to documentation
+  # Prints and Writes yesterday's date with given format
+  def get_yesterday_date(action)
+    format_t = convert_value(action["Format"])
+    time = Date.today.prev_day.strftime(format_t)
+    log_info("Yesterday's date is: #{time}")
+    if action["File"]
+      file = File.open(convert_value(action["File"]), "w")
+      file.write(time)
+      file.close
+    elsif action["Var"]
+      ENV[convert_value(action["Var"])] = time
+    end
+  end
+
+  #add to documentation
+  # Prints and Writes tomorrow's date with given format
+  def get_tomorrow_date(action)
+    format_t = convert_value(action["Format"])
+    time = (Date.today + 1).strftime(format_t)
+    log_info("Tomorrow's date is: #{time}")
+    if action["File"]
+      file = File.open(convert_value(action["File"]), "w")
+      file.write(time)
+      file.close
+    elsif action["Var"]
+      ENV[convert_value(action["Var"])] = time
+    end
+  end
+   #add to documentation
+   # returns now time -5 minutes
+   def get_past_timestamp(action)
+    format_t = convert_value(action["Format"])
+    time = (Time.now.getlocal - 5*60).strftime(format_t)
+    log_info("Timestamp - 5 minute is: #{time}")
+    if action["File"]
+      file = File.open(convert_value(action["File"]), "w")
+      file.write(time)
+      file.close
+    elsif action["Var"]
+      ENV[convert_value(action["Var"])] = time
+    end
+  end
 
   def set_env_var(action)
     log_info("Assigned value: \"#{convert_value(action["Value"])}\" to Var: \"#{convert_value(action["Var"])}\"")
@@ -1704,22 +1766,7 @@ class Device
   end 
 end
 
-# returns an string with an xpath that needs to have some single quotes inside expression.
-# Accepts:
-#  First_part
-#  Quote_part
-#  Last_part
-#  ResultVar
-# *NOTE*: commas at the end will be ignored due to translation of the values
-def xpath_concat(action)
-  first_part = convert_value(action["First_part"])
-  quote_part = convert_value(action["Quote_part"])
-  last_part = convert_value(action["Last_part"])
-
-  result = "#{first_part}, '#{quote_part}'#{last_part}" #added , in the variable due to value translation of the framework
-  ENV[convert_value(action["ResultVar"])] = result.to_s
-end
-
+#add to documentation
 # returns the attribute of the element in a variable
 def return_element_attribute(action)
   el = wait_for(action)
@@ -1728,6 +1775,44 @@ def return_element_attribute(action)
   attr_value = el.attribute(action["Attribute"])
   log_info("Element attribute is " + attr_value.to_s)
   ENV[convert_value(action["ResultVar"])] = attr_value.to_s
+end
+
+# Returns a variable with a unique name using timestamps at the end
+# i.e. method receives "Hey" and then returns "Hey <timestamp>"
+def generate_unique_name(action)
+  name = convert_value(action["Name"])
+  unique_name = "#{name} #{Time.now.utc.strftime("%d%m%y%H%M%S")}"
+  ENV[convert_value(action["ResultVar"])] = unique_name
+end
+
+# Custom method to verify that an event on Never Alone went to the bottom after its time has passed.
+def verify_event_went_to_bottom(action)
+  action = convert_value_pageobjects(action);
+  event_name = convert_value(action["EventName"])
+
+  if event_name.nil? || event_name.empty?
+    raise "EventName cannot be null."
+  end
+
+  events = @driver.find_elements(convert_value(action["Strategy"]), convert_value(action["Id"]))
+
+  if events.nil? || events.empty?
+    raise "Event elements collection cannot be null."
+  end
+
+  event_labels = []
+  events.each do |event|
+    attr_value = event.attribute("label")
+    log_info("Found element label: #{attr_value}")
+    event_labels.push(attr_value)
+  end
+
+  if event_labels.last().include? event_name
+    log_info("#{event_name} was at the bottom of the Schedules!")
+  else
+    raise "#{event_name} was not at the bottom of the Schedules!"
+  end
+
 end
 
 # END OF DEVICE CLASS

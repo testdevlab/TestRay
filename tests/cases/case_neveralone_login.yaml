@@ -1,5 +1,5 @@
-# CXTB-219
-LoginNeverAloneTest:
+# CXTB-219: Verify Log in to the Never Alone app
+TestLoginNeverAlone:
   Environment: Settings
   Roles:
     - Role: localiOS
