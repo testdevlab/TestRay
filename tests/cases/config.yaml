@@ -101,5 +101,5 @@ Environments:
       employee_user2_card_member_id: add_your_info
       employee_user2_name: add_your_info
       employee_user2_lastname: add_your_info
-      employee_user2_dob: add_your_info
-      employee_user2_phone_number:
+      employee_user2_dob: "YYYY-MM-DD" #you need to keep the date between quotation marks
+      employee_user2_phone_number: add_your_info #phone number is a combination of 10 digits, without parenthesis or dashes
