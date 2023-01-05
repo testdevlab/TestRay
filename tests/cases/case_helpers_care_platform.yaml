@@ -61,7 +61,7 @@ CarePartnerLogin:
   Actions:
     - Type: navigate
       Role: desktopChrome
-      Value: https://care-platform-qa.chs-ds.com/login
+      Value: $AND_CLI_care_platform_url$
     - Type: maximize
     - Type: send_keys
       Strategy: id
