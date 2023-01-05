@@ -5,7 +5,7 @@ TestForgotPassword:
     - Role: desktopChrome
       App: "desktop"
   Actions:
-  #Calling Login case
+  #Navigating to the Care Platform login page
     - Type: maximize
     - Type: navigate
       Role: desktopChrome
@@ -45,7 +45,8 @@ TestForgotPassword:
       - Type: eq 
         Var: thank_you_text
         Value: "Thank You"
-        raise: true      
+        raise: true
+  #Closing the Thank You dialog   
     - Type: click
       Strategy: xpath
       Id : $PAGE.care_platform_login.close_icon_button$
