@@ -1,0 +1,54 @@
+#CXTB-222: Log In - Forgot Password
+TestForgotPassword:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: maximize
+    - Type: navigate
+      Role: desktopChrome
+      Value: $AND_CLI_care_platform_url$ 
+  #Opening the forgot password dialog
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_login.forgot_password_button$
+  #Closing the dialog
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_login.cancel_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_login.submit_button$
+  #Opening the forgot password dialog
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_login.forgot_password_button$
+  #Submitting the email
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_login.dialog_email_input$
+      Value: $AND_CLI_carepartner_user1$
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_login.submit_button$
+  #Verify the Thank You text showed up
+    - Type: get_text  
+      Strategy: xpath
+      Id: $PAGE.care_platform_login.thank_you_h4$
+      Greps:
+      - var: thank_you_text
+        match: "(.*)"
+    - Type: assert
+      Asserts: 
+      - Type: eq 
+        Var: thank_you_text
+        Value: "Thank You"
+        raise: true      
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_login.close_icon_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id : $PAGE.care_platform_login.submit_button$
