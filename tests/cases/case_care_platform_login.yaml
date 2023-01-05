@@ -17,10 +17,10 @@ TestForgotPassword:
   #Closing the dialog
     - Type: click
       Strategy: xpath
-      Id : $PAGE.care_platform_login.cancel_button$
+      Id : $PAGE.care_platform_login.dialog_cancel_button$
     - Type: wait_not_visible
       Strategy: xpath
-      Id: $PAGE.care_platform_login.submit_button$
+      Id: $PAGE.care_platform_login.dialog_submit_button$
   #Opening the forgot password dialog
     - Type: click
       Strategy: xpath
@@ -32,24 +32,24 @@ TestForgotPassword:
       Value: $AND_CLI_carepartner_user1$
     - Type: click
       Strategy: xpath
-      Id : $PAGE.care_platform_login.submit_button$
+      Id : $PAGE.care_platform_login.dialog_submit_button$
   #Verify the Thank You text showed up
     - Type: get_text  
       Strategy: xpath
-      Id: $PAGE.care_platform_login.thank_you_h4$
+      Id: $PAGE.care_platform_login.dialog_thank_you_title$
       Greps:
-      - var: thank_you_text
+      - var: THANK_YOU_TEXT
         match: "(.*)"
     - Type: assert
       Asserts: 
       - Type: eq 
-        Var: thank_you_text
+        Var: THANK_YOU_TEXT
         Value: "Thank You"
         raise: true
   #Closing the Thank You dialog   
     - Type: click
       Strategy: xpath
-      Id : $PAGE.care_platform_login.close_icon_button$
+      Id : $PAGE.care_platform_login.dialog_close_icon_button$
     - Type: wait_not_visible
       Strategy: xpath
-      Id : $PAGE.care_platform_login.submit_button$
+      Id : $PAGE.care_platform_login.dialog_submit_button$
