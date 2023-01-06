@@ -386,3 +386,39 @@ TestUpdateInfoAccount:
       Strategy: xpath
       Id: $PAGE.myaccount_info.modal_title$
       Time: 2
+
+#CXTB-237 Account - Help
+TestAccountHelp:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: CarePartnerLogin
+  #Going to My Account
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+  #Going to Help
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.help_menu_button$
+  #Verify the Help page is visible
+    - Type: switch_window
+      Value: 1
+      CheckTime: 10
+    - Type: get_url
+      Greps:
+        - var: HELP_PAGE_URL
+          match: "(.*)care_partner_user_manual(.*).pdf"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: HELP_PAGE_URL
+          Value: care_partner_user_manual
+        - Type: contain
+          Var: HELP_PAGE_URL
+          Value: .pdf
