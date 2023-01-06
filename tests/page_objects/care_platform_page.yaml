@@ -2,6 +2,12 @@ care_platform_login:
   email_input: email
   password_input: password
   login_button: //button[text() = 'Log In']
+  forgot_password_button: //button[text()='Forgot Password']
+  dialog_email_input: //div[contains(@class,'dialog')]//input
+  dialog_submit_button: //button[text()='Submit']
+  dialog_cancel_button: //button[text()='Cancel']
+  dialog_thank_you_title: //h4[contains(text(),'Thank You')]
+  dialog_close_icon_button: //button[span]
 
 verify_account:
   verify_modal_title: //*[@id='dialogs']//h4[contains(text(),'Verify Your Account')]
