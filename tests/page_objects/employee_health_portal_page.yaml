@@ -1,6 +1,8 @@
 employee_health_login_page:
   sign_up_button: //div[@class='login-screen-form']//button[text()='Sign Up']
   log_in_button: //div[@class='login-screen']//form/button[text()='Log In']
+  email_input: //input[@id='email']
+  password_input: //input[@id='password']
 
 employee_health_signup_page:
   first_name_input: //input[@id='firstName']
@@ -17,8 +19,26 @@ employee_health_signup_page:
   back_login_button: //button[contains(text(),'Login')]
   page_title: //span[@class='input-checkbox-label']
 
-confirmation_modal:
+employee_health_signup_confirmation_modal:
   thanks_title: //*[@id='dialogs']//h4[text()='Thank You']
   email_address: //*[@id='dialogs']//p/strong/text()
   close_modal_button: //*[@id='dialogs']//button
 
+employee_health_home_page:
+  user_dropdown_button: //header//div[@class='user-dropdown']/button
+  user_dropdown_menu: //nav[@class='user-dropdown-menu']
+  dropdown_option_myaccount: //nav/button[text()='My Account']
+  alert_updated_notification: //div[@class='Toastify']//div[contains(text(),'Notification preferences updated')]
+
+employee_health_my_account_modal:
+  modal_title: //*[@id='modals']//h4[text()='My Account']
+  close_modal_button: //*[@id='modals']//button[text()='Close']
+  notifications_tab: //*[@id='modals']//nav/button[text()='Notifications']
+  notifications_text: //div[@tab-title='Notifications']/form
+  save_changes_button: //button[text()='Save Changes']
+  cancel_button: //button[text()='Cancel']
+  notifications_email_checkbox_input: //*[@id='minBeforeAppointmentToEmail']
+  notifications_sms_checkbox_input: //*[@id='minBeforeAppointmentToText']
+  notifications_email_checkbox: //*[@id='minBeforeAppointmentToEmail']/following-sibling::span
+  notifications_sms_checkbox: //*[@id='minBeforeAppointmentToText']/following-sibling::span
+  

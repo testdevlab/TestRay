@@ -17,3 +17,48 @@ EmployeeHealthPortalGoSignUp:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.employee_health_signup_page.first_name_input$
+
+EmployeeHealthPortalLogIn:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:      
+    - Type: maximize
+    - Type: navigate
+      Role: desktopChrome
+      Value: $AND_CLI_employee_health_url$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.log_in_button$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.email_input$
+      Value: $AND_CLI_employee_user1$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.password_input$
+      Value: $AND_CLI_employee_user1_pwd$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.log_in_button$
+
+#CXTB-233 Navigate to My Account
+NavigateToMyAccount:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.user_dropdown_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.user_dropdown_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.user_dropdown_menu$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.dropdown_option_myaccount$
