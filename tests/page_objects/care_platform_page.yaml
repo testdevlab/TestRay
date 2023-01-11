@@ -60,9 +60,15 @@ care_platform_logout_modal:
   cancel_logout_button: //button[contains(@class,'button-ghost')] 
 
 care_platform_participant:
+  first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
+  selected_darkened_letter_button: //button[contains(@class,'is-selected')]
   senior_1_td: //td[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
   senior_1_row: //*[@id='containerElement']/table[1]/tbody/tr[1]
+  first_senior_in_list_strong: //*[@id='containerElement']/table[1]/tbody/tr[1]//strong
   call_portal_btn: //button[text()='Call Portal']
+  search_button: //button[span[@class='icon-search']]
+  search_input: //input[contains(@placeholder,'Search by participant name')]
+  clear_search_button: //button[contains(@class,'button-circle')]
 
 care_platform_participant_details:
   follow_up_tab_button: //nav/button[contains(text(),'Follow-up Tickets')]
