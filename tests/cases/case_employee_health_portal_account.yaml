@@ -28,7 +28,7 @@ TestSettingNotification:
   #Verifying text in the notification tab
     - Type: get_text
       Strategy: xpath
-      Id : $PAGE.employee_health_my_account_modal.notifications_text$
+      Id: $PAGE.employee_health_my_account_modal.notifications_text$
       Greps:
         - var: TITLE_TEXT
           condition: nempty
@@ -136,3 +136,139 @@ TestSettingNotification:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.employee_health_home_page.alert_updated_notification$
+
+#CXTB-252 Information & Update Contact Number
+TestInformationUpdateNumber:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - use-fake-ui-for-media-stream
+            - use-fake-device-for-media-stream
+            - no-sandbox
+            - disable-gpu
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  #Navigate into My Account
+    - Type: case
+      Value: NavigateToMyAccount
+  #Check that phone is the only one enable to edit, all the others are read only
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.modal_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_input$ 
+      Property: disabled
+      Value: "false"
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_firstname_input$ 
+      Property: disabled
+      Value: "true"
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_lastname_input$ 
+      Property: disabled
+      Value: "true"
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_email_input$ 
+      Property: disabled
+      Value: "true"
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_date_of_birth_input$ 
+      Property: disabled
+      Value: "true"
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_member_id_input$ 
+      Property: disabled
+      Value: "true"
+    #Save the current value for phone
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_input$
+      Greps:
+      - var: CURRENT_PHONE
+        attr: value
+        remove: '+1 '
+        match: "(.*)"
+    #The way to leave the phone input empty is by backspacing 10 times
+    - Type: loop
+      Times: 10
+      Case: CaseDeletePhoneNumber
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_input$
+      Attribute: value
+      Value: ''
+    #Trying to save with empty phone number input
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_alert_message$
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_alert_message$
+      Greps:
+        - var: PHONE_ALERT
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: PHONE_ALERT
+          Value: Please enter a phone number
+    #Checking alert when using wrong format
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_input$
+      Value: 333666
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_alert_message$
+      Greps:
+        - var: PHONE_ALERT
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: PHONE_ALERT
+          Value: Please enter a valid phone number
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_input$
+      Value: 4444
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.save_changes_button$
+  #Waiting for notification of success
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.alert_updated_info$
+    #Navigate into My Account
+    - Type: case
+      Value: NavigateToMyAccount
+    #Erase again the phone number
+    - Type: loop
+      Times: 10
+      Case: CaseDeletePhoneNumber
+    #Setting back the right value for phone number
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_input$
+      Value: $AND_CLI_employee_user1_phone_number$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.alert_updated_info$  

@@ -29,11 +29,13 @@ employee_health_home_page:
   user_dropdown_menu: //nav[@class='user-dropdown-menu']
   dropdown_option_myaccount: //nav/button[text()='My Account']
   alert_updated_notification: //div[@class='Toastify']//div[contains(text(),'Notification preferences updated')]
+  alert_updated_info: //div[@class='Toastify']//div[contains(text(),'Account info updated')]
 
 employee_health_my_account_modal:
   modal_title: //*[@id='modals']//h4[text()='My Account']
   close_modal_button: //*[@id='modals']//button[text()='Close']
   notifications_tab: //*[@id='modals']//nav/button[text()='Notifications']
+  my_info_tab: //*[@id='modals']//nav/button[text()='My Info']
   notifications_text: //div[@tab-title='Notifications']/form
   save_changes_button: //button[text()='Save Changes']
   cancel_button: //button[text()='Cancel']
@@ -41,4 +43,10 @@ employee_health_my_account_modal:
   notifications_sms_checkbox_input: //*[@id='minBeforeAppointmentToText']
   notifications_email_checkbox: //*[@id='minBeforeAppointmentToEmail']/following-sibling::span
   notifications_sms_checkbox: //*[@id='minBeforeAppointmentToText']/following-sibling::span
-  
+  my_info_phone_input: //input[@id='phone']
+  my_info_phone_alert_message: //*[@id='modals']//input[@id='phone']//following-sibling::div[@aria-hidden='false']//div[contains(@class,'color-red-400')]
+  my_info_firstname_input: //input[@id='firstName']
+  my_info_lastname_input: //*[@id='lastName']
+  my_info_email_input: //*[@id='email']
+  my_info_date_of_birth_input: //*[@id='dateOfBirth']
+  my_info_member_id_input: //*[@id='memberIdentifier']
