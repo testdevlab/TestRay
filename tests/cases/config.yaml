@@ -8,6 +8,14 @@ Timeout: 15
 Devices:
   - role: command1,command2,command3
   - role: desktopChrome,desktopChrome1   
+    capabilities:
+      chromeOptions:
+        args:
+          - use-fake-ui-for-media-stream
+          - use-fake-device-for-media-stream
+          - no-sandbox
+          - disable-gpu
+          - start-maximized
     browser: chrome
   - role: desktopFirefox
     browser: firefox
@@ -23,7 +31,7 @@ Devices:
     capabilities:
       deviceName:  "Apple’s iPad (15.5)" #"iPad Pro (12.9-inch) (5th generation) Simulator (15.5)" #THIS DEVICE CAN BE UPDATED BY YOUR DEVICE
       udid: "00008101-001510200E04001E" #"D017D231-AAF1-4050-946B-B9FC0838D146" #THIS UDID CAN BE UPDATEDED WITH YOUR DEVICE UDID 
-      newCommandTimeout: 30
+      newCommandTimeout: 60
 
 #VARS
 Environments:

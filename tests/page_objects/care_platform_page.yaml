@@ -22,6 +22,10 @@ care_platform:
   navigation_followup: //nav//div[contains(text(),'Follow-up')]
   navigation_home: //nav//div[contains(text(),'Home')]
 
+care_platform_home:
+  first_call_of_queue: //tbody[@role='rowgroup']/tr[1]
+  answer_call: //button[text()='Answer Call']
+
 care_platform_header:
   app_logo: //header//div[@class='app-header-logo']/img
   app_time: //header//time
@@ -93,7 +97,12 @@ care_platform_call_portal:
   symptoms_start_input_container: react-datepicker__input-container
   submit_create_event_btn: //button[text()='Create Event'][@type='submit']
   call_participant_btn: //button[text()='Call Participant']
+  video_btn: //button[@class='video-control']//span[@class='icon-video-off']
+  video_mirror_care_partner: //div[@class='video-mirror']
+  video_grid_from_senior_btn: //div[@class='video-feed']/div[@data-testid='video-grid']
+  full_screen_call_btn: //button[@class='video-control video-control-top-right']
   medical_transfer_btn: //button[span[text()='Medical']]
+  verify_video_is_full_screen: //div[@class='app-video app-video-fullscreen']
   leave_call_btn: //button[span/span[@class='icon-phone-end']]
   submit_btn: //button[text()='Submit']
   complete_session_btn: //button[text()='Complete Session']

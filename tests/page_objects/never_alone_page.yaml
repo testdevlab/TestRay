@@ -8,6 +8,7 @@ never_alone_login:
   
 never_alone_home:
   schedule_label: //XCUIElementTypeStaticText[@name='Schedule']
+  call_care_partner: "**/XCUIElementTypeOther[`label BEGINSWITH 'Call Personal' AND label ENDSWITH 'Care Partner'`]"
   full_schedule_btn: "**/XCUIElementTypeButton[`label CONTAINS 'Full Schedule'`][-1]"
   settings_icon: (//XCUIElementTypeOther[starts-with(@name, '$AND_CLI_TODAY_DATE$')])[last()]/following-sibling::XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]
 
@@ -35,12 +36,24 @@ never_alone_incoming_call:
 never_alone_call:
   end_call_button: (//XCUIElementTypeOther[contains(@name,'End Call')])[last()]
   mute_call_button: (//XCUIElementTypeOther[contains(@name,'Microphone')])[last()]
+  medical_call_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Medical'`][1]"
+  non_medical_call_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Non-Medical'`]"
+  cancel_call_button: "**/XCUIElementTypeButton[`label CONTAINS 'Cancel Call'`]"
+  waiting_room_label: "**/XCUIElementTypeStaticText[`label == 'Waiting room'`]"
+  video_button: "**/XCUIElementTypeOther[`label ENDSWITH 'Camera'`]"
   
 never_alone_post_call_survey:
   great_answer_button: //XCUIElementTypeOther[@name='Great']
   ok_answer_button: //XCUIElementTypeOther[@name='Ok']
   bad_answer_button: //XCUIElementTypeOther[@name='Bad']
   to_home_button: //XCUIElementTypeOther[@name='To Home']
+  thank_you_label: "**/XCUIElementTypeStaticText[`label == 'Thank you for your feedback'`]"
+  video_quality_not_good_option: "**/XCUIElementTypeOther[`label == 'The video quality was not good.'`]"
+  could_not_hear_audio_option: "**/XCUIElementTypeOther[`label == 'I could not hear the audio.'`]"
+  problem_was_not_solved_option: "**/XCUIElementTypeOther[`label == 'My problem was not solved.'`]"
+  issue_with_care_partner_option: "**/XCUIElementTypeOther[`label == 'Issues with the care partner.'`]"
+  call_was_not_answered_option: "**/XCUIElementTypeOther[`label == 'Call was not answered.'`]"
+  back_to_select_button: "**/XCUIElementTypeOther[`label ENDSWITH 'Back to select'`][-1]"
 
 never_alone_appointment_modal:
   reschedule_btn: "**/XCUIElementTypeButton[`label == 'Reschedule'`]"
