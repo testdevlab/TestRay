@@ -27,23 +27,38 @@ LoginNeverAloneHelper:
     # Open the Never Alone app and click on Provision Device button.
     - Type: click
       Strategy: xpath
-      Id: $PAGE.never_alone_login.provision_device_btn$
+      Id: $PAGE.seniors_app_login.provision_device_btn$
     # Fill in the email and password fields with credentials.
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.never_alone_login.email_input$
+      Id: $PAGE.seniors_app_login.email_input$
       Value: $AND_CLI_senior_user1$
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.never_alone_login.password_input$
+      Id: $PAGE.seniors_app_login.password_input$
       Value: $AND_CLI_senior_user1_pwd$
     - Type: hide_keyboard
       Role: localiOS
     # Click on the Log In button.
     - Type: click
       Strategy: xpath
-      Id: $PAGE.never_alone_login.login_btn$
+      Id: $PAGE.seniors_app_login.login_btn$
     # Verify that the user has successfully logged in.
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.never_alone_home.schedule_label$
+      Id: $PAGE.seniors_app_home.schedule_label$
+
+SchedulesPageNavigationHelper:
+  Environment: Settings
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+  # In the Home page, click on the button "Full Schedule"
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.full_schedule_btn$
+  # Verify Schedules page is displayed
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.schedule_label$

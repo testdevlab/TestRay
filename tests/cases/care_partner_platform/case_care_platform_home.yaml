@@ -265,11 +265,11 @@ TestUpdateInfoAccount:
       Id : $PAGE.care_platform_header.myaccount_menu_button$  
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.myaccount_info.modal_title$
+      Id: $PAGE.care_platform_myaccount_info.modal_title$
   #Saving original firstname, and adding a 1 to form input
     - Type: get_attribute
       Strategy: xpath
-      Id : $PAGE.myaccount_info.firstname_input$
+      Id : $PAGE.care_platform_myaccount_info.firstname_input$
       Greps:
         - var: FIRSTNAME_ORIG
           attr: value
@@ -277,14 +277,14 @@ TestUpdateInfoAccount:
           match: "(.*)"
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.myaccount_info.firstname_input$
+      Id: $PAGE.care_platform_myaccount_info.firstname_input$
       Value: '1'
     - Type: click
       Strategy: xpath
-      Id : $PAGE.myaccount_info.modal_title$
+      Id : $PAGE.care_platform_myaccount_info.modal_title$
     - Type: get_attribute
       Strategy: xpath
-      Id : $PAGE.myaccount_info.firstname_input$
+      Id : $PAGE.care_platform_myaccount_info.firstname_input$
       Greps:
         - var: FIRSTNAME_NEW
           attr: value
@@ -299,19 +299,19 @@ TestUpdateInfoAccount:
   #Verify that the email input can't be modify
     - Type: wait_for_attribute
       Strategy: xpath
-      Id: $PAGE.myaccount_info.email_input$
+      Id: $PAGE.care_platform_myaccount_info.email_input$
       Attribute: disabled
       Value: true
     - Type: click
       Strategy: xpath
-      Id : $PAGE.myaccount_info.save_changes_button$  
+      Id : $PAGE.care_platform_myaccount_info.save_changes_button$  
   #Wait for the success alert message
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.myaccount_info.success_alert_msg$
+      Id: $PAGE.care_platform_myaccount_info.success_alert_msg$
     - Type: wait_not_visible
       Strategy: xpath
-      Id: $PAGE.myaccount_info.success_alert_msg$
+      Id: $PAGE.care_platform_myaccount_info.success_alert_msg$
       Time: 10
   #Verify that the name in the header reflects the new change to the firstname
     - Type: get_text
@@ -335,18 +335,18 @@ TestUpdateInfoAccount:
       Id : $PAGE.care_platform_header.myaccount_menu_button$  
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.myaccount_info.modal_title$
+      Id: $PAGE.care_platform_myaccount_info.modal_title$
   #Changing back the first name as it was originally
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.myaccount_info.firstname_input$
+      Id: $PAGE.care_platform_myaccount_info.firstname_input$
       Value: "backspace"
     - Type: click
       Strategy: xpath
-      Id : $PAGE.myaccount_info.save_changes_button$
+      Id : $PAGE.care_platform_myaccount_info.save_changes_button$
     - Type: wait_not_visible
       Strategy: xpath
-      Id: $PAGE.myaccount_info.success_alert_msg$
+      Id: $PAGE.care_platform_myaccount_info.success_alert_msg$
       Time: 10
     - Type: click
       Strategy: xpath
@@ -356,7 +356,7 @@ TestUpdateInfoAccount:
       Id : $PAGE.care_platform_header.myaccount_menu_button$
     - Type: get_attribute
       Strategy: xpath
-      Id : $PAGE.myaccount_info.firstname_input$
+      Id : $PAGE.care_platform_myaccount_info.firstname_input$
       Greps:
         - var: BACK_NAME
           attr: value
@@ -370,21 +370,21 @@ TestUpdateInfoAccount:
   #Check error on phone number
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.myaccount_info.phone_input$
+      Id: $PAGE.care_platform_myaccount_info.phone_input$
       Value: "backspace"
     - Type: click
       Strategy: xpath
-      Id : $PAGE.myaccount_info.save_changes_button$
+      Id : $PAGE.care_platform_myaccount_info.save_changes_button$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.myaccount_info.phone_error_message$
+      Id: $PAGE.care_platform_myaccount_info.phone_error_message$
   #Use button cancel of the modal
     - Type: click
       Strategy: xpath
-      Id : $PAGE.myaccount_info.cancel_button$
+      Id : $PAGE.care_platform_myaccount_info.cancel_button$
     - Type: wait_not_visible
       Strategy: xpath
-      Id: $PAGE.myaccount_info.modal_title$
+      Id: $PAGE.care_platform_myaccount_info.modal_title$
       Time: 2
 
 #CXTB-237 Account - Help

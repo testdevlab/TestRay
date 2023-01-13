@@ -29,42 +29,42 @@ TestCallPersonalCarePartnerOnHomePage:
     # Click on the Call Personal Care Partner button.
     - Type: click
       Strategy: class_chain
-      Id: $PAGE.never_alone_home.call_care_partner$
+      Id: $PAGE.seniors_app_home.call_care_partner$
     # Verify that the screen updates to show screen asking what kind of heelp you need:
     # Medical 
     # Non-Medical
     # Cancel Call
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_call.medical_call_button$
+      Id: $PAGE.seniors_app_call.medical_call_button$
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_call.non_medical_call_button$
+      Id: $PAGE.seniors_app_call.non_medical_call_button$
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_call.cancel_call_button$
+      Id: $PAGE.seniors_app_call.cancel_call_button$
     # Click on the Cancel Call button and verify that Home page is displayed.
     - Type: click
       Strategy: class_chain
-      Id: $PAGE.never_alone_call.cancel_call_button$
+      Id: $PAGE.seniors_app_call.cancel_call_button$
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_home.call_care_partner$
+      Id: $PAGE.seniors_app_home.call_care_partner$
     # Click on the Call Personal Care Partner button again.
     - Type: click
       Strategy: class_chain
-      Id: $PAGE.never_alone_home.call_care_partner$
+      Id: $PAGE.seniors_app_home.call_care_partner$
     # Click on the Non Medical call button.
     - Type: click
       Strategy: class_chain
-      Id: $PAGE.never_alone_call.non_medical_call_button$
+      Id: $PAGE.seniors_app_call.non_medical_call_button$
     # Verify that screen redirects to the call waiting room.
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_call.waiting_room_label$
+      Id: $PAGE.seniors_app_call.waiting_room_label$
     - Type: click
       Strategy: class_chain
-      Id: $PAGE.never_alone_call.video_button$
+      Id: $PAGE.seniors_app_call.video_button$
 
     ## Care partner steps to take the call.
     - Type: click
@@ -93,7 +93,7 @@ TestCallPersonalCarePartnerOnHomePage:
       Id: $PAGE.care_platform_call_portal.verify_video_is_full_screen$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.never_alone_call.mute_call_button$
+      Id: $PAGE.seniors_app_call.mute_call_button$
     # Record the call.
     - Type: case
       Value: GetCallRecordings
@@ -120,66 +120,66 @@ TestCallPersonalCarePartnerOnHomePage:
     # Select the Bad option on the Post Survey screen.
     - Type: click
       Strategy: xpath
-      Id: $PAGE.never_alone_post_call_survey.bad_answer_button$
+      Id: $PAGE.seniors_app_post_call_survey.bad_answer_button$
     # Verify page updates to ask why you made your selection and presents you with a set of reasons, or gives you option to return to main survey page.
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_post_call_survey.video_quality_not_good_option$
+      Id: $PAGE.seniors_app_post_call_survey.video_quality_not_good_option$
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_post_call_survey.could_not_hear_audio_option$
+      Id: $PAGE.seniors_app_post_call_survey.could_not_hear_audio_option$
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_post_call_survey.problem_was_not_solved_option$
+      Id: $PAGE.seniors_app_post_call_survey.problem_was_not_solved_option$
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_post_call_survey.issue_with_care_partner_option$
+      Id: $PAGE.seniors_app_post_call_survey.issue_with_care_partner_option$
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_post_call_survey.call_was_not_answered_option$
+      Id: $PAGE.seniors_app_post_call_survey.call_was_not_answered_option$
     # Click on the back to select button.
     - Type: click
       Strategy: class_chain
-      Id: $PAGE.never_alone_post_call_survey.back_to_select_button$
+      Id: $PAGE.seniors_app_post_call_survey.back_to_select_button$
     # Select the Ok option.
     - Type: click
       Strategy: xpath
-      Id: $PAGE.never_alone_post_call_survey.ok_answer_button$
+      Id: $PAGE.seniors_app_post_call_survey.ok_answer_button$
     # Verify page updates to ask why you made your selection and presents you with a set of reasons, or gives you option to return to main survey page.
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_post_call_survey.video_quality_not_good_option$
+      Id: $PAGE.seniors_app_post_call_survey.video_quality_not_good_option$
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_post_call_survey.could_not_hear_audio_option$
+      Id: $PAGE.seniors_app_post_call_survey.could_not_hear_audio_option$
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_post_call_survey.problem_was_not_solved_option$
+      Id: $PAGE.seniors_app_post_call_survey.problem_was_not_solved_option$
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_post_call_survey.issue_with_care_partner_option$
+      Id: $PAGE.seniors_app_post_call_survey.issue_with_care_partner_option$
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_post_call_survey.call_was_not_answered_option$
+      Id: $PAGE.seniors_app_post_call_survey.call_was_not_answered_option$
     # Click on the back to select button.
     - Type: click
       Strategy: class_chain
-      Id: $PAGE.never_alone_post_call_survey.back_to_select_button$
+      Id: $PAGE.seniors_app_post_call_survey.back_to_select_button$
     # Select the Great option.
     - Type: click
       Strategy: xpath
-      Id: $PAGE.never_alone_post_call_survey.great_answer_button$
+      Id: $PAGE.seniors_app_post_call_survey.great_answer_button$
     # Verify page updates and shows Thank You for you feedback page.
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_post_call_survey.thank_you_label$
+      Id: $PAGE.seniors_app_post_call_survey.thank_you_label$
     # Do not click the "To Home" button on Thank you for your feedback screen.
     - Type: sleep
       Time: 8
     # Verify device is automatically returned to home page after a few seconds.
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.never_alone_home.call_care_partner$
+      Id: $PAGE.seniors_app_home.call_care_partner$
 
     # End the call on care partner side - Teardown.
     # Fill the notes

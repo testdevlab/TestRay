@@ -9,7 +9,7 @@ care_platform_login:
   dialog_thank_you_title: //h4[contains(text(),'Thank You')]
   dialog_close_icon_button: //button[span]
 
-verify_account:
+care_platform_verify_account:
   verify_modal_title: //*[@id='dialogs']//h4[contains(text(),'Verify Your Account')]
   email_button: //button[contains(text(),'Email')]
   goback_button: //button[contains(.,'Go Back')]
@@ -43,7 +43,7 @@ care_platform_header:
   myaccount_menu_button: //header//nav//button[contains(.,'My Account')]
   logout_menu_button: //header//nav//button[contains(.,'Log Out')]
 
-myaccount_info:
+care_platform_myaccount_info:
   modal_title: //*[@id='modals']//h4[contains(text(),'My account')]
   close_modal_button: //*[@id="modals"]//button[contains(text(),'Close')]
   firstname_input: //input[@id='firstName']
@@ -114,7 +114,6 @@ care_platform_call_portal:
   complete_session_btn: //button[text()='Complete Session']
   issue_resolved_yes_radiobutton: //label[input[@name='resolved'][@value='true']]
   non_medical_radiobtn: //label[input[@name='kind'][@value='non-med']]
-  category_select: category
   medical_question_option: //option[@value='medicalQuestion']
   subcategory_select: subcategory
   located_provider_option: //option[@value='locatedProvider']

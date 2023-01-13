@@ -35,11 +35,11 @@ SetFollowUpTicket:
     - Type: wait_for
       Role: localiOS
       Strategy: xpath
-      Id: $PAGE.never_alone_incoming_call.answer_call_button$
+      Id: $PAGE.seniors_app_incoming_call.answer_call_button$
     - Type: click
       Role: localiOS
       Strategy: xpath
-      Id: $PAGE.never_alone_incoming_call.answer_call_button$
+      Id: $PAGE.seniors_app_incoming_call.answer_call_button$
       # Fill the notes
     - Type: send_keys
       Strategy: xpath
@@ -57,11 +57,11 @@ SetFollowUpTicket:
     - Type: click
       Role: localiOS
       Strategy: xpath
-      Id: $PAGE.never_alone_post_call_survey.great_answer_button$
+      Id: $PAGE.seniors_app_post_call_survey.great_answer_button$
     - Type: click
       Role: localiOS
       Strategy: xpath
-      Id: $PAGE.never_alone_post_call_survey.to_home_button$
+      Id: $PAGE.seniors_app_post_call_survey.to_home_button$
       # Complete the session 
     - Type: wait_for
       Strategy: xpath
@@ -213,11 +213,11 @@ SetMissedCallTicket:
     - Type: wait_for
       Role: localiOS
       Strategy: xpath
-      Id: $PAGE.never_alone_incoming_call.answer_call_button$
+      Id: $PAGE.seniors_app_incoming_call.answer_call_button$
     - Type: click
       Role: localiOS
       Strategy: xpath
-      Id: $PAGE.never_alone_incoming_call.answer_call_button$
+      Id: $PAGE.seniors_app_incoming_call.answer_call_button$
       # Open the Meical Transfer
     - Type: click
       Strategy: xpath
@@ -255,14 +255,14 @@ SetMissedCallTicket:
     - Type: click
       Role: localiOS
       Strategy: xpath
-      Id: $PAGE.never_alone_call.mute_call_button$
+      Id: $PAGE.seniors_app_call.mute_call_button$
     - Type: sleep
       Role: localiOS
       Time: 20
     - Type: click
       Role: localiOS
       Strategy: xpath
-      Id: $PAGE.never_alone_call.mute_call_button$
+      Id: $PAGE.seniors_app_call.mute_call_button$
     - Type: sleep
       Role: localiOS
       Time: 20
@@ -276,15 +276,15 @@ SetMissedCallTicket:
     - Type: click
       Role: localiOS
       Strategy: xpath
-      Id: $PAGE.never_alone_call.end_call_button$
+      Id: $PAGE.seniors_app_call.end_call_button$
     - Type: click
       Role: localiOS
       Strategy: xpath
-      Id: $PAGE.never_alone_post_call_survey.great_answer_button$
+      Id: $PAGE.seniors_app_post_call_survey.great_answer_button$
     - Type: click
       Role: localiOS
       Strategy: xpath
-      Id: $PAGE.never_alone_post_call_survey.to_home_button$
+      Id: $PAGE.seniors_app_post_call_survey.to_home_button$
       # Fill the notes
     - Type: send_keys
       Strategy: xpath

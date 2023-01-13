@@ -1,4 +1,4 @@
-never_alone_login:
+seniors_app_login:
   logging_you_in_label: //XCUIElementTypeStaticText[@name='Logging you in...']
   provision_device_btn: //XCUIElementTypeOther[@name='Provision Device']
   email_input: //XCUIElementTypeTextField[@name='RNE__Input__text-input']
@@ -6,13 +6,13 @@ never_alone_login:
   login_btn: (//XCUIElementTypeOther[@name='Log In'])[last()]
   schedule_label: //XCUIElementTypeStaticText[@name='Schedule']
   
-never_alone_home:
+seniors_app_home:
   schedule_label: //XCUIElementTypeStaticText[@name='Schedule']
   call_care_partner: "**/XCUIElementTypeOther[`label BEGINSWITH 'Call Personal' AND label ENDSWITH 'Care Partner'`]"
   full_schedule_btn: "**/XCUIElementTypeButton[`label CONTAINS 'Full Schedule'`][-1]"
   settings_icon: (//XCUIElementTypeOther[starts-with(@name, '$AND_CLI_TODAY_DATE$')])[last()]/following-sibling::XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]
 
-never_alone_settings:
+seniors_app_settings:
   my_details_tab: (//XCUIElementTypeOther[contains(@name, 'My Details')])[2]
   wifi_tab: (//XCUIElementTypeOther[contains(@name, 'Wi-fi')])[2]
   text_message_alerts_tab: (//XCUIElementTypeOther[contains(@name, 'Text Message Alerts')])[2]
@@ -29,11 +29,11 @@ never_alone_settings:
   country_field: //XCUIElementTypeOther[@name='Country']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
   phone_number_field: //XCUIElementTypeOther[@name='Phone Number']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
 
-never_alone_incoming_call:
+seniors_app_incoming_call:
   answer_call_button: //XCUIElementTypeButton[@name='Answer Call']
   ignore_call_button: //XCUIElementTypeButton[@name='Ignore Call']
 
-never_alone_call:
+seniors_app_call:
   end_call_button: (//XCUIElementTypeOther[contains(@name,'End Call')])[last()]
   mute_call_button: (//XCUIElementTypeOther[contains(@name,'Microphone')])[last()]
   medical_call_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Medical'`][1]"
@@ -42,7 +42,7 @@ never_alone_call:
   waiting_room_label: "**/XCUIElementTypeStaticText[`label == 'Waiting room'`]"
   video_button: "**/XCUIElementTypeOther[`label ENDSWITH 'Camera'`]"
   
-never_alone_post_call_survey:
+seniors_app_post_call_survey:
   great_answer_button: //XCUIElementTypeOther[@name='Great']
   ok_answer_button: //XCUIElementTypeOther[@name='Ok']
   bad_answer_button: //XCUIElementTypeOther[@name='Bad']
@@ -55,11 +55,12 @@ never_alone_post_call_survey:
   call_was_not_answered_option: "**/XCUIElementTypeOther[`label == 'Call was not answered.'`]"
   back_to_select_button: "**/XCUIElementTypeOther[`label ENDSWITH 'Back to select'`][-1]"
 
-never_alone_appointment_modal:
+seniors_app_appointment_modal:
   reschedule_btn: "**/XCUIElementTypeButton[`label == 'Reschedule'`]"
   close_btn: "**/XCUIElementTypeButton[`label CONTAINS 'Close'`]"
 
-never_alone_schedule:
+seniors_app_schedule:
+  schedule_label: "**/XCUIElementTypeStaticText[`label == 'Schedule'`]"
   schedule_date_label: "**/XCUIElementTypeOther[`label BEGINSWITH 'Today' AND label ENDSWITH 'Calendar'`]/**/XCUIElementTypeStaticText"
   left_arrow_schedule: "**/XCUIElementTypeOther[`label BEGINSWITH 'Today'`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[`enabled == 1 AND visible == 0 AND accessible == 1`][1]"
   right_arrow_schedule: "**/XCUIElementTypeOther[`label BEGINSWITH 'Today'`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[`enabled == 1 AND visible == 0 AND accessible == 1`][-1]"

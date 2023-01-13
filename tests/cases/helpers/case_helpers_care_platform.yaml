@@ -88,4 +88,4 @@ VerifyEmail:
   Actions:
     - Type: click
       Strategy: xpath
-      Id: $PAGE.verify_account.email_button$
+      Id: $PAGE.care_platform_verify_account.email_button$
