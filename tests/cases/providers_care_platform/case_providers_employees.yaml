@@ -1,0 +1,116 @@
+#CXTB-191: Access Employees Directory and Filter
+TestAccessEmployeesDirectoryAndFilter:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  # Log in to Care Platform as a Provider.
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+  # Go to Employees Page.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.employees_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.employees_label$
+  # Get the value to compare later.
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.first_darkened_letter_button$
+      Greps:
+        - var: LASTNAME_FILTER_LETTER
+          match: "(.*)"
+  # Click the first darkened letter button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.first_darkened_letter_button$
+  # Verify it was filtered by the selected letter.
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.first_employee_in_list_strong$
+      Greps:
+        - var: LASTNAME_FIRST_LETTER
+          match: ^[a-zA-Z]   #The match selects: The first char from the starter word (^) that is a letter ([a-zA-Z])
+    - Type: assert
+      Asserts: 
+      - Type: eq
+        Var: LASTNAME_FIRST_LETTER
+        Value: $AND_CLI_LASTNAME_FILTER_LETTER$
+  # Remove the filter by clicking on the letter.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.selected_darkened_letter_button$
+  # Get the first last name in the list.
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.first_employee_in_list_strong$
+      Greps:
+        - var: LASTNAME_EMPLOYEE_NO_FILTER
+          match: (.*)
+  # Add the search filter.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.search_button$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.search_input$
+      Value: $AND_CLI_LASTNAME_FIRST_EMPLOYEE_NO_FILTER$
+  # Verify there is at least one employee with that name.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.first_employee_in_list_strong$
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.first_employee_in_list_strong$
+      Greps:
+        - var: LASTNAME_FIRST_EMPLOYEE
+          match: (.*)
+  # Verify the first employee last name contains the text filtered.
+    - Type: assert
+      Asserts: 
+      - Type: contain
+        Var: LASTNAME_FIRST_EMPLOYEE
+        Value: $AND_CLI_LASTNAME_FIRST_EMPLOYEE_NO_FILTER$
+  # Clear the search by clicking small "x" at right of field.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.clear_search_button$
+  # Verify there is at least one employee.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.first_employee_in_list_strong$
+  # Click on the first employee.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.first_employee$
+  # Verify that the Name, DOB and Call History Listing components show after selecting the employee.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.employee_dob_label$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.employee_contact_label$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.employee_call_history_tab$
+  # Verify that the DOB & Contact content are not empty.
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.employee_dob_content$
+      Greps:
+        - var: EMPLOYEE_DOB_CONTENT
+          match: "(.*)"
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.providers_employees_page.employee_contact_content$
+      Greps:
+        - var: EMPLOYEE_CONTACT_CONTENT
+          match: "(.*)"
+    - Type: operation
+      Operation: "'$AND_CLI_EMPLOYEE_DOB_CONTENT$'.size > 0"
+      ExpectedResult: true
+    - Type: operation
+      Operation: "'$AND_CLI_EMPLOYEE_CONTACT_CONTENT$'.size > 0"
+      ExpectedResult: true

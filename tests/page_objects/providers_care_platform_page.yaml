@@ -11,7 +11,7 @@ providers_home_page:
   last_medical_transfer_row: (//div[contains(text(),'Medical Transfer')])[last()]
   last_on_demand_row: (//div[contains(text(),'On Demand Call')])[last()]
   facilities_navigation: //a//div[contains(text(),'Facilities')]
-  employees_navitagion: //a//div[contains(text(),'Employees')]
+  employees_navigation: //a//div[contains(text(),'Employees')]
 
 providers_facilities_page:
   alpha_center_td: //tr//td[contains(text(),'$AND_CLI_facility_devices_user1_number$')]
@@ -28,3 +28,17 @@ providers_call_queue_page:
   time_follow_up_two_days_radiobtn: //label[input[@name='followUpTime'][@value=48]]
   submit_session_btn: //button[@type='submit']
 
+providers_employees_page:
+  employees_label: //h3[text()='Employees']
+  search_button: //button[span[@class='icon-search']]
+  search_input: //input[contains(@placeholder,'Search by employee name')]
+  clear_search_button: //button[contains(@class,'button-circle')]
+  first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
+  selected_darkened_letter_button: //button[contains(@class,'is-selected')]
+  first_employee_in_list_strong: //*[@id='containerElement']/table[1]/tbody/tr[1]//strong
+  first_employee: //*[@id='containerElement']/table[1]/tbody/tr[1]
+  employee_dob_label: //strong[@class='color-green-300' and text()='DOB']
+  employee_dob_content: //div[@class='flex-col flex-col-auto']/time
+  employee_contact_label: //strong[@class='color-green-300' and text()='Contact']
+  employee_contact_content: //div[@class='flex-col flex-col-auto']/span
+  employee_call_history_tab: //button[text()='Call History']

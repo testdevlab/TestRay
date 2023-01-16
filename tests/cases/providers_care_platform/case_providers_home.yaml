@@ -500,7 +500,7 @@ TestStatusNotOnActiveCallForProviders:
       # Navigate to Employees
     - Type: click
       Strategy: xpath
-      Id : $PAGE.providers_home_page.employees_navitagion$
+      Id : $PAGE.providers_home_page.employees_navigation$
       # Verifying the status indicator didn't change to In Session
     - Type: get_attribute
       Strategy: xpath
@@ -527,7 +527,7 @@ TestStatusNotOnActiveCallForProviders:
       Id: $PAGE.care_platform_header.status_available_button$
     - Type: click
       Strategy: xpath
-      Id : $PAGE.providers_home_page.employees_navitagion$
+      Id : $PAGE.providers_home_page.employees_navigation$
     - Type: get_text
       Strategy: xpath
       Id : $PAGE.care_platform.page_title$
