@@ -53,6 +53,17 @@ care_platform_myaccount_info:
   save_changes_button: //*[@id='modals']//button[text()='Save Changes']
   cancel_button: //*[@id='modals']//button[text()='Cancel']
   success_alert_msg: //div[@class='Toastify']//div[contains(text(),'Account info updated')]
+  password_updated_successfully_alert_msg: //div[@class='Toastify']//div[contains(text(),'Password updated successfully')]  
+  update_password_button: //nav//button[contains(text(),'Update Password')]
+  current_password_label: //label[@for='currentPassword']
+  current_password_input: //input[@id='currentPassword']
+  new_password_label: //label[@for='password']
+  new_password_input: //input[@id='password']
+  confirm_new_password_label: //label[@for='passwordConfirmation']
+  confirm_new_password_input: //input[@id='passwordConfirmation']
+  change_my_password_button: //button[contains(text(),'Change My Password')]
+  password_requirements_alert_text: //div[contains(@class,'red')][contains(text(),'Password does not meet the requirements')]
+  
 
 care_platform_logout_modal:
   stay_on_shift_button: //button[contains(text(),'Stay On Shift')]
