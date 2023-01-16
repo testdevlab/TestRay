@@ -1,0 +1,15 @@
+# CXTB-23: Notifications Page Navigation
+TestNotificationsPageNavigation:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+  # In the Home page, click on the Bell icon and verify user is redirected to Notifications page.
+    - Type: case
+      Value: NotificationsPageNavigationHelper
+  # Terminate the app.
+    - Type: case
+      Value: TerminateApp
