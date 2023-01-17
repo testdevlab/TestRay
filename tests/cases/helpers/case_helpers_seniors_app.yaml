@@ -77,3 +77,18 @@ NotificationsPageNavigationHelper:
     - Type: wait_for
       Strategy: class_chain
       Id: $PAGE.seniors_app_notifications.notifications_label$
+
+SettingsPageNavigationHelper:
+  Environment: Settings
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+  # In the Home page, click on the Settings icon.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.settings_icon$
+  # Verify Settings "My Details" page is displayed.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_settings.my_details_label$

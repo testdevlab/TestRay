@@ -10,11 +10,8 @@ TestVerifyMyDetailsSettingsPageElements:
       App: NeverAlone
   Actions:
     # Click on the Settings icon in app header.
-    - Type: get_timestamp
-      Format: "%A, %B%e"
-      Var: TODAY_DATE
     - Type: click
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_home.settings_icon$
     # Verify that the page shows the following sub pages:
     # My Details
@@ -135,3 +132,19 @@ TestVerifyMyDetailsSettingsPageElements:
         - Type: eq
           Var: IS_EMAIL_NOT_EMPTY
           Value: 'true'
+
+# CXTB-34: Settings "My Details" Page Navigation
+TestSettingsPageNavigation:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+  # In the Home page, click on the Settings icon and verify user is redirected to Settings "My Details" page.
+    - Type: case
+      Value: SettingsPageNavigationHelper
+  # Terminate the app.
+    - Type: case
+      Value: TerminateApp

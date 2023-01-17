@@ -10,11 +10,12 @@ seniors_app_home:
   schedule_label: //XCUIElementTypeStaticText[@name='Schedule']
   call_care_partner: "**/XCUIElementTypeOther[`label BEGINSWITH 'Call Personal' AND label ENDSWITH 'Care Partner'`]"
   full_schedule_btn: "**/XCUIElementTypeButton[`label CONTAINS 'Full Schedule'`][-1]"
-  settings_icon: (//XCUIElementTypeOther[starts-with(@name, '$AND_CLI_TODAY_DATE$')])[last()]/following-sibling::XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]
+  settings_icon: "**/XCUIElementTypeOther[`name == 'headerContainer'`]/XCUIElementTypeOther/XCUIElementTypeOther[-1]/XCUIElementTypeOther/XCUIElementTypeOther[1]"
   notifications_icon: "**/XCUIElementTypeOther[`name == 'headerContainer'`]/XCUIElementTypeOther/XCUIElementTypeOther[-1]/XCUIElementTypeOther/XCUIElementTypeOther[-1]"
 
 seniors_app_settings:
   my_details_tab: (//XCUIElementTypeOther[contains(@name, 'My Details')])[2]
+  my_details_label: "**/XCUIElementTypeStaticText[`label == 'Settings | My Details'`]"
   wifi_tab: (//XCUIElementTypeOther[contains(@name, 'Wi-fi')])[2]
   text_message_alerts_tab: (//XCUIElementTypeOther[contains(@name, 'Text Message Alerts')])[2]
   screen_brightness_tab: (//XCUIElementTypeOther[contains(@name, 'Screen Brightness')])[2]
