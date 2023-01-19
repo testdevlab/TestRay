@@ -254,6 +254,44 @@ class Device
     @driver.hide_keyboard
   end
 
+  #add to documentation
+  # Toggles wifi using the iOS Control Center (available only for iOS with Physical Devices, not simulators)
+  def toggle_wifi(action = nil)
+    # Get the window size 
+    size = @driver.window_size
+
+    # Get the top right offset
+    top_right_offset = {x: size.width, y: 0}
+    
+    # Get the bottom right offset
+    bottom_right_offset = {x: size.width, y: size.height}
+
+    opts = {
+      start_x: top_right_offset[:x],
+      start_y: top_right_offset[:y],
+      end_x: bottom_right_offset[:x],
+      end_y: bottom_right_offset[:y],
+    }
+
+    # Swipe down to make Control Center appear
+    action = Appium::TouchAction.new(@driver).swipe(opts).perform
+
+    # Toggle the wifi
+    wifi_toggle_button = @driver.find_element(:accessibility_id, "wifi-button") 
+    wifi_toggle_button.click
+
+    opts = {
+      start_x: bottom_right_offset[:x],
+      start_y: bottom_right_offset[:y],
+      end_x: top_right_offset[:x],
+      end_y: top_right_offset[:y],
+    }
+
+    # Swipe up to make Control Center disappear
+    action = Appium::TouchAction.new(@driver).swipe(opts).perform
+    log_info("Toggled wifi using Control Center!")
+  end
+
   # launches the app specified by the Android app package / iOS bundle ID
   # defaults to the app under test if Value is not provided
   # Accepts:
@@ -1773,8 +1811,16 @@ def return_element_attribute(action)
   return unless el
 
   attr_value = el.attribute(action["Attribute"])
-  log_info("Element attribute is " + attr_value.to_s)
-  ENV[convert_value(action["ResultVar"])] = attr_value.to_s
+  
+  if action["NoNewLine"]
+    no_newline_el_string = attr_value.to_s.gsub("\n", " ")
+    log_info("Element attribute is  #{no_newline_el_string}")
+    ENV[convert_value(action["ResultVar"])] = no_newline_el_string
+  else
+    log_info("Element attribute is " + attr_value.to_s)
+    ENV[convert_value(action["ResultVar"])] = attr_value.to_s
+  end
+
 end
 
 # Returns a variable with a unique name using timestamps at the end

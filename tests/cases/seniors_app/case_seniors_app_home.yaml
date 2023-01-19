@@ -240,3 +240,147 @@ TestCallPersonalCarePartnerOnHomePage:
       Role: desktopChrome
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.call_completed_notification$
+
+# CXTB-47: Verify in App Offline Behavior
+TestVerifyInAppOfflineBehavior:
+  Environment: Settings
+  Precases:
+    - SetScheduledCallForSeniors
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Navigate to Notifications page.
+    - Type: case
+      Value: NotificationsPageNavigationHelper
+    # Wait for notifications to load before the device goes offline.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.first_notification$
+      Time: 30
+    # Click on the Close button to go back to Home page.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.close_btn$
+    # Disconnect from wi-fi to get device offline while viewing the home page.
+    - Type: toggle_wifi
+      Role: localiOS
+    # Verify there is a yellow message bar that indicates that the device is offline and to dial 911 in emergency.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.offline_yellow_bar$
+      Time: 30
+    # Verify that the call buttons has been replaced with a single gray inactive button saying:
+    # "Personal Care Partner and Emergency Services are Offline"
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.offline_call_button$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.offline_call_button$
+      Attribute: label
+      ResultVar: OFFLINE_CALL_BUTTON_VALUE
+      NoNewLine: true
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: OFFLINE_CALL_BUTTON_VALUE
+          Value: Personal Care Partner and Emergency Services are Offline
+    # Verify that the emergency call button disappears.
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.emergency_services_button$
+      Time: 10
+    # Click an event from the schedule listing.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.first_event$
+    # Verify that a connection error message window appears indicating that the device is offline.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_connection_error_modal.connection_header_header_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_connection_error_modal.device_offline_label$
+    # Close the message window.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_connection_error_modal.close_btn$  
+    # Navigate to Schedules
+    - Type: case
+      Value: SchedulesPageNavigationHelper
+    # Verify there is a yellow message bar that indicates that the device is offline and to dial 911 in emergency.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.offline_yellow_bar$
+      Time: 30
+    # Verify that the call buttons has been replaced with a single gray inactive button saying:
+    # "Personal Care Partner & Emergency Services are Offline"
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.offline_call_button$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.offline_call_button$
+      Attribute: label
+      ResultVar: SCHEDULE_OFFLINE_CALL_BUTTON_VALUE
+      NoNewLine: true
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: SCHEDULE_OFFLINE_CALL_BUTTON_VALUE
+          Value: Personal Care Partner & Emergency Services are Offline
+    # Verify that the emergency call button disappears.
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.emergency_services_button$
+      Time: 10
+    # Click an event from the schedule listing.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.first_event$
+    # Verify that a connection error message window appears indicating that the device is offline.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_connection_error_modal.connection_header_header_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_connection_error_modal.device_offline_label$
+    # Close the message window.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_connection_error_modal.close_btn$
+    # Click on the Close button to go back to Home page.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_connection_error_modal.close_btn$
+    # Navigate to Notifications page.
+    - Type: case
+      Value: NotificationsPageNavigationHelper
+    # Click a notification from the notifications listing.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.first_notification$
+    # Verify that a connection error message window appears indicating that the device is offline.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_connection_error_modal.connection_header_header_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_connection_error_modal.device_offline_label$
+    # Close the message window.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_connection_error_modal.close_btn$
+    # Click on the Close button to go back to Home page.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.close_btn$
+  # Connect back the wi-fi to get device online.
+    - Type: toggle_wifi
+      Role: localiOS
