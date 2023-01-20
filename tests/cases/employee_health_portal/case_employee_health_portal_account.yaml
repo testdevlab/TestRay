@@ -271,4 +271,22 @@ TestInformationUpdateNumber:
       Id: $PAGE.employee_health_my_account_modal.save_changes_button$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.employee_health_home_page.alert_updated_info$  
+      Id: $PAGE.employee_health_home_page.alert_updated_info$
+
+#CXTB-241 “Update password” Workflow in My account Modal
+TestUpdateAccountPassword:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+    - Type: case
+      Value: EmployeeHealthPortalUpdateAccountPassword
+    - Type: set_env_var
+      Value: $AND_CLI_employee_dependent_user1_pwd$
+      Var: employee_user1_pwd
+    - Type: set_env_var
+      Value: $AND_CLI_employee_dependent_user1$
+      Var: employee_user1
+    - Type: case
+      Value: EmployeeHealthPortalUpdateAccountPassword  

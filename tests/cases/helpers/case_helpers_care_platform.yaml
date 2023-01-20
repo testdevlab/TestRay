@@ -4,7 +4,7 @@ CarePlatformLogout:
     - Role: desktopChrome
       App: desktop       
   Actions:     
-      # Login to the Care Platform app with Care Partners account
+      # Log out to the Care Platform app with Care Partners account
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_header.user_dropdown_button$

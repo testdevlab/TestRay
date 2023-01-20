@@ -25,17 +25,22 @@ employee_health_signup_confirmation_modal:
   close_modal_button: //*[@id='dialogs']//button
 
 employee_health_home_page:
+  user_profile_contact_info: //div[@class='participant-profile-contact']
   user_dropdown_button: //header//div[@class='user-dropdown']/button
   user_dropdown_menu: //nav[@class='user-dropdown-menu']
   dropdown_option_myaccount: //nav/button[text()='My Account']
+  dropdown_option_logout: //nav/button[text()='Log out']
   alert_updated_notification: //div[@class='Toastify']//div[contains(text(),'Notification preferences updated')]
   alert_updated_info: //div[@class='Toastify']//div[contains(text(),'Account info updated')]
+  alert_failed_update_password: //div[@role='alert']//div[contains(text(),'Failed to update password')]
+  alert_success_update_password: //div[@class='Toastify']//div[contains(text(),'Password updated successfully')]
 
 employee_health_my_account_modal:
   modal_title: //*[@id='modals']//h4[text()='My Account']
   close_modal_button: //*[@id='modals']//button[text()='Close']
   notifications_tab: //*[@id='modals']//nav/button[text()='Notifications']
   my_info_tab: //*[@id='modals']//nav/button[text()='My Info']
+  update_password_tab: //nav/button[text()='Update Password']
   notifications_text: //div[@tab-title='Notifications']/form
   save_changes_button: //button[text()='Save Changes']
   cancel_button: //button[text()='Cancel']
@@ -50,3 +55,10 @@ employee_health_my_account_modal:
   my_info_email_input: //*[@id='email']
   my_info_date_of_birth_input: //*[@id='dateOfBirth']
   my_info_member_id_input: //*[@id='memberIdentifier']
+  update_password_current: //*[@id='currentPassword']
+  update_password_new: //*[@id='password']
+  update_password_confirm: //*[@id='passwordConfirmation']
+  update_password_change_button: //*[@tab-title='Update Password']//button[text()='Change My Password']
+  update_password_cancel_button: //*[@tab-title='Update Password']//button[text()='Cancel']
+  update_password_requirements_link: //span[text()='see requirements']
+  update_password_requirements_text: //*[@id='passwordRequirements']

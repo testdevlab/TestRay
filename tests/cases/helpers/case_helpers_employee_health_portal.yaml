@@ -19,7 +19,6 @@ EmployeeHealthPortalGoSignUp:
       Id: $PAGE.employee_health_signup_page.first_name_input$
 
 EmployeeHealthPortalLogIn:
-  Environment: Settings 
   Roles:
     - Role: desktopChrome
       App: desktop       
@@ -45,7 +44,6 @@ EmployeeHealthPortalLogIn:
 
 #CXTB-233 Navigate to My Account
 NavigateToMyAccount:
-  Environment: Settings 
   Roles:
     - Role: desktopChrome
       App: desktop       
@@ -64,7 +62,6 @@ NavigateToMyAccount:
       Id: $PAGE.employee_health_home_page.dropdown_option_myaccount$
 
 CaseDeletePhoneNumber:
-  Environment: Settings 
   Roles:
     - Role: desktopChrome
       App: desktop       
@@ -73,3 +70,171 @@ CaseDeletePhoneNumber:
       Strategy: xpath
       Id: $PAGE.employee_health_my_account_modal.my_info_phone_input$
       Value: backspace
+
+EmployeeHealthPortalLogOut: 
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions: 
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.user_dropdown_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.dropdown_option_logout$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.log_in_button$
+
+#CXTB-241 “Update password” Workflow in My account Modal
+EmployeeHealthPortalUpdateAccountPassword:
+  Vars:
+    ENV_PASS_STORE: $AND_CLI_employee_user1_pwd$ 
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  #Navigate into My Account
+    - Type: case
+      Value: NavigateToMyAccount
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.modal_title$
+    - Type: wait_for_page_to_load
+      Time: 5
+  #Go to Update Password tab and check components visibility
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_tab$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_current$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_new$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_confirm$
+  #Try incorrect current password
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_current$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_current$
+      Value: "wrongPass!23"
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_new$
+      Value: "Neural123!"
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_confirm$
+      Value: "Neural123!"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_change_button$
+  #Wait for failure alert
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.alert_failed_update_password$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_cancel_button$  
+  #Verify the dialog is closed
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.modal_title$
+      Time: 5
+  #Navigate into My Account
+    - Type: case
+      Value: NavigateToMyAccount
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.modal_title$
+    - Type: wait_for_page_to_load
+      Time: 5
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_tab$
+  #Check requirements
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_requirements_link$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_requirements_text$  
+  #Fill the fields correctly
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_current$
+      Value: $AND_CLI_employee_user1_pwd$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_new$
+      Value: "Neural123!"
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_confirm$
+      Value: "Neural123!"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_change_button$
+  #Wait for success alert
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.alert_success_update_password$
+  #Log Out
+    - Type: case
+      Value: EmployeeHealthPortalLogOut
+  #Setting the password var to the new value
+    - Type: set_env_var
+      Value: Neural123!
+      Var: employee_user1_pwd
+  #Log In with new credentials
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  #Verify the login with the new password was successful
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.user_profile_contact_info$
+  #Restore original password
+    - Type: case
+      Value: NavigateToMyAccount
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.modal_title$
+    - Type: wait_for_page_to_load
+      Time: 5
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_tab$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_current$
+      Value: $AND_CLI_employee_user1_pwd$
+      #Restore variables
+    - Type: set_env_var
+      Value: $AND_CLI_ENV_PASS_STORE$
+      Var: employee_user1_pwd
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_new$
+      Value: $AND_CLI_employee_user1_pwd$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_confirm$
+      Value: $AND_CLI_employee_user1_pwd$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_change_button$
+      #Wait for success alert
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.alert_success_update_password$  
+      #Log Out
+    - Type: case
+      Value: EmployeeHealthPortalLogOut
