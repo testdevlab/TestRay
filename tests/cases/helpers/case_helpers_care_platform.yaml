@@ -81,6 +81,30 @@ CarePartnerLogin:
 #      If_Cases:
 #      - If_Case: VerifyEmail
 
+CarePartnerLoginSecondaryUser:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    - Type: navigate
+      Role: desktopChrome
+      Value: $AND_CLI_care_platform_url$
+    - Type: maximize
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_login.email_input$
+      Value: $AND_CLI_carepartner_user2$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_login.password_input$
+      Value: $AND_CLI_carepartner_user2_pwd$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_login.login_button$
+    - Type: sleep
+      Time: 2
+
 VerifyEmail:
   Roles:
     - Role: desktopChrome

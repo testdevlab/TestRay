@@ -577,4 +577,65 @@ TestUpdatePassword:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.change_my_password_button$
-      
+
+#CXTB-268 Log Out - Manually of Portal and Go Off Shift
+TestLogoutGoOffShift:
+  Environment: Settings 
+  Vars:
+    LOGOUT_OPTION: "Go Off Shift"
+    CARE_PARTNER_USER1_FULLNAME: $AND_CLI_carepartner_user1_name$ $AND_CLI_carepartner_user1_lastname$
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Clicking the name.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.user_dropdown_button$
+  # Click on the logout button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.logout_menu_button$
+  # Click on the cancel button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_logout_modal.cancel_logout_button$
+  # Calling Logout case.
+    - Type: case
+      Value: CarePlatformLogout
+  # NOTE: Step 7 was skipped because it involved verifying text messages,
+  # This step needed to call from SNF and then validate that care partner did not receive text notification.
+  # Continued on Step 8.
+  # Log in with the second user.
+    - Type: case
+      Value: CarePartnerLoginSecondaryUser
+  # Click on the users dropdown.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.users_dropdown_button$
+  # Verify that the first user has gone off shift.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.offline_carepartner1_element$
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.offline_carepartner1_element$
+      Greps:
+        - var: CARE_PARTNER_ELEMENT
+          match: "(.*)"
+    - Type: assert
+      Asserts: 
+      - Type: n_contain
+        Var: CARE_PARTNER_ELEMENT
+        Value: "Available"
+    - Type: assert
+      Asserts: 
+      - Type: n_contain
+        Var: CARE_PARTNER_ELEMENT
+        Value: "Idle"
+  # Log out of the second user too.
+    - Type: case
+      Value: CarePlatformLogout
