@@ -384,3 +384,67 @@ TestVerifyInAppOfflineBehavior:
   # Connect back the wi-fi to get device online.
     - Type: toggle_wifi
       Role: localiOS
+
+# CXTB-38: Verify app automatically returns to Home page after inactivity period.
+TestAutoReturnToHomePageAfterInactivityPeriod:
+  Environment: Settings
+  Precases:
+    - SetScheduledCallForSeniors
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      Capabilities:
+        newCommandTimeout: 310
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Navigate to Settings "My Details" page.
+    - Type: case
+      Value: SettingsPageNavigationHelper
+    # Wait for 5 minutes and validate that Home page is displayed after waiting for 5 minutes.
+    - Type: sleep
+      Time: 300
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.full_schedule_btn$
+    # Navigate to Notifications page.
+    - Type: case
+      Value: NotificationsPageNavigationHelper
+    # Wait for 5 minutes and validate that Home page is displayed after waiting for 5 minutes.
+    - Type: sleep
+      Time: 300
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.full_schedule_btn$
+    # Navigate to Notifications page again.
+    - Type: case
+      Value: NotificationsPageNavigationHelper
+    # Click on a notification.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.first_notification$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_header_modal$
+    # Wait for 5 minutes and validate that Home page is displayed after waiting for 5 minutes.
+    - Type: sleep
+      Time: 300
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.full_schedule_btn$
+    # Click on an event on the home page listing.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.first_event$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.appointment_header_modal$
+    # Wait for 5 minutes and validate that Home page is displayed after waiting for 5 minutes.
+    - Type: sleep
+      Time: 300
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.full_schedule_btn$

@@ -14,6 +14,7 @@ seniors_app_home:
   notifications_icon: "**/XCUIElementTypeOther[`name == 'headerContainer'`]/XCUIElementTypeOther/XCUIElementTypeOther[-1]/XCUIElementTypeOther/XCUIElementTypeOther[-1]"
   emergency_services_button: "**/XCUIElementTypeOther[`label == 'Emergency Services'`]"
   first_event: "**/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/**/XCUIElementTypeOther[`enabled == 1 AND accessible == 1`][1]"
+  appointment_header_modal: "**/XCUIElementTypeStaticText[`label BEGINSWITH 'Appointment'`][-1]"
   offline_call_button: "**/XCUIElementTypeOther[`label BEGINSWITH 'Personal' AND label ENDSWITH 'Offline'`][-1]"
   offline_yellow_bar: "**/XCUIElementTypeStaticText[`label ENDSWITH 'please call 911.'`][-1]"
 
@@ -87,3 +88,4 @@ seniors_app_notifications:
   notifications_label: "**/XCUIElementTypeStaticText[`label == 'Notifications'`]"
   first_notification: "**/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/**/XCUIElementTypeOther[`enabled == 1 AND accessible == 1`][1]"
   close_btn: "**/XCUIElementTypeButton[`label CONTAINS 'Close'`]"
+  appointment_header_modal: "**/XCUIElementTypeStaticText[`label BEGINSWITH 'Appointment'`][-1]"

@@ -42,7 +42,7 @@ Environments:
       backend_qa_url: https://never-alone-backend-qa.chs-ds.com/
       facility_ahc: alpha health center
       facility_bhc:  beta health center
-      facility_bhc:  charlie health center
+      facility_chc:  charlie health center
 #Onboarder users      
       onboarder_user1: add_your_info
       onboarder_user1_pwd: add_your_info
