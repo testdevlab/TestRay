@@ -4,13 +4,6 @@ TestSignUpNewDependent:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
-      Capabilities:
-        chromeOptions:
-          args:
-            - use-fake-ui-for-media-stream
-            - use-fake-device-for-media-stream
-            - no-sandbox
-            - disable-gpu
       App: "desktop"
   Actions:
   #Go to Employee Health Portal, then to Sign Up
@@ -100,3 +93,52 @@ TestSignUpNewDependent:
       Strategy: xpath
       Id: $PAGE.employee_health_login_page.log_in_button$
 
+#CXTB-284 Forgot Password on Login Page
+#Test ended at step 6; step 7 and 8 are to check for a confirmation sent to the employee user 1
+TestForgotPasswordOnLoginPage:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:      
+    - Type: maximize
+    - Type: navigate
+      Role: desktopChrome
+      Value: $AND_CLI_employee_health_url$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.log_in_button$
+  #Opening the forgot password dialog
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.employee_health_login_page.forgot_password_button$
+  #Closing the dialog
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.employee_health_login_page.dialog_cancel_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.dialog_submit_button$
+  #Opening the forgot password dialog again
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.employee_health_login_page.forgot_password_button$
+  #Submitting the email
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.dialog_email_input$
+      Value: $AND_CLI_employee_user1$
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.employee_health_login_page.dialog_submit_button$
+  #Verify the Thank You text showed up
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.dialog_thank_you_title$
+  #Closing the Thank You dialog   
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.employee_health_login_page.dialog_close_icon_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id : $PAGE.employee_health_login_page.dialog_submit_button$

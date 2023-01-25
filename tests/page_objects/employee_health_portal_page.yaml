@@ -3,7 +3,13 @@ employee_health_login_page:
   log_in_button: //div[@class='login-screen']//form/button[text()='Log In']
   email_input: //input[@id='email']
   password_input: //input[@id='password']
-
+  forgot_password_button: //button[text()='Forgot Password']
+  dialog_email_input: //div[contains(@class,'dialog')]//input
+  dialog_submit_button: //*[@id='dialogs']//button[text()='Submit']
+  dialog_cancel_button: //*[@id='dialogs']//button[text()='Cancel']
+  dialog_thank_you_title: //*[@id='dialogs']//h4[text()='Thank You']
+  dialog_close_icon_button: //*[@id='dialogs']//button[contains(@class,'dialog-close')]
+  
 employee_health_signup_page:
   first_name_input: //input[@id='firstName']
   first_name_alert: //label[@for='firstName']/following-sibling::div//div[contains(@class,'red')]
