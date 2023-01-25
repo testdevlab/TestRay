@@ -1861,4 +1861,33 @@ def verify_event_went_to_bottom(action)
 
 end
 
+# Custom method to verify that all events are matching today's date.
+def verify_all_events_match_todays_date(action)
+  action = convert_value_pageobjects(action);
+
+  events = @driver.find_elements(convert_value(action["Strategy"]), convert_value(action["Id"]))
+
+  if events.nil? || events.empty?
+    raise "Event elements collection cannot be null."
+  end
+
+  today_date = Date.today
+  events.each do |event|
+    event.click
+    wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+    date_label = wait.until {@driver.find_element(convert_value(action["SecondStrategy"]), convert_value_pageobjects(action["SecondId"]))}
+    event_date = Date.parse(date_label.attribute("label"))
+    close_button = @driver.find_element(:class_chain, "**/XCUIElementTypeButton[`label CONTAINS 'Close'`]")
+    close_button.click
+
+    if today_date == event_date
+      log_info("An event has been validated to be for today!")
+    else
+      raise "Event is not for today's date, today's date: #{today_date}, event's date: #{event_date}"
+    end
+
+  end
+
+end
+
 # END OF DEVICE CLASS

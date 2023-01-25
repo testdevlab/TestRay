@@ -448,3 +448,46 @@ TestAutoReturnToHomePageAfterInactivityPeriod:
     - Type: wait_for
       Strategy: class_chain
       Id: $PAGE.seniors_app_home.full_schedule_btn$
+
+# CXTB-68: Verify Appointments appear as expected in Home page
+TestAppointmentsAppearAsExpectedHomePage:
+  Environment: Settings
+  Vars:
+    LOGOUT_OPTION: "Stay On Shift"
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Create event for the current day
+    - Type: case
+      Value: SetScheduledCallForSeniors
+    # Calling Logout case
+    - Type: case
+      Value: CarePlatformLogout
+    # Set up past event on Care Platform.
+    - Type: case
+      Value: SetPastEventForSeniors
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.close_btn$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+    # Verify that only the current day's event are listed
+    - Type: verify_all_events_match_todays_date
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.events_elements$
+      SecondStrategy: xpath
+      SecondId: $PAGE.seniors_app_home.date_value_appointment_modal$
+    # Verify that any event that is over has moved to the bottom of the list.
+    - Type: verify_event_went_to_bottom
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.events_elements$
+      EventName: $AND_CLI_UNIQUE_EVENT_NAME$

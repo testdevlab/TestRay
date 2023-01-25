@@ -17,6 +17,8 @@ seniors_app_home:
   appointment_header_modal: "**/XCUIElementTypeStaticText[`label BEGINSWITH 'Appointment'`][-1]"
   offline_call_button: "**/XCUIElementTypeOther[`label BEGINSWITH 'Personal' AND label ENDSWITH 'Offline'`][-1]"
   offline_yellow_bar: "**/XCUIElementTypeStaticText[`label ENDSWITH 'please call 911.'`][-1]"
+  events_elements: "**/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/**/XCUIElementTypeOther[`enabled == 1 AND accessible == 1`]"
+  date_value_appointment_modal: "//XCUIElementTypeStaticText[@name='Date:']/following-sibling::XCUIElementTypeOther"
 
 seniors_app_settings:
   my_details_tab: (//XCUIElementTypeOther[contains(@name, 'My Details')])[2]

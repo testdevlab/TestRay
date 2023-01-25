@@ -1,110 +1,3 @@
-SetPastEvent:
-  Environment: Settings
-  Roles:
-    - Role: desktopChrome
-      Capabilities:
-        chromeOptions:
-          args:
-            - use-fake-ui-for-media-stream
-            - use-fake-device-for-media-stream
-            - no-sandbox
-            - disable-gpu
-      App: desktop       
-  Actions:   
-    # Login to the Care Platform app with Care Partners account
-    - Type: case
-      Value: CarePartnerLogin
-      # Navigate to Participants
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform.navigation_participant$
-      # Open the Call Portal
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform_participant.senior_1_td$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform_participant.call_portal_btn$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.care_platform_call_portal.create_event_btn$    
-      # Create the event
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform_call_portal.create_event_btn$    
-    - Type: click
-      Strategy: id
-      Id: $PAGE.care_platform_call_portal.category_select$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform_call_portal.teleheath_appointment_option$
-    #Generate unique name for the event.
-    - Type: generate_unique_name
-      Name: "Automation Sched Event"
-      ResultVar: UNIQUE_EVENT_NAME
-    - Type: send_keys
-      Strategy: xpath
-      Id: $PAGE.care_platform_call_portal.subject_input$
-      Value: $AND_CLI_UNIQUE_EVENT_NAME$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform_call_portal.date_container$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform_call_portal.today_date_date_picker$
-    #Set a time in the past for the event to start
-    - Type: get_past_timestamp
-      Format: "%I%M%p"
-      Var: PAST_START_TIME
-    - Type: send_keys
-      Strategy: id
-      Id: $PAGE.care_platform_call_portal.start_time_picker$
-      Value: $AND_CLI_PAST_START_TIME$
-    # Set now time to end the event.
-    - Type: get_local_timestamp
-      Format: "%I%M%p"
-      Var: NOW_END_TIME
-    - Type: send_keys
-      Strategy: id
-      Id: $PAGE.care_platform_call_portal.end_time_picker$
-      Value: $AND_CLI_NOW_END_TIME$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform_call_portal.next_btn$
-      # Filling the Situation fields
-      # Urgent patient matter
-    - Type: click
-      Strategy: id
-      Id: $PAGE.care_platform_call_portal.urgent_patient_matter_select$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform_call_portal.urgent_patient_matter_yes_option$
-      # Reason for request
-    - Type: click
-      Strategy: id
-      Id: $PAGE.care_platform_call_portal.reason_for_request_select$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform_call_portal.reason_for_request_covid_options$
-      # When did symptoms start      
-    - Type: click
-      Strategy: class
-      Id: $PAGE.care_platform_call_portal.symptoms_start_input_container$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform_call_portal.today_date_date_picker$
-      # Click in the submit button
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform_call_portal.submit_create_event_btn$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.care_platform_notifications.event_created_notification$
-      # Navigate back to home 
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform.navigation_home$
-
 # CXTB-10: Full Schedule display
 TestVerifyFullScheduleDisplay:
   Environment: Settings
@@ -127,7 +20,7 @@ TestVerifyFullScheduleDisplay:
   Actions:
   # Set up past event on Care Platform.
     - Type: case
-      Value: SetPastEvent
+      Value: SetPastEventForSeniors
     - Type: click
       Strategy: class_chain
       Id: $PAGE.seniors_app_appointment_modal.close_btn$
@@ -141,7 +34,7 @@ TestVerifyFullScheduleDisplay:
       Strategy: class_chain
       Id: $PAGE.seniors_app_home.full_schedule_btn$
     - Type: get_timestamp
-      Format: "%A %B%e"
+      Format: "%A %B %-d"
       Var: TODAY_DATE
   # Verify that the Full Schedule page loaded as expected.
     - Type: return_element_attribute
@@ -159,7 +52,7 @@ TestVerifyFullScheduleDisplay:
       Strategy: class_chain
       Id: $PAGE.seniors_app_schedule.left_arrow_schedule$
     - Type: get_yesterday_date
-      Format: "%A %B%e"
+      Format: "%A %B %-d"
       Var: YESTERDAY_DATE
     - Type: return_element_attribute
       Strategy: class_chain
@@ -179,7 +72,7 @@ TestVerifyFullScheduleDisplay:
       Strategy: class_chain
       Id: $PAGE.seniors_app_schedule.right_arrow_schedule$
     - Type: get_tomorrow_date
-      Format: "%A %B%e"
+      Format: "%A %B %-d"
       Var: TOMORROW_DATE
     - Type: return_element_attribute
       Strategy: class_chain
