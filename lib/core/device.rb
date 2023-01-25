@@ -1447,6 +1447,7 @@ class Device
       ENV[convert_value(action["Var"])] = time
     end
   end
+
    #add to documentation
    # returns now time -5 minutes
    def get_past_timestamp(action)
@@ -1461,6 +1462,23 @@ class Device
       ENV[convert_value(action["Var"])] = time
     end
   end
+
+   #add to documentation
+   # returns now time + # minutes
+   def get_timestamp_plus_minutes(action)
+    format_t = convert_value(action["Format"])
+    user_minutes = convert_value(action["Minutes"])
+    time = (Time.now.getlocal + user_minutes.to_i*60).strftime(format_t)
+    log_info("Timestamp + #{user_minutes} minute is: #{time}")
+    if action["File"]
+      file = File.open(convert_value(action["File"]), "w")
+      file.write(time)
+      file.close
+    elsif action["Var"]
+      ENV[convert_value(action["Var"])] = time
+    end
+  end
+
 
   def set_env_var(action)
     log_info("Assigned value: \"#{convert_value(action["Value"])}\" to Var: \"#{convert_value(action["Var"])}\"")

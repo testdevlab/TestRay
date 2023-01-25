@@ -491,3 +491,102 @@ TestAppointmentsAppearAsExpectedHomePage:
       Strategy: class_chain
       Id: $PAGE.seniors_app_home.events_elements$
       EventName: $AND_CLI_UNIQUE_EVENT_NAME$
+
+# CXTB-83: Verify starting soon notification while in the notification window.
+TestStartingSoonNotification:
+  Environment: Settings
+  Precases:
+    - SetScheduledCallForSeniorsToStartIn7Minutes
+    - SetScheduledCallForSeniorsToStartIn11Minutes
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      Capabilities:
+        newCommandTimeout: 300
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Click an event from the schedule listing.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.first_event$
+    # Wait for the first Starting Soon notification from the first meeting.
+    - Type: sleep
+      Time: 120
+    # Verify that the Starting Soon notification has not appeared until user closes the events detail view.
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_header_modal$
+      Attribute: label
+      ResultVar: APPOINTMENT_HEADER_TEXT
+    - Type: assert
+      Asserts:
+        - Type: ne
+          Var: APPOINTMENT_HEADER_TEXT
+          Value: Appointment Starting Soon
+    # Click on the Close button to go back to Home page.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.close_btn$
+    # Verify that Starting Soon notification should show up.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_starting_soon_header_modal$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_starting_soon_header_modal$
+      Attribute: label
+      ResultVar: APPOINTMENT_HEADER_TEXT
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: APPOINTMENT_HEADER_TEXT
+          Value: Appointment Starting Soon
+    # Click on the Close button to go back to Home page.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.close_btn$
+    # Add some sleep time to be closer to the 5 mins notification.
+    - Type: sleep
+      Time: 120
+    # Open a notification to see the notification detail window.
+    - Type: case
+      Value: NotificationsPageNavigationHelper
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.first_notification$
+    # Add some sleep time to be complete the 5 mins notification.
+    - Type: sleep
+      Time: 240
+    # Verify that the Starting Soon notification has not appeared until user closes the notifications detail view.
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_header_modal$
+      Attribute: label
+      ResultVar: APPOINTMENT_HEADER_TEXT
+    - Type: assert
+      Asserts:
+        - Type: ne
+          Var: APPOINTMENT_HEADER_TEXT
+          Value: Appointment Starting Soon
+    # Click on the Close button to go back to Home page.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.close_btn$
+    # Verify that Starting Soon notification should show up.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_starting_soon_header_modal$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_starting_soon_header_modal$
+      Attribute: label
+      ResultVar: APPOINTMENT_HEADER_TEXT
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: APPOINTMENT_HEADER_TEXT
+          Value: Appointment Starting Soon

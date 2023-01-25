@@ -91,3 +91,4 @@ seniors_app_notifications:
   first_notification: "**/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/**/XCUIElementTypeOther[`enabled == 1 AND accessible == 1`][1]"
   close_btn: "**/XCUIElementTypeButton[`label CONTAINS 'Close'`]"
   appointment_header_modal: "**/XCUIElementTypeStaticText[`label BEGINSWITH 'Appointment'`][-1]"
+  appointment_starting_soon_header_modal: "**/XCUIElementTypeStaticText[`label BEGINSWITH 'Appointment' and label ENDSWITH 'Soon'`][-1]"
