@@ -44,6 +44,7 @@ care_platform_header:
   myaccount_menu_button: //header//nav//button[contains(.,'My Account')]
   logout_menu_button: //header//nav//button[contains(.,'Log Out')]
   offline_carepartner1_element: //div[@class='users-dropdown-list-item is-offline']//div[@class='users-dropdown-name' and contains(., '$AND_CLI_CARE_PARTNER_USER1_FULLNAME$')]
+  onshift_carepartner1_element: //div[contains(@class,'is-green')]//following-sibling::div[@class='users-dropdown-name' and contains(., '$AND_CLI_CARE_PARTNER_USER1_FULLNAME$')]
 
 care_platform_myaccount_info:
   modal_title: //*[@id='modals']//h4[contains(text(),'My account')]
