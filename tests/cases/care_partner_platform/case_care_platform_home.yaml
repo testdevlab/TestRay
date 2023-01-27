@@ -671,3 +671,64 @@ TestLogoutStayOnShift:
       Strategy: xpath
       Id: $PAGE.care_platform_header.onshift_carepartner1_element$
       
+
+#CXTB-92: Verify Access and Review Team Member's Availability
+TestAccessAndReviewTeamMembersAvailability:
+  Environment: Settings
+  Vars:
+    CARE_PARTNER_USER1_FULLNAME: $AND_CLI_carepartner_user1_name$ $AND_CLI_carepartner_user1_lastname$
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Click on the users dropdown.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.users_dropdown_button$
+  # Care Partner list appears from right side of screen.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.users_dropdown_list$
+    - Type: sleep
+      Time: 5
+  # Verify that the list shows care partner users and current statuses.
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.users_dropdown_list$
+      Greps:
+      - var: USERS_LIST_TEXT
+        match: '[\s\S]*' # using single quotes due to YAML issues with regex and double quotes.
+    - Type: assert
+      Asserts: 
+      - Type: contain
+        Var: USERS_LIST_TEXT
+        Value: "ON SHIFT"
+    - Type: assert
+      Asserts: 
+      - Type: contain
+        Var: USERS_LIST_TEXT
+        Value: "OFF SHIFT"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+      - Type: contain
+        Var: USERS_LIST_TEXT
+        Value: $AND_CLI_CARE_PARTNER_USER1_FULLNAME$
+  # Click on the headset icon again.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.users_dropdown_button$
+  # Verify that the list disappears.
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.users_dropdown_list$
+      Attribute: className
+      ResultVar: IS_LIST_OPEN
+    - Type: assert
+      Asserts:
+        - Type: n_contain
+          Var: IS_LIST_OPEN
+          Value: users-dropdown-open

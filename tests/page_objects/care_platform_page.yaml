@@ -32,6 +32,7 @@ care_platform_header:
   user_toggle_input: //header//div[@class='radio-toggle']//input
   user_dropdown_button: //header//div[contains(@class,'user-dropdown')]/button
   users_dropdown_button: //button[@class='users-dropdown-toggle']
+  users_dropdown_list: //button[@class='users-dropdown-toggle']/ancestor::div[contains(@class, 'users-dropdown')]
   dropdown_username: //header//div[@class='user-dropdown-name']
   headset_icon: //header//button/span[@class='icon-headset']
   status_menu_header: //header//nav//div[contains(text(),'Status')]
