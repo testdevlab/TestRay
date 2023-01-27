@@ -290,3 +290,44 @@ TestUpdateAccountPassword:
       Var: employee_user1
     - Type: case
       Value: EmployeeHealthPortalUpdateAccountPassword  
+
+#CXTB-285 Employee Health Portal - Account - Help
+TestEmployeeHealthPortalAccountHelp:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  #Going to Help
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.user_dropdown_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.user_dropdown_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.user_dropdown_menu$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.dropdown_option_help$
+  #Verify the Help page is visible
+    - Type: switch_window
+      Value: 1
+      CheckTime: 10
+    - Type: get_url
+      Greps:
+        - var: HELP_PAGE_URL
+          match: "Employee_Health_User_Manual(.*).pdf"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: HELP_PAGE_URL
+          Value: Employee_Health_User_Manual
+        - Type: contain
+          Var: HELP_PAGE_URL
+          Value: .pdf

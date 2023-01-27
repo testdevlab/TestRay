@@ -35,6 +35,7 @@ employee_health_home_page:
   user_dropdown_button: //header//div[@class='user-dropdown']/button
   user_dropdown_menu: //nav[@class='user-dropdown-menu']
   dropdown_option_myaccount: //nav/button[text()='My Account']
+  dropdown_option_help: //nav//button[text()='Help']
   dropdown_option_logout: //nav/button[text()='Log out']
   alert_updated_notification: //div[@class='Toastify']//div[contains(text(),'Notification preferences updated')]
   alert_updated_info: //div[@class='Toastify']//div[contains(text(),'Account info updated')]
