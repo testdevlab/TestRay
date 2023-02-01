@@ -19,6 +19,7 @@ seniors_app_home:
   offline_yellow_bar: "**/XCUIElementTypeStaticText[`label ENDSWITH 'please call 911.'`][-1]"
   events_elements: "**/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/**/XCUIElementTypeOther[`enabled == 1 AND accessible == 1`]"
   date_value_appointment_modal: "//XCUIElementTypeStaticText[@name='Date:']/following-sibling::XCUIElementTypeOther"
+  event_based_on_name_element: "**/XCUIElementTypeOther[`label CONTAINS '$AND_CLI_UNIQUE_EVENT_NAME$'`][-1]"
 
 seniors_app_settings:
   my_details_tab: (//XCUIElementTypeOther[contains(@name, 'My Details')])[2]
@@ -50,12 +51,15 @@ seniors_app_call:
   cancel_call_button: "**/XCUIElementTypeButton[`label CONTAINS 'Cancel Call'`]"
   waiting_room_label: "**/XCUIElementTypeStaticText[`label == 'Waiting room'`]"
   video_button: "**/XCUIElementTypeOther[`label ENDSWITH 'Camera'`]"
+  volume_button: "**/XCUIElementTypeOther[`label ENDSWITH 'Volume'`]"
+  brightness_button: "**/XCUIElementTypeOther[`label ENDSWITH 'Brightness'`][-1]"
   
 seniors_app_post_call_survey:
   great_answer_button: //XCUIElementTypeOther[@name='Great']
   ok_answer_button: //XCUIElementTypeOther[@name='Ok']
   bad_answer_button: //XCUIElementTypeOther[@name='Bad']
   to_home_button: //XCUIElementTypeOther[@name='To Home']
+  skip_survey_button: "**/XCUIElementTypeOther[`label == 'Skip this'`]"
   thank_you_label: "**/XCUIElementTypeStaticText[`label == 'Thank you for your feedback'`]"
   video_quality_not_good_option: "**/XCUIElementTypeOther[`label == 'The video quality was not good.'`]"
   could_not_hear_audio_option: "**/XCUIElementTypeOther[`label == 'I could not hear the audio.'`]"
@@ -67,6 +71,15 @@ seniors_app_post_call_survey:
 seniors_app_appointment_modal:
   reschedule_btn: "**/XCUIElementTypeButton[`label == 'Reschedule'`]"
   close_btn: "**/XCUIElementTypeButton[`label CONTAINS 'Close'`]"
+  join_button: "**/XCUIElementTypeButton[`label == 'Join'`]"
+  appointment_header_modal: "**/XCUIElementTypeStaticText[`label BEGINSWITH 'Appointment'`][-1]"
+  appointment_starting_soon_header_modal: "**/XCUIElementTypeStaticText[`label BEGINSWITH 'Appointment' and label ENDSWITH 'Soon'`][-1]"
+  what_label: "**/XCUIElementTypeStaticText[`label == 'What:'`]"
+  date_label: "**/XCUIElementTypeStaticText[`label == 'Date:'`]"
+  time_label: "**/XCUIElementTypeStaticText[`label == 'Time:'`]"
+  time_value: //XCUIElementTypeStaticText[@name='Time:']/following-sibling::XCUIElementTypeStaticText
+  where_label: "**/XCUIElementTypeStaticText[`label == 'Where:'`]"
+  description_label: "**/XCUIElementTypeStaticText[`label == 'Description'`]"
 
 seniors_app_connection_error_modal:
   device_offline_label: "**/XCUIElementTypeStaticText[`label == 'Device is offline.'`]"
@@ -85,6 +98,7 @@ seniors_app_schedule:
   first_event: "**/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/**/XCUIElementTypeOther[`enabled == 1 AND accessible == 1`][1]"
   offline_call_button: "**/XCUIElementTypeOther[`label BEGINSWITH 'Personal' AND label ENDSWITH 'Offline'`][-1]"
   offline_yellow_bar: "**/XCUIElementTypeStaticText[`label ENDSWITH 'please call 911.'`][-1]"
+  event_based_on_name_element: "**/XCUIElementTypeOther[`label CONTAINS '$AND_CLI_UNIQUE_EVENT_NAME$'`][-1]"
 
 seniors_app_notifications:
   notifications_label: "**/XCUIElementTypeStaticText[`label == 'Notifications'`]"

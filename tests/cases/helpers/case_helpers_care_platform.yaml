@@ -361,11 +361,15 @@ SetScheduledCallForSeniorsToStartIn7Minutes:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_call_portal.today_date_date_picker$
-    #Set a time in the future for the event to start in 6 minutes.
+    #Set a time in the future for the event to start in 7 minutes.
     - Type: get_timestamp_plus_minutes
       Minutes: 7
       Format: "%I%M%p"
       Var: FUTURE_START_6MINUTES
+    - Type: get_timestamp_plus_minutes
+      Minutes: 7
+      Format: "%-I:%M%P"
+      Var: FUTURE_START_6MINUTES_FOR_COMPARISON
     - Type: send_keys
       Strategy: id
       Id: $PAGE.care_platform_call_portal.start_time_picker$
@@ -467,7 +471,7 @@ SetScheduledCallForSeniorsToStartIn11Minutes:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_call_portal.today_date_date_picker$
-    #Set a time in the future for the event to start in 6 minutes.
+    #Set a time in the future for the event to start in 11 minutes.
     - Type: get_timestamp_plus_minutes
       Minutes: 11
       Format: "%I%M%p"
