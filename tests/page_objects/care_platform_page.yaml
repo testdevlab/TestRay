@@ -86,6 +86,9 @@ care_platform_participant:
   clear_search_button: //button[contains(@class,'button-circle')]
 
 care_platform_participant_details:
+  call_history_tab_button: //nav/button[contains(text(),'Call History')]
+  first_call_history_row: //div[@tab-title='Call History']//div[contains(@class,'accordion-item call')][1]
+  first_call_history_content: //div[@tab-title='Call History']//div[contains(@class,'accordion-item call')][1]//table[@class='call-details']
   follow_up_tab_button: //nav/button[contains(text(),'Follow-up Tickets')]
   create_ticket_button: //div[@tab-title='Follow-up Tickets']//button[contains(text(),'Create Ticket')]
   ticket_subject_input: //*[@id='subject']
@@ -99,7 +102,6 @@ care_platform_participant_details:
   new_ticket_notification: //div[@class='Toastify']//div[text()='Follow-up ticket created']
   new_ticket_subject: //div[@tab-title='Follow-up Tickets']//div[@class='accordion-item-toggle']//div[contains(text(),'Automated test')]
   new_ticket_date: (//div[@class='accordion-item']//div[contains(text(),'Automated test')]/preceding-sibling::div/time[contains(text(),'$AND_CLI_TODAYS_DATE$')])[last()]
-
 
 care_platform_call_portal:
   category_select: category
