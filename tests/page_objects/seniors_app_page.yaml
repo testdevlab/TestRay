@@ -80,6 +80,7 @@ seniors_app_appointment_modal:
   time_value: //XCUIElementTypeStaticText[@name='Time:']/following-sibling::XCUIElementTypeStaticText
   where_label: "**/XCUIElementTypeStaticText[`label == 'Where:'`]"
   description_label: "**/XCUIElementTypeStaticText[`label == 'Description'`]"
+  live_label: "**/XCUIElementTypeOther[`label == 'Live'`]"
 
 seniors_app_connection_error_modal:
   device_offline_label: "**/XCUIElementTypeStaticText[`label == 'Device is offline.'`]"

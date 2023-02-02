@@ -748,3 +748,164 @@ TestAlertAndStartingSoonVisuals:
       Strategy: class_chain
       Id: $PAGE.seniors_app_home.events_elements$
       EventName: $AND_CLI_UNIQUE_EVENT_NAME$
+
+# CXTB-50: Verify active appointment time window when not joined prior.
+TestActiveAppointmentTimeWindowWhenNotJoinedPrior:
+  Environment: Settings
+  Precases:
+    - SetScheduledCallForSeniorsToStartIn7Minutes
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      Capabilities:
+        newCommandTimeout: 450
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Wait for the Starting Soon modal and verify it appears on the screen indicating relative start time and the event details with a join button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.close_btn$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+    - Type: sleep
+      Time: 420
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+      Attribute: label
+      ResultVar: APPOINTMENT_HEADER_TEXT
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: APPOINTMENT_HEADER_TEXT
+          Value: Appointment Started
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.close_btn$
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.close_btn$
+      Time: 10
+    # Verify user was redirected to Home page.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.full_schedule_btn$
+    # See the event in the events listing in the Home page.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.event_based_on_name_element$
+    # Event display should show that there is a visual saying "Live".
+    - Type: get_text
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.event_based_on_name_element$
+      Greps:
+        - var: LIVE_EVENT_TEXT
+          match: "Live"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: LIVE_EVENT_TEXT
+          Value: Live
+    # Click the event.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.event_based_on_name_element$
+    # Appointment window opens indicating that it’s Live and the event details with a "Join" button at the bottom.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.join_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.live_label$
+    - Type: get_text
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.live_label$
+      Greps:
+        - var: LIVE_EVENT_LABEL
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: LIVE_EVENT_LABEL
+          Value: Live
+    # Click "Close" in upper right corner.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.close_btn$
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.close_btn$
+      Time: 10
+    # Verify user was redirected to Home page.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.full_schedule_btn$
+    # Navigate to Schedules
+    - Type: case
+      Value: SchedulesPageNavigationHelper
+    # Click the event in the listing with the "Live" message.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.event_based_on_name_element$
+    # Appointment window opens indicating it’s live and the event details with a "Join" button at the bottom.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.join_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.live_label$
+    - Type: get_text
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.live_label$
+      Greps:
+        - var: LIVE_EVENT_LABEL
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: LIVE_EVENT_LABEL
+          Value: Live
+    # Click on th "Join" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.join_button$
+    # Verify that "Waiting Room" label appears once user is connected to the Care Platform.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.waiting_room_label$
+    # Complete the telehealth call with the provider, testing any controls you would like - volume, brightness and camera.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.volume_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.brightness_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.video_button$
+    # Then click "End Call".
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.seniors_app_call.end_call_button$
+    # Skip the survey.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_post_call_survey.skip_survey_button$
+    # Verify user was redirected to Home page.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.full_schedule_btn$
+    # Verify that any event that is over has moved to the bottom of the list.
+    - Type: verify_event_went_to_bottom
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.events_elements$
+      EventName: $AND_CLI_UNIQUE_EVENT_NAME$
