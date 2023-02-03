@@ -256,3 +256,142 @@ TestParticipantCallHistory:
         - Type: contain
           Var: DETAILS_CONTENT
           Value: 'Notes'
+
+#CXTB-105 Click and View Participant Record from Listing
+TestParticipantRecordListing:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: CarePartnerLogin
+  #Go to participants
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_participant$
+  #Select first participant in the list
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_1_row$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_1_row$
+  #Go to Records
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.records_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_name$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_dob$
+  #Navigate between tabs
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.demographics_tab$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.demographics_tab$
+      Greps:
+        - var: TAB_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: TAB_CLASS
+          Value: 'active'
+  #Go to Medical tab
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.medical_tab$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.medical_tab$
+      Greps:
+        - var: TAB_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: TAB_CLASS
+          Value: 'active'
+  #Go to Medical Subtabs
+  #Medications
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.medical_medications_subtab$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.medical_medications_subtab$
+      Greps:
+        - var: SUBTAB_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: SUBTAB_CLASS
+          Value: 'active'
+  #Medical needs
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.medical_medical_needs_subtab$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.medical_medical_needs_subtab$
+      Greps:
+        - var: SUBTAB_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: SUBTAB_CLASS
+          Value: 'active'
+  #Behavioral
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.medical_behavioral_subtab$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.medical_behavioral_subtab$
+      Greps:
+        - var: SUBTAB_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: SUBTAB_CLASS
+          Value: 'active'
+  #Medical History
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.medical_medical_history_subtab$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.medical_medical_history_subtab$
+      Greps:
+        - var: SUBTAB_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: SUBTAB_CLASS
+          Value: 'active'
+
+
+
+

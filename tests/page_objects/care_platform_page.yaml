@@ -68,7 +68,6 @@ care_platform_myaccount_info:
   change_my_password_button: //button[contains(text(),'Change My Password')]
   password_requirements_alert_text: //div[contains(@class,'red')][contains(text(),'Password does not meet the requirements')]
   
-
 care_platform_logout_modal:
   stay_on_shift_button: //button[contains(text(),'Stay On Shift')]
   go_off_shift_button: //button[contains(text(),'Go Off Shift')]
@@ -102,6 +101,17 @@ care_platform_participant_details:
   new_ticket_notification: //div[@class='Toastify']//div[text()='Follow-up ticket created']
   new_ticket_subject: //div[@tab-title='Follow-up Tickets']//div[@class='accordion-item-toggle']//div[contains(text(),'Automated test')]
   new_ticket_date: (//div[@class='accordion-item']//div[contains(text(),'Automated test')]/preceding-sibling::div/time[contains(text(),'$AND_CLI_TODAYS_DATE$')])[last()]
+  records_button: //a/button[text()='Records']
+
+care_platform_participant_records:
+  participant_name: //div[@class='participant-profile-contact']/h3
+  participant_dob: //div[@class='participant-profile-contact']//strong[contains(text(),'DOB')]/following-sibling::time
+  demographics_tab: //nav[contains(@class,'box-tabs-nav')]/button[text()='Demographics']
+  medical_tab: //nav[contains(@class,'box-tabs-nav')]/button[text()='Medical']
+  medical_medications_subtab: //nav/button[text()='Medications']
+  medical_medical_needs_subtab: //nav/button[text()='Medical Needs']
+  medical_behavioral_subtab: //nav/button[text()='Behavioral']
+  medical_medical_history_subtab: //nav/button[text()='Medical History']
 
 care_platform_call_portal:
   category_select: category
