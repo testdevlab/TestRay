@@ -20,19 +20,19 @@ TestVerifyMyDetailsSettingsPageElements:
     # Screen Brightness
     # Sound
     - Type: wait_for
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_settings.my_details_tab$
     - Type: wait_for
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_settings.wifi_tab$
     - Type: wait_for
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_settings.text_message_alerts_tab$
     - Type: wait_for
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_settings.screen_brightness_tab$
     - Type: wait_for
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_settings.sound_tab$
     # Verify that the default view is "My Details" page.
     - Type: wait_for
@@ -148,3 +148,48 @@ TestSettingsPageNavigation:
   # Terminate the app.
     - Type: case
       Value: TerminateApp
+
+# CXTB-35: Wi-fi settings page to review, add or update wi-fi network information
+TestWifiSettingsPage:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+    # In the Home page, click on the Settings icon and verify user is redirected to Settings "My Details" page.
+    - Type: case
+      Value: SettingsPageNavigationHelper
+    # Navigate to the Wi-fi tab.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_settings.wifi_tab$
+    # Verify user has been redirected to the Wi-fi tab.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_settings.wifi_network_name_label$
+    # Verify that it indicates the current device wi-fi connection status.
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.seniors_app_settings.network_status_label$
+      Attribute: label
+      ResultVar: NETWORK_STATUS_VALUE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: NETWORK_STATUS_VALUE
+          Value: Connected
+    # Screen shows your current wi-fi network setup.
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.seniors_app_settings.network_setup_label$
+      Attribute: label
+      ResultVar: NETWORK_SETUP_VALUE
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: NETWORK_SETUP_VALUE
+          Value: "Wi-fi is connected to"

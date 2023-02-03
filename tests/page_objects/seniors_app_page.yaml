@@ -22,12 +22,12 @@ seniors_app_home:
   event_based_on_name_element: "**/XCUIElementTypeOther[`label CONTAINS '$AND_CLI_UNIQUE_EVENT_NAME$'`][-1]"
 
 seniors_app_settings:
-  my_details_tab: (//XCUIElementTypeOther[contains(@name, 'My Details')])[2]
+  my_details_tab: "**/XCUIElementTypeOther[`label CONTAINS 'My Details'`][-1]"
   my_details_label: "**/XCUIElementTypeStaticText[`label == 'Settings | My Details'`]"
-  wifi_tab: (//XCUIElementTypeOther[contains(@name, 'Wi-fi')])[2]
-  text_message_alerts_tab: (//XCUIElementTypeOther[contains(@name, 'Text Message Alerts')])[2]
-  screen_brightness_tab: (//XCUIElementTypeOther[contains(@name, 'Screen Brightness')])[2]
-  sound_tab: (//XCUIElementTypeOther[contains(@name, 'Sound')])[2]
+  wifi_tab: "**/XCUIElementTypeOther[`label CONTAINS 'Wi-fi'`][-1]"
+  text_message_alerts_tab: "**/XCUIElementTypeOther[`label CONTAINS 'Text Message Alerts'`][-1]"
+  screen_brightness_tab: "**/XCUIElementTypeOther[`label CONTAINS 'Screen Brightness'`][-1]"
+  sound_tab: "**/XCUIElementTypeOther[`label CONTAINS 'Sound'`][-1]"
   first_name_field: //XCUIElementTypeOther[@name='First Name']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
   last_name_field: //XCUIElementTypeOther[@name='Last Name']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
   email_field: //XCUIElementTypeOther[@name='Email']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
@@ -38,6 +38,9 @@ seniors_app_settings:
   zip_code_field: //XCUIElementTypeOther[@name='Zip Code']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
   country_field: //XCUIElementTypeOther[@name='Country']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
   phone_number_field: //XCUIElementTypeOther[@name='Phone Number']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  wifi_network_name_label: "**/XCUIElementTypeStaticText[`label == 'Wi-fi Network Name'`]"
+  network_status_label: //XCUIElementTypeStaticText[starts-with(@name, 'Status:')]/following-sibling::XCUIElementTypeOther
+  network_setup_label: (//XCUIElementTypeOther[starts-with(@name, 'Status:')])[last()]/following-sibling::XCUIElementTypeStaticText
 
 seniors_app_incoming_call:
   answer_call_button: //XCUIElementTypeButton[@name='Answer Call']
