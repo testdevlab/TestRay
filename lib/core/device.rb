@@ -1854,6 +1854,27 @@ def generate_unique_name(action)
   ENV[convert_value(action["ResultVar"])] = unique_name
 end
 
+# Custom method to calculate the minutes/seconds from when an event was created
+# i.e. returns "Added x minutes ago" or "Added x seconds ago"
+def calculate_minutes_passed_by_from_event_creation(action)
+  timestamp = Time.parse(convert_value(action["Timestamp"]))
+  now = Time.now.getlocal
+  diff = now - timestamp
+  
+  if diff < 60
+    seconds_passed = diff.truncate()
+    ENV[convert_value(action["ResultVar"])] = "Added #{seconds_passed} seconds ago"
+  else
+    minutes_passed = (diff/60).truncate()
+    if minutes_passed == 1
+      ENV[convert_value(action["ResultVar"])] = "Added #{minutes_passed} minute ago"
+    else
+      ENV[convert_value(action["ResultVar"])] = "Added #{minutes_passed} minutes ago"
+    end
+  end
+  
+end
+
 # Custom method to verify that an event on Never Alone went to the bottom after its time has passed.
 def verify_event_went_to_bottom(action)
   action = convert_value_pageobjects(action);

@@ -164,6 +164,10 @@ SetScheduledCallForSeniors:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.event_created_notification$
+    # Get timestamp where event was sent to Senior.
+    - Type: get_local_timestamp
+      Format: "%c"
+      Var: EVENT_SENT_TIMESTAMP
     # Navigate back to home 
     - Type: click
       Strategy: xpath
