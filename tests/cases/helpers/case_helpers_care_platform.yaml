@@ -18,42 +18,6 @@ CarePlatformLogout:
       Strategy: xpath
       Id: $PAGE.care_platform_login.login_button$
 
-ProvidersCarePlatformLogin:
-  Environment: Settings 
-  Roles:
-    - Role: desktopChrome
-      App: desktop       
-  Actions:      
-      # Login to Providers Care Platform
-    - Type: maximize
-    - Type: navigate
-      Role: desktopChrome
-      Value: $AND_CLI_care_platform_url$
-    - Type: get_text
-      Strategy: xpath
-      Id : $PAGE.care_platform_login_page.login_button$
-      Greps:
-      - var: login_text
-        match: "Log In"
-    - Type: assert
-      Role: desktopChrome
-      Asserts: 
-      - Type: eq
-        Var: login_text
-        Value: "Log In"  
-    - Type: send_keys
-      Strategy: id
-      Id: $PAGE.care_platform_login_page.email_input$
-      Value: $AND_CLI_provider_user1$
-    - Type: send_keys
-      Strategy: id
-      Id: $PAGE.care_platform_login_page.password_input$
-      Value: $AND_CLI_provider_user1_pwd$
-    - Type: click
-      Strategy: xpath
-      Role: desktopChrome
-      Id: $PAGE.care_platform_login_page.login_button$
-
 CarePartnerLogin:
   Roles:
     - Role: desktopChrome

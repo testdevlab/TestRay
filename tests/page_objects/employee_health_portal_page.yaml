@@ -41,6 +41,8 @@ employee_health_home_page:
   alert_updated_info: //div[@class='Toastify']//div[contains(text(),'Account info updated')]
   alert_failed_update_password: //div[@role='alert']//div[contains(text(),'Failed to update password')]
   alert_success_update_password: //div[@class='Toastify']//div[contains(text(),'Password updated successfully')]
+  call_now_button: //button[text()='Call Now']
+  alert_call_ended: //div[@role='alert']//div[contains(text(),'Call has ended')]
 
 employee_health_my_account_modal:
   modal_title: //*[@id='modals']//h4[text()='My Account']
@@ -69,3 +71,31 @@ employee_health_my_account_modal:
   update_password_cancel_button: //*[@tab-title='Update Password']//button[text()='Cancel']
   update_password_requirements_link: //span[text()='see requirements']
   update_password_requirements_text: //*[@id='passwordRequirements']
+
+employee_health_telehealth_on_demand_modal:
+  modal_title: //*[@id='modals']//h4[text()='Telehealth On Demand Form']
+  modal_cancel_button: //*[@id='modals']//button[text()='Cancel']
+  modal_call_provider_button: //*[@id='modals']//button[text()='Call Provider']
+  modal_state_select: //*[@id='state']
+  modal_state_select_option: //*[@id='state']/option[2]
+  modal_patient_select: //*[@id='dependentIdentifier']
+  modal_reasons_input: //*[@id='comments']
+  modal_reasons_error: //*[@id='comments']/following-sibling::div[@aria-hidden='false']//div[contains(@class,'red')] [contains(text(),'Please enter a reason for this request')]
+
+employee_health_on_demand_call_page:
+  page_title: //h2[contains(text(),'On-demand call')]
+  video_feed: //div[@class='video']/div[@class='video-feed']
+  video_enable_button: //div[@class='video-controls-overlay']//span[contains(text(), 'Video')]/parent::button
+  video_settings_button: //div[@class='video-controls-overlay']//span[contains(text(), 'Settings')]/parent::button
+  video_end_call_button: //div[@class='video-controls-overlay']//span[contains(text(), 'End Call')]/parent::button
+  video_settings_modal_title: //*[@id='modals']//h4[text()='Call Settings']
+  video_settings_modal_mic_select: //div[text()='Microphone']/following-sibling::div//select
+  video_settings_modal_speakers_select: //div[text()='Speakers']/following-sibling::div//select
+  video_settings_modal_camera_select: //div[text()='Camera']/following-sibling::div//select
+  video_settings_modal_close_button: //*[@id='modals']//button[text()='Close']
+
+
+
+
+
+

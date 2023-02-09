@@ -1,4 +1,5 @@
 providers_home_page:
+  home_title: //h3[text()='Home']
   table : email
   follow_up_calls: (//div[contains(text(),'Follow-up')])[last()]
   missed_calls_text: (//div[contains(text(),'Missed Call')])[last()]
@@ -10,6 +11,7 @@ providers_home_page:
   time_all_option: //div[div[contains(text(),'Time')]]//button[contains(text(),'All')]
   last_medical_transfer_row: (//div[contains(text(),'Medical Transfer')])[last()]
   last_on_demand_row: (//div[contains(text(),'On Demand Call')])[last()]
+  first_on_demand_row: //tbody/tr//div[text()='On Demand Call'][1]
   facilities_navigation: //a//div[contains(text(),'Facilities')]
   employees_navigation: //a//div[contains(text(),'Employees')]
 
@@ -27,7 +29,18 @@ providers_call_queue_page:
   reason_last_option: //option[last()]
   time_follow_up_two_days_radiobtn: //label[input[@name='followUpTime'][@value=48]]
   submit_session_btn: //button[@type='submit']
-
+  answer_call_button: //button[text()='Answer Call']
+  call_notes_subject_input: //*[@id='providerSubject']
+  call_notes_provider_input: //*[@id='providerNotes']
+  call_notes_save_button: //button[text()='Save Notes']
+  end_answer_call_button: //span[text()='End Call']//ancestor::button
+  complete_session_button: //button[text()='Complete Session']
+  post_call_survey_title: //h3[text()='Post-call Survey']
+  resolved_true_option: //input[@name='resolved' and @value='true']/following-sibling::span
+  recommend_discharge_true_option: //input[@name='recommendedDischarge' and @value='true']/following-sibling::span
+  submit_exit_session_button: //button[text()='Submit and Exit Session']
+  cancel_exit_session_button: //button[text()='Cancel']
+  
 providers_employees_page:
   employees_label: //h3[text()='Employees']
   search_button: //button[span[@class='icon-search']]

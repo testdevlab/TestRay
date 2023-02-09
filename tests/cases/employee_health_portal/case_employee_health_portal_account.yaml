@@ -3,13 +3,6 @@ TestSettingNotification:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
-      Capabilities:
-        chromeOptions:
-          args:
-            - use-fake-ui-for-media-stream
-            - use-fake-device-for-media-stream
-            - no-sandbox
-            - disable-gpu
       App: "desktop"
   Actions:
   #Calling Login case
@@ -142,13 +135,6 @@ TestInformationUpdateNumber:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
-      Capabilities:
-        chromeOptions:
-          args:
-            - use-fake-ui-for-media-stream
-            - use-fake-device-for-media-stream
-            - no-sandbox
-            - disable-gpu
       App: "desktop"
   Actions:
   #Calling Login case
