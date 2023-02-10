@@ -1,100 +1,36 @@
 #CXTB-86 Employee Health Portal - Home - Employee User Call Now
 TestEmployeeHealthPortalUserCall:
-  Environment: Settings 
+  Environment: Settings
   Roles:
     - Role: desktopChrome
       App: "desktop"
   Actions:
   #Calling Login case
     - Type: case
-      Value: EmployeeHealthPortalLogIn
-  #Home Page
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.employee_health_home_page.call_now_button$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.employee_health_home_page.call_now_button$
-  #Telehealth on demand modal
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_title$
-  #Cancel should take you back to the Home Page
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_cancel_button$
-    - Type: wait_not_visible
-      Strategy: xpath
-      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_title$
-  #Going back to the Telehealth on demand modal
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.employee_health_home_page.call_now_button$  
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_state_select$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_state_select_option$
-  #Try to call without all fields filled
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_call_provider_button$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_reasons_error$
-  #Fill all fields
-    - Type: send_keys
-      Strategy: xpath
-      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_reasons_input$
-      Value: 'Test reason: automation'
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_call_provider_button$
-  #Call page
-  #Enable webcam
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.employee_health_on_demand_call_page.video_enable_button$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.employee_health_on_demand_call_page.video_enable_button$
-  #Checking Settings modal
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.employee_health_on_demand_call_page.video_settings_button$
-    - Type: sleep
-      Time: 2
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.employee_health_on_demand_call_page.video_settings_modal_title$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.employee_health_on_demand_call_page.video_settings_modal_mic_select$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.employee_health_on_demand_call_page.video_settings_modal_speakers_select$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.employee_health_on_demand_call_page.video_settings_modal_camera_select$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.employee_health_on_demand_call_page.video_settings_modal_close_button$
-    - Type: wait_not_visible
-      Strategy: xpath
-      Id: $PAGE.employee_health_on_demand_call_page.video_settings_modal_close_button$
-  #Opening new tab for the provider's part of the process
-    - Type: new_tab
-    - Type: switch_window
-      Value: 1
+      Value: EmployeeHealthPortalUserCall
+
+#CXTB-88 “Call Now” as Dependent User
+TestEmployeeHealthPortalDependentUserCall:
+  Environment: Settings
+  Vars:
+    ENV_USER_STORE: $AND_CLI_employee_user1$
+    ENV_PASS_STORE: $AND_CLI_employee_user1_pwd$ 
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+    - Type: set_env_var
+      Value: $AND_CLI_employee_dependent_user1_pwd$
+      Var: employee_user1_pwd
+    - Type: set_env_var
+      Value: $AND_CLI_employee_dependent_user1$
+      Var: employee_user1
     - Type: case
-      Value: ProvidersCarePlatformLogin
-    - Type: case
-      Value: ProvidersCarePlatformEndCall
-  #Switch back to the Employee Health Portal tab
-    - Type: switch_window
-      Value: 0
-  #Wait for notification that call ended
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.employee_health_home_page.alert_call_ended$
+      Value: EmployeeHealthPortalUserCall
+  #Restore values
+    - Type: set_env_var
+      Value: $AND_CLI_ENV_PASS_STORE$
+      Var: employee_user1_pwd
+    - Type: set_env_var
+      Value: $AND_CLI_ENV_USER_STORE$
+      Var: employee_user1

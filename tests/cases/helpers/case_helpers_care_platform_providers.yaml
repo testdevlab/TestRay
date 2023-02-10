@@ -1,5 +1,4 @@
 ProvidersCarePlatformLogin:
-  Environment: Settings 
   Roles:
     - Role: desktopChrome
       App: desktop       
@@ -35,7 +34,6 @@ ProvidersCarePlatformLogin:
       Id: $PAGE.care_platform_login_page.login_button$
 
 ProvidersCarePlatformEndCall:
-  Environment: Settings 
   Roles:
     - Role: desktopChrome
       App: desktop       
