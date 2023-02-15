@@ -77,7 +77,7 @@ class Device
       if @url.nil? # local Appium - need to create server too
         @server = AppiumServer.new(@role, @udid, @server_port)
         server_port = @server.start
-        @url = "http://localhost:#{server_port}/wd/hub"
+        @url = "http://localhost:#{server_port}/"
       end
       driverclass = AppiumDriver.new(@device_name, @driver_port, @udid, @app_details, @url)
       base_caps = case @platform

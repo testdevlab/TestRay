@@ -114,3 +114,280 @@ TestNotificationsPageOnSeniorApp:
         - Type: eq
           Var: APPOINTMENT_ADDED_X_TIME_AGO
           Value: $AND_CLI_ADDED_EVENT_X_TIME_AGO$
+
+# CXTB-31: Verify appointment added notifications
+TestAppointmentAddedNotifications:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop    
+  Actions:
+  # In the Home page, click on the Bell icon and verify user is redirected to Notifications page.
+    - Type: case
+      Value: NotificationsPageNavigationHelper
+    - Type: sleep
+      Time: 10
+  # Add manual appointment
+    - Type: case
+      Value: SetNonTelehealthAppointmentForSenior
+  # Click on the notification created on this run.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.manual_appointment_based_on_name_element$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+  # Verify "Appointment Added" detail window opens, showing the related event details:
+  # What, Date, Time, Where, Description.
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+      Attribute: label
+      ResultVar: APPOINTMENT_HEADER_TEXT
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: APPOINTMENT_HEADER_TEXT
+          Value: Appointment Added
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.what_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.date_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.time_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.where_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.description_label$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.close_btn$
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+      Time: 10
+  # Create an event for the future
+    - Type: case
+      Value: SetScheduledCallForSeniorsToStartIn11Minutes
+  # Click and view an "Appointment Added" notification for a teleheallth appointment.
+    - Type: sleep
+      Time: 10
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_based_on_name_element$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+  # "Appointment Added" detail windows opens. Showing the related event details.
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+      Attribute: label
+      ResultVar: APPOINTMENT_HEADER_TEXT
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: APPOINTMENT_HEADER_TEXT
+          Value: Appointment Added
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.what_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.date_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.time_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.where_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.description_label$
+  # Verify that there is a button that has the following text: "Cancel or Reschedule".
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.cancel_or_reschedule_button$
+  # Click the "Cancel or Reschedule" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.cancel_or_reschedule_button$
+  # Device screen updates to show screen asking what kind of need you help:
+  # Medical, Non-Medical and Cancel
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.non_medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.cancel_call_button$
+  # Click on the Medical option.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.medical_call_button$
+  # Verify that screen redirects to the call waiting room.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.waiting_room_label$
+  # Log in as a Care partner and reschedule the event.
+    - Type: case
+      Value: AnswerCallAndRescheduleForOneHourLater
+  # Go back to the iPad and fill in the Post Call Survey.
+    - Type: case
+      Value: SeniorGreatPostSurveyCallHelper
+  # Verify that the appointment appears in the schedule listing.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.event_based_on_name_element$
+  # Click on it and verify the Time value.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.event_based_on_name_element$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.seniors_app_appointment_modal.time_value$
+      Attribute: label
+      ResultVar: TIME_VALUE
+    - Type: operation
+      Operation: "'$AND_CLI_FUTURE_START_60MINUTES_FOR_COMPARISON$' + ' - ' + '$AND_CLI_FUTURE_START_90MINUTES_FOR_COMPARISON$'"
+      ResultVar: EXPECTED_SCHEDULE_TIME
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: TIME_VALUE
+          Value: $AND_CLI_EXPECTED_SCHEDULE_TIME$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.close_btn$
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+      Time: 10
+  # Do the same validations for the "Past Appointment" workflow.
+  # Set up past event on Care Platform.
+    - Type: case
+      Value: SetPastEventForSeniors
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.close_btn$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+  # In the Home page, click on the Bell icon and verify user is redirected to Notifications page.
+    - Type: case
+      Value: NotificationsPageNavigationHelper
+    - Type: sleep
+      Time: 10
+  # Click on the notification created on this run.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.added_appointment_based_on_name_element$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+      Attribute: label
+      ResultVar: APPOINTMENT_HEADER_TEXT
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: APPOINTMENT_HEADER_TEXT
+          Value: Appointment Added
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.what_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.date_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.time_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.where_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.description_label$
+  # Verify that there is a button that has the following text: "Reschedule".
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.reschedule_button$
+  # Click the "Reschedule" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.reschedule_button$
+  # Device screen updates to show screen asking what kind of need you help:
+  # Medical, Non-Medical and Cancel
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.non_medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.cancel_call_button$
+  # Click on the Medical option.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.medical_call_button$
+  # Verify that screen redirects to the call waiting room.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.waiting_room_label$
+  # Log in as a Care partner and reschedule the event.
+    - Type: case
+      Value: AnswerPastCallAndRescheduleForOneHourLater
+  # Go back to the iPad and fill in the Post Call Survey.
+    - Type: case
+      Value: SeniorGreatPostSurveyCallHelper
+  # Verify that the appointment appears in the schedule listing.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.event_based_on_name_element$
+  # Click on it and verify the Time value.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.event_based_on_name_element$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.seniors_app_appointment_modal.time_value$
+      Attribute: label
+      ResultVar: TIME_VALUE
+    - Type: operation
+      Operation: "'$AND_CLI_FUTURE_START_60MINUTES_FOR_COMPARISON$' + ' - ' + '$AND_CLI_FUTURE_START_90MINUTES_FOR_COMPARISON$'"
+      ResultVar: EXPECTED_SCHEDULE_TIME
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: TIME_VALUE
+          Value: $AND_CLI_EXPECTED_SCHEDULE_TIME$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.close_btn$
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+      Time: 10

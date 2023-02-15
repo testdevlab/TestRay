@@ -117,12 +117,15 @@ care_platform_call_portal:
   category_select: category
   create_event_btn: //button[text()='Create Event']
   teleheath_appointment_option: //option[@value='telehealthAppointment']
-  subject_input: //div[label[text()='Subject']]//input
+  manual_appointment_option: //option[@value='manualAppointment']
+  subject_input: //div[@class='app-modals']//input[@id='subject']
+  location_input: //input[@id='location']
   date_container: //div[@class='react-datepicker__input-container']
   today_date_date_picker: //div[@aria-current='date']
   start_time_picker: startTime
   end_time_picker: endTime
   next_btn: //button[text()='Next']
+  save_and_close_btn: //button[text()='Save and Close']
   urgent_patient_matter_select: priorityLevel
   urgent_patient_matter_yes_option: //option[text()='Yes']
   reason_for_request_select: reasonForRequest
@@ -145,7 +148,11 @@ care_platform_call_portal:
   subcategory_select: subcategory
   located_provider_option: //option[@value='locatedProvider']
   submit_and_exit_session_button: //button[contains(text(),'Submit and Exit Session')]
+  participant_schedule_based_on_element: //strong[text()='$AND_CLI_UNIQUE_EVENT_NAME$']
+  edit_event_button: //div[@class='accordion-item is-open']//button[text()='Edit']
+  edit_event_modal_header: //div[@class='box has-scrollable-content box-tight has-shadow has-border max-h-full']//h4[@class='font-bold text-md']
 
 care_platform_notifications:
   call_completed_notification: //div[text()='Call completed']
   event_created_notification: //div[text()='Event created']
+  event_saved_notification: //div[@class='Toastify']//div[text()='Event saved']
