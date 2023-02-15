@@ -106,3 +106,6 @@ ProvidersCarePlatformEndCall:
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.home_title$

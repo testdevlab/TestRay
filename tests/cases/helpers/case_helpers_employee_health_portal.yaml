@@ -284,6 +284,12 @@ EmployeeHealthPortalUserCall:
       Strategy: xpath
       Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_reasons_error$
   #Fill all fields
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select_option$
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_reasons_input$
@@ -336,5 +342,8 @@ EmployeeHealthPortalUserCall:
       Value: 0
   #Wait for notification that call ended
     - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.alert_call_ended$
+    - Type: wait_not_visible
       Strategy: xpath
       Id: $PAGE.employee_health_home_page.alert_call_ended$

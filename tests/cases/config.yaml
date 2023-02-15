@@ -111,6 +111,9 @@ Environments:
       employee_dependent_user1_dob: "YYYY-MM-DD" #you need to keep the date between quotation marks
       employee_dependent_user1_card_member_id: add_your_info
       employee_dependent_user1_phone_number: add_your_info #phone number is a combination of 10 digits, without parenthesis or dashes
+      employee_minor_dependent_user: add_your_info #This is the email of the employee with a minor as dependent
+      employee_minor_dependent_pwd: add_your_info
+      employee_minor_dependent_card_member_id: add_your_info #Member id of the minor
       employee_user2: add_your_info
       employee_user2_pwd: add_your_info
       employee_user2_card_member_id: add_your_info
