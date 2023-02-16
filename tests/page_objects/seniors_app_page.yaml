@@ -119,4 +119,6 @@ seniors_app_notifications:
   appointment_starting_soon_header_modal: "**/XCUIElementTypeStaticText[`label BEGINSWITH 'Appointment' and label ENDSWITH 'Soon'`][-1]"
   appointment_based_on_name_element: "**/XCUIElementTypeOther[`label CONTAINS '$AND_CLI_UNIQUE_EVENT_NAME$'`][-1]"
   added_appointment_based_on_name_element: "**/XCUIElementTypeOther[`label CONTAINS '$AND_CLI_UNIQUE_EVENT_NAME$' AND label CONTAINS 'Added'`][-1]"
+  canceled_appointment_based_on_name_element: "**/XCUIElementTypeOther[`label CONTAINS '$AND_CLI_UNIQUE_EVENT_NAME$' AND label CONTAINS 'Canceled'`][-1]"
+  missed_appointment_based_on_name_element: "**/XCUIElementTypeOther[`label CONTAINS '$AND_CLI_UNIQUE_EVENT_NAME$' AND label CONTAINS 'Missed'`][-1]"
   manual_appointment_based_on_name_element: "**/XCUIElementTypeOther[`label CONTAINS '$AND_CLI_UNIQUE_MANUAL_APPOINTMENT$'`][-1]"

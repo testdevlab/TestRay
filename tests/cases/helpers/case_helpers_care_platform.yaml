@@ -913,3 +913,60 @@ AnswerPastCallAndRescheduleForOneHourLater:
       Id: $PAGE.care_platform.navigation_home$
     - Type: case
       Value: CarePlatformLogout
+
+DeleteFutureEventForSenior:
+  Environment: Settings
+  Vars:
+    LOGOUT_OPTION: "Go Off Shift"
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Login to the Care Platform app with Care Partners account.
+    - Type: case
+      Value: CarePartnerLogin
+    # Navigate to Participants
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_participant$
+    # Open the Call Portal
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_1_td$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.create_event_btn$   
+    # Delete the event
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.participant_schedule_based_on_element$
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.participant_schedule_based_on_element$
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.delete_event_button$
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.yes_delete_button$
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.yes_delete_button$
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.event_deleted_notification$
+    # Navigate back to home 
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_home$
+    - Type: case
+      Value: CarePlatformLogout

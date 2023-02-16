@@ -151,8 +151,11 @@ care_platform_call_portal:
   participant_schedule_based_on_element: //strong[text()='$AND_CLI_UNIQUE_EVENT_NAME$']
   edit_event_button: //div[@class='accordion-item is-open']//button[text()='Edit']
   edit_event_modal_header: //div[@class='box has-scrollable-content box-tight has-shadow has-border max-h-full']//h4[@class='font-bold text-md']
+  delete_event_button: //div[@class='accordion-item is-open']//button[text()='Delete']
+  yes_delete_button: //div[@class='app-dialogs']//button[text()='Yes, Delete']
 
 care_platform_notifications:
   call_completed_notification: //div[text()='Call completed']
   event_created_notification: //div[text()='Event created']
   event_saved_notification: //div[@class='Toastify']//div[text()='Event saved']
+  event_deleted_notification: //div[@class='Toastify']//div[text()='Event deleted']
