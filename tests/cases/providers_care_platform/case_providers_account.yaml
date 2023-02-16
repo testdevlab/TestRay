@@ -1,0 +1,21 @@
+#CXTB-204 “Update password” Workflow in My account Modal
+TestProvidersUpdatePassword:
+  Environment: Settings 
+  Vars:
+    LOGOUT_OPTION: "Stay On Shift"
+    ENV_PASS_STORE: $AND_CLI_provider_user1_pwd$
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  # Log in to Care Platform as a Provider.
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+    - Type: set_env_var
+      Value: $AND_CLI_provider_user1$
+      Var: carepartner_user1
+    - Type: set_env_var
+      Value: $AND_CLI_provider_user1_pwd$
+      Var: carepartner_user1_pwd
+    - Type: case
+      Value: CarePlatformUpdatePassword
