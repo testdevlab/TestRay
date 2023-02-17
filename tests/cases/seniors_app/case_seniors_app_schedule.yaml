@@ -119,3 +119,40 @@ TestSchedulesPageNavigation:
   # Terminate the app.
     - Type: case
       Value: TerminateApp
+
+# CXTB-39: Automatically Return to Full Schedule Page After Period of Inactivity
+TestAutomaticReturnAfterInactivty:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      Capabilities:
+        newCommandTimeout: 310
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop 
+  Actions:
+  # Set up an appointment for the senior.
+    - Type: case
+      Value: SetScheduledCallForSeniors
+  # In the Home page, click on the button "Full Schedule" and verify user is redirected to Schedules page.
+    - Type: case
+      Value: SchedulesPageNavigationHelper
+  # Click an event in the listing.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.first_event$
+  # Event details view should be displayed.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+  # Wait for 5 minutes without performing any actions.
+    - Type: sleep
+      Time: 300
+  # Schedules page should be displayed.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.schedule_label$
