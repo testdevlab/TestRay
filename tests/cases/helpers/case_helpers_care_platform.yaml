@@ -1120,3 +1120,139 @@ CarePlatformUpdatePassword:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.change_my_password_button$
+
+CarePlatformUpdateInfo:
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+#Going to My Account
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.myaccount_menu_button$  
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.modal_title$
+  #Saving original firstname, and adding a 1 to form input
+    - Type: get_attribute
+      Strategy: xpath
+      Id : $PAGE.care_platform_myaccount_info.firstname_input$
+      Greps:
+        - var: FIRSTNAME_ORIG
+          attr: value
+          condition: nempty
+          match: "(.*)"
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.firstname_input$
+      Value: '1'
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_myaccount_info.modal_title$
+    - Type: get_attribute
+      Strategy: xpath
+      Id : $PAGE.care_platform_myaccount_info.firstname_input$
+      Greps:
+        - var: FIRSTNAME_NEW
+          attr: value
+          condition: nempty
+          match: "(.*)" 
+  #Checking original and new name are not the same
+    - Type: assert
+      Asserts:
+        - Type: ne
+          Var: FIRSTNAME_ORIG
+          Value: $AND_CLI_FIRSTNAME_NEW$
+  #Verify that the email input can't be modify
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.email_input$
+      Attribute: disabled
+      Value: true
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_myaccount_info.save_changes_button$  
+  #Wait for the success alert message
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.success_alert_msg$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.success_alert_msg$
+      Time: 10
+  #Verify that the name in the header reflects the new change to the firstname
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.dropdown_username$
+      Greps:
+        - var: NEW_NAME
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: NEW_NAME
+          Value: $AND_CLI_FIRSTNAME_NEW$
+  #Going again to the My Account Modal
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.myaccount_menu_button$  
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.modal_title$
+  #Changing back the first name as it was originally
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.firstname_input$
+      Value: "backspace"
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_myaccount_info.save_changes_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.success_alert_msg$
+      Time: 10
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.myaccount_menu_button$
+    - Type: get_attribute
+      Strategy: xpath
+      Id : $PAGE.care_platform_myaccount_info.firstname_input$
+      Greps:
+        - var: BACK_NAME
+          attr: value
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: BACK_NAME
+          Value: $AND_CLI_FIRSTNAME_ORIG$
+  #Check error on phone number
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.phone_input$
+      Value: "backspace"
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_myaccount_info.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.phone_error_message$
+  #Use button cancel of the modal
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_myaccount_info.cancel_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.modal_title$
+      Time: 2

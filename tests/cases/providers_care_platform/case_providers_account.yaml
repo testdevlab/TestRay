@@ -39,15 +39,9 @@ TestProviderLogOutStayOnShift:
   # NOTE: Step 4 was skipped because it involved verifying text messages,
   # This step needed to call from SNF and then validate that care partner did receive text notification.
   # Continued on Step 5.
-    - Type: set_env_var
-      Value: $AND_CLI_provider_user2$
-      Var: carepartner_user2
-    - Type: set_env_var
-      Value: $AND_CLI_provider_user2_pwd$
-      Var: carepartner_user2_pwd
   # Log in with the second user.
     - Type: case
-      Value: CarePartnerLoginSecondaryUser
+      Value: ProviderLoginSecondaryUser
   # Click on the users dropdown.
     - Type: click
       Strategy: xpath
@@ -56,3 +50,17 @@ TestProviderLogOutStayOnShift:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_header.onshift_carepartner1_element$
+
+#CXTB-203 Open “My account” Window & Review or Update “My info”
+TestProviderUpdateAccountInfo:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  # Log in with the second user.
+    - Type: case
+      Value: ProviderLoginSecondaryUser
+  # Call case to update info
+    - Type: case
+      Value: CarePlatformUpdateInfo
