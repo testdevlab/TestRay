@@ -56,6 +56,7 @@ seniors_app_call:
   video_button: "**/XCUIElementTypeOther[`label ENDSWITH 'Camera'`]"
   volume_button: "**/XCUIElementTypeOther[`label ENDSWITH 'Volume'`]"
   brightness_button: "**/XCUIElementTypeOther[`label ENDSWITH 'Brightness'`][-1]"
+  video_window: "**/XCUIElementTypeImage[-1]"
   
 seniors_app_post_call_survey:
   great_answer_button: //XCUIElementTypeOther[@name='Great']
@@ -106,6 +107,7 @@ seniors_app_schedule:
   offline_call_button: "**/XCUIElementTypeOther[`label BEGINSWITH 'Personal' AND label ENDSWITH 'Offline'`][-1]"
   offline_yellow_bar: "**/XCUIElementTypeStaticText[`label ENDSWITH 'please call 911.'`][-1]"
   event_based_on_name_element: "**/XCUIElementTypeOther[`label CONTAINS '$AND_CLI_UNIQUE_EVENT_NAME$'`][-1]"
+  call_care_partner: "**/XCUIElementTypeOther[`label BEGINSWITH 'Call Personal' AND label ENDSWITH 'Care Partner'`]"
 
 seniors_app_notifications:
   notifications_label: "**/XCUIElementTypeStaticText[`label == 'Notifications'`]"

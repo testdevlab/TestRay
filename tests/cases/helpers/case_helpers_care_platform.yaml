@@ -1256,3 +1256,87 @@ CarePlatformUpdateInfo:
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.modal_title$
       Time: 2
+
+AnswerCallAsCarePartner:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Login to the Care Platform app with Care Partners account.
+    - Type: case
+      Value: CarePartnerLogin
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_home.first_call_of_queue$
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_home.answer_call$
+
+PostCallSurveyCarePartner:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # End the call on care partner side - Teardown.
+    # Fill the notes
+    - Type: send_keys
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.subject_input$
+      Value: Missed Call Subject Automation
+    - Type: send_keys
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.details_textarea$
+      Value: Automation Tear Down post call survey    
+    - Type: wait_for_property
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.complete_session_btn$ 
+      Property: disabled
+      Value: "false"
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.complete_session_btn$             
+    # Fill the Post-call Survey
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.non_medical_radiobtn$
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.non_medical_radiobtn$             
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.issue_resolved_yes_radiobutton$          
+    - Type: click
+      Role: desktopChrome
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.category_select$
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.medical_question_option$
+    - Type: click
+      Role: desktopChrome
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.subcategory_select$
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.located_provider_option$
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.submit_and_exit_session_button$
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.call_completed_notification$
