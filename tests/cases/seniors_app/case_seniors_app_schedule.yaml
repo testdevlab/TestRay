@@ -218,3 +218,44 @@ TestCallPersonalCareButtonOnFullSchedule:
   # Care partner tear down
     - Type: case
       Value: PostCallSurveyCarePartner
+
+# CXTB-87: Verify no prompts for cancelled appointments
+TestNoPromptsForCancelledAppointments:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop 
+  Actions:
+  # In the Home page, click on the button "Full Schedule" and verify user is redirected to Schedules page.
+    - Type: case
+      Value: SchedulesPageNavigationHelper
+  # Set an appointment for the future.
+    - Type: case
+      Value: SetScheduledCallForSeniorsToStartIn11Minutes
+  # Verify the appointment was registered in the schedule.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.event_based_on_name_element$
+  # Care partner cancels the appointment
+    - Type: case
+      Value: DeleteFutureEventForSenior
+  # Verify that there are no notifications related to the cancelation of the appointment.
+    - Type: sleep
+      Time: 10
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_header_modal$
+      Time: 10
+  # Verify that the appointment is no longer schedule.
+    - Type: sleep
+      Time: 10
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.event_based_on_name_element$
+      Time: 10
