@@ -259,3 +259,63 @@ TestNoPromptsForCancelledAppointments:
       Strategy: class_chain
       Id: $PAGE.seniors_app_notifications.event_based_on_name_element$
       Time: 10
+
+# CXTB-18: Verify Future Non-Telehealth Event Window Access
+TestFutureNonTelehealthEventWindowAccess:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop 
+  Actions:
+  # In the Home page, click on the button "Full Schedule" and verify user is redirected to Schedules page.
+    - Type: case
+      Value: SchedulesPageNavigationHelper
+  # Set an appointment for the future.
+    - Type: case
+      Value: SetScheduledCallForSeniorsToStartIn11Minutes
+  # Verify the appointment was registered in the schedule.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.event_based_on_name_element$
+  # Click the future event in the schedule listing.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.event_based_on_name_element$
+  # Appointment event detail window opens showing the following information:
+  # What, Date, Time, Where and Description.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.what_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.date_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.time_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.where_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.description_label$
+  # Click on the "Close" button in the upper right corner.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.close_btn$
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+      Time: 10
+  # User is redirected to the Schedules page.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.schedule_label$
