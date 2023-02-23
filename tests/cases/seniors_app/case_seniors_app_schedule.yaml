@@ -319,3 +319,71 @@ TestFutureNonTelehealthEventWindowAccess:
     - Type: wait_for
       Strategy: class_chain
       Id: $PAGE.seniors_app_schedule.schedule_label$
+
+# CXTB-19: Verify Future Telehealth Appointment Cancel or Reschedule button
+TestFutureAppointmentCancelOrRescheduleButton:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop 
+  Actions:
+  # In the Home page, click on the button "Full Schedule" and verify user is redirected to Schedules page.
+    - Type: case
+      Value: SchedulesPageNavigationHelper
+  # Set an appointment for the future.
+    - Type: case
+      Value: SetScheduledCallForSeniorsToStartIn11Minutes
+  # Verify the appointment was registered in the schedule.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.event_based_on_name_element$
+  # Click the future event in the schedule listing.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.event_based_on_name_element$
+  # Appointment event detail window opens with "cancel or Reschedule" button visible.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.cancel_or_reschedule_button$
+  # Click the "Cancel or Reschedule" button in the window.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.cancel_or_reschedule_button$
+  # A modal asking what kind of help you need appears:
+  # Medical, Non-Medical and Cancel Call.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.non_medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.cancel_call_button$
+  # Click the "Medical" button
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.medical_call_button$
+  # Device screen updates showing you connecting, in the waiting room.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.waiting_room_label$
+  # Answer the call as a car partner and then update the appointment for one hour later.
+    - Type: case
+      Value: AnswerCallAndRescheduleForOneHourLater
+  # Go back to the iPad and fill in the Post Call Survey.
+    - Type: case
+      Value: SeniorGreatPostSurveyCallHelper
+  # Verify that the appointment appears in the schedule listing.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.event_based_on_name_element$

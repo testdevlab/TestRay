@@ -283,6 +283,7 @@ SetPastEventForSeniors:
     - Type: case
       Value: CarePlatformLogout
 
+# Used 7 mins to be safe, Starting modal starts when it's missing 5 minutes and with 7 mins then we play safe with the care partner tear down.
 SetScheduledCallForSeniorsToStartIn7Minutes:
   Environment: Settings
   Vars:
@@ -393,6 +394,7 @@ SetScheduledCallForSeniorsToStartIn7Minutes:
     - Type: case
       Value: CarePlatformLogout
 
+# Used 11 mins so the user is able to do all the needed task with the ones using the 7 mins one(the one above) and then be able to do the validations for this one.
 SetScheduledCallForSeniorsToStartIn11Minutes:
   Environment: Settings
   Vars:
