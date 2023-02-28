@@ -18,6 +18,7 @@ care_platform_verify_account:
 
 care_platform:
   page_title: //h3
+  call_queue_title: //h3[text()='Call Queue']
   navigation_participant: //nav//div[contains(text(),'Participants')]
   navigation_followup: //nav//div[contains(text(),'Follow-up')]
   navigation_home: //nav//div[contains(text(),'Home')]
@@ -74,6 +75,7 @@ care_platform_logout_modal:
   cancel_logout_button: //button[contains(@class,'button-ghost')] 
 
 care_platform_participant:
+  first_participant_row: //table/thead[contains(.,'Participant')]/following-sibling::tbody/tr[contains(.,'$AND_CLI_senior_user1_name$') and contains(.,'$AND_CLI_senior_user1_lastname$')][1]
   first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
   selected_darkened_letter_button: //button[contains(@class,'is-selected')]
   senior_1_td: //td[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
@@ -85,6 +87,21 @@ care_platform_participant:
   clear_search_button: //button[contains(@class,'button-circle')]
 
 care_platform_participant_details:
+  participant_details_title: //h3[contains(.,'$AND_CLI_senior_user1_name$') and contains(.,'$AND_CLI_senior_user1_lastname$')]
+  participant_dob: //strong[contains(text(),'DOB')]/following-sibling::time
+  health_overview_tab_nav: //nav/button[contains(.,'Health Overview')]
+  health_overview_title: //h4[contains(.,'At-A-Glance')]
+  medication_tab_nav: //nav/button[contains(.,'Medication')]
+  providers_tab_nav: //nav/button[contains(.,'Providers')]
+  tab_nav_content: //div[@data-testid='box'][1]//div[@data-testid='box'][1]//div[contains(@class,'tabs-all')]/div[@class='tabs-content']
+  health_insurance_label: //strong[text()='Health Insurance']
+  health_insurance_button: //button[text()='Health Insurance']
+  secondary_health_insurance_button: //button[text()='Secondary Health Insurance']
+  tertiary_health_insurance_button: //button[text()='Tertiary Health Insurance']
+  primary_care_physician: //strong[text()='Primary Care Physician']
+  pharmacy_button: //button[text()='Pharmacy']
+  preferred_lab_button: //button[text()='Preferred Lab']
+  specialist_button: //button[text()='Specialist']
   call_history_tab_button: //nav/button[contains(text(),'Call History')]
   first_call_history_row: //div[@tab-title='Call History']//div[contains(@class,'accordion-item call')][1]
   first_call_history_content: //div[@tab-title='Call History']//div[contains(@class,'accordion-item call')][1]//table[@class='call-details']
@@ -140,6 +157,7 @@ care_platform_call_portal:
   medical_transfer_btn: //button[span[text()='Medical']]
   verify_video_is_full_screen: //div[@class='app-video app-video-fullscreen']
   leave_call_btn: //button[span/span[@class='icon-phone-end']]
+  end_call_button: //div[@class='video-controls']//span[@class='icon-phone-end']//ancestor::button
   submit_btn: //button[text()='Submit']
   complete_session_btn: //button[text()='Complete Session']
   issue_resolved_yes_radiobutton: //label[input[@name='resolved'][@value='true']]

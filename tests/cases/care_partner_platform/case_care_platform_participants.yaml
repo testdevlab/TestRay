@@ -3,13 +3,6 @@ TestCreateFollowUpTicket:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
-      Capabilities:
-        chromeOptions:
-          args:
-            - use-fake-ui-for-media-stream
-            - use-fake-device-for-media-stream
-            - no-sandbox
-            - disable-gpu
       App: "desktop"
   Actions:
   #Calling Login case
@@ -392,6 +385,240 @@ TestParticipantRecordListing:
           Var: SUBTAB_CLASS
           Value: 'active'
 
-
-
-
+#CXTB-93 Care Partner Platform - Review Participant Summary
+TestCarePartnerParticipantReview:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop 
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: CarePartnerLogin
+  # Click on the Call Personal Care Partner
+    - Type: wait_for
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.seniors_app_home.call_care_partner$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.call_care_partner$
+  # Click "Non-Medical" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.non_medical_call_button$
+  # Verify that screen redirects to the call waiting room.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.waiting_room_label$
+  # Back in CarePartners we should have a call in the queue
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform.call_queue_title$
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.first_participant_row$
+  # Check participant info in the right
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_participant_details.participant_details_title$
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_participant_details.participant_dob$
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_home.answer_call$
+  #Check content on Health Overview Tab
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_participant_details.health_overview_tab_nav$
+    - Type: get_attribute
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_participant_details.health_overview_tab_nav$
+      Greps:
+        - var: TAB_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: TAB_CLASS
+          Value: 'active'
+    - Type: get_attribute
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.tab_nav_content$
+      Greps:
+        - var: HEALTH_TAB_CONTENT
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: HEALTH_TAB_CONTENT
+          Value: 'At-A-Glance'
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: HEALTH_TAB_CONTENT
+          Value: 'Common Issues'
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: HEALTH_TAB_CONTENT
+          Value: 'Communication'
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: HEALTH_TAB_CONTENT
+          Value: 'Warning Signs'
+  # Check medication tab and content
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.medication_tab_nav$
+    - Type: get_attribute
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.medication_tab_nav$
+      Greps:
+        - var: TAB_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: TAB_CLASS
+          Value: 'active'
+  # Check Providers tab and content
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.providers_tab_nav$
+    - Type: get_attribute
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.providers_tab_nav$
+      Greps:
+        - var: TAB_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: TAB_CLASS
+          Value: 'active'
+    - Type: scroll_to
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.health_insurance_button$
+    - Type: scroll_to
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.secondary_health_insurance_button$
+    - Type: scroll_to
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.tertiary_health_insurance_button$
+    - Type: scroll_to
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.primary_care_physician$
+    - Type: scroll_to
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.pharmacy_button$
+    - Type: scroll_to
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.preferred_lab_button$
+    - Type: scroll_to
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.specialist_button$
+  #Check Call History tab
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.call_history_tab_button$
+    - Type: get_attribute
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_participant_details.call_history_tab_button$
+      Greps:
+        - var: TAB_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: TAB_CLASS
+          Value: 'active'
+  #Go to follow-up tickets tab
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_participant_details.follow_up_tab_button$
+    - Type: get_attribute
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_tab_button$
+      Greps:
+        - var: TAB_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: TAB_CLASS
+          Value: 'active'
+  #These action beyond this point are not part of the test
+  #but a way to avoid an unanswered call
+    - Type: scroll_to
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_home.answer_call$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_home.answer_call$
+      Role: desktopChrome
+      # Click "End Call".
+    - Type: click
+      Strategy: xpath
+      Condition:
+      - Value: 20
+        Operation: visible
+        Result: true
+      Id: $PAGE.care_platform_call_portal.end_call_button$
+      Role: desktopChrome
+    - Type: case
+      Value: PostCallSurveyCarePartner
+      Role: desktopChrome
