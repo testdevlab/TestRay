@@ -474,3 +474,84 @@ TestNonMissedPastAppointmentWindow:
     - Type: wait_for
       Strategy: class_chain
       Id: $PAGE.seniors_app_schedule.schedule_label$
+
+# CXTB-20: Verify Telehealth Appointment Missed Window Access
+TestTelehealthAppointmentMissedWindowAccess:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop 
+  Actions:
+    # Set past appointment for the senior.
+    - Type: case
+      Value: SetPastEventForSeniors
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.close_btn$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+    # Navigate to the Schedules page.
+    - Type: case
+      Value: SchedulesPageNavigationHelper
+    # Click on the "Appointment Missed" notification.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.missed_appointment_based_on_name_element$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.missed_appointment_based_on_name_element$
+    # "Appointment Missed" event detail window opens with "Reschedule" button visible.
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_header_modal$
+      Attribute: label
+      ResultVar: APPOINTMENT_HEADER_TEXT
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: APPOINTMENT_HEADER_TEXT
+          Value: Appointment Missed
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.reschedule_button$
+    # Click the "Reschedule" button in the window.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.reschedule_button$
+    # Device screen updates to show screen asking what kind of need you help:
+    # Medical, Non-Medical and Cancel
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.non_medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.cancel_call_button$
+    # Click on the Medical option.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.medical_call_button$
+    # Verify that screen redirects to the call waiting room.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.waiting_room_label$
+    # Log in as a Care partner and reschedule the event.
+    - Type: case
+      Value: AnswerPastCallAndRescheduleForOneHourLater
+    # Go back to the iPad and fill in the Post Call Survey.
+    - Type: case
+      Value: SeniorGreatPostSurveyCallHelper
+    # Verify that the appointment appears in the schedule listing.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.event_based_on_name_element$
