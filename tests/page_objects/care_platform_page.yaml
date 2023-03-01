@@ -131,6 +131,19 @@ care_platform_participant_records:
   medical_medical_history_subtab: //nav/button[text()='Medical History']
 
 care_platform_call_portal:
+  call_volume_button: //span[contains(@class,'icon-volume')]/ancestor::button
+  call_mic_button: //span[contains(@class,'icon-mic')]/ancestor::button
+  call_camera_button: //span[contains(@class,'icon-video')]/ancestor::button
+  call_add_caller_button: //button[span/span[@class='icon-add-caller']]
+  call_medical_transfer_button: //span[contains(@class,'icon-transfer-med')]/ancestor::button
+  call_settings_button: //span[contains(@class,'icon-settings')]/ancestor::button
+  add_caller_title: //div[text()='Add Caller']
+  close_add_caller_button: //button[text()='Close']
+  first_contact_button: //div[text()='Contacts']/following-sibling::div//div[@class='accordion']/div[1]
+  calendar_title: //*[contains(@class,'calendar-header')]//time
+  calendar_today_day: //div[contains(@class,'calendar-days')]//button[contains(@class,'is-today')]
+  calendar_any_day_without_event: //button[contains(@class,'calendar-day')][not (contains(@class,'has-event'))][1]
+  calendar_no_events_message: //div[contains(text(),'There are no events for the selected date')]
   category_select: category
   create_event_btn: //button[text()='Create Event']
   teleheath_appointment_option: //option[@value='telehealthAppointment']
@@ -171,7 +184,19 @@ care_platform_call_portal:
   edit_event_modal_header: //div[@class='box has-scrollable-content box-tight has-shadow has-border max-h-full']//h4[@class='font-bold text-md']
   delete_event_button: //div[@class='accordion-item is-open']//button[text()='Delete']
   yes_delete_button: //div[@class='app-dialogs']//button[text()='Yes, Delete']
+  video_status: //div[@class='video']//div[@class='video-status']
 
+care_platform_call_settings_modal:
+  video_settings_modal_title: //*[@id='modals']//h4[text()='Call Settings']
+  video_settings_modal_mic_select: //div[text()='Microphone']/following-sibling::div//select
+  video_settings_modal_speakers_select: //div[text()='Speakers']/following-sibling::div//select
+  video_settings_modal_camera_select: //div[text()='Camera']/following-sibling::div//select
+  video_settings_modal_close_button: //*[@id='modals']//button[text()='Close']
+
+care_platform_create_event_modal:
+  modal_title: //*[@id='modals']//h4[contains(text(),'Create Event')]
+  cancel_button: //*[@id='modals']//button[contains(.,'Cancel')]
+  
 care_platform_notifications:
   call_completed_notification: //div[text()='Call completed']
   event_created_notification: //div[text()='Event created']
