@@ -64,3 +64,142 @@ TestProviderUpdateAccountInfo:
   # Call case to update info
     - Type: case
       Value: CarePlatformUpdateInfo
+
+#CXTB-208 Providers - My Account - Credentials
+TestProviderUpdateCredentials:
+  Environment: Settings
+  Vars:
+    STATE: IN
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  # Log in with the second user.
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+  #Going to My Account
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.myaccount_menu_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.modal_title$
+  #Select credentials
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.providers_account_modal.credentials_navigation_tab$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.credentials_content$
+    - Type: credentials_checkbox
+      Strategy: xpath
+      Option: uncheck
+      Id: $PAGE.providers_account_modal.indiana_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.save_changes_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.credentials_content$
+  #Opening new tab for the Employee's part of the process
+    - Type: new_tab
+    - Type: switch_window
+      Value: 1
+  #Calling Employee Login case
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  #Employee Home Page
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.call_now_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.call_now_button$
+  #Telehealth on demand modal
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_title$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_state_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_state_select_option$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_reasons_input$
+      Value: 'Test reason: automation'
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_call_provider_button$
+  # Go back to providers
+    - Type: switch_window
+      Value: 0
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.first_on_demand_row$
+  #Check that the on demand call is from the state selected and disable to take by the provider
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.first_on_demand_row$
+      Greps:
+        - var: DETAILS_CONTENT
+          attr: outerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: DETAILS_CONTENT
+          Value: $AND_CLI_STATE$
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: DETAILS_CONTENT
+          Value: "is-disabled"
+  #Going to My Account
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.myaccount_menu_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.modal_title$
+  #Select credentials to answer call
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.providers_account_modal.credentials_navigation_tab$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.credentials_content$
+    - Type: credentials_checkbox
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.providers_account_modal.indiana_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.save_changes_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.credentials_content$
+  #call should be changed to enabled
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.first_on_demand_row$
+      Greps:
+        - var: OUTER_HTML
+          attr: outerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: n_contain
+          Var: OUTER_HTML
+          Value: "is-disabled"
+    - Type: case
+      Value: ProvidersCarePlatformEndCall

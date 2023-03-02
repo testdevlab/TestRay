@@ -1364,6 +1364,30 @@ class Device
             "#{default_wait_time} seconds\nError Screenshot: #{path}"
   end
 
+  # guarantee that the checkbox is checked or unchecked depending on the option
+  # Accepts:
+  #   Strategy
+  #   Id
+  #   Option -> check or uncheck
+  def credentials_checkbox(action)
+    action = convert_value_pageobjects(action);
+    option = convert_value(action["Option"])
+    el = @driver.find_element(convert_value(action["Strategy"]), convert_value(action["Id"]))
+    input = el.find_element(:xpath => "./input")
+    span = el.find_element(:xpath => "./span")
+    is_checked = false
+    
+    if input.attribute("checked")
+      is_checked = true
+    end
+      
+    if (is_checked) && (option == "uncheck")
+      span.click
+    elsif (option == "check") && (!is_checked)
+      span.click
+    end
+  end
+
   # opens driver notifications.
   def notifications(action)
     begin
@@ -1483,7 +1507,6 @@ class Device
       ENV[convert_value(action["Var"])] = time
     end
   end
-
 
   def set_env_var(action)
     log_info("Assigned value: \"#{convert_value(action["Value"])}\" to Var: \"#{convert_value(action["Var"])}\"")

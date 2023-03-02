@@ -11,9 +11,21 @@ providers_home_page:
   time_all_option: //div[div[contains(text(),'Time')]]//button[contains(text(),'All')]
   last_medical_transfer_row: (//div[contains(text(),'Medical Transfer')])[last()]
   last_on_demand_row: (//div[contains(text(),'On Demand Call')])[last()]
-  first_on_demand_row: //tbody/tr//div[text()='On Demand Call'][1]
+  first_row: //table/tbody/tr[@role='row'][1]
+  first_on_demand_row: //tbody/tr//div[text()='On Demand Call'][1]/ancestor::tr
   facilities_navigation: //a//div[contains(text(),'Facilities')]
   employees_navigation: //a//div[contains(text(),'Employees')]
+
+providers_account_modal:
+  credentials_navigation_tab: //*[@id='modals']//nav/button[text()='Credentials']
+  credentials_content: //*[@id='modals']//div[@class='tabs-content' and @tab-title='Credentials']
+  pennsylvania_option: //*[@id='PA']
+  maryland_option: //*[@id='MD']
+  indiana_option: //*[@id='IN']/ancestor::label
+  west_virginia_option: //*[@id='WV']
+  special_need_option: //*[@id='specialNeedsPlanCertified']
+  save_changes_button: //*[@id='modals']//button[contains(.,'Save Changes')]
+  cancel_button: //*[@id='modals']//button[contains(.,'Cancel')]
 
 providers_facilities_page:
   alpha_center_td: //tr//td[contains(text(),'$AND_CLI_facility_devices_user1_number$')]

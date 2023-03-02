@@ -77,7 +77,7 @@ employee_health_telehealth_on_demand_modal:
   modal_cancel_button: //*[@id='modals']//button[text()='Cancel']
   modal_call_provider_button: //*[@id='modals']//button[text()='Call Provider']
   modal_state_select: //*[@id='state']
-  modal_state_select_option: //*[@id='state']/option[2]
+  modal_state_select_option: //*[@id='state']/option[@value='$AND_CLI_STATE$']
   modal_patient_select: //*[@id='dependentIdentifier']
   modal_patient_select_option: //select[@id='dependentIdentifier']//option[@value='$AND_CLI_employee_user1_card_member_id$']
   modal_reasons_input: //*[@id='comments']

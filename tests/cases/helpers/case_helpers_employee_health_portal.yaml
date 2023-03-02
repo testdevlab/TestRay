@@ -241,6 +241,8 @@ EmployeeHealthPortalUpdateAccountPassword:
 
 #Employee Health Portal - User Call Now helper
 EmployeeHealthPortalUserCall:
+  Vars:
+    STATE: IN
   Roles:
     - Role: desktopChrome
       App: "desktop"
