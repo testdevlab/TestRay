@@ -518,6 +518,51 @@ class Device
     end
   end
 
+  # Accepts:
+  #   Strategy
+  #   Id
+  #   Condition
+  #   CheckTime
+  #   NoRaise
+  def hover(action)
+    action = convert_value_pageobjects(action);
+    start = Time.now
+    return unless wait_for(action)
+
+    action["Condition"] = nil
+    start_error = Time.now
+
+    el = wait_for(action)
+
+    now = Time.now
+    log_info("Time to find element: #{now - start - (now - start_error) / 2}s " +
+           "error #{(now - start_error)}") if action["CheckTime"]
+    error = nil
+
+    wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
+
+    while (Time.now - start) < wait_time
+      begin
+        @platform == "iOS" ?
+          @driver.action.move_to(el) :
+          @driver.action.move_to(el).perform
+      rescue => e
+        error = e
+      end
+      begin
+        @driver.action.move_to(el).release.perform
+        log_info("Time for click and hold: #{Time.now - start}s") if action["CheckTime"]
+        return
+      rescue => e
+        error = e
+      end
+    end
+    if error && !action["NoRaise"]
+      path = take_error_screenshot()
+      raise "#{@role}: #{error.message}\nError Screenshot: #{path}"
+    end
+  end
+
   # tap_by_coord on the provided element but over its coordinates. Multiple location 
   # strategies are accepted - css, xPath, id.
   # Accepts:

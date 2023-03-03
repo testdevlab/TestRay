@@ -125,6 +125,10 @@ care_platform_participant_records:
   participant_dob: //div[@class='participant-profile-contact']//strong[contains(text(),'DOB')]/following-sibling::time
   demographics_tab: //nav[contains(@class,'box-tabs-nav')]/button[text()='Demographics']
   medical_tab: //nav[contains(@class,'box-tabs-nav')]/button[text()='Medical']
+  call_history_tab: //nav/button[contains(text(),'Call History')]
+  call_history_title: //h4[text()='Ticket History']
+  emergency_calls_tab: //nav/button[contains(text(),'Emergency Calls')]
+  follow_up_tickets_tab: //nav/button[contains(text(),'Follow-up Tickets')]
   medical_medications_subtab: //nav/button[text()='Medications']
   medical_medical_needs_subtab: //nav/button[text()='Medical Needs']
   medical_behavioral_subtab: //nav/button[text()='Behavioral']
@@ -185,6 +189,7 @@ care_platform_call_portal:
   delete_event_button: //div[@class='accordion-item is-open']//button[text()='Delete']
   yes_delete_button: //div[@class='app-dialogs']//button[text()='Yes, Delete']
   video_status: //div[@class='video']//div[@class='video-status']
+  call_participant_records: //a[contains(text(),'Records')]
 
 care_platform_call_settings_modal:
   video_settings_modal_title: //*[@id='modals']//h4[text()='Call Settings']
@@ -192,6 +197,13 @@ care_platform_call_settings_modal:
   video_settings_modal_speakers_select: //div[text()='Speakers']/following-sibling::div//select
   video_settings_modal_camera_select: //div[text()='Camera']/following-sibling::div//select
   video_settings_modal_close_button: //*[@id='modals']//button[text()='Close']
+
+care_platform_floating_video_call:
+  video_fixed_content: //div[contains(@class,'app-video-fixed')]
+  video_hide_button: //div[@class='app-video-controls']/button[contains(.,'Hide')]
+  video_show_button: //div[@class='app-video-controls']/button[contains(.,'Show')]
+  video_return_button: //div[@class='video']/button[@class='video-return']
+  video_return_span: //button/span[contains(text(),'Return to Session')]
 
 care_platform_create_event_modal:
   modal_title: //*[@id='modals']//h4[contains(text(),'Create Event')]

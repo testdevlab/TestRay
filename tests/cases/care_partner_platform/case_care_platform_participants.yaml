@@ -916,3 +916,219 @@ TestCarePartnerAnswerAndComplete:
         - Type: contain
           Var: INDICATOR
           Value: 'is-green'
+
+# CXTB-97 Review Behavior When on Active Call and Navigate Portal While on Call
+TestCarePartnerBrowsingWhileOnCall:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop 
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: CarePartnerLogin
+  # Click on the Call Personal Care Partner
+    - Type: wait_for
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.seniors_app_home.call_care_partner$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.call_care_partner$
+  # Click "Non-Medical" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.non_medical_call_button$
+  # Verify that screen redirects to the call waiting room.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.waiting_room_label$
+  # Back in CarePartners we should have a call in the queue
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform.call_queue_title$
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.first_participant_row$
+  # Answer Call
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_home.answer_call$
+      Role: desktopChrome
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_btn$
+      Role: desktopChrome
+  # Go into the records
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_call_portal.call_participant_records$
+    #Checking fixed video 
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_floating_video_call.video_fixed_content$
+    # Red indicator for 'In session'
+    - Type: get_attribute
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_header.status_indicator$
+      Greps:
+        - var: INDICATOR
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: INDICATOR
+          Value: 'is-red'
+  # Click around
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_participant_records.medical_tab$
+    - Type: get_attribute
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_participant_records.medical_tab$
+      Greps:
+        - var: ACTIVE_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: ACTIVE_CLASS
+          Value: 'active' 
+    #Checking fixed video 
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_floating_video_call.video_fixed_content$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_participant_records.call_history_tab$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_participant_records.emergency_calls_tab$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_participant_records.follow_up_tickets_tab$
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_participant_records.call_history_title$
+    #Checking fixed video 
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_floating_video_call.video_fixed_content$
+  # Check on Hide button
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_floating_video_call.video_hide_button$
+    - Type: get_attribute
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_floating_video_call.video_fixed_content$
+      Greps:
+        - var: VIDEO_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: VIDEO_CLASS
+          Value: 'app-video-hidden'
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_floating_video_call.video_show_button$
+  # Show video again
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_floating_video_call.video_show_button$
+    - Type: get_attribute
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_floating_video_call.video_fixed_content$
+      Greps:
+        - var: VIDEO_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: n_contain
+          Var: VIDEO_CLASS
+          Value: 'app-video-hidden'
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_floating_video_call.video_hide_button$
+  # Hover over the video tile
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_floating_video_call.video_fixed_content$
+    - Type: hover
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_floating_video_call.video_fixed_content$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_floating_video_call.video_return_span$
+      Condition:
+      - Value: 2
+        Operation: visible
+        Result: true
+    - Type: wait_not_visible
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_floating_video_call.video_fixed_content$
+      Time: 5
+  #End Call
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_call_portal.leave_call_btn$
+    - Type: get_attribute
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_call_portal.video_status$
+      Greps:
+        - var: CALL_MESSAGE
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: CALL_MESSAGE
+          Value: 'The call has ended'
+  # Fill survey
+    - Type: case
+      Value: PostCallSurveyCarePartner
