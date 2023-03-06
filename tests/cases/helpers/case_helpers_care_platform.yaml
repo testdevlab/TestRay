@@ -12,7 +12,7 @@ CarePlatformLogout:
       Id: $PAGE.care_platform_header.logout_menu_button$
     - Type: click
       Strategy: xpath
-      Id: //button[contains(text(),'$AND_CLI_LOGOUT_OPTION$')]
+      Id: $PAGE.care_platform_logout_modal.log_out_button$
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_login.login_button$
@@ -1030,6 +1030,9 @@ CarePlatformUpdatePassword:
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.confirm_new_password_input$
       Value: "Neural123"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.change_my_password_button$
   #Verify a red alert text showed up
     - Type: wait_for
       Strategy: xpath

@@ -73,6 +73,7 @@ care_platform_logout_modal:
   stay_on_shift_button: //button[contains(text(),'Stay On Shift')]
   go_off_shift_button: //button[contains(text(),'Go Off Shift')]
   cancel_logout_button: //button[contains(@class,'button-ghost')] 
+  log_out_button: //button[contains(text(),'$AND_CLI_LOGOUT_OPTION$')]
 
 care_platform_participant:
   first_participant_row: //table/thead[contains(.,'Participant')]/following-sibling::tbody/tr[contains(.,'$AND_CLI_senior_user1_name$') and contains(.,'$AND_CLI_senior_user1_lastname$')][1]
