@@ -4,6 +4,7 @@ providers_home_page:
   follow_up_calls: (//div[contains(text(),'Follow-up')])[last()]
   missed_calls_text: (//div[contains(text(),'Missed Call')])[last()]
   medical_transfer_calls: (//div[contains(text(),'Medical Transfer')])[last()]
+  first_medical_transfer: //td//div[@class='call-type call-type-pink'][1]
   scheduled_calls: (//div[contains(text(),'Scheduled Call')])[last()]
   on_demand_calls: (//div[contains(text(),'On Demand Call')])[last()]
   datetime: //time
@@ -37,7 +38,9 @@ providers_call_queue_page:
   subject_input: //div[label[text()='Subject']]//input
   details_textarea: //div[label[text()='Details']]//textarea
   complete_session_btn: //button[text()='Complete Session']
+  yes_issue_resolved_radio_btn: //label[input[@name='resolved'][@value='true']]
   no_radiobtn: //label[input[@name='resolved'][@value='false']]
+  yes_recommended_discharge_radio_btn: //label[input[@name='recommendedDischarge'][@value='true']]
   reason_last_option: //option[last()]
   time_follow_up_two_days_radiobtn: //label[input[@name='followUpTime'][@value=48]]
   submit_session_btn: //button[@type='submit']
@@ -67,3 +70,6 @@ providers_employees_page:
   employee_contact_label: //strong[@class='color-green-300' and text()='Contact']
   employee_contact_content: //div[@class='flex-col flex-col-auto']/span
   employee_call_history_tab: //button[text()='Call History']
+
+providers_notifications:
+  call_completed_notification:  //div[text()='Call completed']

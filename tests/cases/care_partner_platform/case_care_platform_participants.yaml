@@ -917,6 +917,181 @@ TestCarePartnerAnswerAndComplete:
           Var: INDICATOR
           Value: 'is-green'
 
+#CXTB-96: Answer Call from Queue & Complete a Medical Transfer
+TestAnswerCallFromQueueAndCompleteMedicalTransfer:
+  Environment: Settings
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome1
+      App: desktop
+  Actions:
+  # Login as a senior.
+    - Type: case
+      Value: LoginNeverAloneHelper
+  # Generate a medical call as a senior.
+    - Type: case
+      Value: CallCarePartner
+  # Login and answer call as a care partner,
+    - Type: case
+      Value: AnswerCallAsCarePartner
+  # Panel slides to the left, bringing you to the Call portal with the active call represented in the call video, and your user status has been automatically updated to "In session" (red dot). 
+  # Both cameras default to off as they do currently.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.end_call_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Attribute: className
+      ResultVar: IS_RED
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: IS_RED
+          Value: is-red
+  # Verify video is disabled by default on the care partners.
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_camera_button$
+      Greps:
+        - var: CLASS
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: CLASS
+          Value: 'off'
+  # Verify video is disabled by default on the seniors.
+    - Type: wait_not_visible
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.video_window$
+  # Click "Medical" button in video call window so the participant speaks to a doctor while on the call.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.medical_transfer_btn$
+  # "Telehealth request form" appears to the left of video call window.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.telehealth_request_form_header$
+  # Click on "Submit" and verify that the form can't be submitted.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.submit_btn$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.urgent_patient_matter_error_label$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.reason_for_request_error_label$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.symptoms_start_input_error_label$
+  # Fill in the required fields:
+  # Priority level, Reason for request and When did symptoms start?
+  # Urgent patient matter
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.urgent_patient_matter_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.urgent_patient_matter_yes_option$
+  # Reason for request
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.reason_for_request_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.first_reason_for_request_available_option$
+  # When did symptoms start      
+    - Type: click
+      Strategy: class
+      Id: $PAGE.care_platform_call_portal.symptoms_start_input_container$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.today_date_date_picker$
+  # Click on "Submit".
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.submit_btn$
+  # Telehealth request form window disappears.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id : $PAGE.care_platform_call_portal.telehealth_request_form_header$
+  # Verify "End Call" button has been replaced with "Leave Call" button.
+    - Type: wait_for
+      Strategy: xpath
+      Id : $PAGE.care_platform_call_portal.leave_call_btn$
+  # Log in as a provider and join the call
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+      Role: desktopChrome1
+    - Type: case
+      Value: JoinMedicalTransfer
+      Role: desktopChrome1
+  # Care partner leaves the call after provider has joined.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.leave_call_btn$
+  # Verify that the video updates to show the "The call has ended" text.
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+      Greps:
+        - var: CALL_MESSAGE
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: CALL_MESSAGE
+          Value: 'The call has ended.'
+  # Fill up the post call survey to complete the session.
+    - Type: case
+      Value: PostCallSurveyCarePartner
+  # Verify that care partner was returned to the "Call queue" page.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform.call_queue_title$
+  # Verify that care partner is no longer showing as "In Session (red dot)".
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Attribute: className
+      ResultVar: IS_RED
+    - Type: assert
+      Asserts:
+        - Type: n_contain
+          Var: IS_RED
+          Value: is-red
+  # Provider and senior tear down.
+  # Provider ends call.
+    - Type: click
+      Role: desktopChrome1
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.end_call_btn$
+  # Provider fills up Post call Survey.
+    - Type: case
+      Value: PostCallSurveyProvider
+      Role: desktopChrome1
+  # Senior fills up Post call Survey.
+    - Type: case
+      Value: SeniorGreatPostSurveyCallHelper
+
 # CXTB-97 Review Behavior When on Active Call and Navigate Portal While on Call
 TestCarePartnerBrowsingWhileOnCall:
   Environment: Settings

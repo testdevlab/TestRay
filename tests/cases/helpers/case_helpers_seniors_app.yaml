@@ -115,3 +115,26 @@ SeniorGreatPostSurveyCallHelper:
     - Type: wait_for
       Strategy: class_chain
       Id: $PAGE.seniors_app_home.call_care_partner$
+
+CallCarePartner:
+  Environment: Settings
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+    # Click on the Call Personal Care Partner
+    - Type: wait_for
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.seniors_app_home.call_care_partner$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.call_care_partner$
+    # Click "Medical" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.medical_call_button$
+    # Verify that screen redirects to the call waiting room.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.waiting_room_label$

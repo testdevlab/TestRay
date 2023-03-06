@@ -155,7 +155,7 @@ SetScheduledCallTicket:
       Id: $PAGE.care_platform_call_portal.reason_for_request_select$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_call_portal.reason_for_request_covid_options$
+      Id: $PAGE.care_platform_call_portal.first_reason_for_request_available_option$
       # When did symptoms start      
     - Type: click
       Strategy: class
@@ -236,7 +236,7 @@ SetMissedCallTicket:
       Id: $PAGE.care_platform_call_portal.reason_for_request_select$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_call_portal.reason_for_request_covid_options$
+      Id: $PAGE.care_platform_call_portal.first_reason_for_request_available_option$
       # When did symptoms start      
     - Type: click
       Strategy: class

@@ -6,7 +6,6 @@ ProvidersCarePlatformLogin:
       # Login to Providers Care Platform
     - Type: maximize
     - Type: navigate
-      Role: desktopChrome
       Value: $AND_CLI_care_platform_url$
     - Type: get_text
       Strategy: xpath
@@ -15,7 +14,6 @@ ProvidersCarePlatformLogin:
       - var: login_text
         match: "Log In"
     - Type: assert
-      Role: desktopChrome
       Asserts: 
       - Type: eq
         Var: login_text
@@ -30,7 +28,6 @@ ProvidersCarePlatformLogin:
       Value: $AND_CLI_provider_user1_pwd$
     - Type: click
       Strategy: xpath
-      Role: desktopChrome
       Id: $PAGE.care_platform_login_page.login_button$
 
 ProvidersCarePlatformEndCall:
@@ -133,3 +130,67 @@ ProviderLoginSecondaryUser:
       Id: $PAGE.care_platform_login.login_button$
     - Type: sleep
       Time: 2
+
+JoinMedicalTransfer:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.first_medical_transfer$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.first_medical_transfer$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.answer_call_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.answer_call_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.end_call_btn$
+
+# Post Call survey when the call ends.
+PostCallSurveyProvider:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Fill the notes
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.subject_input$
+      Value: Automation Call
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.details_textarea$
+      Value: Automation call    
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.complete_session_btn$ 
+      Property: disabled
+      Value: "false"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.complete_session_btn$             
+    # Fill the Post-call Survey
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.yes_issue_resolved_radio_btn$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.yes_issue_resolved_radio_btn$             
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.yes_recommended_discharge_radio_btn$          
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.yes_recommended_discharge_radio_btn$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_notifications.call_completed_notification$

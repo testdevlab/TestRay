@@ -162,9 +162,12 @@ care_platform_call_portal:
   save_and_close_btn: //button[text()='Save and Close']
   urgent_patient_matter_select: priorityLevel
   urgent_patient_matter_yes_option: //option[text()='Yes']
+  urgent_patient_matter_error_label: //select[@id='priorityLevel']/following-sibling::div/div/div[@class='text-xs color-red-400']
   reason_for_request_select: reasonForRequest
-  reason_for_request_covid_options: //option[text()='COVID-19 concerns']
+  first_reason_for_request_available_option: //select[@id='reasonForRequest']/option[not(@value)][1]
+  reason_for_request_error_label: //select[@id='reasonForRequest']/following-sibling::div/div/div[@class='text-xs color-red-400']
   symptoms_start_input_container: react-datepicker__input-container
+  symptoms_start_input_error_label: //div[@class='react-datepicker-wrapper']/following-sibling::div/div/div[@class='text-xs color-red-400']
   submit_create_event_btn: //button[text()='Create Event'][@type='submit']
   call_participant_btn: //button[text()='Call Participant']
   video_btn: //button[@class='video-control']//span[@class='icon-video-off']
@@ -190,6 +193,7 @@ care_platform_call_portal:
   yes_delete_button: //div[@class='app-dialogs']//button[text()='Yes, Delete']
   video_status: //div[@class='video']//div[@class='video-status']
   call_participant_records: //a[contains(text(),'Records')]
+  telehealth_request_form_header: //div[@id='modals']//h4[@class='font-bold text-md' and text()='Telehealth Request Form']
 
 care_platform_call_settings_modal:
   video_settings_modal_title: //*[@id='modals']//h4[text()='Call Settings']
@@ -208,7 +212,7 @@ care_platform_floating_video_call:
 care_platform_create_event_modal:
   modal_title: //*[@id='modals']//h4[contains(text(),'Create Event')]
   cancel_button: //*[@id='modals']//button[contains(.,'Cancel')]
-  
+
 care_platform_notifications:
   call_completed_notification: //div[text()='Call completed']
   event_created_notification: //div[text()='Event created']
