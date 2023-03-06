@@ -20,3 +20,46 @@ TestOnboarderCarePartnerUpdatePassword:
       Var: carepartner_user1_pwd
     - Type: case
       Value: CarePlatformUpdatePassword
+
+#CXTB-164: Manually Log out of the Portal 
+TestManuallyLogOutOfThePortalOnboarder:
+  Environment: Settings 
+  Vars:
+    LOGOUT_OPTION: "Go Off Shift"
+  Roles: 
+  - Role: desktopChrome
+    App: "desktop"
+  Actions:
+  # Calling Login case
+  - Type: case
+    Value: OnboarderCarePartnerLogin
+  # Click the name in upper right corner.
+  - Type: click
+    Strategy: xpath
+    Id: $PAGE.care_platform_header.user_dropdown_button$
+  # Menu appears offering the following options:
+  # My Account and Log out.
+  - Type: wait_for
+    Strategy: xpath
+    Id: $PAGE.care_platform_header.myaccount_menu_button$
+  - Type: wait_for
+    Strategy: xpath
+    Id: $PAGE.care_platform_header.logout_menu_button$
+  # Click on the logout button.
+  - Type: click
+    Strategy: xpath
+    Id: $PAGE.care_platform_header.logout_menu_button$
+  # Validate that the logout modal appears offering options relating to your status after logging out.
+  - Type: wait_for
+    Strategy: xpath
+    Id: $PAGE.care_platform_logout_modal.stay_on_shift_button$
+  - Type: wait_for
+    Strategy: xpath
+    Id: $PAGE.care_platform_logout_modal.go_off_shift_button$
+  # Click on the cancel button.
+  - Type: click
+    Strategy: xpath
+    Id: $PAGE.care_platform_logout_modal.cancel_logout_button$
+  # Repeat the steps from above and log out.
+  - Type: case
+    Value: CarePlatformLogout

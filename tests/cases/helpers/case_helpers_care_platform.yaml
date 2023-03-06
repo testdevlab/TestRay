@@ -1025,11 +1025,11 @@ CarePlatformUpdatePassword:
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.new_password_input$
-      Value: "Neural123"
+      Value: $AND_CLI_alternative_incorrect_password$
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.confirm_new_password_input$
-      Value: "Neural123"
+      Value: $AND_CLI_alternative_incorrect_password$
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.change_my_password_button$
@@ -1065,11 +1065,11 @@ CarePlatformUpdatePassword:
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.new_password_input$
-      Value: "Neural123!"
+      Value: $AND_CLI_alternative_correct_password$
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.confirm_new_password_input$
-      Value: "Neural123!"
+      Value: $AND_CLI_alternative_correct_password$
   #Click the Change My Password button
     - Type: click
       Strategy: xpath
@@ -1083,7 +1083,7 @@ CarePlatformUpdatePassword:
       Value: CarePlatformLogout
   #Setting the password var to the new value
     - Type: set_env_var
-      Value: Neural123!
+      Value: $AND_CLI_alternative_correct_password$
       Var: carepartner_user1_pwd
   #Calling Login case
     - Type: case
@@ -1112,7 +1112,7 @@ CarePlatformUpdatePassword:
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.current_password_input$
-      Value: "Neural123!"
+      Value: $AND_CLI_alternative_correct_password$
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.new_password_input$

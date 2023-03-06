@@ -129,11 +129,11 @@ EmployeeHealthPortalUpdateAccountPassword:
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.employee_health_my_account_modal.update_password_new$
-      Value: "Neural123!"
+      Value: $AND_CLI_alternative_correct_password$
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.employee_health_my_account_modal.update_password_confirm$
-      Value: "Neural123!"
+      Value: $AND_CLI_alternative_correct_password$
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_my_account_modal.update_password_change_button$
@@ -175,11 +175,11 @@ EmployeeHealthPortalUpdateAccountPassword:
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.employee_health_my_account_modal.update_password_new$
-      Value: "Neural123!"
+      Value: $AND_CLI_alternative_correct_password$
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.employee_health_my_account_modal.update_password_confirm$
-      Value: "Neural123!"
+      Value: $AND_CLI_alternative_correct_password$
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_my_account_modal.update_password_change_button$
@@ -192,7 +192,7 @@ EmployeeHealthPortalUpdateAccountPassword:
       Value: EmployeeHealthPortalLogOut
   #Setting the password var to the new value
     - Type: set_env_var
-      Value: Neural123!
+      Value: $AND_CLI_alternative_correct_password$
       Var: employee_user1_pwd
   #Log In with new credentials
     - Type: case
