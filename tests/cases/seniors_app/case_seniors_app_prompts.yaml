@@ -1,0 +1,175 @@
+# Physical Only
+# CXTB-52: Verify "Personal Care Partner Message" Prompt & Call Back Button.
+TestPersonalCarePartnerMessagePromptAndCallBackButton:
+  Environment: Settings
+  Vars:
+  # Log out option
+    LOGOUT_OPTION: "Go Off Shift"
+  # Video quality variables
+    TIME: 5
+    INTERFACE: en0
+    VIDEO_IN: "1"
+    TEST_FOLDER: $AND_CMD_pwd$/Reports/executions/$AND_CMD_date +%s$
+  # Message from Care Partner to Senior
+    MESSAGE_TO_PARTICIPANT: Automation Message
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - use-file-for-fake-audio-capture=$AND_CMD_pwd$/video_audio_samples/sample3.wav
+            - use-file-for-fake-video-capture=$AND_CMD_pwd$/video_audio_samples/sample_640x360.mjpeg
+      App: desktop
+    - Role: command1
+      App: command  
+  Actions:
+  # Send a message to the Senior through the Care Platform logged in as a Care Partner.
+    - Type: case
+      Value: CarePartnerSendMessageToSenior
+  # Device automatically displays "Personal Care Partner Message" window displaying
+  # the message sent and indicating the details of who/when sent.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.message_header$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.message_header$
+      Attribute: label
+      ResultVar: MESSAGE_HEADER_TITLE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: MESSAGE_HEADER_TITLE
+          Value: Personal Care Partner Message
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.from_label$
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.seniors_app_message_modal.from_value$
+      Attribute: label
+      ResultVar: FROM_VALUE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: FROM_VALUE
+          Value: $AND_CLI_carepartner_user1_name$ $AND_CLI_carepartner_user1_lastname$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.sent_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.message_label$
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.seniors_app_message_modal.message_value$
+      Attribute: label
+      ResultVar: MESSAGE_VALUE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: MESSAGE_VALUE
+          Value: $AND_CLI_MESSAGE_TO_PARTICIPANT$
+  # Click the "Call Back Personal Care Partner" button.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.call_back_button$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.call_back_button$
+      Attribute: label
+      ResultVar: CALL_BACK_BUTTON
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALL_BACK_BUTTON
+          Value: Call Back Personal Care Partner
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.call_back_button$
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.call_back_button$
+      Time: 10
+  # Device screen updates to show screen asking what kind of need you help:
+  # Medical, Non-Medical and Cancel
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.non_medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.cancel_call_button$
+  # Click "Medical" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.medical_call_button$
+  # User is redirected to the waiting room.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.waiting_room_label$
+  # Care partner answers call.
+    - Type: case
+      Value: AnswerCallAsCarePartner
+  # Turn on Senior camera.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.video_button$
+  # Verify that a video tumbnail will appear in the upper right corner giving a preview of what the Care Partner is seeing.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.video_window$
+  # Video Quality Step
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_btn$
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_mirror_care_partner$
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.full_screen_call_btn$
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.verify_video_is_full_screen$
+    # Record the call.
+    - Type: case
+      Value: GetCallRecordings
+    # Analyze the call.
+    - Type: case
+      Value: AnalyzeRecordings
+    # Make video quality assertions
+    - Type: case
+      Value: VideoQualityAssertions
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.full_screen_call_btn$
+  # Step 6-7 will be skipped
+  # These steps are related to XCUI limitations and an existing bug
+  # Please refer to the following ticket for more information: https://digitalscientists.atlassian.net/browse/CXTB-317
+  # Click "End Call".
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.seniors_app_call.end_call_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.seniors_app_call.end_call_button$
+  # Fill in the post call survey with the Great option.
+    - Type: case
+      Value: SeniorGreatPostSurveyCallHelper
+  # Care partner tear down
+    - Type: case
+      Value: PostCallSurveyCarePartner

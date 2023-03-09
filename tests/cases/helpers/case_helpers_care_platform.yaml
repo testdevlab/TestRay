@@ -1274,7 +1274,7 @@ AnswerCallAsCarePartner:
     - Type: click
       Role: desktopChrome
       Strategy: xpath
-      Id: $PAGE.care_platform_home.first_call_of_queue$
+      Id: $PAGE.care_platform_home.call_based_on_participant_name$
     - Type: click
       Role: desktopChrome
       Strategy: xpath
@@ -1345,3 +1345,70 @@ PostCallSurveyCarePartner:
       Role: desktopChrome
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.call_completed_notification$
+
+CarePartnerNavigateToParticipants:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Navigate to Participants.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_participant$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.participants_title$ 
+      Property: textContent
+      Value: "Participants"
+
+CarePartnerNavigateToHome:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Navigate to Home.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_home$
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform.call_queue_title$
+
+CarePartnerSendMessageToSenior:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Log in.
+    - Type: case
+      Value: CarePartnerLogin
+    # Navigate to Participants.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+    # Click on the desired participant.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_1_td$
+    # Click on "Records".
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.records_button$
+    # Verify that there is a message field.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.message_input$
+    # Send a Message to the Care Partner.
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.message_input$
+      Value: $AND_CLI_MESSAGE_TO_PARTICIPANT$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.message_submit_button$
+    # Log out.
+    - Type: case
+      Value: CarePlatformLogout

@@ -89,6 +89,16 @@ seniors_app_appointment_modal:
   live_label: "**/XCUIElementTypeOther[`label == 'Live'`]"
   appointment_added_label: "**/XCUIElementTypeStaticText[`label BEGINSWITH 'Added'`]"
 
+seniors_app_message_modal:
+  message_header: "**/XCUIElementTypeStaticText[`label ENDSWITH 'Message'`]"
+  from_label: "**/XCUIElementTypeStaticText[`label == 'From:'`]"
+  from_value: //XCUIElementTypeStaticText[@name='From:']/following-sibling::XCUIElementTypeStaticText
+  sent_label: "**/XCUIElementTypeStaticText[`label == 'Sent:'`]"
+  message_label: "**/XCUIElementTypeStaticText[`label == 'Message:'`]"
+  message_value:  //XCUIElementTypeStaticText[@name='Message:']/following-sibling::XCUIElementTypeStaticText
+  call_back_button: "**/XCUIElementTypeButton[`label BEGINSWITH 'Call Back'`]"
+  close_button: "**/XCUIElementTypeButton[`label CONTAINS 'Close'`]"
+
 seniors_app_connection_error_modal:
   device_offline_label: "**/XCUIElementTypeStaticText[`label == 'Device is offline.'`]"
   connection_header_header_label: "**/XCUIElementTypeStaticText[`label == 'Connection Error'`]"

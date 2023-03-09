@@ -26,6 +26,7 @@ care_platform:
 care_platform_home:
   first_call_of_queue: //tbody[@role='rowgroup']/tr[1]
   answer_call: //button[text()='Answer Call']
+  call_based_on_participant_name: //tbody[@role='rowgroup']/tr//strong[text() = '$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']
 
 care_platform_header:
   app_logo: //header//div[@class='app-header-logo']/img
@@ -76,6 +77,7 @@ care_platform_logout_modal:
   log_out_button: //button[contains(text(),'$AND_CLI_LOGOUT_OPTION$')]
 
 care_platform_participant:
+  participants_title: //div[@class='text-lg font-bold']//h3[@class='text-lg font-bold']
   first_participant_row: //table/thead[contains(.,'Participant')]/following-sibling::tbody/tr[contains(.,'$AND_CLI_senior_user1_name$') and contains(.,'$AND_CLI_senior_user1_lastname$')][1]
   first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
   selected_darkened_letter_button: //button[contains(@class,'is-selected')]
@@ -134,6 +136,8 @@ care_platform_participant_records:
   medical_medical_needs_subtab: //nav/button[text()='Medical Needs']
   medical_behavioral_subtab: //nav/button[text()='Behavioral']
   medical_medical_history_subtab: //nav/button[text()='Medical History']
+  message_input: //input[@id='message']
+  message_submit_button: //span[@class='icon-send text-md']/ancestor::button[@type='submit']
 
 care_platform_call_portal:
   call_volume_button: //span[contains(@class,'icon-volume')]/ancestor::button
@@ -174,7 +178,7 @@ care_platform_call_portal:
   video_btn: //button[@class='video-control']//span[@class='icon-video-off']
   video_mirror_care_partner: //div[@class='video-mirror']
   video_grid_from_senior_btn: //div[@class='video-feed']/div[@data-testid='video-grid']
-  full_screen_call_btn: //button[@class='video-control video-control-top-right']
+  full_screen_call_btn: //button[contains(@class, 'video-control video-control-top-right')]
   medical_transfer_btn: //button[span[text()='Medical']]
   verify_video_is_full_screen: //div[@class='app-video app-video-fullscreen']
   leave_call_btn: //button[span/span[@class='icon-phone-end']]
