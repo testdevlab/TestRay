@@ -178,7 +178,7 @@ end
 def load_case_file(filename)
   case_names = []
   case_file = {}
-  casefile_path = File.join(Dir.getwd(), filename)
+  casefile_path = File.join(Dir.getwd() + "/cases", filename)
   unless File.exist?(casefile_path)
     log_abort("The case file '#{filename}' doesn't exist!")
   end
@@ -199,6 +199,47 @@ def load_case_file(filename)
   end
 
   return case_file
+end
+
+def load_case_files_from_folder(foldername)
+  case_name_files = {}
+  cases = {}
+  begin
+    Dir.glob("cases/#{foldername}/case*.yaml").each do |filename|
+      casefile_path = File.join(Dir.getwd(), filename)
+      log_debug("Found case file: #{casefile_path}")
+      yaml_file = YAML.load_file(casefile_path)
+      next unless yaml_file
+      cases.merge!(yaml_file)
+
+      # gather the case names to identify duplicates
+      File.open(casefile_path, "r") do |file|
+        # find words with no preceding spaces and a succeeding colon (= case names)
+        case_names = file.read.scan(/(?:\n|^)(\w+):/).flatten
+        for case_name in case_names
+          if case_name_files.key?(case_name)
+            case_name_files[case_name].append(filename)
+          else
+            case_name_files[case_name] = [filename]
+          end
+        end
+      end
+    end
+  rescue => e
+    log_abort("Could not load case files!\n#{e.message}")
+  end
+
+  # check for duplicates
+  found_duplicates = false
+  case_name_files.each do |case_name, files|
+    next if files.length == 1
+    log_error("Found #{files.length} declarations for case " +
+              "'#{case_name}'! Check files: #{files}")
+    found_duplicates = true
+  end
+  log_abort("Encountered duplicate cases!") if found_duplicates
+
+  return cases
 end
 
 ########################################################
