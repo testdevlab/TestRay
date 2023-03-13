@@ -43,8 +43,10 @@ seniors_app_settings:
   network_setup_label: (//XCUIElementTypeOther[starts-with(@name, 'Status:')])[last()]/following-sibling::XCUIElementTypeStaticText
 
 seniors_app_incoming_call:
-  answer_call_button: //XCUIElementTypeButton[@name='Answer Call']
-  ignore_call_button: //XCUIElementTypeButton[@name='Ignore Call']
+  incoming_call_header: "**/XCUIElementTypeOther[`label CONTAINS 'Incoming' AND label ENDSWITH 'Call'`]/XCUIElementTypeOther/**/XCUIElementTypeStaticText[`label CONTAINS 'Incoming'`]"
+  called_name: "**/XCUIElementTypeOther[`label CONTAINS 'Incoming' AND label ENDSWITH 'Call'`][-1]/XCUIElementTypeOther[2]/XCUIElementTypeStatic[-1]"
+  answer_call_button: "**/XCUIElementTypeButton[`label == 'Answer Call'`]"
+  ignore_call_button: "**/XCUIElementTypeButton[`label == 'Ignore Call'`]"
 
 seniors_app_call:
   end_call_button: (//XCUIElementTypeOther[contains(@name,'End Call')])[last()]

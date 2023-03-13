@@ -194,3 +194,47 @@ PostCallSurveyProvider:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_notifications.call_completed_notification$
+
+ProviderNavigateToParticipants:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Navigate to Participants.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_participant$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.participants_title$ 
+      Property: textContent
+      Value: "Participants"
+
+ProviderCallParticipant:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Login to the Care Platform app with Providers account.
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+    # Navigate to Participants.
+    - Type: case
+      Value: ProviderNavigateToParticipants
+    # Click the desired participant.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.participant_based_on_name$
+    # Click on the call portal button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participant_modal.call_portal_button$
+    # Call the participant.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_participant_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_participant_button$

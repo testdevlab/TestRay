@@ -173,3 +173,126 @@ TestPersonalCarePartnerMessagePromptAndCallBackButton:
   # Care partner tear down
     - Type: case
       Value: PostCallSurveyCarePartner
+
+# Physical Only
+# CXTB-56: Verify "Answer Call" for Provider Calling.
+TestAnswerCallForProviderCalling:
+  Environment: Settings
+  Vars:
+  # Log out option
+    LOGOUT_OPTION: "Go Off Shift"
+  # Video quality variables
+    TIME: 5
+    INTERFACE: en0
+    VIDEO_IN: "1"
+    TEST_FOLDER: $AND_CMD_pwd$/Reports/executions/$AND_CMD_date +%s$
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - use-file-for-fake-audio-capture=$AND_CMD_pwd$/video_audio_samples/sample3.wav
+            - use-file-for-fake-video-capture=$AND_CMD_pwd$/video_audio_samples/sample_640x360.mjpeg
+      App: desktop
+    - Role: command1
+      App: command  
+  Actions:
+  # Call participant(Senior) logged in as a Provider.
+    - Type: case
+      Value: ProviderCallParticipant
+  # Device begins ringing and automatically displays "Incoming Call" modal.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.incoming_call_header$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.incoming_call_header$
+      Attribute: label
+      ResultVar: HEADER_TITLE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: HEADER_TITLE
+          Value: Incoming Call...
+  # Verify that it shows who is calling and their details, giving you the option to answer ore ignore the call.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.called_name$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.called_name$
+      Attribute: label
+      ResultVar: CALLER_VALUE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALLER_VALUE
+          Value: Dr. $AND_CLI_provider_user1_name$ $AND_CLI_provider_user1_lastname$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.answer_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.ignore_call_button$
+  # Click "Answer Call" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.answer_call_button$
+  # Verify that senior was connected to the call.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.video_button$
+  # Turn on Senior camera.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.video_button$
+  # Verify that a video tumbnail will appear in the upper right corner giving a preview of what the Care Partner is seeing.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.video_window$
+  # Video Quality Step
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_btn$
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_mirror_care_partner$
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.full_screen_call_btn$
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.verify_video_is_full_screen$
+    # Record the call.
+    - Type: case
+      Value: GetCallRecordings
+    # Analyze the call.
+    - Type: case
+      Value: AnalyzeRecordings
+    # Make video quality assertions
+    - Type: case
+      Value: VideoQualityAssertions
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.full_screen_call_btn$
+  # Then click "End Call".
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.seniors_app_call.end_call_button$
+  # Select the Great option on the Post Call Survey once the call ends.
+    - Type: case
+      Value: SeniorGreatPostSurveyCallHelper
+  # Fill up the Post Call Survey on the provider side.
+    - Type: case
+      Value: PostCallSurveyProvider

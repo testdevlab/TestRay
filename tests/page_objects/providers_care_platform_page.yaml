@@ -55,6 +55,7 @@ providers_call_queue_page:
   recommend_discharge_true_option: //input[@name='recommendedDischarge' and @value='true']/following-sibling::span
   submit_exit_session_button: //button[text()='Submit and Exit Session']
   cancel_exit_session_button: //button[text()='Cancel']
+  call_participant_button: //button[@class='button' and contains(., 'Call')]
   
 providers_employees_page:
   employees_label: //h3[text()='Employees']
@@ -70,6 +71,13 @@ providers_employees_page:
   employee_contact_label: //strong[@class='color-green-300' and text()='Contact']
   employee_contact_content: //div[@class='flex-col flex-col-auto']/span
   employee_call_history_tab: //button[text()='Call History']
+
+providers_participants_page:
+  participants_title: //div[@class='text-lg font-bold']//h3[@class='text-lg font-bold']
+  participant_based_on_name: //td[text()='$AND_CLI_senior_user1_name$']/strong[text()='$AND_CLI_senior_user1_lastname$']
+
+providers_participant_modal:
+  call_portal_button: //button[text()='Call Portal']
 
 providers_notifications:
   call_completed_notification:  //div[text()='Call completed']

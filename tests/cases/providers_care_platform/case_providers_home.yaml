@@ -34,11 +34,11 @@ SetFollowUpTicket:
       # Answer the call from SNF
     - Type: wait_for
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_incoming_call.answer_call_button$
     - Type: click
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_incoming_call.answer_call_button$
       # Fill the notes
     - Type: send_keys
@@ -212,11 +212,11 @@ SetMissedCallTicket:
       # Answer the call
     - Type: wait_for
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_incoming_call.answer_call_button$
     - Type: click
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_incoming_call.answer_call_button$
       # Open the Meical Transfer
     - Type: click
