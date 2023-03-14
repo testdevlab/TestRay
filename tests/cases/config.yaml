@@ -96,6 +96,8 @@ Environments:
       facility_devices_user2: add_your_info
       facility_devices_user2_pwd: add_your_info  
       facility_devices_user2_number: add_your_info
+      facility_devices_requester_name: add_your_info
+      facility_devices_requester_lastname: add_your_info
 #Employee users    
       employee_user1: add_your_info
       employee_user1_pwd: add_your_info

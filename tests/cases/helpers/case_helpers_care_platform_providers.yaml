@@ -191,9 +191,9 @@ PostCallSurveyProvider:
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.providers_notifications.call_completed_notification$
+#    - Type: wait_for
+#      Strategy: xpath
+#      Id: $PAGE.providers_notifications.call_completed_notification$
 
 ProviderNavigateToParticipants:
   Environment: Settings

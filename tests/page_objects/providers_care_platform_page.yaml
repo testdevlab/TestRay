@@ -4,7 +4,7 @@ providers_home_page:
   follow_up_calls: (//div[contains(text(),'Follow-up')])[last()]
   missed_calls_text: (//div[contains(text(),'Missed Call')])[last()]
   medical_transfer_calls: (//div[contains(text(),'Medical Transfer')])[last()]
-  first_medical_transfer: //td//div[@class='call-type call-type-pink'][1]
+  first_medical_transfer: //tr[1]//div[contains(text(),'Medical Transfer')]
   scheduled_calls: (//div[contains(text(),'Scheduled Call')])[last()]
   on_demand_calls: (//div[contains(text(),'On Demand Call')])[last()]
   datetime: //time
