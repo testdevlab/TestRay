@@ -81,3 +81,7 @@ providers_participant_modal:
 
 providers_notifications:
   call_completed_notification:  //div[text()='Call completed']
+
+provider_practice_page:
+  dropdown_userName: userName
+  button_Help: //button[text() = 'Help']
