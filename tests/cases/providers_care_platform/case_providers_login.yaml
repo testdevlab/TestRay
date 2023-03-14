@@ -1,0 +1,41 @@
+#CXTB-206: Use Forgot Password Link on Login Page
+  TestProviderUseForgotPasswordLink:
+    Environment: Settings 
+    Roles:
+      - Role: desktopChrome
+        App: "desktop"
+    Actions:
+      - Type: maximize
+      - Type: navigate
+        Value: $AND_CLI_care_platform_url$
+        Role: desktopChrome
+    #Opening the forgot password dialog
+      - Type: click
+        Strategy: xpath
+        Id : $PAGE.care_platform_login.forgot_password_button$
+    #Submitting the email
+      - Type: send_keys
+        Strategy: xpath
+        Id: $PAGE.care_platform_login.dialog_email_input$
+        Value: $AND_CLI_carepartner_user1$
+      - Type: click
+        Strategy: xpath
+        Id : $PAGE.care_platform_login.dialog_submit_button$
+      - Type: sleep
+        Time: 20
+    #Verify the Thank You text showed up
+      - Type: get_text  
+        Strategy: xpath
+        Id: $PAGE.care_platform_login.dialog_thank_you_title$
+        Greps:
+        - var: THANK_YOU_TEXT
+          match: "(.*)"
+      - Type: assert
+        Asserts: 
+        - Type: eq 
+          Var: THANK_YOU_TEXT
+          Value: "Thank You"
+          raise: true
+
+ 
+

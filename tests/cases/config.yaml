@@ -14,8 +14,8 @@ Devices:
           - use-fake-ui-for-media-stream
           - use-fake-device-for-media-stream
           - no-sandbox
-          - disable-gpu
-          - start-maximized
+          - disable-gpu        - start-maximized
+  
     browser: chrome
   - role: desktopFirefox
     browser: firefox
@@ -37,35 +37,35 @@ Devices:
 Environments:
   Settings:
     Vars:
-      care_platform_url: https://care-platform-qa.chs-ds.com/
-      employee_health_url: https://employee-health-portal-qa.chs-ds.com/
-      backend_qa_url: https://never-alone-backend-qa.chs-ds.com/
+      care_platform_url: https://care-platform-support.chs-ds.com/
+      employee_health_url: https://employee-health-support.chs-ds.com/
+      backend_qa_url: https://never-alone-backend-support.chs-ds.com/
       facility_ahc: alpha health center
       facility_bhc:  beta health center
       facility_chc:  charlie health center
 #Onboarder users      
-      onboarder_user1: add_your_info
-      onboarder_user1_pwd: add_your_info
-      onboarder_user1_name: add_your_info
-      onboarder_user1_lastname: add_your_info
+      onboarder_user1: cmoreno+onboarder@neural.com.do
+      onboarder_user1_pwd: 954a9d6de50b6a12cf606068acaff998
+      onboarder_user1_name: Cesar
+      onboarder_user1_lastname: Moreno
       onboarder_user2: add_your_info
       onboarder_user2_pwd: add_your_info
       onboarder_user2_name: add_your_info
       onboarder_user2_lastname: add_your_info
 #Carepartmer users
-      carepartner_user1: csanchez@neural.com.do
-      carepartner_user1_pwd: e0fa218d6a41284ccb842d52a25c3750
-      carepartner_user1_name: add_your_info
-      carepartner_user1_lastname: add_your_info
+      carepartner_user1: cmoreno+carepartner@neural.com.do
+      carepartner_user1_pwd: 954a9d6de50b6a12cf606068acaff998
+      carepartner_user1_name: Cesar
+      carepartner_user1_lastname: Moreno
       carepartner_user2: add_your_info
       carepartner_user2_pwd: add_your_info
       carepartner_user2_name: add_your_info
       carepartner_user2_lastname: add_your_info
 #Provider users      
-      provider_user1: add_your_info
-      provider_user1_pwd: add_your_info
-      provider_user1_name: add_your_info
-      provider_user1_lastname: add_your_info      
+      provider_user1: cmoreno+provider@neural.com.do
+      provider_user1_pwd: 954a9d6de50b6a12cf606068acaff998
+      provider_user1_name: Cesar
+      provider_user1_lastname: Moreno     
       provider_user2: add_your_info
       provider_user2_pwd: add_your_info
       provider_user2_name: add_your_info
@@ -76,8 +76,8 @@ Environments:
       admin_user2: add_your_info
       admin_user2_pwd: add_your_info
 #Admin on call users      
-      admincall_user1: add_your_info
-      admincall_user1_pwd: add_your_info
+      admincall_user1: cmoreno+adminoncall@neural.com.do
+      admincall_user1_pwd: 954a9d6de50b6a12cf606068acaff998
       admincall_user2: add_your_info
       admincall_user2_pwd: add_your_info
 #Senior users    
