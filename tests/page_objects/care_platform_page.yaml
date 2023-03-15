@@ -138,6 +138,8 @@ care_platform_participant_records:
   medical_medical_history_subtab: //nav/button[text()='Medical History']
   message_input: //input[@id='message']
   message_submit_button: //span[@class='icon-send text-md']/ancestor::button[@type='submit']
+  message_historical_arrow_button: //div[@data-testid='box']//span[@class='button button-circle-lg -mr-5']
+  last_message_historical: (//div[@class='message message-to'])[last()]
 
 care_platform_call_portal:
   call_volume_button: //span[contains(@class,'icon-volume')]/ancestor::button

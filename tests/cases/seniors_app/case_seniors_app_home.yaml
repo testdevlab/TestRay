@@ -119,7 +119,7 @@ TestCallPersonalCarePartnerOnHomePage:
       Id: $PAGE.care_platform_call_portal.leave_call_btn$
     # Select the Bad option on the Post Survey screen.
     - Type: click
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_post_call_survey.bad_answer_button$
     # Verify page updates to ask why you made your selection and presents you with a set of reasons, or gives you option to return to main survey page.
     - Type: wait_for
@@ -143,7 +143,7 @@ TestCallPersonalCarePartnerOnHomePage:
       Id: $PAGE.seniors_app_post_call_survey.back_to_select_button$
     # Select the Ok option.
     - Type: click
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_post_call_survey.ok_answer_button$
     # Verify page updates to ask why you made your selection and presents you with a set of reasons, or gives you option to return to main survey page.
     - Type: wait_for
@@ -167,7 +167,7 @@ TestCallPersonalCarePartnerOnHomePage:
       Id: $PAGE.seniors_app_post_call_survey.back_to_select_button$
     # Select the Great option.
     - Type: click
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_post_call_survey.great_answer_button$
     # Verify page updates and shows Thank You for you feedback page.
     - Type: wait_for
