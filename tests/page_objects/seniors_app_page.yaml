@@ -43,8 +43,10 @@ seniors_app_settings:
   network_setup_label: (//XCUIElementTypeOther[starts-with(@name, 'Status:')])[last()]/following-sibling::XCUIElementTypeStaticText
 
 seniors_app_incoming_call:
-  answer_call_button: //XCUIElementTypeButton[@name='Answer Call']
-  ignore_call_button: //XCUIElementTypeButton[@name='Ignore Call']
+  incoming_call_header: "**/XCUIElementTypeOther[`label CONTAINS 'Incoming' AND label ENDSWITH 'Call'`]/XCUIElementTypeOther/**/XCUIElementTypeStaticText[`label CONTAINS 'Incoming'`]"
+  called_name: "**/XCUIElementTypeOther[`label CONTAINS 'Incoming' AND label ENDSWITH 'Call'`][-1]/XCUIElementTypeOther[2]/XCUIElementTypeStatic[-1]"
+  answer_call_button: "**/XCUIElementTypeButton[`label == 'Answer Call'`]"
+  ignore_call_button: "**/XCUIElementTypeButton[`label == 'Ignore Call'`]"
 
 seniors_app_call:
   end_call_button: (//XCUIElementTypeOther[contains(@name,'End Call')])[last()]
@@ -59,10 +61,10 @@ seniors_app_call:
   video_window: "**/XCUIElementTypeImage[-1]"
   
 seniors_app_post_call_survey:
-  great_answer_button: //XCUIElementTypeOther[@name='Great']
-  ok_answer_button: //XCUIElementTypeOther[@name='Ok']
-  bad_answer_button: //XCUIElementTypeOther[@name='Bad']
-  to_home_button: //XCUIElementTypeOther[@name='To Home']
+  great_answer_button: "**/XCUIElementTypeOther[`label == 'Great'`]"
+  ok_answer_button: "**/XCUIElementTypeOther[`label == 'Ok'`]"
+  bad_answer_button: "**/XCUIElementTypeOther[`label == 'Bad'`]"
+  to_home_button: "**/XCUIElementTypeOther[`label == 'To Home'`]"
   skip_survey_button: "**/XCUIElementTypeOther[`label == 'Skip this'`]"
   thank_you_label: "**/XCUIElementTypeStaticText[`label == 'Thank you for your feedback'`]"
   video_quality_not_good_option: "**/XCUIElementTypeOther[`label == 'The video quality was not good.'`]"
@@ -88,6 +90,16 @@ seniors_app_appointment_modal:
   description_label: "**/XCUIElementTypeStaticText[`label == 'Description'`]"
   live_label: "**/XCUIElementTypeOther[`label == 'Live'`]"
   appointment_added_label: "**/XCUIElementTypeStaticText[`label BEGINSWITH 'Added'`]"
+
+seniors_app_message_modal:
+  message_header: "**/XCUIElementTypeStaticText[`label ENDSWITH 'Message'`]"
+  from_label: "**/XCUIElementTypeStaticText[`label == 'From:'`]"
+  from_value: //XCUIElementTypeStaticText[@name='From:']/following-sibling::XCUIElementTypeStaticText
+  sent_label: "**/XCUIElementTypeStaticText[`label == 'Sent:'`]"
+  message_label: "**/XCUIElementTypeStaticText[`label == 'Message:'`]"
+  message_value:  //XCUIElementTypeStaticText[@name='Message:']/following-sibling::XCUIElementTypeStaticText
+  call_back_button: "**/XCUIElementTypeButton[`label BEGINSWITH 'Call Back'`]"
+  close_button: "**/XCUIElementTypeButton[`label CONTAINS 'Close'`]"
 
 seniors_app_connection_error_modal:
   device_offline_label: "**/XCUIElementTypeStaticText[`label == 'Device is offline.'`]"

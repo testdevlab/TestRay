@@ -518,6 +518,51 @@ class Device
     end
   end
 
+  # Accepts:
+  #   Strategy
+  #   Id
+  #   Condition
+  #   CheckTime
+  #   NoRaise
+  def hover(action)
+    action = convert_value_pageobjects(action);
+    start = Time.now
+    return unless wait_for(action)
+
+    action["Condition"] = nil
+    start_error = Time.now
+
+    el = wait_for(action)
+
+    now = Time.now
+    log_info("Time to find element: #{now - start - (now - start_error) / 2}s " +
+           "error #{(now - start_error)}") if action["CheckTime"]
+    error = nil
+
+    wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
+
+    while (Time.now - start) < wait_time
+      begin
+        @platform == "iOS" ?
+          @driver.action.move_to(el) :
+          @driver.action.move_to(el).perform
+      rescue => e
+        error = e
+      end
+      begin
+        @driver.action.move_to(el).release.perform
+        log_info("Time for click and hold: #{Time.now - start}s") if action["CheckTime"]
+        return
+      rescue => e
+        error = e
+      end
+    end
+    if error && !action["NoRaise"]
+      path = take_error_screenshot()
+      raise "#{@role}: #{error.message}\nError Screenshot: #{path}"
+    end
+  end
+
   # tap_by_coord on the provided element but over its coordinates. Multiple location 
   # strategies are accepted - css, xPath, id.
   # Accepts:
@@ -1364,6 +1409,30 @@ class Device
             "#{default_wait_time} seconds\nError Screenshot: #{path}"
   end
 
+  # guarantee that the checkbox is checked or unchecked depending on the option
+  # Accepts:
+  #   Strategy
+  #   Id
+  #   Option -> check or uncheck
+  def credentials_checkbox(action)
+    action = convert_value_pageobjects(action);
+    option = convert_value(action["Option"])
+    el = @driver.find_element(convert_value(action["Strategy"]), convert_value(action["Id"]))
+    input = el.find_element(:xpath => "./input")
+    span = el.find_element(:xpath => "./span")
+    is_checked = false
+    
+    if input.attribute("checked")
+      is_checked = true
+    end
+      
+    if (is_checked) && (option == "uncheck")
+      span.click
+    elsif (option == "check") && (!is_checked)
+      span.click
+    end
+  end
+
   # opens driver notifications.
   def notifications(action)
     begin
@@ -1483,7 +1552,6 @@ class Device
       ENV[convert_value(action["Var"])] = time
     end
   end
-
 
   def set_env_var(action)
     log_info("Assigned value: \"#{convert_value(action["Value"])}\" to Var: \"#{convert_value(action["Var"])}\"")

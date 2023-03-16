@@ -1,0 +1,177 @@
+#CXTB-17 - New Request to Provider - Successful Call Connect
+TestRequestSuccessfulCallConnect:
+  Environment: Settings
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop 
+  Actions:
+  #Call login for nurses
+    - Type: case
+      Role: localiOS
+      Value: LoginSNFHelper
+  #Verify that the user has successfully logged in.
+    - Type: wait_for
+      Role: localiOS
+      Strategy: xpath
+      Id: $PAGE.snf_home.new_request_btn$
+  #New request
+    - Type: click
+      Strategy: xpath
+      Role: localiOS
+      Id: $PAGE.snf_home.new_request_btn$
+    - Type: wait_for
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.patient_information_title$
+  #Submit button should be disabled until required data entered
+    - Type: wait_for_attribute
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.submit_button$
+      Attribute: enabled
+      Value: "false"
+    - Type: send_keys
+      Strategy: xpath
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.requester_first_name$
+      Value: $AND_CLI_facility_devices_requester_name$
+    - Type: send_keys
+      Strategy: xpath
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.requester_last_name$
+      Value: $AND_CLI_facility_devices_requester_lastname$
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.patient_information_title$
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.patient_name_select$
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.first_patient_select_option$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.urgent_reason_dropdown$
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.urgent_reason_dropdown$
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.urgent_reason_option_no$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.reason_for_request_dropdown$
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.reason_for_request_option_one$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+  # Submit button gets enabled
+    - Type: wait_for_attribute
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.submit_button$
+      Attribute: enabled
+      Value: "true"
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.submit_button$
+  # Select "Yes, Call provider"
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.submit_options.yes_call_provider_button$
+  # Verify that screen redirects to the call waiting room.
+    - Type: wait_for
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.seniors_app_call.waiting_room_label$
+  # Provider side
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+      Role: desktopChrome
+    #Selects first on demand call
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_home_page.first_on_demand_row$
+  #Answer call
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_call_queue_page.answer_call_button$
+  ## back to SNF and end call
+    - Type: wait_for
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.call_portal.end_call_button$
+    - Type: click
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.call_portal.end_call_button$
+  # Select the Bad option on the Post Survey screen.
+    - Type: wait_for
+      Role: localiOS
+      Strategy: xpath
+      Id: $PAGE.seniors_app_post_call_survey.bad_answer_button$
+    - Type: click
+      Role: localiOS
+      Strategy: xpath
+      Id: $PAGE.seniors_app_post_call_survey.bad_answer_button$
+  # Click on the back to select button.
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.seniors_app_post_call_survey.back_to_select_button$
+  # Select the Ok option.
+    - Type: click
+      Strategy: xpath
+      Role: localiOS
+      Id: $PAGE.seniors_app_post_call_survey.ok_answer_button$
+  # Select reason
+    - Type: wait_for
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.seniors_app_post_call_survey.problem_was_not_solved_option$
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.seniors_app_post_call_survey.problem_was_not_solved_option$
+  # Wait to be redirected home
+    # Verify page updates and shows Thank You for you feedback page.
+    - Type: wait_for
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.seniors_app_post_call_survey.thank_you_label$
+    # Do not click the "To Home" button on Thank you for your feedback screen.
+    - Type: sleep
+      Time: 8
+    - Type: wait_for
+      Role: localiOS
+      Strategy: xpath
+      Id: $PAGE.snf_home.new_request_btn$
+    - Type: case
+      Value: PostCallSurveyProvider

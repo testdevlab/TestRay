@@ -34,11 +34,11 @@ SetFollowUpTicket:
       # Answer the call from SNF
     - Type: wait_for
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_incoming_call.answer_call_button$
     - Type: click
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_incoming_call.answer_call_button$
       # Fill the notes
     - Type: send_keys
@@ -56,11 +56,11 @@ SetFollowUpTicket:
       # Complete the call in SNF
     - Type: click
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_post_call_survey.great_answer_button$
     - Type: click
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_post_call_survey.to_home_button$
       # Complete the session 
     - Type: wait_for
@@ -155,7 +155,7 @@ SetScheduledCallTicket:
       Id: $PAGE.care_platform_call_portal.reason_for_request_select$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_call_portal.reason_for_request_covid_options$
+      Id: $PAGE.care_platform_call_portal.first_reason_for_request_available_option$
       # When did symptoms start      
     - Type: click
       Strategy: class
@@ -212,11 +212,11 @@ SetMissedCallTicket:
       # Answer the call
     - Type: wait_for
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_incoming_call.answer_call_button$
     - Type: click
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_incoming_call.answer_call_button$
       # Open the Meical Transfer
     - Type: click
@@ -236,7 +236,7 @@ SetMissedCallTicket:
       Id: $PAGE.care_platform_call_portal.reason_for_request_select$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_call_portal.reason_for_request_covid_options$
+      Id: $PAGE.care_platform_call_portal.first_reason_for_request_available_option$
       # When did symptoms start      
     - Type: click
       Strategy: class
@@ -279,11 +279,11 @@ SetMissedCallTicket:
       Id: $PAGE.seniors_app_call.end_call_button$
     - Type: click
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_post_call_survey.great_answer_button$
     - Type: click
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_post_call_survey.to_home_button$
       # Fill the notes
     - Type: send_keys

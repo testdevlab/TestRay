@@ -145,7 +145,7 @@ module TestRay
       end
     end
 
-    desc "execute_file <file>", "Execute all cases within the case_*.yaml file. Give relative path from project folder Ex: cases/case_*.yaml"
+    desc "execute_file <file>", "Execute all cases within the case_*.yaml file. Give relative path from cases folder Ex: case_*.yaml or */case_*yaml"
     option :retries,
            :desc => "number of test retries",
            :default => 0,
@@ -161,14 +161,15 @@ module TestRay
            :default => ""
     def execute_file(case_file_name)
       load_common_execute_parameters(options[:log_level])
-      cases = load_case_file(case_file_name)
+      file_cases = load_case_file(case_file_name)
+      all_cases =  load_case_files();
       load_environment(options[:env])  
       errors = []
       log_case("Starting Execution for '#{case_file_name}'")
-      for case_name in cases.keys do
+      for case_name in file_cases.keys do
         begin
           retries ||= 0
-          error_message = run_single_case(cases, case_name, {}, options, true)
+          error_message = run_single_case(all_cases, case_name, {}, options, true)
           errors.append("Case #{case_name} with error: #{error_message}") if error_message
         rescue Interrupt
           next
@@ -194,6 +195,56 @@ module TestRay
       end
     end
 
+    desc "execute_folder <folder_name>", "Execute all cases within a folder containing case_*.yaml files. Give relative path from project folder Ex: cases/<folder_name>"
+    option :retries,
+           :desc => "number of test retries",
+           :default => 0,
+           :type => :numeric
+    option :log_level,
+           :desc => "sets log level. Default 'info', possible values: 'info','debug','error'",
+           :default => "info"
+    option :report,
+           :desc => "types of report. Default 'cucumber', possible values: 'cucumber','testray', 'none'",
+           :default => "cucumber"
+    option :env,
+           :desc => "Sets the environment to load from config.yaml file",
+           :default => ""
+    def execute_folder(foldername)
+      load_common_execute_parameters(options[:log_level])
+      folder_cases = load_case_files_from_folder(foldername)
+      all_cases =  load_case_files();
+      load_environment(options[:env])  
+      errors = []
+      log_case("Starting Execution for '#{foldername}'")
+      for case_name in folder_cases.keys do
+        begin
+          retries ||= 0
+          error_message = run_single_case(all_cases, case_name, {}, options, true)
+          errors.append("Case #{case_name} with error: #{error_message}") if error_message
+        rescue Interrupt
+          next
+        rescue => e
+          if (retries += 1) <= options[:retries]
+            log_warn "Retrying Test Case #{case_name}..."
+            retry
+          end
+          errors.append("Case #{case_name} with error: #{e.message}")
+          log_error("Encountered error: #{e.message}")
+        end
+      end
+
+      jsonfile_path = generate_report(options[:report], File.basename(foldername, ".*")) 
+
+      unless errors.empty?
+        errors.unshift("End of file '#{foldername}' with #{errors.length} errors! " + 
+                       "Report in #{jsonfile_path}")
+        log_case_error(errors)
+        abort()
+      else
+        log_case("End of file '#{foldername}'. Report in #{jsonfile_path}")
+      end
+    end
+   
     desc "android <action> [app]", "Executes given action on all local Android "+
                                    "devices. A udid can be provided to select " +
                                    "a specific device. Some actions also " +

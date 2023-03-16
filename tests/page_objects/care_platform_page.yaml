@@ -26,6 +26,7 @@ care_platform:
 care_platform_home:
   first_call_of_queue: //tbody[@role='rowgroup']/tr[1]
   answer_call: //button[text()='Answer Call']
+  call_based_on_participant_name: //tbody[@role='rowgroup']/tr//strong[text() = '$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']
 
 care_platform_header:
   app_logo: //header//div[@class='app-header-logo']/img
@@ -73,8 +74,10 @@ care_platform_logout_modal:
   stay_on_shift_button: //button[contains(text(),'Stay On Shift')]
   go_off_shift_button: //button[contains(text(),'Go Off Shift')]
   cancel_logout_button: //button[contains(@class,'button-ghost')] 
+  log_out_button: //button[contains(text(),'$AND_CLI_LOGOUT_OPTION$')]
 
 care_platform_participant:
+  participants_title: //div[@class='text-lg font-bold']//h3[@class='text-lg font-bold']
   first_participant_row: //table/thead[contains(.,'Participant')]/following-sibling::tbody/tr[contains(.,'$AND_CLI_senior_user1_name$') and contains(.,'$AND_CLI_senior_user1_lastname$')][1]
   first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
   selected_darkened_letter_button: //button[contains(@class,'is-selected')]
@@ -125,10 +128,18 @@ care_platform_participant_records:
   participant_dob: //div[@class='participant-profile-contact']//strong[contains(text(),'DOB')]/following-sibling::time
   demographics_tab: //nav[contains(@class,'box-tabs-nav')]/button[text()='Demographics']
   medical_tab: //nav[contains(@class,'box-tabs-nav')]/button[text()='Medical']
+  call_history_tab: //nav/button[contains(text(),'Call History')]
+  call_history_title: //h4[text()='Ticket History']
+  emergency_calls_tab: //nav/button[contains(text(),'Emergency Calls')]
+  follow_up_tickets_tab: //nav/button[contains(text(),'Follow-up Tickets')]
   medical_medications_subtab: //nav/button[text()='Medications']
   medical_medical_needs_subtab: //nav/button[text()='Medical Needs']
   medical_behavioral_subtab: //nav/button[text()='Behavioral']
   medical_medical_history_subtab: //nav/button[text()='Medical History']
+  message_input: //input[@id='message']
+  message_submit_button: //span[@class='icon-send text-md']/ancestor::button[@type='submit']
+  message_historical_arrow_button: //div[@data-testid='box']//span[@class='button button-circle-lg -mr-5']
+  last_message_historical: (//div[@class='message message-to'])[last()]
 
 care_platform_call_portal:
   call_volume_button: //span[contains(@class,'icon-volume')]/ancestor::button
@@ -158,15 +169,18 @@ care_platform_call_portal:
   save_and_close_btn: //button[text()='Save and Close']
   urgent_patient_matter_select: priorityLevel
   urgent_patient_matter_yes_option: //option[text()='Yes']
+  urgent_patient_matter_error_label: //select[@id='priorityLevel']/following-sibling::div/div/div[@class='text-xs color-red-400']
   reason_for_request_select: reasonForRequest
-  reason_for_request_covid_options: //option[text()='COVID-19 concerns']
+  first_reason_for_request_available_option: //select[@id='reasonForRequest']/option[not(@value)][1]
+  reason_for_request_error_label: //select[@id='reasonForRequest']/following-sibling::div/div/div[@class='text-xs color-red-400']
   symptoms_start_input_container: react-datepicker__input-container
+  symptoms_start_input_error_label: //div[@class='react-datepicker-wrapper']/following-sibling::div/div/div[@class='text-xs color-red-400']
   submit_create_event_btn: //button[text()='Create Event'][@type='submit']
   call_participant_btn: //button[text()='Call Participant']
   video_btn: //button[@class='video-control']//span[@class='icon-video-off']
   video_mirror_care_partner: //div[@class='video-mirror']
   video_grid_from_senior_btn: //div[@class='video-feed']/div[@data-testid='video-grid']
-  full_screen_call_btn: //button[@class='video-control video-control-top-right']
+  full_screen_call_btn: //button[contains(@class, 'video-control video-control-top-right')]
   medical_transfer_btn: //button[span[text()='Medical']]
   verify_video_is_full_screen: //div[@class='app-video app-video-fullscreen']
   leave_call_btn: //button[span/span[@class='icon-phone-end']]
@@ -185,6 +199,8 @@ care_platform_call_portal:
   delete_event_button: //div[@class='accordion-item is-open']//button[text()='Delete']
   yes_delete_button: //div[@class='app-dialogs']//button[text()='Yes, Delete']
   video_status: //div[@class='video']//div[@class='video-status']
+  call_participant_records: //a[contains(text(),'Records')]
+  telehealth_request_form_header: //div[@id='modals']//h4[@class='font-bold text-md' and text()='Telehealth Request Form']
 
 care_platform_call_settings_modal:
   video_settings_modal_title: //*[@id='modals']//h4[text()='Call Settings']
@@ -193,10 +209,17 @@ care_platform_call_settings_modal:
   video_settings_modal_camera_select: //div[text()='Camera']/following-sibling::div//select
   video_settings_modal_close_button: //*[@id='modals']//button[text()='Close']
 
+care_platform_floating_video_call:
+  video_fixed_content: //div[contains(@class,'app-video-fixed')]
+  video_hide_button: //div[@class='app-video-controls']/button[contains(.,'Hide')]
+  video_show_button: //div[@class='app-video-controls']/button[contains(.,'Show')]
+  video_return_button: //div[@class='video']/button[@class='video-return']
+  video_return_span: //button/span[contains(text(),'Return to Session')]
+
 care_platform_create_event_modal:
   modal_title: //*[@id='modals']//h4[contains(text(),'Create Event')]
   cancel_button: //*[@id='modals']//button[contains(.,'Cancel')]
-  
+
 care_platform_notifications:
   call_completed_notification: //div[text()='Call completed']
   event_created_notification: //div[text()='Event created']

@@ -1,2 +1,27 @@
 snf_home:
   new_request_btn: //XCUIElementTypeButton[@name='New Request']
+  
+snf_new_request_form:
+  patient_information_title: "**/XCUIElementTypeStaticText[`label == 'Patient Information'`]"
+  requester_first_name: //XCUIElementTypeOther[@name='Requester First Name*']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  requester_last_name: //XCUIElementTypeOther[@name='Requester Last Name*']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  patient_name_select: "**/XCUIElementTypeStaticText[`label == 'Select a Patient'`]"
+  first_patient_select_option: "**/XCUIElementTypeOther[`name BEGINSWITH 'default-'`][1]"
+  patient_mnr: //XCUIElementTypeOther[@name='Patient MRN*']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  urgent_reason_dropdown: "**/XCUIElementTypeOther[`label BEGINSWITH 'Is this an urgent patient matter?*'`]/**/XCUIElementTypeStaticText[`name == 'iconIcon'`][1]"
+  urgent_reason_option_yes: "**/XCUIElementTypeStaticText[`label == 'Yes'`]"
+  urgent_reason_option_no: "**/XCUIElementTypeStaticText[`label == 'No'`]"
+  urgent_reason_option_cancel: "**/XCUIElementTypeStaticText[`label == 'Cancel'`]"
+  reason_for_request_dropdown: "**/XCUIElementTypeOther[`label BEGINSWITH 'Reason for Request*'`]/**/XCUIElementTypeStaticText[`name == 'iconIcon'`]"
+  reason_for_request_option_one: "**/XCUIElementTypeOther[`name BEGINSWITH 'default-'`][1]"
+  clear_form_button: "**/XCUIElementTypeButton[`label == 'Clear Form'`]"
+  back_to_home_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Back to Home'`]"
+  submit_button: "**/XCUIElementTypeButton[`label == 'Submit'`]"
+
+submit_options:
+  yes_call_provider_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Yes, Call Provider'`]"
+  no_adjust_form_button: "**/XCUIElementTypeButton[`label ENDSWITH 'No, Adjust Form'`]"
+  no_cancel_call_button: "**/XCUIElementTypeButton[`label ENDSWITH 'No, Cancel Call'`]"
+
+call_portal:
+  end_call_button: "**/XCUIElementTypeOther[`label ENDSWITH 'End Call'`][-1]"
