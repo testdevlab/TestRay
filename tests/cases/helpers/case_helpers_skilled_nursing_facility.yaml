@@ -6,22 +6,22 @@ LoginSNFHelper:
   Actions:
     # Open the Never Alone app and click on Provision Device button.
     - Type: click
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_login.provision_device_btn$
     # Fill in the email and password fields with credentials.
     - Type: send_keys
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_login.email_input$
       Value: $AND_CLI_facility_devices_user1$
     - Type: send_keys
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_login.password_input$
       Value: $AND_CLI_facility_devices_user1_pwd$
     - Type: hide_keyboard
       Role: localiOS
     # Click on the Log In button.
     - Type: click
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_login.login_btn$
     # Verify that the user has successfully logged in.
     - Type: wait_for
