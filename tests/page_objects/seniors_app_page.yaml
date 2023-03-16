@@ -61,10 +61,10 @@ seniors_app_call:
   video_window: "**/XCUIElementTypeImage[-1]"
   
 seniors_app_post_call_survey:
-  great_answer_button: //XCUIElementTypeOther[@name='Great']
-  ok_answer_button: //XCUIElementTypeOther[@name='Ok']
-  bad_answer_button: //XCUIElementTypeOther[@name='Bad']
-  to_home_button: //XCUIElementTypeOther[@name='To Home']
+  great_answer_button: "**/XCUIElementTypeOther[`label == 'Great'`]"
+  ok_answer_button: "**/XCUIElementTypeOther[`label == 'Ok'`]"
+  bad_answer_button: "**/XCUIElementTypeOther[`label == 'Bad'`]"
+  to_home_button: "**/XCUIElementTypeOther[`label == 'To Home'`]"
   skip_survey_button: "**/XCUIElementTypeOther[`label == 'Skip this'`]"
   thank_you_label: "**/XCUIElementTypeStaticText[`label == 'Thank you for your feedback'`]"
   video_quality_not_good_option: "**/XCUIElementTypeOther[`label == 'The video quality was not good.'`]"

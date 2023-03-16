@@ -1,5 +1,6 @@
 # Physical Only
 # CXTB-52: Verify "Personal Care Partner Message" Prompt & Call Back Button.
+# CXTB-129: Message Participant's Device - Participant Profile.
 TestPersonalCarePartnerMessagePromptAndCallBackButton:
   Environment: Settings
   Vars:
@@ -173,6 +174,57 @@ TestPersonalCarePartnerMessagePromptAndCallBackButton:
   # Care partner tear down
     - Type: case
       Value: PostCallSurveyCarePartner
+  # Navigate to Participants.
+    - Type: case
+      Role: desktopChrome
+      Value: CarePartnerNavigateToParticipants
+  # Select the corresponding user.
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_1_td$
+  # Right side of screen updates to show the selected participant’s summary component.
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.records_button$
+  # Click "Records" button at top of participant component on right side of screen.
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.records_button$
+  # Page refreshes to show the Participant record:
+  # Name and DOB at top of left panel.
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_name$
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_dob$
+  # Click down arrow next to "Message Participant" (where Participant is their name) on left side.
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.message_historical_arrow_button$
+  # Verify that the historical messages list has included the message that was just sent.
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.last_message_historical$
+    - Type: return_element_attribute
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.last_message_historical$
+      Attribute: textContent
+      ResultVar: LAST_MESSAGE_HISTORY
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: LAST_MESSAGE_HISTORY
+          Value: $AND_CLI_MESSAGE_TO_PARTICIPANT$
 
 # Physical Only
 # CXTB-56: Verify "Answer Call" for Provider Calling.

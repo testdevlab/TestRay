@@ -1397,11 +1397,19 @@ CarePartnerSendMessageToSenior:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_participant_details.records_button$
+    # Page refreshes to show the Participant record:
+    # Name and DOB at top of left panel.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_name$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_dob$
     # Verify that there is a message field.
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_participant_records.message_input$
-    # Send a Message to the Care Partner.
+    # Send a Message to the Participant (Senior).
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.care_platform_participant_records.message_input$

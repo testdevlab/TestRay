@@ -56,11 +56,11 @@ SetFollowUpTicket:
       # Complete the call in SNF
     - Type: click
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_post_call_survey.great_answer_button$
     - Type: click
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_post_call_survey.to_home_button$
       # Complete the session 
     - Type: wait_for
@@ -279,11 +279,11 @@ SetMissedCallTicket:
       Id: $PAGE.seniors_app_call.end_call_button$
     - Type: click
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_post_call_survey.great_answer_button$
     - Type: click
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_post_call_survey.to_home_button$
       # Fill the notes
     - Type: send_keys
