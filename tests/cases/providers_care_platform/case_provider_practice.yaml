@@ -8,6 +8,7 @@ TestProviderHelpMenuOption:
   # Log in with my provider User 
     - Type: case
       Value: ProvidersCarePlatformLogin
+  # Click your name in upper Right corner after click on help option
     - Type: click
       Strategy: id
       Id: $PAGE.provider_practice_page.dropdown_userName$
@@ -32,4 +33,4 @@ TestProviderHelpMenuOption:
           Var: HELP_PAGE_URL
           Value: .pdf
 
-  # Click your name in upper Right corner
+ 
