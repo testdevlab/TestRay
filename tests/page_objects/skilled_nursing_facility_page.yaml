@@ -1,5 +1,7 @@
 snf_home:
+  facility_name: "**/XCUIElementTypeOther[`name == 'headerContainer'`]/**/XCUIElementTypeStaticText"
   new_request_btn: //XCUIElementTypeButton[@name='New Request']
+  existing_request_button: "**/XCUIElementTypeButton[`label == 'Existing Request'`]"
   
 snf_new_request_form:
   patient_information_title: "**/XCUIElementTypeStaticText[`label == 'Patient Information'`]"
@@ -7,6 +9,7 @@ snf_new_request_form:
   requester_last_name: //XCUIElementTypeOther[@name='Requester Last Name*']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
   patient_name_select: "**/XCUIElementTypeStaticText[`label == 'Select a Patient'`]"
   first_patient_select_option: "**/XCUIElementTypeOther[`name BEGINSWITH 'default-'`][1]"
+  patient_name_section: "**/XCUIElementTypeOther[`label BEGINSWITH 'Patient Name*'`]/XCUIElementTypeOther/**/XCUIElementTypeStaticText[1]"
   patient_mnr: //XCUIElementTypeOther[@name='Patient MRN*']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
   urgent_reason_dropdown: "**/XCUIElementTypeOther[`label BEGINSWITH 'Is this an urgent patient matter?*'`]/**/XCUIElementTypeStaticText[`name == 'iconIcon'`][1]"
   urgent_reason_option_yes: "**/XCUIElementTypeStaticText[`label == 'Yes'`]"
@@ -18,6 +21,9 @@ snf_new_request_form:
   back_to_home_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Back to Home'`]"
   submit_button: "**/XCUIElementTypeButton[`label == 'Submit'`]"
 
+snf_existing_request:
+  last_existing_request: "**/XCUIElementTypeOther[`label BEGINSWITH 'Select Existing Request'`][1]/**/XCUIElementTypeOther[-1]"
+
 submit_options:
   yes_call_provider_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Yes, Call Provider'`]"
   no_adjust_form_button: "**/XCUIElementTypeButton[`label ENDSWITH 'No, Adjust Form'`]"
@@ -25,3 +31,7 @@ submit_options:
 
 call_portal:
   end_call_button: "**/XCUIElementTypeOther[`label ENDSWITH 'End Call'`][-1]"
+
+snf_notifications:
+  missed_call_modal_title: Missed Outgoing Call
+  missed_call_modal_close_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Close'`]"

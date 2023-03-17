@@ -56,6 +56,11 @@ providers_call_queue_page:
   submit_exit_session_button: //button[text()='Submit and Exit Session']
   cancel_exit_session_button: //button[text()='Cancel']
   call_participant_button: //button[@class='button' and contains(., 'Call')]
+  details_title: //div[@data-testid='box'][contains(@class,'gradient')]//h3
+  details_requester_name: //strong[contains(text(),'Requester Name')]/parent::div/following-sibling::div
+  details_patient_name: //strong[contains(text(),'Patient Name')]/parent::div/following-sibling::div
+  assign_to_me_button: //button[contains(text(),'Assign to Me')]
+  unnasign_button: //button[contains(text(),'Unassign')]
   
 providers_employees_page:
   employees_label: //h3[text()='Employees']

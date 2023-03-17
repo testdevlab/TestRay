@@ -176,18 +176,13 @@ SetScheduledCallTicket:
       Id: $PAGE.care_platform.navigation_home$
 
 SetMissedCallTicket:
-  Environment: Settings 
+  Environment: Settings
   Roles:
     - Role: desktopChrome
-      Capabilities:
-        chromeOptions:
-          args:
-            - use-fake-ui-for-media-stream
-            - use-fake-device-for-media-stream
-            - no-sandbox
-            - disable-gpu
       App: desktop   
     - Role: localiOS
+      Capabilities:
+        newCommandTimeout: 100
       App: NeverAlone
   Actions:   
       # Navigate to Participants
@@ -251,21 +246,7 @@ SetMissedCallTicket:
       # Workaround: to make it appear Missed, it has to be waiting for 60 seconds. If appium passes 30+ seconds in sleep, it fails.
     - Type: sleep
       Role: localiOS
-      Time: 20
-    - Type: click
-      Role: localiOS
-      Strategy: xpath
-      Id: $PAGE.seniors_app_call.mute_call_button$
-    - Type: sleep
-      Role: localiOS
-      Time: 20
-    - Type: click
-      Role: localiOS
-      Strategy: xpath
-      Id: $PAGE.seniors_app_call.mute_call_button$
-    - Type: sleep
-      Role: localiOS
-      Time: 20
+      Time: 61
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_call_portal.leave_call_btn$
