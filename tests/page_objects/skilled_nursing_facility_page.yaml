@@ -5,11 +5,12 @@ snf_home:
   
 snf_new_request_form:
   patient_information_title: "**/XCUIElementTypeStaticText[`label == 'Patient Information'`]"
-  requester_first_name: //XCUIElementTypeOther[@name='Requester First Name*']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
-  requester_last_name: //XCUIElementTypeOther[@name='Requester Last Name*']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  requester_first_name: "**/XCUIElementTypeOther[`label == 'Requester First Name*'`]/**/XCUIElementTypeTextField[`name == 'RNE__Input__text-input'`]"
+  requester_last_name: "**/XCUIElementTypeOther[`label == 'Requester Last Name*'`]/**/XCUIElementTypeTextField[`name == 'RNE__Input__text-input'`]"
   patient_name_select: "**/XCUIElementTypeStaticText[`label == 'Select a Patient'`]"
   first_patient_select_option: "**/XCUIElementTypeOther[`name BEGINSWITH 'default-'`][1]"
   patient_name_section: "**/XCUIElementTypeOther[`label BEGINSWITH 'Patient Name*'`]/XCUIElementTypeOther/**/XCUIElementTypeStaticText[1]"
+  patient_based_on_name: "**/XCUIElementTypeOther[`name BEGINSWITH 'default-$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$'`]"
   patient_mnr: //XCUIElementTypeOther[@name='Patient MRN*']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
   urgent_reason_dropdown: "**/XCUIElementTypeOther[`label BEGINSWITH 'Is this an urgent patient matter?*'`]/**/XCUIElementTypeStaticText[`name == 'iconIcon'`][1]"
   urgent_reason_option_yes: "**/XCUIElementTypeStaticText[`label == 'Yes'`]"

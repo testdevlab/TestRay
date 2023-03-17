@@ -533,3 +533,247 @@ TestStatusNotOnActiveCallForProviders:
         - Type: contain
           Var: STATUS_VAR
           Value: "is-green"
+
+# CXTB-133: Verify that Providers answer SNF call and completes session.
+TestProvidersAnswerSNFCallAndCompletesSession:
+  Environment: Settings
+  Vars:
+    PROVIDERS_SUBJECT:  Automation Test Call SNF.
+    PROVIDERS_DETAILS:  Automation Test Notes Verify that Providers answer SNF call and completes session.
+  Precases:
+    - LoginSNFHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+    # Login to the Care Platform app with Providers account.
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+    # Call Provider from SNF.
+    - Type: case
+      Value: SNFNewRequestHelper
+    # Click on the corresponding call on the Home page to and click on the "Answer" button.
+    - Type: wait_for
+      Strategy: xpath
+      Id : $PAGE.providers_home_page.call_based_on_participant_name$
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.providers_home_page.call_based_on_participant_name$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.answer_call_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.answer_call_button$
+    # Call portal should be displayed and the user status has been automatically updated to "In session" (red dot).
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_btn$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Greps:
+        - var: INDICATOR
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: INDICATOR
+          Value: 'is-red'
+    # Verify video is disabled by default on the Providers.
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_camera_button$
+      Greps:
+        - var: CLASS
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: CLASS
+          Value: 'off'
+  # Verify video is disabled by default on the SNF.
+    - Type: wait_not_visible
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.video_window$
+    # Click the "End Call" button.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.end_answer_call_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.end_answer_call_button$
+    # Video area updates to show a message showing that the call has ended.
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+      Greps:
+        - var: CALL_MESSAGE
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: CALL_MESSAGE
+          Value: 'The call has ended'
+    # Verify that the status still is "In Session".
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Greps:
+        - var: INDICATOR
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: INDICATOR
+          Value: 'is-red'
+    # Fill the Provider's call notes
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+      Value: $AND_CLI_PROVIDERS_SUBJECT$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_notes_provider_input$
+      Value: $AND_CLI_PROVIDERS_DETAILS$
+    # Click the "Complete session" button.
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
+      Property: disabled
+      Value: "false"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
+    # Post-call survey screen appears with your current notes pre-populated.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.post_call_survey_title$
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+      Attribute: value
+      ResultVar: SUBJECT_SUBJECT_CURRENT_TEXT
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: SUBJECT_SUBJECT_CURRENT_TEXT
+          Value: $AND_CLI_PROVIDERS_SUBJECT$
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_notes_provider_input$
+      Attribute: value
+      ResultVar: SUBJECT_NOTES_CURRENT_TEXT
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: SUBJECT_NOTES_CURRENT_TEXT
+          Value: $AND_CLI_PROVIDERS_DETAILS$
+    # Change to "No" on the "Was issue resolved" question.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.resolved_no_option$
+    # Survey updates based on this response:
+    # New "Reason" field appears.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.reason_label$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.reason_input$
+    # "Follow-up recommended" is automatically selected.
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.follow_up_recommended_checkbox$
+      Attribute: value
+      Value: true
+    # New time options appear below Follow-up recommended checkbox, with "1 hour" selected.
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.selected_follow_up_time_option$
+      Attribute: value
+      Value: "1"
+    # "Assign to myself" box appears and is automatically selected.
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.assign_to_myself_checkbox$
+      Attribute: value
+      Value: true
+    # Select a reason and click on the "Submit and Exit Session" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.reason_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.first_reason_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.recommend_discharge_no_option$
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+    # User is redirected to the Home Listing page with the new Follow-up ticket included in the listing.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.home_title$
+    # Set Time to all so the follow-up appears.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.time_dropdown$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.time_all_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.time_all_option$
+      Condition:
+        - Value: 5
+          Operation: visible
+          Result: true
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.follow_up_ticket_based_on_participant_name$
+    # Close ticket so it cleans the Home queue.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.follow_up_ticket_based_on_participant_name$
+    - Type: sleep
+      Time: 10
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.close_ticket_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.close_ticket_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.reason_for_closing_ticket_input$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.reason_for_closing_ticket_input$
+      Value: 'Automation Test Close Ticket'
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.save_and_close_ticket_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_notifications.follow_up_ticket_closed_notification$

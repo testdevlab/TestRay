@@ -30,12 +30,12 @@ TestRequestSuccessfulCallConnect:
       Attribute: enabled
       Value: "false"
     - Type: send_keys
-      Strategy: xpath
+      Strategy: class_chain
       Role: localiOS
       Id: $PAGE.snf_new_request_form.requester_first_name$
       Value: $AND_CLI_facility_devices_requester_name$
     - Type: send_keys
-      Strategy: xpath
+      Strategy: class_chain
       Role: localiOS
       Id: $PAGE.snf_new_request_form.requester_last_name$
       Value: $AND_CLI_facility_devices_requester_lastname$
