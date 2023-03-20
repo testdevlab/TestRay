@@ -198,7 +198,8 @@ care_platform_call_portal:
   edit_event_modal_header: //div[@class='box has-scrollable-content box-tight has-shadow has-border max-h-full']//h4[@class='font-bold text-md']
   delete_event_button: //div[@class='accordion-item is-open']//button[text()='Delete']
   yes_delete_button: //div[@class='app-dialogs']//button[text()='Yes, Delete']
-  video_status: //div[@class='video']//div[@class='video-status']
+  video_status: //div[contains(@class,'video')]//div[@class='video-status']
+  unanswered_call_icon: //div[@class='video-unanswered']
   call_participant_records: //a[contains(text(),'Records')]
   telehealth_request_form_header: //div[@id='modals']//h4[@class='font-bold text-md' and text()='Telehealth Request Form']
 

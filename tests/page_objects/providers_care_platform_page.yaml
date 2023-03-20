@@ -16,6 +16,11 @@ providers_home_page:
   first_on_demand_row: //tbody/tr//div[text()='On Demand Call'][1]/ancestor::tr
   facilities_navigation: //a//div[contains(text(),'Facilities')]
   employees_navigation: //a//div[contains(text(),'Employees')]
+  call_based_on_participant_name: //tbody[@role='rowgroup']//strong[text()='$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']
+  follow_up_ticket_based_on_participant_name: //div[contains(text(), 'Follow-up')]/ancestor::tr//strong[text()='$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']
+  close_ticket_button: //button[text()='Close Ticket']
+  reason_for_closing_ticket_input:  //input[@name='reasonForClosing']
+  save_and_close_ticket_button: //button[text()='Save and Close Ticket']
 
 providers_account_modal:
   credentials_navigation_tab: //*[@id='modals']//nav/button[text()='Credentials']
@@ -52,10 +57,23 @@ providers_call_queue_page:
   complete_session_button: //button[text()='Complete Session']
   post_call_survey_title: //h3[text()='Post-call Survey']
   resolved_true_option: //input[@name='resolved' and @value='true']/following-sibling::span
+  resolved_no_option: //input[@name='resolved' and @value='false']/following-sibling::span
+  reason_label: //div[@aria-hidden='false']//div[@class='font-bold mb-half mt']
+  reason_input: //select[@id='reason']
+  first_reason_option: //select[@id='reason']/option[not(@value)][1]
   recommend_discharge_true_option: //input[@name='recommendedDischarge' and @value='true']/following-sibling::span
+  recommend_discharge_no_option: //input[@name='recommendedDischarge' and @value='false']/following-sibling::span
+  follow_up_recommended_checkbox: //input[@id='followUpRecommended']
+  assign_to_myself_checkbox: //input[@id='assignToMyself']
+  selected_follow_up_time_option: //input[@name='followUpTime' and @checked]
   submit_exit_session_button: //button[text()='Submit and Exit Session']
   cancel_exit_session_button: //button[text()='Cancel']
   call_participant_button: //button[@class='button' and contains(., 'Call')]
+  details_title: //div[@data-testid='box'][contains(@class,'gradient')]//h3
+  details_requester_name: //strong[contains(text(),'Requester Name')]/parent::div/following-sibling::div
+  details_patient_name: //strong[contains(text(),'Patient Name')]/parent::div/following-sibling::div
+  assign_to_me_button: //button[contains(text(),'Assign to Me')]
+  unnasign_button: //button[contains(text(),'Unassign')]
   
 providers_employees_page:
   employees_label: //h3[text()='Employees']
@@ -81,7 +99,8 @@ providers_participant_modal:
 
 providers_notifications:
   call_completed_notification:  //div[text()='Call completed']
+  follow_up_ticket_closed_notification:  //div[text()='Follow-up ticket closed']
 
 provider_practice_page:
-  dropdown_userName: userName
-  button_Help: //button[text() = 'Help']
+  dropdown_username: userName
+  button_help: //button[text() = 'Help']

@@ -1307,3 +1307,125 @@ TestCarePartnerBrowsingWhileOnCall:
   # Fill survey
     - Type: case
       Value: PostCallSurveyCarePartner
+
+# CXTB-124: Call Participant's device - Call Complete.
+TestCarePartnerCallParticipantsDeviceCallComplete:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: desktopChrome
+      App: desktop 
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Navigate to Participants.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+  # Click on the corresponding participant.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_1_td$
+  # Click on the "Call Portal" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+  # Page updates to show portal screen with "No active call" text in video window.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+      Greps:
+        - var: CALL_MESSAGE
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALL_MESSAGE
+          Value: 'No active call.'
+  # Click "Call Participant" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_participant_btn$
+  # Video window updates visually as call attempt is made.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.unanswered_call_icon$
+  # Answer call on the Participant Device.
+    - Type: case
+      Value: AnswerCallAsSenior
+  # Page updates to become an active call screen with video call in portal and normal functions 
+  # and Notes section as seen when an inbound call has been answered.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_volume_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.subject_input$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.details_textarea$
+  # End the call.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.end_call_button$
+  # Video feed ends, area updating to show a message that the call has ended.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+      Greps:
+        - var: CALL_MESSAGE
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALL_MESSAGE
+          Value: 'The call has ended.'
+  # Verify that your status will remain "In session" until you have completed and submitted the post call survey to fully complete the session.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Attribute: className
+      ResultVar: IS_RED
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: IS_RED
+          Value: is-red
+  # Fill up the post call survey.
+    - Type: case
+      Value: PostCallSurveyCarePartner
+  # Fill up Senior post call survey.
+    - Type: case
+      Value: SeniorGreatPostSurveyCallHelper
+  # Verify you are returned to the Call queue page and your user status is no longer showing as "In session" (red dot).
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Greps:
+        - var: INDICATOR
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: INDICATOR
+          Value: 'is-green'
