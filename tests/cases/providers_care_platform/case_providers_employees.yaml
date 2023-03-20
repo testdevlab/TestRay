@@ -114,3 +114,160 @@ TestAccessEmployeesDirectoryAndFilter:
     - Type: operation
       Operation: "'$AND_CLI_EMPLOYEE_CONTACT_CONTENT$'.size > 0"
       ExpectedResult: true
+
+#CXTB-140 Answer Call and Complete Session From EHP
+TestAnswerCompleteSessionFromEHP:
+  Environment: Settings 
+  Vars:
+    STATE: IN
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  #Make call
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.call_now_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.call_now_button$  
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_state_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_state_select_option$
+  #Fill all fields
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select_option$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_reasons_input$
+      Value: 'Test reason: TestAnswerCompleteSessionFromEHP automation'
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_call_provider_button$
+  #Opening new tab for the provider's part of the process
+    - Type: new_tab
+    - Type: switch_window
+      Value: 1
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+  #Answer and End Call
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.home_title$
+    - Type: case
+      Value: ProviderSetStateCredential 
+  #Selects first on demand call
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_home_page.first_on_demand_row$
+  #Answer call
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.answer_call_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.answer_call_button$
+    - Type: sleep
+      Time: 3
+  #End call
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.end_answer_call_button$
+  #Check In Session indicator
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Attribute: className
+      ResultVar: IS_RED
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: IS_RED
+          Value: is-red
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.end_answer_call_button$
+  #Fill the Provider's call notes
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+      Value: 'Automation Test subject'
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_notes_provider_input$
+      Value: 'Automation Test Notes: Test TestAnswerCompleteSessionFromEHP'
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_notes_save_button$
+  #Manual save of notes
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_notes_save_button$
+  #Complete Session
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
+      Property: disabled
+      Value: "false"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
+  #Fill survey and end session
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.post_call_survey_title$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.resolved_no_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.recommend_discharge_true_option$
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.home_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Attribute: className
+      ResultVar: IS_GREEN
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: IS_GREEN
+          Value: is-green
+  #Switch back to the Employee Health Portal tab
+    - Type: switch_window
+      Value: 0
+  #Wait for notification that call ended
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.alert_call_ended$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.alert_call_ended$

@@ -210,7 +210,6 @@ ProviderNavigateToParticipants:
       Id: $PAGE.providers_participants_page.participants_title$ 
       Property: textContent
       Value: "Participants"
-
 ProviderCallParticipant:
   Environment: Settings
   Roles:
@@ -238,3 +237,49 @@ ProviderCallParticipant:
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_call_queue_page.call_participant_button$
+
+ProviderSetStateCredential:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+#Going to My Account
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.myaccount_menu_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.modal_title$
+  #Select credentials to answer call
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.providers_account_modal.credentials_navigation_tab$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.credentials_content$
+    - Type: credentials_checkbox
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.providers_account_modal.indiana_option$
+    - Type: credentials_checkbox
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.providers_account_modal.maryland_option$
+    - Type: credentials_checkbox
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.providers_account_modal.pennsylvania_option$
+    - Type: credentials_checkbox
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.providers_account_modal.west_virginia_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.save_changes_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.credentials_content$
