@@ -20,9 +20,10 @@
         Value: $AND_CLI_carepartner_user1$
       - Type: click
         Strategy: xpath
-        Id : $PAGE.care_platform_login.dialog_submit_button$
-      - Type: sleep
-        Time: 20
+        Id : $PAGE.care_platform_login.dialog_submit_button$   
+      - Type: wait_for
+        Strategy: xpath
+        Id: $PAGE.care_platform_login.dialog_thank_you_title$    
     #Verify the Thank You text showed up
       - Type: get_text  
         Strategy: xpath
