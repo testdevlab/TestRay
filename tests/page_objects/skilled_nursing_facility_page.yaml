@@ -24,6 +24,9 @@ snf_new_request_form:
 
 snf_existing_request:
   last_existing_request: "**/XCUIElementTypeOther[`label BEGINSWITH 'Select Existing Request'`][1]/**/XCUIElementTypeOther[-1]"
+  close_existing_request_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Close'`]"
+  search_bar_text_box: "**/XCUIElementTypeTextField[`value == 'Search patient name'`]"
+  results_label: "**/XCUIElementTypeStaticText[`label CONTAINS ' result'`]"
 
 submit_options:
   yes_call_provider_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Yes, Call Provider'`]"

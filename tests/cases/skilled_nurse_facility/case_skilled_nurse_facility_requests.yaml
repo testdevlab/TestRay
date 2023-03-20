@@ -171,6 +171,7 @@ TestRequestSuccessfulCallConnect:
     - Type: case
       Value: PostCallSurveyProvider
 
+#CXTB-25 Existing Request - Place Call to Provider
 #CXTB-127 See Call Appear in Queue, Assign and Review Details
 TestCheckQueueandReviewDetails:
   Environment: Settings
@@ -231,6 +232,49 @@ TestCheckQueueandReviewDetails:
       Role: localiOS
       Strategy: class_chain
       Id: $PAGE.snf_home.existing_request_button$
+  #Search on existing request
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.snf_existing_request.results_label$
+      Attribute: label
+      ResultVar: SEARCH_QUANTITY_BEFORE
+    - Type: assert
+      Role: localiOS
+      Asserts:
+        - Type: n_contain
+          Var: SEARCH_QUANTITY_BEFORE
+          Value: "0 result"
+    - Type: send_keys
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_existing_request.search_bar_text_box$
+      Value: "Wrong name"
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.snf_existing_request.results_label$
+      Attribute: label
+      ResultVar: SEARCH_QUANTITY_AFTER
+    - Type: assert
+      Role: localiOS
+      Asserts:
+        - Type: contain
+          Var: SEARCH_QUANTITY_AFTER
+          Value: "0 result"
+  #Close Existing request
+    - Type: click
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.snf_existing_request.close_existing_request_button$
+  #Open it again
+    - Type: wait_for
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.snf_home.existing_request_button$
+    - Type: click
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.snf_home.existing_request_button$
+  #Select the existing request
     - Type: click
       Role: localiOS
       Strategy: class_chain
