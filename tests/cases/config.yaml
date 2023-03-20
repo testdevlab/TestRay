@@ -95,6 +95,7 @@ Environments:
       facility_devices_user1_number: add_your_info
       facility_devices_user2: add_your_info
       facility_devices_user2_pwd: add_your_info  
+      facility_name1: add_your_info #i.e. Alpha Healthcare Center
       facility_devices_user2_number: add_your_info
       facility_devices_requester_name: add_your_info
       facility_devices_requester_lastname: add_your_info

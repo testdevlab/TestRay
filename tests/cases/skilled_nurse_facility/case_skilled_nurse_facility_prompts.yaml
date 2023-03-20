@@ -1,0 +1,92 @@
+# Phisical Device only.
+# CXTB-42: Verify Provider Incoming Call - Answer Call.
+# CXTB-188: Provider Call Facility Device & Completes an On-Demand Call.
+TestProviderIncomingCallAnswerCallOnSNF:
+  Environment: Settings
+  Precases:
+    - LoginSNFHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop 
+  Actions:
+    # Generate a call from Provider to Facility Device.
+    - Type: case
+      Value: ProviderCallFacility
+    # SNF Device begins ringing and automatically displays "Incoming Call".
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_incoming_call.incoming_call_header$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.snf_incoming_call.incoming_call_header$
+      Attribute: label
+      ResultVar: HEADER_TITLE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: HEADER_TITLE
+          Value: Incoming Call...
+    # Verify it shows the details of who is calling, and presents the options to answer or ignore the call.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_incoming_call.called_name$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.snf_incoming_call.called_name$
+      Attribute: label
+      ResultVar: CALLER_VALUE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALLER_VALUE
+          Value: Dr. $AND_CLI_provider_user1_name$ $AND_CLI_provider_user1_lastname$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_incoming_call.answer_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_incoming_call.ignore_call_button$
+    # Nurse answers the call from Provider.
+    - Type: case
+      Value: SNFAnswerIncomingCall
+    # Turn on Nurse camera.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_call_portal.video_button$
+    # Verify that a video tumbnail will appear in the upper right corner giving a preview of what the Provider is seeing.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_call_portal.video_window$
+    # Click the end call button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_call_portal.end_call_button$
+    # Provider fills up the Post Call Survey.
+    - Type: case
+      Value: PostCallSurveyProvider
+    # After call ends, select the Great option answer and then verify that the Nurse is redirected to the Home Page.
+    - Type: case
+      Value: SNFGreatPostCallSurvey
+    # Checking the status indicator correspond to Available in the Porivders side.
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+    - Type: get_attribute
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Greps:
+        - var: STATUS_VAR
+          attr: class
+          condition: nempty
+          match: "(.*)has-status(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: STATUS_VAR
+          Value: "is-green"
