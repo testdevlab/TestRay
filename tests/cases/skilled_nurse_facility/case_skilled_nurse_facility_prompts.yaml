@@ -1,7 +1,7 @@
 # Phisical Device only.
 # CXTB-42: Verify Provider Incoming Call - Answer Call.
 # CXTB-188: Provider Call Facility Device & Completes an On-Demand Call.
-TestProviderIncomingCallAnswerCallOnSNF:
+TestSNFProviderIncomingCallAnswerCallOnSNF:
   Environment: Settings
   Precases:
     - LoginSNFHelper

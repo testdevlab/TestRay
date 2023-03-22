@@ -29,3 +29,4 @@ chromedriver
 *.mp4
 *.txt
 tests/appium_logs/*
+bin/*

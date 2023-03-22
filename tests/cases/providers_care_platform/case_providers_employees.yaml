@@ -116,7 +116,7 @@ TestAccessEmployeesDirectoryAndFilter:
       ExpectedResult: true
 
 #CXTB-140 Answer Call and Complete Session From EHP
-TestAnswerCompleteSessionFromEHP:
+TestProviderAnswerCompleteSessionFromEHP:
   Environment: Settings 
   Vars:
     STATE: IN

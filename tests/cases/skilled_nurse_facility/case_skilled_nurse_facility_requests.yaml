@@ -1,5 +1,5 @@
 #CXTB-17 - New Request to Provider - Successful Call Connect
-TestRequestSuccessfulCallConnect:
+TestSNFRequestSuccessfulCallConnect:
   Environment: Settings
   Aftercases:
     - TerminateApp
@@ -173,7 +173,7 @@ TestRequestSuccessfulCallConnect:
 
 #CXTB-25 Existing Request - Place Call to Provider
 #CXTB-127 See Call Appear in Queue, Assign and Review Details
-TestCheckQueueandReviewDetails:
+TestSNFCheckQueueandReviewDetails:
   Environment: Settings
   Aftercases:
     - TerminateApp
