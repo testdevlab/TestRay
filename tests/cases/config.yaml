@@ -37,9 +37,9 @@ Devices:
 Environments:
   Settings:
     Vars:
-      care_platform_url: https://care-platform-support.chs-ds.com/
-      employee_health_url: https://employee-health-support.chs-ds.com/
-      backend_qa_url: https://never-alone-backend-support.chs-ds.com/
+      care_platform_url: https://care-platform-qa.chs-ds.com/
+      employee_health_url: https://employee-health-portal-qa.chs-ds.com/
+      backend_qa_url: https://never-alone-backend-qa.chs-ds.com/
       facility_ahc: alpha health center
       facility_bhc:  beta health center
       facility_chc:  charlie health center
@@ -47,7 +47,7 @@ Environments:
       onboarder_user1: add_your_info
       onboarder_user1_pwd: add_your_info
       onboarder_user1_name: add_your_info
-      onboarder_user1_lastname: Madd_your_info
+      onboarder_user1_lastname: add_your_info
       onboarder_user2: add_your_info
       onboarder_user2_pwd: add_your_info
       onboarder_user2_name: add_your_info
