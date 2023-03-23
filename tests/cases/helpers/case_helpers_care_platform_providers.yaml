@@ -158,6 +158,12 @@ PostCallSurveyProvider:
     - Role: desktopChrome
       App: desktop
   Actions:
+    # Verify that the "Complete Session" is disabled.
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.complete_session_btn$ 
+      Property: disabled
+      Value: "true"
     # Fill the notes
     - Type: send_keys
       Strategy: xpath
@@ -211,6 +217,22 @@ ProviderNavigateToParticipants:
       Property: textContent
       Value: "Participants"
 
+ProviderNavigateToFacilities:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Navigate to Facilities.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.facilities_navigation$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.facilities_header_title$ 
+      Property: textContent
+      Value: "Facilities"
+
 ProviderCallParticipant:
   Environment: Settings
   Roles:
@@ -238,3 +260,104 @@ ProviderCallParticipant:
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_call_queue_page.call_participant_button$
+
+ProviderCallFacility:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Login to the Care Platform app with Providers account.
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+    # Navigate to Facilities.
+    - Type: case
+      Value: ProviderNavigateToFacilities
+    # Select the desired facility.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.facility_based_on_name$ 
+    # Navigate to the Devices tab.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.devices_tab$ 
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.devices_tab$
+    # Find the corresponding facility device and then call it.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.call_based_on_device_button$ 
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.call_based_on_device_button$
+    # Page updates to show call portal screen with "No active call" showing in video window.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.video_status$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.video_status$
+      Greps:
+        - var: CALL_MESSAGE
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALL_MESSAGE
+          Value: 'No active call.'
+    # Click on the Call Device button.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_device_btn$ 
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_device_btn$ 
+
+ProviderSetStateCredential:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+#Going to My Account
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.myaccount_menu_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_myaccount_info.modal_title$
+  #Select credentials to answer call
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.providers_account_modal.credentials_navigation_tab$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.credentials_content$
+    - Type: credentials_checkbox
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.providers_account_modal.indiana_option$
+    - Type: credentials_checkbox
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.providers_account_modal.maryland_option$
+    - Type: credentials_checkbox
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.providers_account_modal.pennsylvania_option$
+    - Type: credentials_checkbox
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.providers_account_modal.west_virginia_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.save_changes_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.credentials_content$

@@ -1,7 +1,7 @@
 # Physical Only
 # CXTB-52: Verify "Personal Care Partner Message" Prompt & Call Back Button.
 # CXTB-129: Message Participant's Device - Participant Profile.
-TestPersonalCarePartnerMessagePromptAndCallBackButton:
+TestSeniorAppPersonalCarePartnerMessagePromptAndCallBackButton:
   Environment: Settings
   Vars:
   # Log out option
@@ -228,7 +228,7 @@ TestPersonalCarePartnerMessagePromptAndCallBackButton:
 
 # Physical Only
 # CXTB-56: Verify "Answer Call" for Provider Calling.
-TestAnswerCallForProviderCalling:
+TestSeniorAppAnswerCallForProviderCalling:
   Environment: Settings
   Vars:
   # Log out option

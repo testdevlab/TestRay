@@ -918,7 +918,7 @@ TestCarePartnerAnswerAndComplete:
           Value: 'is-green'
 
 #CXTB-96: Answer Call from Queue & Complete a Medical Transfer
-TestAnswerCallFromQueueAndCompleteMedicalTransfer:
+TestCarePartnerAnswerCallFromQueueAndCompleteMedicalTransfer:
   Environment: Settings
   Aftercases:
     - TerminateApp

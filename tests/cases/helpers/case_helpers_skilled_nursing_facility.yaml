@@ -118,9 +118,48 @@ SNFNewRequestHelper:
     - Type: click
       Strategy: class_chain
       Role: localiOS
-      Id: $PAGE.submit_options.yes_call_provider_button$
+      Id: $PAGE.snf_submit_options.yes_call_provider_button$
   # Verify that screen redirects to the call waiting room.
     - Type: wait_for
       Strategy: class_chain
       Role: localiOS
       Id: $PAGE.seniors_app_call.waiting_room_label$
+
+SNFGreatPostCallSurvey:
+  Roles:
+    - Role: localiOS
+      App: NeverAlone      
+  Actions:
+    # Select the Great option.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_post_call_survey.great_answer_button$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_post_call_survey.great_answer_button$
+    # Verify page updates and shows Thank You for you feedback page.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_post_call_survey.thank_you_label$
+    # Click the "To Home" button on Thank you for your feedback screen.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_post_call_survey.to_home_button$
+
+SNFAnswerIncomingCall:
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+  # Nurse sees that there is an incoming call.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_incoming_call.incoming_call_header$
+  # Click the "Answer Call" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_incoming_call.answer_call_button$
+  # Device screen updates shows the active call screen with a Provider.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_call_portal.video_button$

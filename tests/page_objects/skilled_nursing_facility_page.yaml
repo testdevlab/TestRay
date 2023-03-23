@@ -28,14 +28,27 @@ snf_existing_request:
   search_bar_text_box: "**/XCUIElementTypeTextField[`value == 'Search patient name'`]"
   results_label: "**/XCUIElementTypeStaticText[`label CONTAINS ' result'`]"
 
-submit_options:
+snf_submit_options:
   yes_call_provider_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Yes, Call Provider'`]"
   no_adjust_form_button: "**/XCUIElementTypeButton[`label ENDSWITH 'No, Adjust Form'`]"
   no_cancel_call_button: "**/XCUIElementTypeButton[`label ENDSWITH 'No, Cancel Call'`]"
 
-call_portal:
+snf_call_portal:
   end_call_button: "**/XCUIElementTypeOther[`label ENDSWITH 'End Call'`][-1]"
+  video_button: "**/XCUIElementTypeOther[`label ENDSWITH 'Camera'`]"
+  video_window: "**/XCUIElementTypeImage[-1]"
 
 snf_notifications:
   missed_call_modal_title: Missed Outgoing Call
   missed_call_modal_close_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Close'`]"
+
+snf_incoming_call:
+  incoming_call_header: "**/XCUIElementTypeOther[`label CONTAINS 'Incoming' AND label ENDSWITH 'Call'`]/XCUIElementTypeOther/**/XCUIElementTypeStaticText[`label CONTAINS 'Incoming'`]"
+  called_name: "**/XCUIElementTypeOther[`label CONTAINS 'Incoming' AND label ENDSWITH 'Call'`][-1]/XCUIElementTypeOther[2]/XCUIElementTypeStatic[-1]"
+  answer_call_button: "**/XCUIElementTypeButton[`label == 'Answer Call'`]"
+  ignore_call_button: "**/XCUIElementTypeButton[`label == 'Ignore Call'`]"
+
+snf_post_call_survey:
+  great_answer_button: "**/XCUIElementTypeOther[`label == 'Great'`]"
+  thank_you_label: "**/XCUIElementTypeStaticText[`label == 'Thank you for your feedback'`]"
+  to_home_button: "**/XCUIElementTypeOther[`label == 'To Home'`]"

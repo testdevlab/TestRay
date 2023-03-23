@@ -1,5 +1,5 @@
 #CXTB-17 - New Request to Provider - Successful Call Connect
-TestRequestSuccessfulCallConnect:
+TestSNFRequestSuccessfulCallConnect:
   Environment: Settings
   Aftercases:
     - TerminateApp
@@ -98,7 +98,7 @@ TestRequestSuccessfulCallConnect:
     - Type: click
       Strategy: class_chain
       Role: localiOS
-      Id: $PAGE.submit_options.yes_call_provider_button$
+      Id: $PAGE.snf_submit_options.yes_call_provider_button$
   # Verify that screen redirects to the call waiting room.
     - Type: wait_for
       Strategy: class_chain
@@ -122,11 +122,11 @@ TestRequestSuccessfulCallConnect:
     - Type: wait_for
       Role: localiOS
       Strategy: class_chain
-      Id: $PAGE.call_portal.end_call_button$
+      Id: $PAGE.snf_call_portal.end_call_button$
     - Type: click
       Role: localiOS
       Strategy: class_chain
-      Id: $PAGE.call_portal.end_call_button$
+      Id: $PAGE.snf_call_portal.end_call_button$
   # Select the Bad option on the Post Survey screen.
     - Type: wait_for
       Role: localiOS
@@ -173,7 +173,7 @@ TestRequestSuccessfulCallConnect:
 
 #CXTB-25 Existing Request - Place Call to Provider
 #CXTB-127 See Call Appear in Queue, Assign and Review Details
-TestCheckQueueandReviewDetails:
+TestSNFCheckQueueandReviewDetails:
   Environment: Settings
   Aftercases:
     - TerminateApp
@@ -205,11 +205,11 @@ TestCheckQueueandReviewDetails:
     - Type: wait_for
       Role: localiOS
       Strategy: class_chain
-      Id: $PAGE.call_portal.end_call_button$
+      Id: $PAGE.snf_call_portal.end_call_button$
     - Type: click
       Role: localiOS
       Strategy: class_chain
-      Id: $PAGE.call_portal.end_call_button$
+      Id: $PAGE.snf_call_portal.end_call_button$
     - Type: click
       Role: localiOS
       Strategy: class_chain
@@ -283,7 +283,7 @@ TestCheckQueueandReviewDetails:
     - Type: click
       Role: localiOS
       Strategy: class_chain
-      Id: $PAGE.submit_options.yes_call_provider_button$
+      Id: $PAGE.snf_submit_options.yes_call_provider_button$
   #Provider side
     - Type: case
       Value: ProvidersCarePlatformLogin
