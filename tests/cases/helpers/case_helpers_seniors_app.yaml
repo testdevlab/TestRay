@@ -26,26 +26,26 @@ LoginNeverAloneHelper:
   Actions:
     # Open the Never Alone app and click on Provision Device button.
     - Type: click
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_login.provision_device_btn$
     # Fill in the email and password fields with credentials.
     - Type: send_keys
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_login.email_input$
       Value: $AND_CLI_senior_user1$
     - Type: send_keys
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_login.password_input$
       Value: $AND_CLI_senior_user1_pwd$
     - Type: hide_keyboard
       Role: localiOS
     # Click on the Log In button.
     - Type: click
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_login.login_btn$
     # Verify that the user has successfully logged in.
     - Type: wait_for
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_home.schedule_label$
 
 SchedulesPageNavigationHelper:
@@ -138,3 +138,22 @@ CallCarePartner:
     - Type: wait_for
       Strategy: class_chain
       Id: $PAGE.seniors_app_call.waiting_room_label$
+
+AnswerCallAsSenior:
+  Environment: Settings
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+    # Wait for the call prompt to show up.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.incoming_call_header$
+    # Click on the Answer Call button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.answer_call_button$
+    # Wait for the call screen to load.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.video_button$

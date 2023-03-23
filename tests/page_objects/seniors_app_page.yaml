@@ -1,13 +1,12 @@
 seniors_app_login:
-  logging_you_in_label: //XCUIElementTypeStaticText[@name='Logging you in...']
-  provision_device_btn: //XCUIElementTypeOther[@name='Provision Device']
-  email_input: //XCUIElementTypeTextField[@name='RNE__Input__text-input']
-  password_input: //XCUIElementTypeSecureTextField[@name='RNE__Input__text-input']
-  login_btn: (//XCUIElementTypeOther[@name='Log In'])[last()]
-  schedule_label: //XCUIElementTypeStaticText[@name='Schedule']
+  logging_you_in_label: "**/XCUIElementTypeStaticText[`label == 'Logging you in...'`]"
+  provision_device_btn: "**/XCUIElementTypeOther[`label == 'Provision Device'`]"
+  email_input: "**/XCUIElementTypeTextField[`name == 'RNE__Input__text-input'`]"
+  password_input: "**/XCUIElementTypeSecureTextField[`name == 'RNE__Input__text-input'`]"
+  login_btn: "**/XCUIElementTypeOther[`label == 'Log In'`][-1]"
   
 seniors_app_home:
-  schedule_label: //XCUIElementTypeStaticText[@name='Schedule']
+  schedule_label: "**/XCUIElementTypeStaticText[`label == 'Schedule'`]"
   call_care_partner: "**/XCUIElementTypeOther[`label BEGINSWITH 'Call Personal' AND label ENDSWITH 'Care Partner'`]"
   full_schedule_btn: "**/XCUIElementTypeButton[`label CONTAINS 'Full Schedule'`][-1]"
   settings_icon: "**/XCUIElementTypeOther[`name == 'headerContainer'`]/XCUIElementTypeOther/XCUIElementTypeOther[-1]/XCUIElementTypeOther/XCUIElementTypeOther[1]"

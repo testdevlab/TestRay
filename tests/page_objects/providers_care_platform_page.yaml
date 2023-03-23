@@ -16,21 +16,30 @@ providers_home_page:
   first_on_demand_row: //tbody/tr//div[text()='On Demand Call'][1]/ancestor::tr
   facilities_navigation: //a//div[contains(text(),'Facilities')]
   employees_navigation: //a//div[contains(text(),'Employees')]
+  call_based_on_participant_name: //tbody[@role='rowgroup']//strong[text()='$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']
+  follow_up_ticket_based_on_participant_name: //div[contains(text(), 'Follow-up')]/ancestor::tr//strong[text()='$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']
+  close_ticket_button: //button[text()='Close Ticket']
+  reason_for_closing_ticket_input:  //input[@name='reasonForClosing']
+  save_and_close_ticket_button: //button[text()='Save and Close Ticket']
 
 providers_account_modal:
   credentials_navigation_tab: //*[@id='modals']//nav/button[text()='Credentials']
   credentials_content: //*[@id='modals']//div[@class='tabs-content' and @tab-title='Credentials']
-  pennsylvania_option: //*[@id='PA']
-  maryland_option: //*[@id='MD']
+  pennsylvania_option: //*[@id='PA']/ancestor::label
+  maryland_option: //*[@id='MD']/ancestor::label
   indiana_option: //*[@id='IN']/ancestor::label
-  west_virginia_option: //*[@id='WV']
+  west_virginia_option: //*[@id='WV']/ancestor::label
   special_need_option: //*[@id='specialNeedsPlanCertified']
   save_changes_button: //*[@id='modals']//button[contains(.,'Save Changes')]
   cancel_button: //*[@id='modals']//button[contains(.,'Cancel')]
 
 providers_facilities_page:
+  facilities_header_title: //div[@class='box-unscrollable-content']//h3
   alpha_center_td: //tr//td[contains(text(),'$AND_CLI_facility_devices_user1_number$')]
   call_portal_btn: //button[text()='Call Portal']
+  facility_based_on_name: //td/strong[text()='$AND_CLI_facility_name1$']
+  devices_tab: //div[@class='tabs box-scrollable-content -mb']//button[@id='2']
+  call_based_on_device_button: //strong[text()='Device $AND_CLI_facility_devices_user1_number$:']/ancestor::tr//a[@class='button button-basic text-xs']
 
 providers_call_queue_page:
   end_call_btn: //button[span[text()='End Call']]
@@ -52,10 +61,24 @@ providers_call_queue_page:
   complete_session_button: //button[text()='Complete Session']
   post_call_survey_title: //h3[text()='Post-call Survey']
   resolved_true_option: //input[@name='resolved' and @value='true']/following-sibling::span
+  resolved_no_option: //input[@name='resolved' and @value='false']/following-sibling::span
+  reason_label: //div[@aria-hidden='false']//div[@class='font-bold mb-half mt']
+  reason_input: //select[@id='reason']
+  first_reason_option: //select[@id='reason']/option[not(@value)][1]
   recommend_discharge_true_option: //input[@name='recommendedDischarge' and @value='true']/following-sibling::span
+  recommend_discharge_no_option: //input[@name='recommendedDischarge' and @value='false']/following-sibling::span
+  follow_up_recommended_checkbox: //input[@id='followUpRecommended']
+  assign_to_myself_checkbox: //input[@id='assignToMyself']
+  selected_follow_up_time_option: //input[@name='followUpTime' and @checked]
   submit_exit_session_button: //button[text()='Submit and Exit Session']
   cancel_exit_session_button: //button[text()='Cancel']
   call_participant_button: //button[@class='button' and contains(., 'Call')]
+  details_title: //div[@data-testid='box'][contains(@class,'gradient')]//h3
+  details_requester_name: //strong[contains(text(),'Requester Name')]/parent::div/following-sibling::div
+  details_patient_name: //strong[contains(text(),'Patient Name')]/parent::div/following-sibling::div
+  assign_to_me_button: //button[contains(text(),'Assign to Me')]
+  unnasign_button: //button[contains(text(),'Unassign')]
+  video_status: //div[contains(@class,'video')]//div[@class='video-status']
   
 providers_employees_page:
   employees_label: //h3[text()='Employees']
@@ -81,3 +104,4 @@ providers_participant_modal:
 
 providers_notifications:
   call_completed_notification:  //div[text()='Call completed']
+  follow_up_ticket_closed_notification:  //div[text()='Follow-up ticket closed']

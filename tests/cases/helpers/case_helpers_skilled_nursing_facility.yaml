@@ -6,24 +6,160 @@ LoginSNFHelper:
   Actions:
     # Open the Never Alone app and click on Provision Device button.
     - Type: click
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_login.provision_device_btn$
     # Fill in the email and password fields with credentials.
     - Type: send_keys
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_login.email_input$
       Value: $AND_CLI_facility_devices_user1$
     - Type: send_keys
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_login.password_input$
       Value: $AND_CLI_facility_devices_user1_pwd$
     - Type: hide_keyboard
       Role: localiOS
     # Click on the Log In button.
     - Type: click
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_login.login_btn$
     # Verify that the user has successfully logged in.
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.snf_home.new_request_btn$
+
+# Making a New Request with only the required data, and call to the provider.
+# the first option on the following dropdowns: urgency and reasons.
+# Requester name and lastname are filled with config variables: facility_devices_requester_name and facility_devices_requester_lastname
+# Request will be scheduled for the participant used in the variables.
+SNFNewRequestHelper:
+  Roles:
+    - Role: localiOS
+      App: NeverAlone      
+  Actions:
+  #Verify that the button is visible
+    - Type: wait_for
+      Role: localiOS
+      Strategy: xpath
+      Id: $PAGE.snf_home.new_request_btn$
+  #New request
+    - Type: click
+      Strategy: xpath
+      Role: localiOS
+      Id: $PAGE.snf_home.new_request_btn$
+    - Type: wait_for
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.patient_information_title$
+    - Type: send_keys
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.requester_first_name$
+      Value: $AND_CLI_facility_devices_requester_name$
+    - Type: send_keys
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.requester_last_name$
+      Value: $AND_CLI_facility_devices_requester_lastname$
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.patient_information_title$
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.patient_name_select$
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.patient_based_on_name$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.urgent_reason_dropdown$
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.urgent_reason_dropdown$
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.urgent_reason_option_no$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.reason_for_request_dropdown$
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.reason_for_request_option_one$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_name_section$
+      Attribute: label
+      ResultVar: PATIENT_NAME_SNF
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.submit_button$
+  # Select "Yes, Call provider"
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_submit_options.yes_call_provider_button$
+  # Verify that screen redirects to the call waiting room.
+    - Type: wait_for
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.seniors_app_call.waiting_room_label$
+
+SNFGreatPostCallSurvey:
+  Roles:
+    - Role: localiOS
+      App: NeverAlone      
+  Actions:
+    # Select the Great option.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_post_call_survey.great_answer_button$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_post_call_survey.great_answer_button$
+    # Verify page updates and shows Thank You for you feedback page.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_post_call_survey.thank_you_label$
+    # Click the "To Home" button on Thank you for your feedback screen.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_post_call_survey.to_home_button$
+
+SNFAnswerIncomingCall:
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+  # Nurse sees that there is an incoming call.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_incoming_call.incoming_call_header$
+  # Click the "Answer Call" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_incoming_call.answer_call_button$
+  # Device screen updates shows the active call screen with a Provider.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_call_portal.video_button$

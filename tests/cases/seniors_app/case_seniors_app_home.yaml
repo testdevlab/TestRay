@@ -1,5 +1,5 @@
 # CXTB-70: Verify Call Personal Care Partner Button on Page
-TestCallPersonalCarePartnerOnHomePage:
+TestSeniorAppCallPersonalCarePartnerOnHomePage:
   Vars:
     TIME: 5
     INTERFACE: en0
@@ -242,7 +242,7 @@ TestCallPersonalCarePartnerOnHomePage:
       Id: $PAGE.care_platform_notifications.call_completed_notification$
 
 # CXTB-47: Verify in App Offline Behavior
-TestVerifyInAppOfflineBehavior:
+TestSeniorAppVerifyInAppOfflineBehavior:
   Environment: Settings
   Precases:
     - SetScheduledCallForSeniors
