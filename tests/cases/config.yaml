@@ -14,8 +14,8 @@ Devices:
           - use-fake-ui-for-media-stream
           - use-fake-device-for-media-stream
           - no-sandbox
-          - disable-gpu
-          - start-maximized
+          - disable-gpu        
+          - start-maximized  
     browser: chrome
   - role: desktopFirefox
     browser: firefox
@@ -65,7 +65,7 @@ Environments:
       provider_user1: add_your_info
       provider_user1_pwd: add_your_info
       provider_user1_name: add_your_info
-      provider_user1_lastname: add_your_info      
+      provider_user1_lastname: add_your_info     
       provider_user2: add_your_info
       provider_user2_pwd: add_your_info
       provider_user2_name: add_your_info
