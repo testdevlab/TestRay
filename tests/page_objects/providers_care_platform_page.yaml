@@ -21,6 +21,8 @@ providers_home_page:
   close_ticket_button: //button[text()='Close Ticket']
   reason_for_closing_ticket_input:  //input[@name='reasonForClosing']
   save_and_close_ticket_button: //button[text()='Save and Close Ticket']
+  dropdown_username: userName
+  button_help: //button[text() = 'Help']
 
 providers_account_modal:
   credentials_navigation_tab: //*[@id='modals']//nav/button[text()='Credentials']
@@ -105,3 +107,5 @@ providers_participant_modal:
 providers_notifications:
   call_completed_notification:  //div[text()='Call completed']
   follow_up_ticket_closed_notification:  //div[text()='Follow-up ticket closed']
+
+ 
