@@ -248,13 +248,11 @@ class Device
     @driver.background_app(-1)
   end
 
-  #add to documentation
-  # hides keyboard (available on iOS)
+  # hides keyboard (Only Mobile)
   def hide_keyboard(action = nil)
     @driver.hide_keyboard
   end
 
-  #add to documentation
   # Toggles wifi using the iOS Control Center (available only for iOS with Physical Devices, not simulators)
   def toggle_wifi(action = nil)
     # Get the window size 
@@ -518,6 +516,7 @@ class Device
     end
   end
 
+  # Hovers over an element.
   # Accepts:
   #   Strategy
   #   Id
@@ -579,7 +578,6 @@ class Device
     action = Appium::TouchAction.new(@driver).press(x: el_location.x, y: el_location.y).wait(600).release.perform
   end
 
-  #add to documentation
   # taps on an element, only mobile.
   def tap(action)
     action = convert_value_pageobjects(action);
@@ -991,7 +989,7 @@ class Device
     @driver.switch_to.window @driver.window_handles[index.to_i]
   end
 
-  #open new tab
+  # open new tab
   def new_tab(action = nil)
     @driver.manage.new_window(:tab)
   end
@@ -1267,7 +1265,6 @@ class Device
             "#{default_wait_time} seconds \nException: #{exception}\nError Screenshot: #{path}"
   end
 
-  # add to documentation readme
   # waits for the element to have a specific JS property value.
   # Accepts:
   #   Strategy
@@ -1477,8 +1474,10 @@ class Device
     end
   end
   
-  #add to documentation
   # Prints and Writes local timestamp with given format
+  # Format
+  # Var
+  # File
   def get_local_timestamp(action)
     format_t = convert_value(action["Format"])
     time = Time.now.getlocal.strftime(format_t)
@@ -1492,8 +1491,10 @@ class Device
     end
   end
 
-  #add to documentation
   # Prints and Writes yesterday's date with given format
+  # Format
+  # Var
+  # File
   def get_yesterday_date(action)
     format_t = convert_value(action["Format"])
     time = Date.today.prev_day.strftime(format_t)
@@ -1507,8 +1508,10 @@ class Device
     end
   end
 
-  #add to documentation
   # Prints and Writes tomorrow's date with given format
+  # Format
+  # Var
+  # File
   def get_tomorrow_date(action)
     format_t = convert_value(action["Format"])
     time = (Date.today + 1).strftime(format_t)
@@ -1522,8 +1525,10 @@ class Device
     end
   end
 
-   #add to documentation
-   # returns now time -5 minutes
+  # returns now time -5 minutes
+  # Format
+  # Var
+  # File
    def get_past_timestamp(action)
     format_t = convert_value(action["Format"])
     time = (Time.now.getlocal - 5*60).strftime(format_t)
@@ -1537,8 +1542,11 @@ class Device
     end
   end
 
-   #add to documentation
-   # returns now time + # minutes
+  # returns now time + # minutes
+  # Format
+  # Mintes
+  # Var
+  # File
    def get_timestamp_plus_minutes(action)
     format_t = convert_value(action["Format"])
     user_minutes = convert_value(action["Minutes"])
@@ -1895,7 +1903,6 @@ class Device
   end 
 end
 
-#add to documentation
 # returns the attribute of the element in a variable
 def return_element_attribute(action)
   el = wait_for(action)
