@@ -159,7 +159,7 @@ TestAutomaticReturnAfterInactivty:
 
 # Only for physical devices.
 # CXTB-16: Call Personal Care Partner Button on Full Schedule
-TestCallPersonalCareButtonOnFullSchedule:
+TestSeniorAppCallPersonalCareButtonOnFullSchedule:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper

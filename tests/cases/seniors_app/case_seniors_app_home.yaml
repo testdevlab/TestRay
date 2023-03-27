@@ -1,3 +1,4 @@
+# Physical Only
 # CXTB-70: Verify Call Personal Care Partner Button on Page
 TestSeniorAppCallPersonalCarePartnerOnHomePage:
   Vars:
@@ -241,6 +242,7 @@ TestSeniorAppCallPersonalCarePartnerOnHomePage:
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.call_completed_notification$
 
+# Physical only
 # CXTB-47: Verify in App Offline Behavior
 TestSeniorAppVerifyInAppOfflineBehavior:
   Environment: Settings
