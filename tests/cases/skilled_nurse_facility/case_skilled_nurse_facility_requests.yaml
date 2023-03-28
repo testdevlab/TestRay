@@ -112,7 +112,7 @@ TestSNFRequestSuccessfulCallConnect:
     - Type: click
       Strategy: xpath
       Role: desktopChrome
-      Id: $PAGE.providers_home_page.first_on_demand_row$
+      Id: $PAGE.providers_home_page.on_demand_calls$
   #Answer call
     - Type: click
       Strategy: xpath

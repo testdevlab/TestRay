@@ -45,7 +45,7 @@ TestProviderLogOutStayOnShift:
   # Click on the users dropdown.
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_header.users_dropdown_button$
+      Id: $PAGE.care_platform_header.headset_dropdown_button$
   # Verify that the first user has stayed on shift.
     - Type: wait_for
       Strategy: xpath
@@ -140,11 +140,11 @@ TestProviderUpdateCredentials:
       Value: 0
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_home_page.first_on_demand_row$
+      Id: $PAGE.providers_home_page.last_on_demand_row$
   #Check that the on demand call is from the state selected and disable to take by the provider
     - Type: get_attribute
       Strategy: xpath
-      Id: $PAGE.providers_home_page.first_on_demand_row$
+      Id: $PAGE.providers_home_page.last_on_demand_row$
       Greps:
         - var: DETAILS_CONTENT
           attr: outerHTML
@@ -190,7 +190,7 @@ TestProviderUpdateCredentials:
   #call should be changed to enabled
     - Type: get_attribute
       Strategy: xpath
-      Id: $PAGE.providers_home_page.first_on_demand_row$
+      Id: $PAGE.providers_home_page.last_on_demand_row$
       Greps:
         - var: OUTER_HTML
           attr: outerHTML

@@ -3,17 +3,14 @@ providers_home_page:
   table : email
   follow_up_calls: (//div[contains(text(),'Follow-up')])[last()]
   missed_calls_text: (//div[contains(text(),'Missed Call')])[last()]
-  medical_transfer_calls: (//div[contains(text(),'Medical Transfer')])[last()]
-  first_medical_transfer: //tr[1]//div[contains(text(),'Medical Transfer')]
   scheduled_calls: (//div[contains(text(),'Scheduled Call')])[last()]
   on_demand_calls: (//div[contains(text(),'On Demand Call')])[last()]
   datetime: //time
   time_dropdown: //div[div[contains(text(),'Time')]]//button
   time_all_option: //div[div[contains(text(),'Time')]]//button[contains(text(),'All')]
   last_medical_transfer_row: (//div[contains(text(),'Medical Transfer')])[last()]
-  last_on_demand_row: (//div[contains(text(),'On Demand Call')])[last()]
   first_row: //table/tbody/tr[@role='row'][1]
-  first_on_demand_row: //tbody/tr//div[text()='On Demand Call'][1]/ancestor::tr
+  last_on_demand_row: //tbody/tr//div[text()='On Demand Call'][last()]/ancestor::tr
   facilities_navigation: //a//div[contains(text(),'Facilities')]
   employees_navigation: //a//div[contains(text(),'Employees')]
   call_based_on_participant_name: //tbody[@role='rowgroup']//strong[text()='$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']
@@ -48,7 +45,6 @@ providers_call_queue_page:
   call_device_btn: //button[text()='Call Device']
   subject_input: //div[label[text()='Subject']]//input
   details_textarea: //div[label[text()='Details']]//textarea
-  complete_session_btn: //button[text()='Complete Session']
   yes_issue_resolved_radio_btn: //label[input[@name='resolved'][@value='true']]
   no_radiobtn: //label[input[@name='resolved'][@value='false']]
   yes_recommended_discharge_radio_btn: //label[input[@name='recommendedDischarge'][@value='true']]
@@ -59,7 +55,6 @@ providers_call_queue_page:
   call_notes_subject_input: //*[@id='providerSubject']
   call_notes_provider_input: //*[@id='providerNotes']
   call_notes_save_button: //button[text()='Save Notes']
-  end_answer_call_button: //span[text()='End Call']//ancestor::button
   complete_session_button: //button[text()='Complete Session']
   post_call_survey_title: //h3[text()='Post-call Survey']
   resolved_true_option: //input[@name='resolved' and @value='true']/following-sibling::span

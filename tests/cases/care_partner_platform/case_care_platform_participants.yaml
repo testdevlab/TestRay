@@ -103,7 +103,7 @@ TestParticipantDirectoryFilter:
   #Verify it was filtered by the selected letter
     - Type: get_text
       Strategy: xpath
-      Id: $PAGE.care_platform_participant.first_senior_in_list_strong$
+      Id: $PAGE.care_platform_participant.first_senior_lastname$
       Greps:
         - var: LASTNAME_FIRST_LETTER
           match: ^[a-zA-Z]   #The match selects: The first char from the starter word (^) that is a letter ([a-zA-Z])
@@ -119,7 +119,7 @@ TestParticipantDirectoryFilter:
   #Get the first lastname in the list
     - Type: get_text
       Strategy: xpath
-      Id: $PAGE.care_platform_participant.first_senior_in_list_strong$
+      Id: $PAGE.care_platform_participant.first_senior_lastname$
       Greps:
         - var: LASTNAME_FIRST_PARTICIPANT_NO_FILTER
           match: (.*)
@@ -134,10 +134,10 @@ TestParticipantDirectoryFilter:
   #Verify there is at least 1 user with that name
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.care_platform_participant.first_senior_in_list_strong$
+      Id: $PAGE.care_platform_participant.first_senior_lastname$
     - Type: get_text
       Strategy: xpath
-      Id: $PAGE.care_platform_participant.first_senior_in_list_strong$
+      Id: $PAGE.care_platform_participant.first_senior_lastname$
       Greps:
         - var: LASTNAME_FIRST_PARTICIPANT
           match: (.*)
@@ -154,7 +154,7 @@ TestParticipantDirectoryFilter:
   #Verify there is at least 1 user
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.care_platform_participant.first_senior_in_list_strong$
+      Id: $PAGE.care_platform_participant.first_senior_lastname$
   #Click on an user
     - Type: click
       Strategy: xpath
@@ -1330,7 +1330,7 @@ TestCarePartnerCallParticipantsDeviceCallComplete:
   # Click on the corresponding participant.
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_participant.senior_1_td$
+      Id: $PAGE.care_platform_participant.senior_complete_name$
   # Click on the "Call Portal" button.
     - Type: click
       Strategy: xpath

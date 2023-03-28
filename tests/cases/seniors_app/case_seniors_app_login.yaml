@@ -1,6 +1,8 @@
 # CXTB-219: Verify Log in to the Never Alone app
 TestLoginNeverAlone:
   Environment: Settings
+  Aftercases:
+    - TerminateApp
   Roles:
     - Role: localiOS
       App: NeverAlone      
@@ -8,6 +10,3 @@ TestLoginNeverAlone:
     # Log in to the Never Alone app using Seniors credentials.
     - Type: case
       Value: LoginNeverAloneHelper
-    # Terminate the app.
-    - Type: case
-      Value: TerminateApp

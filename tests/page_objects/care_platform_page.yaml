@@ -33,9 +33,9 @@ care_platform_header:
   app_time: //header//time
   user_toggle_input: //header//div[@class='radio-toggle']//input
   user_dropdown_button: //header//div[contains(@class,'user-dropdown')]/button
-  users_dropdown_button: //button[@class='users-dropdown-toggle']
+  headset_dropdown_button: //button[@class='users-dropdown-toggle']
   users_dropdown_list: //button[@class='users-dropdown-toggle']/ancestor::div[contains(@class, 'users-dropdown')]
-  dropdown_username: //header//div[@class='user-dropdown-name']
+  dropdown_username: userName
   headset_icon: //header//button/span[@class='icon-headset']
   status_menu_header: //header//nav//div[contains(text(),'Status')]
   status_available_button: //header//nav/button[contains(.,'Available')]
@@ -47,7 +47,7 @@ care_platform_header:
   myaccount_menu_button: //header//nav//button[contains(.,'My Account')]
   logout_menu_button: //header//nav//button[contains(.,'Log Out')]
   offline_carepartner1_element: //div[@class='users-dropdown-list-item is-offline']//div[@class='users-dropdown-name' and contains(., '$AND_CLI_CARE_PARTNER_USER1_FULLNAME$')]
-  onshift_carepartner1_element: //div[contains(@class,'is-green')]//following-sibling::div[@class='users-dropdown-name' and contains(., '$AND_CLI_CARE_PARTNER_USER1_FULLNAME$')]
+  onshift_carepartner1_element: //div[contains(text(),'On Shift')]//following-sibling::div[not(contains(@class,'is-offline'))]/div[@class='users-dropdown-name' and contains(., '$AND_CLI_CARE_PARTNER_USER1_FULLNAME$')]
 
 care_platform_myaccount_info:
   modal_title: //*[@id='modals']//h4[contains(text(),'My account')]
@@ -81,9 +81,9 @@ care_platform_participant:
   first_participant_row: //table/thead[contains(.,'Participant')]/following-sibling::tbody/tr[contains(.,'$AND_CLI_senior_user1_name$') and contains(.,'$AND_CLI_senior_user1_lastname$')][1]
   first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
   selected_darkened_letter_button: //button[contains(@class,'is-selected')]
-  senior_1_td: //td[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
+  senior_complete_name: //td[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
   senior_1_row: //*[@id='containerElement']/table[1]/tbody/tr[1]
-  first_senior_in_list_strong: //*[@id='containerElement']/table[1]/tbody/tr[1]//strong
+  first_senior_lastname: //*[@id='containerElement']/table[1]/tbody/tr[1]//strong
   call_portal_btn: //button[text()='Call Portal']
   search_button: //button[span[@class='icon-search']]
   search_input: //input[contains(@placeholder,'Search by participant name')]

@@ -66,7 +66,6 @@ TestSeniorAppCallPersonalCarePartnerOnHomePage:
     - Type: click
       Strategy: class_chain
       Id: $PAGE.seniors_app_call.video_button$
-
     ## Care partner steps to take the call.
     - Type: click
       Role: desktopChrome
@@ -108,7 +107,6 @@ TestSeniorAppCallPersonalCarePartnerOnHomePage:
       Role: desktopChrome
       Strategy: xpath
       Id: $PAGE.care_platform_call_portal.full_screen_call_btn$
-
     # Care partner leaves the call.
     - Type: wait_for
       Role: desktopChrome
@@ -181,7 +179,6 @@ TestSeniorAppCallPersonalCarePartnerOnHomePage:
     - Type: wait_for
       Strategy: class_chain
       Id: $PAGE.seniors_app_home.call_care_partner$
-
     # End the call on care partner side - Teardown.
     # Fill the notes
     - Type: send_keys
