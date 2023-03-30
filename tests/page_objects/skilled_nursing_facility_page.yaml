@@ -2,6 +2,7 @@ snf_home:
   facility_name: "**/XCUIElementTypeOther[`name == 'headerContainer'`]/**/XCUIElementTypeStaticText"
   new_request_btn: //XCUIElementTypeButton[@name='New Request']
   existing_request_button: "**/XCUIElementTypeButton[`label == 'Existing Request'`]"
+  telehealth_request_offline_button: "**/XCUIElementTypeButton[`label == 'Telehealth Request is Offline'`]"
   
 snf_new_request_form:
   patient_information_title: "**/XCUIElementTypeStaticText[`label == 'Patient Information'`]"
@@ -40,7 +41,12 @@ snf_call_portal:
 
 snf_notifications:
   missed_call_modal_title: Missed Outgoing Call
-  missed_call_modal_close_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Close'`]"
+  modal_close_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Close'`]"
+
+snf_offline_prompt:
+  connection_error_header:  "**/XCUIElementTypeStaticText[`label == 'Connection Error'`]"
+  device_offline_label: "**/XCUIElementTypeStaticText[`label == 'Device is offline.'`]"
+  close_button: "**/XCUIElementTypeOther[`label BEGINSWITH 'Connection Error'`]/**/XCUIElementTypeButton[`label ENDSWITH 'Close'`]"
 
 snf_incoming_call:
   incoming_call_header: "**/XCUIElementTypeOther[`label CONTAINS 'Incoming' AND label ENDSWITH 'Call'`]/XCUIElementTypeOther/**/XCUIElementTypeStaticText[`label CONTAINS 'Incoming'`]"

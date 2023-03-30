@@ -39,6 +39,10 @@ providers_facilities_page:
   facility_based_on_name: //td/strong[text()='$AND_CLI_facility_name1$']
   devices_tab: //div[@class='tabs box-scrollable-content -mb']//button[@id='2']
   call_based_on_device_button: //strong[text()='Device $AND_CLI_facility_devices_user1_number$:']/ancestor::tr//a[@class='button button-basic text-xs']
+  message_based_on_device_button: //strong[text()='Device $AND_CLI_facility_devices_user1_number$:']/ancestor::tr//button[@class='button button-basic text-xs']
+  message_input: //input[@id='message']
+  send_message_button: //span[@class='icon-send text-md']/ancestor::button
+  last_message_sent: (//div[@class='message message-to message-to-inverted'])[last()]
 
 providers_call_queue_page:
   end_call_btn: //button[span[text()='End Call']]
