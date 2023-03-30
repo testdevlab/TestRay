@@ -166,11 +166,11 @@ TestProviderAnswerCompleteSessionFromEHP:
       Id: $PAGE.providers_home_page.home_title$
     - Type: case
       Value: ProviderSetStateCredential 
-  #Selects first on demand call
+  #Selects on demand call
     - Type: click
       Strategy: xpath
       Role: desktopChrome
-      Id: $PAGE.providers_home_page.first_on_demand_row$
+      Id: $PAGE.providers_home_page.on_demand_calls$
   #Answer call
     - Type: wait_for
       Strategy: xpath
@@ -183,7 +183,7 @@ TestProviderAnswerCompleteSessionFromEHP:
   #End call
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.end_answer_call_button$
+      Id: $PAGE.providers_call_queue_page.end_call_btn$
   #Check In Session indicator
     - Type: wait_for
       Strategy: xpath
@@ -200,7 +200,7 @@ TestProviderAnswerCompleteSessionFromEHP:
           Value: is-red
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.end_answer_call_button$
+      Id: $PAGE.providers_call_queue_page.end_call_btn$
   #Fill the Provider's call notes
     - Type: wait_for
       Strategy: xpath

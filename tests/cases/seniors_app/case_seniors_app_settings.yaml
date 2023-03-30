@@ -138,6 +138,8 @@ TestSettingsPageNavigation:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
   Roles:
     - Role: localiOS
       App: NeverAlone
@@ -145,9 +147,6 @@ TestSettingsPageNavigation:
   # In the Home page, click on the Settings icon and verify user is redirected to Settings "My Details" page.
     - Type: case
       Value: SettingsPageNavigationHelper
-  # Terminate the app.
-    - Type: case
-      Value: TerminateApp
 
 # CXTB-35: Wi-fi settings page to review, add or update wi-fi network information
 TestWifiSettingsPage:

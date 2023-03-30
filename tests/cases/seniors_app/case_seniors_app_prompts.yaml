@@ -182,7 +182,7 @@ TestSeniorAppPersonalCarePartnerMessagePromptAndCallBackButton:
     - Type: click
       Role: desktopChrome
       Strategy: xpath
-      Id: $PAGE.care_platform_participant.senior_1_td$
+      Id: $PAGE.care_platform_participant.senior_complete_name$
   # Right side of screen updates to show the selected participant’s summary component.
     - Type: wait_for
       Role: desktopChrome

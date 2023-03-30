@@ -9,13 +9,6 @@ TestVerifyFullScheduleDisplay:
     - Role: localiOS
       App: NeverAlone
     - Role: desktopChrome
-      Capabilities:
-        chromeOptions:
-          args:
-            - use-fake-ui-for-media-stream
-            - use-fake-device-for-media-stream
-            - no-sandbox
-            - disable-gpu
       App: desktop    
   Actions:
   # Set up past event on Care Platform.
@@ -109,6 +102,8 @@ TestSchedulesPageNavigation:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
   Roles:
     - Role: localiOS
       App: NeverAlone
@@ -116,9 +111,6 @@ TestSchedulesPageNavigation:
   # In the Home page, click on the button "Full Schedule" and verify user is redirected to Schedules page.
     - Type: case
       Value: SchedulesPageNavigationHelper
-  # Terminate the app.
-    - Type: case
-      Value: TerminateApp
 
 # CXTB-39: Automatically Return to Full Schedule Page After Period of Inactivity
 TestAutomaticReturnAfterInactivty:

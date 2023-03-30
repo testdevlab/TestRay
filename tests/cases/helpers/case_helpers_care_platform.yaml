@@ -93,7 +93,7 @@ SetScheduledCallForSeniors:
     # Open the Call Portal
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_participant.senior_1_td$
+      Id: $PAGE.care_platform_participant.senior_complete_name$
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_participant.call_portal_btn$
@@ -178,13 +178,6 @@ SetPastEventForSeniors:
     LOGOUT_OPTION: "Go Off Shift"
   Roles:
     - Role: desktopChrome
-      Capabilities:
-        chromeOptions:
-          args:
-            - use-fake-ui-for-media-stream
-            - use-fake-device-for-media-stream
-            - no-sandbox
-            - disable-gpu
       App: desktop       
   Actions:   
     # Login to the Care Platform app with Care Partners account
@@ -197,7 +190,7 @@ SetPastEventForSeniors:
       # Open the Call Portal
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_participant.senior_1_td$
+      Id: $PAGE.care_platform_participant.senior_complete_name$
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_participant.call_portal_btn$
@@ -302,7 +295,7 @@ SetScheduledCallForSeniorsToStartIn7Minutes:
       # Open the Call Portal
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_participant.senior_1_td$
+      Id: $PAGE.care_platform_participant.senior_complete_name$
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_participant.call_portal_btn$
@@ -413,7 +406,7 @@ SetScheduledCallForSeniorsToStartIn11Minutes:
       # Open the Call Portal
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_participant.senior_1_td$
+      Id: $PAGE.care_platform_participant.senior_complete_name$
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_participant.call_portal_btn$
@@ -519,7 +512,7 @@ SetNonTelehealthAppointmentForSenior:
     # Open the Call Portal
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_participant.senior_1_td$
+      Id: $PAGE.care_platform_participant.senior_complete_name$
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_participant.call_portal_btn$
@@ -933,7 +926,7 @@ DeleteFutureEventForSenior:
     # Open the Call Portal
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_participant.senior_1_td$
+      Id: $PAGE.care_platform_participant.senior_complete_name$
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_participant.call_portal_btn$
@@ -1190,7 +1183,7 @@ CarePlatformUpdateInfo:
       Time: 10
   #Verify that the name in the header reflects the new change to the firstname
     - Type: get_text
-      Strategy: xpath
+      Strategy: id
       Id : $PAGE.care_platform_header.dropdown_username$
       Greps:
         - var: NEW_NAME
@@ -1392,7 +1385,7 @@ CarePartnerSendMessageToSenior:
     # Click on the desired participant.
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_participant.senior_1_td$
+      Id: $PAGE.care_platform_participant.senior_complete_name$
     # Click on "Records".
     - Type: click
       Strategy: xpath

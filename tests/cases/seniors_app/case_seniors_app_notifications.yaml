@@ -1,6 +1,8 @@
 # CXTB-23: Notifications Page Navigation
 TestNotificationsPageNavigation:
   Environment: Settings
+  Aftercases:
+    - TerminateApp
   Precases:
     - LoginNeverAloneHelper
   Roles:
@@ -10,9 +12,6 @@ TestNotificationsPageNavigation:
   # In the Home page, click on the Bell icon and verify user is redirected to Notifications page.
     - Type: case
       Value: NotificationsPageNavigationHelper
-  # Terminate the app.
-    - Type: case
-      Value: TerminateApp
 
 # CXTB-22: Verify Notifications Page on Senior App
 TestNotificationsPageOnSeniorApp:
@@ -408,8 +407,6 @@ TestCanceledAndMissedAppointments:
   # In the Home page, click on the Bell icon and verify user is redirected to Notifications page.
     - Type: case
       Value: NotificationsPageNavigationHelper
-    # - Type: sleep
-    #   Time: 10
   # Add an appointment for the future
     - Type: case
       Value: SetScheduledCallForSeniorsToStartIn11Minutes

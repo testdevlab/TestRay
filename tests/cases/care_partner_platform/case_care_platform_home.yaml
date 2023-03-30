@@ -3,13 +3,6 @@ TestHomePage:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
-      Capabilities:
-        chromeOptions:
-          args:
-            - use-fake-ui-for-media-stream
-            - use-fake-device-for-media-stream
-            - no-sandbox
-            - disable-gpu
       App: "desktop"
   Actions:
   #Calling Login case
@@ -113,13 +106,6 @@ TestStatusDropdown_NotInCall:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
-      Capabilities:
-        chromeOptions:
-          args:
-            - use-fake-ui-for-media-stream
-            - use-fake-device-for-media-stream
-            - no-sandbox
-            - disable-gpu
       App: "desktop"
   Actions:
   #Calling Login case
@@ -342,7 +328,7 @@ TestLogoutGoOffShift:
   # Click on the users dropdown.
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_header.users_dropdown_button$
+      Id: $PAGE.care_platform_header.headset_dropdown_button$
   # Verify that the first user has gone off shift.
     - Type: wait_for
       Strategy: xpath
@@ -392,13 +378,12 @@ TestLogoutStayOnShift:
   # Click on the users dropdown.
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_header.users_dropdown_button$
+      Id: $PAGE.care_platform_header.headset_dropdown_button$
   # Verify that the first user has stayed on shift.
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_header.onshift_carepartner1_element$
       
-
 #CXTB-92: Verify Access and Review Team Member's Availability
 TestAccessAndReviewTeamMembersAvailability:
   Environment: Settings
@@ -414,7 +399,7 @@ TestAccessAndReviewTeamMembersAvailability:
   # Click on the users dropdown.
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_header.users_dropdown_button$
+      Id: $PAGE.care_platform_header.headset_dropdown_button$
   # Care Partner list appears from right side of screen.
     - Type: wait_for
       Strategy: xpath
@@ -447,7 +432,7 @@ TestAccessAndReviewTeamMembersAvailability:
   # Click on the headset icon again.
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_header.users_dropdown_button$
+      Id: $PAGE.care_platform_header.headset_dropdown_button$
   # Verify that the list disappears.
     - Type: return_element_attribute
       Strategy: xpath
