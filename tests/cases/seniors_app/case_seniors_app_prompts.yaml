@@ -272,7 +272,7 @@ TestSeniorAppAnswerCallForProviderCalling:
         - Type: eq
           Var: HEADER_TITLE
           Value: Incoming Call...
-  # Verify that it shows who is calling and their details, giving you the option to answer ore ignore the call.
+  # Verify that it shows who is calling and their details, giving you the option to answer or ignore the call.
     - Type: wait_for
       Strategy: class_chain
       Id: $PAGE.seniors_app_incoming_call.called_name$
@@ -348,3 +348,67 @@ TestSeniorAppAnswerCallForProviderCalling:
   # Fill up the Post Call Survey on the provider side.
     - Type: case
       Value: PostCallSurveyProvider
+
+# CXTB-53: Verify Ignore Call for Care Partner on Never Alone Seniors app.
+TestSeniorAppIgnoreCarePartnerCall:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop    
+  Actions:
+  # Log in as a Care Partner and Call Senior.
+    - Type: case
+      Value: CarePartnerCallSenior
+  # Device begins ringing and automatically displays "Incoming Call" modal.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.incoming_call_header$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.incoming_call_header$
+      Attribute: label
+      ResultVar: HEADER_TITLE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: HEADER_TITLE
+          Value: Incoming Call...
+  # Verify that it shows who is calling and their details, giving you the option to answer or ignore the call.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.called_name$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.called_name$
+      Attribute: label
+      ResultVar: CALLER_VALUE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALLER_VALUE
+          Value: $AND_CLI_carepartner_user1_name$ $AND_CLI_carepartner_user1_lastname$ Personal Care Partner
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.answer_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.ignore_call_button$
+  # Click the "Ignore Call" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.ignore_call_button$
+  # Verify that the device returns you to the screen without entering the call.
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.ignore_call_button$
+      Time: 10
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.video_button$
+      Time: 10
