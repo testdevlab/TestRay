@@ -1,3 +1,212 @@
+#CXTB-9 - New request to provider - Form behavior
+TestSNFNewRequestFormBehavior:
+  Environment: Settings
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+  #Call login for nurses
+    - Type: case
+      Value: LoginSNFHelper
+  #Make a New request
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.snf_home.new_request_btn$
+  #Check behavior
+    #Submit button should be disabled until required data entered
+    - Type: wait_for_attribute
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.submit_button$
+      Attribute: enabled
+      Value: "false"
+    #Selecting patient by name
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_name_select$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_name_select$
+    #Get values that will autopopulate the patient's field
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.mrn_based_on_name$
+      Attribute: value
+      ResultVar: MRN_FROM_PATIENT
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_based_on_name$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.snf_new_request_form.selected_patient_name$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_mrn$
+      Attribute: value
+      ResultVar: MRN_FROM_SELECTED_FORM
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: MRN_FROM_PATIENT
+          Value: $AND_CLI_MRN_FROM_SELECTED_FORM$
+    #When click on clear, should empty all values
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.clear_form_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_name_select$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_mrn$
+      Attribute: value
+      ResultVar: MRN_FROM_CLEAR_FORM
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: MRN_FROM_CLEAR_FORM
+          Value: ""
+    #Complete patient info again
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_information_title$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_name_select$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.first_patient_select_option$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+    #Click on "< Back to Home" option
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.back_to_home_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.snf_home.new_request_btn$
+    #Select new request again and fill the form
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.snf_home.new_request_btn$
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.requester_first_name$
+      Value: $AND_CLI_facility_devices_requester_name$
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.requester_last_name$
+      Value: $AND_CLI_facility_devices_requester_lastname$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_information_title$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_name_select$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.first_patient_select_option$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.urgent_reason_dropdown$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.urgent_reason_dropdown$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.urgent_reason_option_no$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.reason_for_request_dropdown$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.reason_for_request_option_one$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+    #Submit button gets enabled
+    - Type: wait_for_attribute
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.submit_button$
+      Attribute: enabled
+      Value: "true"
+    #Erase a required field: Requester First Name. Submit button should be disable after that.
+    - Type: clear_field
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.requester_first_name$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_information_title$
+    - Type: wait_for_attribute
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.submit_button$
+      Attribute: enabled
+      Value: "false"
+    #Fill the required data to submit. Submit button gets enabled again.
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.requester_first_name$
+      Value: $AND_CLI_facility_devices_requester_name$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_information_title$
+    - Type: wait_for_attribute
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.submit_button$
+      Attribute: enabled
+      Value: "true"
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.submit_button$
+    #Check for further options
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_submit_options.yes_call_provider_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_submit_options.no_adjust_form_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_submit_options.no_cancel_call_button$
+    #Option 'No, Adjust form' should redirect to the request form
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_submit_options.no_adjust_form_button$
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.requester_first_name$
+      Value: " A."
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_information_title$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.submit_button$  
+    #Option 'No, Cancel Call' should redirect to home
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_submit_options.no_cancel_call_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.snf_home.new_request_btn$
+
+#CXTB-14 - New Request to provider - Successful Call to Providers
 #CXTB-17 - New Request to Provider - Successful Call Connect
 TestSNFRequestSuccessfulCallConnect:
   Environment: Settings
@@ -171,6 +380,7 @@ TestSNFRequestSuccessfulCallConnect:
     - Type: case
       Value: PostCallSurveyProvider
 
+#CXTB-24 New Request to Provider - Missed Call
 #CXTB-25 Existing Request - Place Call to Provider
 #CXTB-127 See Call Appear in Queue, Assign and Review Details
 TestSNFCheckQueueandReviewDetails:
