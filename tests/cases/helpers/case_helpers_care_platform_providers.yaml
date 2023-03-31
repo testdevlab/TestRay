@@ -661,3 +661,62 @@ SetMissedCallTicket:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.call_completed_notification$
+
+ProviderSendsMessageToFacility:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Login to the Care Platform app with Providers account.
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+    # Navigate to Facilities.
+    - Type: case
+      Value: ProviderNavigateToFacilities
+    # Select the desired facility.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.facility_based_on_name$ 
+    # Navigate to the Devices tab.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.devices_tab$ 
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.devices_tab$
+    # Find the corresponding facility device and then call it.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.message_based_on_device_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.message_based_on_device_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.message_input$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.message_input$
+      Value: $AND_CLI_MESSAGE_TO_FACILITY$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.send_message_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.send_message_button$
+    - Type: sleep
+      Time: 10
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.last_message_sent$
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.last_message_sent$
+      Attribute: textContent
+      ResultVar: LAST_MESSAGE_HISTORY
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: LAST_MESSAGE_HISTORY
+          Value: $AND_CLI_MESSAGE_TO_FACILITY$

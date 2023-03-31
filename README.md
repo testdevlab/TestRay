@@ -337,10 +337,11 @@ Actions:
 20. [wait_not_visible](#wait_not_visible)
 21. [return_element_attribute](#return_element_attribute)
 22. [hover](#hover)
+23. [clear_field](#clear_field)
 
 ## Only Browser
 
-1. [clear_field](#clear_field)
+1. [new_tab](#new_tab)
 2. [set_attribute](#set_attribute)
 3. [remove_attribute](#remove_attribute)
 4. [switch_window](#switch_window)
@@ -351,7 +352,6 @@ Actions:
 9. [click_js](#click_js)
 10. [add_cookie](#add_cookie)
 11. [wait_for_property](#wait_for_property)
-12. [new_tab](#new_tab)
 
 ## Only Mobile
 
@@ -644,8 +644,6 @@ Hovers over an element.
       Role: role1 (Optional)
       Id: //some//path
 
-## Only Browser
-
 ### <a id="clear_field"></a>clear_field
 
 	- Type: clear_field
@@ -653,6 +651,15 @@ Hovers over an element.
 	  Strategy: id/css/xpath/uiautomator/class_chain/...
 	  Id: //some/path
 	  NoRaise: false/true (Default - false -> will rise error on fail)
+
+
+## Only Browser
+
+### <a id="new_tab"></a>new_tab
+
+  Opens a new tab.
+
+  - Type: new_tab
 
 ### <a id="set_attribute"></a>set_attribute
 
@@ -755,11 +762,6 @@ Waits for the element to have a specific JS property value.
     Value:  Desired value
     Time: Time (int) e.g. 10
 
-### <a id="new_tab"></a>new_tab
-
-Opens a new tab.
-
-  - Type: new_tab
 ## Only Mobile
 
 ### <a id="set_orientation"></a>set_orientation (Mobile)

@@ -2,16 +2,19 @@ snf_home:
   facility_name: "**/XCUIElementTypeOther[`name == 'headerContainer'`]/**/XCUIElementTypeStaticText"
   new_request_btn: //XCUIElementTypeButton[@name='New Request']
   existing_request_button: "**/XCUIElementTypeButton[`label == 'Existing Request'`]"
+  telehealth_request_offline_button: "**/XCUIElementTypeButton[`label == 'Telehealth Request is Offline'`]"
   
 snf_new_request_form:
   patient_information_title: "**/XCUIElementTypeStaticText[`label == 'Patient Information'`]"
   requester_first_name: "**/XCUIElementTypeOther[`label == 'Requester First Name*'`]/**/XCUIElementTypeTextField[`name == 'RNE__Input__text-input'`]"
   requester_last_name: "**/XCUIElementTypeOther[`label == 'Requester Last Name*'`]/**/XCUIElementTypeTextField[`name == 'RNE__Input__text-input'`]"
   patient_name_select: "**/XCUIElementTypeStaticText[`label == 'Select a Patient'`]"
+  selected_patient_name: "$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$"
   first_patient_select_option: "**/XCUIElementTypeOther[`name BEGINSWITH 'default-'`][1]"
   patient_name_section: "**/XCUIElementTypeOther[`label BEGINSWITH 'Patient Name*'`]/XCUIElementTypeOther/**/XCUIElementTypeStaticText[1]"
   patient_based_on_name: "**/XCUIElementTypeOther[`name BEGINSWITH 'default-$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$'`]"
-  patient_mnr: //XCUIElementTypeOther[@name='Patient MRN*']//XCUIElementTypeTextField[@name='RNE__Input__text-input']
+  patient_mrn: "**/XCUIElementTypeOther[`name == 'Patient MRN*'`]/**/XCUIElementTypeTextField[`name == 'RNE__Input__text-input'`]"
+  mrn_based_on_name: "**/XCUIElementTypeOther[`name BEGINSWITH 'default-$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$'`]/**/XCUIElementTypeOther[`label BEGINSWITH 'MRN:'`]/XCUIElementTypeStaticText[2]"
   urgent_reason_dropdown: "**/XCUIElementTypeOther[`label BEGINSWITH 'Is this an urgent patient matter?*'`]/**/XCUIElementTypeStaticText[`name == 'iconIcon'`][1]"
   urgent_reason_option_yes: "**/XCUIElementTypeStaticText[`label == 'Yes'`]"
   urgent_reason_option_no: "**/XCUIElementTypeStaticText[`label == 'No'`]"
@@ -21,7 +24,7 @@ snf_new_request_form:
   clear_form_button: "**/XCUIElementTypeButton[`label == 'Clear Form'`]"
   back_to_home_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Back to Home'`]"
   submit_button: "**/XCUIElementTypeButton[`label == 'Submit'`]"
-
+  
 snf_existing_request:
   last_existing_request: "**/XCUIElementTypeOther[`label BEGINSWITH 'Select Existing Request'`][1]/**/XCUIElementTypeOther[-1]"
   close_existing_request_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Close'`]"
@@ -40,7 +43,12 @@ snf_call_portal:
 
 snf_notifications:
   missed_call_modal_title: Missed Outgoing Call
-  missed_call_modal_close_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Close'`]"
+  modal_close_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Close'`]"
+
+snf_offline_prompt:
+  connection_error_header:  "**/XCUIElementTypeStaticText[`label == 'Connection Error'`]"
+  device_offline_label: "**/XCUIElementTypeStaticText[`label == 'Device is offline.'`]"
+  close_button: "**/XCUIElementTypeOther[`label BEGINSWITH 'Connection Error'`]/**/XCUIElementTypeButton[`label ENDSWITH 'Close'`]"
 
 snf_incoming_call:
   incoming_call_header: "**/XCUIElementTypeOther[`label CONTAINS 'Incoming' AND label ENDSWITH 'Call'`]/XCUIElementTypeOther/**/XCUIElementTypeStaticText[`label CONTAINS 'Incoming'`]"
