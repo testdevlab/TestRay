@@ -150,7 +150,7 @@ TestAccessFacilitiesDirectoryFilter:
      Id: $PAGE.care_platform_participant.senior_1_row$
    - Type : wait_for
      Strategy: xpath
-     Id: //h3[text()='Alpha Healthcare Center']
+     Id: //h3[@class='text-xl color-white font-normal']
   #Verify that a summary component is displayed
   
 
