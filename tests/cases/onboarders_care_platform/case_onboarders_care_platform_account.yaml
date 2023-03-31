@@ -63,3 +63,94 @@ TestManuallyLogOutOfThePortalOnboarder:
   # Repeat the steps from above and log out.
   - Type: case
     Value: CarePlatformLogout
+# CXTB-261-Access facility Directory & Filter
+TestAccessFacilitiesDirectoryFilter:
+   Environment: Settings
+   Roles: 
+   - Role: desktopChrome
+     App: "desktop"
+   Actions:
+  # log in with my onboarder user
+   - Type: case
+     Value: OnboarderCarePartnerLogin
+  # Click on the facilites button
+   - Type: click
+     Strategy: xpath
+     Id: //div[@class='app-sidebar-menu-item-label'][text()='Facilities']
+  # Get the value to compare later
+   - Type: get_text
+     Strategy: xpath
+     Id: $PAGE.care_platform_participant.first_darkened_letter_button$
+     Greps:
+        - var: FILTER_LETTER
+          match: "(.*)"
+  # Click the first darkened letter button
+   - Type: click
+     Strategy: xpath
+     Id: $PAGE.care_platform_participant.first_darkened_letter_button$
+  #Verify it was filtered by the selected letter
+   - Type: get_text
+     Strategy: xpath
+     Id: $PAGE.care_platform_participant.first_senior_lastname$
+     Greps:
+        - var: FIRST_LETTER
+          match: ^[a-zA-Z]   #The match selects: The first char from the starter word (^) that is a letter ([a-zA-Z])
+   - Type: assert
+     Asserts: 
+     - Type: eq
+       Var: FIRST_LETTER
+       Value: $AND_CLI_FILTER_LETTER$
+  #Remove the filter by letter
+   - Type: click
+     Strategy: xpath
+     Id: $PAGE.care_platform_participant.selected_darkened_letter_button$
+  #Get the first lastname in the list
+   - Type: get_text
+     Strategy: xpath
+     Id: $PAGE.care_platform_participant.first_senior_lastname$
+     Greps:
+        - var: FIRST_facility_NO_FILTER
+          match: (.*)
+  #Add the search filter
+   - Type: click
+     Strategy: id
+     Id: $PAGE.care_platform_facility.search_button$
+   - Type: send_keys
+     Strategy: id
+     Id: $PAGE.care_platform_facility.search_text$
+     Value: $AND_CLI_FIRST_facility_NO_FILTER$
+ 
+  #Verify there is at least 1 user with that name
+   - Type: wait_for
+     Strategy: xpath
+     Id: $PAGE.care_platform_participant.first_senior_lastname$
+   - Type: get_text
+     Strategy: xpath
+     Id: $PAGE.care_platform_participant.first_senior_lastname$
+     Greps:
+        - var: FIRST_FACILITY
+          match: (.*)
+  #Verify the first participant lastname contains the text filtered
+   - Type: assert
+     Asserts: 
+      - Type: contain
+        Var: FIRST_FACILITY
+        Value: $AND_CLI_FIRST_facility_NO_FILTER$
+  #Clear the search by clicking small "x" at right of field
+   - Type: click
+     Strategy: xpath
+     Id: $PAGE.care_platform_participant.clear_search_button$
+  #Verify there is at least 1 user
+   - Type: wait_for
+     Strategy: xpath
+     Id: $PAGE.care_platform_participant.first_senior_lastname$
+  #Click on an user
+   - Type: click
+     Strategy: xpath
+     Id: $PAGE.care_platform_participant.senior_1_row$
+   - Type : wait_for
+     Strategy: xpath
+     Id: //h3[text()='Alpha Healthcare Center']
+  #Verify that a summary component is displayed
+  
+
