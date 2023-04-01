@@ -76,7 +76,7 @@ TestAccessFacilitiesDirectoryFilter:
   # Click on the facilites button
    - Type: click
      Strategy: xpath
-     Id: //div[@class='app-sidebar-menu-item-label'][text()='Facilities']
+     Id: $PAGE.care_platform_facility.facilities_button$
   # Get the value to compare later
    - Type: get_text
      Strategy: xpath
@@ -150,7 +150,7 @@ TestAccessFacilitiesDirectoryFilter:
      Id: $PAGE.care_platform_participant.senior_1_row$
    - Type : wait_for
      Strategy: xpath
-     Id: //h3[@class='text-xl color-white font-normal']
+     Id: $PAGE.care_platform_facility.facility_name$
   #Verify that a summary component is displayed
   
 
