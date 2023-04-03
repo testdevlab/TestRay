@@ -48,7 +48,7 @@ seniors_app_incoming_call:
   ignore_call_button: "**/XCUIElementTypeButton[`label == 'Ignore Call'`]"
 
 seniors_app_call:
-  end_call_button: (//XCUIElementTypeOther[contains(@name,'End Call')])[last()]
+  end_call_button: "**/XCUIElementTypeOther[`label ENDSWITH 'End Call'`][-1]"
   mute_call_button: (//XCUIElementTypeOther[contains(@name,'Microphone')])[last()]
   medical_call_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Medical'`][1]"
   non_medical_call_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Non-Medical'`]"

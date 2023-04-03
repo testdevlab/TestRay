@@ -732,7 +732,7 @@ TestAlertAndStartingSoonVisuals:
       Id: $PAGE.seniors_app_call.video_button$
     # Then click "End Call".
     - Type: click
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_call.end_call_button$
     # Skip the survey.
     - Type: click
@@ -893,7 +893,7 @@ TestActiveAppointmentTimeWindowWhenNotJoinedPrior:
       Id: $PAGE.seniors_app_call.video_button$
     # Then click "End Call".
     - Type: click
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_call.end_call_button$
     # Skip the survey.
     - Type: click

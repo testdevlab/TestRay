@@ -606,7 +606,7 @@ SetMissedCallTicket:
       # Complete the call in Seniors App
     - Type: click
       Role: localiOS
-      Strategy: xpath
+      Strategy: class_chain
       Id: $PAGE.seniors_app_call.end_call_button$
     - Type: click
       Role: localiOS

@@ -100,6 +100,9 @@ SeniorGreatPostSurveyCallHelper:
       App: NeverAlone
   Actions:
     # Select the Great option.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_post_call_survey.great_answer_button$
     - Type: click
       Strategy: class_chain
       Id: $PAGE.seniors_app_post_call_survey.great_answer_button$
