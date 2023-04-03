@@ -1,4 +1,5 @@
 #CXTB-9 - New request to provider - Form behavior
+#CXTB-15 - Confirmation Page - "No, Adjust Form" and "No, Cancel Call" options
 TestSNFNewRequestFormBehavior:
   Environment: Settings
   Aftercases:
