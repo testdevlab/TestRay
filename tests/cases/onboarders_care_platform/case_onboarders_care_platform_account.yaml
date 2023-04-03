@@ -151,5 +151,16 @@ TestOnboardersAccessFacilitiesDirectoryFilter:
    - Type : wait_for
      Strategy: xpath
      Id: $PAGE.care_platform_facility.facility_name$
-  
 
+#CXTB-174 - Onboarders - Use “Forgot password” Link on Login Page  
+TestOnboardersForgotPasswordLoginLink:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+    - Type: set_env_var
+      Value: $AND_CLI_onboarder_user1$
+      Var: carepartner_user1
+    - Type: case
+      Value: ForgotPasswordCarePlatformLoginLink
