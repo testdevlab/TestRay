@@ -64,7 +64,7 @@ TestManuallyLogOutOfThePortalOnboarder:
   - Type: case
     Value: CarePlatformLogout
   
-# CXTB-261-Automate Onboarders Access Facilities Directory & Filter
+# CXTB-161-Access Facilities Directory & Filter
 TestOnboardersAccessFacilitiesDirectoryFilter:
    Environment: Settings
    Roles: 
