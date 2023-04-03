@@ -164,3 +164,17 @@ TestOnboardersForgotPasswordLoginLink:
       Var: carepartner_user1
     - Type: case
       Value: ForgotPasswordCarePlatformLoginLink
+  
+# CXTB-168: Access “My account” Window & Review “My info” Page
+TestOnboardersAccessMyAcountWindowAndReviewMyInfo:
+   Environment: Settings
+   Roles: 
+   - Role: desktopChrome
+     App: "desktop"
+   Actions:
+  # Log in with my onboarder user.
+   - Type: case
+     Value: OnboarderCarePartnerLogin
+  # Call case to access "My Account" Window and Review "My Info" Page.
+   - Type: case
+     Value: CarePlatformUpdateInfo
