@@ -226,3 +226,9 @@ care_platform_notifications:
   event_created_notification: //div[text()='Event created']
   event_saved_notification: //div[@class='Toastify']//div[text()='Event saved']
   event_deleted_notification: //div[@class='Toastify']//div[text()='Event deleted']
+
+care_platform_facility:
+  search_button: searchButton
+  search_text: searchText
+  facility_name: //h3[@class='text-xl color-white font-normal']
+  facilities_button: //div[@class='app-sidebar-menu-item-label'][text()='Facilities']
