@@ -88,6 +88,8 @@ care_platform_participant:
   search_button: //button[span[@class='icon-search']]
   search_input: //input[contains(@placeholder,'Search by participant name')]
   clear_search_button: //button[contains(@class,'button-circle')]
+  status_dropdown_button: //button[contains(@class,'queue-filter-dropdown-toggle')]
+  status_dropdown_options: //div[contains(@class, 'queue-filter-dropdown')]  
 
 care_platform_participant_details:
   participant_details_title: //h3[contains(.,'$AND_CLI_senior_user1_name$') and contains(.,'$AND_CLI_senior_user1_lastname$')]
