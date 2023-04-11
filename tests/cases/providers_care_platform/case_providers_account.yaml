@@ -1,6 +1,6 @@
 #CXTB-204 “Update password” Workflow in My account Modal
 TestProvidersUpdatePassword:
-  Environment: Settings 
+  Environment: Settings
   Vars:
     LOGOUT_OPTION: "Stay On Shift"
     ENV_PASS_STORE: $AND_CLI_provider_user1_pwd$
@@ -8,7 +8,7 @@ TestProvidersUpdatePassword:
     - Role: desktopChrome
       App: "desktop"
   Actions:
-  # Log in to Care Platform as a Provider.
+    # Log in to Care Platform as a Provider.
     - Type: case
       Value: ProvidersCarePlatformLogin
     - Type: set_env_var
@@ -22,7 +22,7 @@ TestProvidersUpdatePassword:
 
 #CXTB-201 ProviderCarePlatform - Manually Log Out of Portal & Stay On Shift
 TestProviderLogOutStayOnShift:
-  Environment: Settings 
+  Environment: Settings
   Vars:
     LOGOUT_OPTION: "Stay On Shift"
     CARE_PARTNER_USER1_FULLNAME: $AND_CLI_provider_user1_name$ $AND_CLI_provider_user1_lastname$
@@ -30,38 +30,38 @@ TestProviderLogOutStayOnShift:
     - Role: desktopChrome
       App: "desktop"
   Actions:
-  # Calling Login case.
+    # Calling Login case.
     - Type: case
       Value: ProvidersCarePlatformLogin
-  # Calling Logout case.
+    # Calling Logout case.
     - Type: case
       Value: CarePlatformLogout
-  # NOTE: Step 4 was skipped because it involved verifying text messages,
-  # This step needed to call from SNF and then validate that care partner did receive text notification.
-  # Continued on Step 5.
-  # Log in with the second user.
+    # NOTE: Step 4 was skipped because it involved verifying text messages,
+    # This step needed to call from SNF and then validate that care partner did receive text notification.
+    # Continued on Step 5.
+    # Log in with the second user.
     - Type: case
       Value: ProviderLoginSecondaryUser
-  # Click on the users dropdown.
+    # Click on the users dropdown.
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_header.headset_dropdown_button$
-  # Verify that the first user has stayed on shift.
+    # Verify that the first user has stayed on shift.
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_header.onshift_carepartner1_element$
 
 #CXTB-203 Open “My account” Window & Review or Update “My info”
 TestProviderUpdateAccountInfo:
-  Environment: Settings 
+  Environment: Settings
   Roles:
     - Role: desktopChrome
       App: "desktop"
   Actions:
-  # Log in with the second user.
+    # Log in with the second user.
     - Type: case
       Value: ProviderLoginSecondaryUser
-  # Call case to update info
+    # Call case to update info
     - Type: case
       Value: CarePlatformUpdateInfo
 
@@ -74,23 +74,23 @@ TestProviderUpdateCredentials:
     - Role: desktopChrome
       App: "desktop"
   Actions:
-  # Log in with the second user.
+    # Log in with the second user.
     - Type: case
       Value: ProvidersCarePlatformLogin
-  #Going to My Account
+    #Going to My Account
     - Type: click
       Strategy: xpath
-      Id : $PAGE.care_platform_header.user_dropdown_button$
+      Id: $PAGE.care_platform_header.user_dropdown_button$
     - Type: click
       Strategy: xpath
-      Id : $PAGE.care_platform_header.myaccount_menu_button$
+      Id: $PAGE.care_platform_header.myaccount_menu_button$
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.modal_title$
-  #Select credentials
+    #Select credentials
     - Type: click
       Strategy: xpath
-      Id : $PAGE.providers_account_modal.credentials_navigation_tab$
+      Id: $PAGE.providers_account_modal.credentials_navigation_tab$
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_account_modal.credentials_content$
@@ -104,21 +104,21 @@ TestProviderUpdateCredentials:
     - Type: wait_not_visible
       Strategy: xpath
       Id: $PAGE.providers_account_modal.credentials_content$
-  #Opening new tab for the Employee's part of the process
+    #Opening new tab for the Employee's part of the process
     - Type: new_tab
     - Type: switch_window
       Value: 1
-  #Calling Employee Login case
+    #Calling Employee Login case
     - Type: case
       Value: EmployeeHealthPortalLogIn
-  #Employee Home Page
+    #Employee Home Page
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.employee_health_home_page.call_now_button$
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_home_page.call_now_button$
-  #Telehealth on demand modal
+    #Telehealth on demand modal
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_title$
@@ -131,17 +131,17 @@ TestProviderUpdateCredentials:
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_reasons_input$
-      Value: 'Test reason: automation'
+      Value: "Test reason: automation"
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_call_provider_button$
-  # Go back to providers
+    # Go back to providers
     - Type: switch_window
       Value: 0
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_home_page.last_on_demand_row$
-  #Check that the on demand call is from the state selected and disable to take by the provider
+    #Check that the on demand call is from the state selected and disable to take by the provider
     - Type: get_attribute
       Strategy: xpath
       Id: $PAGE.providers_home_page.last_on_demand_row$
@@ -160,20 +160,20 @@ TestProviderUpdateCredentials:
         - Type: contain
           Var: DETAILS_CONTENT
           Value: "is-disabled"
-  #Going to My Account
+    #Going to My Account
     - Type: click
       Strategy: xpath
-      Id : $PAGE.care_platform_header.user_dropdown_button$
+      Id: $PAGE.care_platform_header.user_dropdown_button$
     - Type: click
       Strategy: xpath
-      Id : $PAGE.care_platform_header.myaccount_menu_button$
+      Id: $PAGE.care_platform_header.myaccount_menu_button$
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.modal_title$
-  #Select credentials to answer call
+    #Select credentials to answer call
     - Type: click
       Strategy: xpath
-      Id : $PAGE.providers_account_modal.credentials_navigation_tab$
+      Id: $PAGE.providers_account_modal.credentials_navigation_tab$
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_account_modal.credentials_content$
@@ -187,7 +187,7 @@ TestProviderUpdateCredentials:
     - Type: wait_not_visible
       Strategy: xpath
       Id: $PAGE.providers_account_modal.credentials_content$
-  #call should be changed to enabled
+    #call should be changed to enabled
     - Type: get_attribute
       Strategy: xpath
       Id: $PAGE.providers_home_page.last_on_demand_row$
@@ -203,3 +203,58 @@ TestProviderUpdateCredentials:
           Value: "is-disabled"
     - Type: case
       Value: ProvidersCarePlatformEndCall
+
+# CXTB-199 Manually Log Out of Portal and Go Off Shift
+TestProviderLogOutPortalGoOffShift:
+  Environment: Settings
+  Vars:
+    LOGOUT_OPTION: "Go Off Shift"
+    CARE_PARTNER_USER1_FULLNAME: $AND_CLI_provider_user1_name$ $AND_CLI_provider_user1_lastname$
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+    # Calling Login case.
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+    # Calling Logout case.
+    - Type: case
+      Value: CarePlatformLogout
+    - Type: set_env_var
+      Value: $AND_CLI_provider_user1$
+      Var: provider_user1
+    - Type: set_env_var
+      Value: $AND_CLI_provider_user1_pwd$
+      Var: provider_user1_pwd
+    # Step 7 skipped, needed to call from SNF and then validate that provider did receive text notification.
+    # Continued on Step 8.
+    # Log in with the second user.
+    - Type: case
+      Value: CarePartnerLoginSecondaryUser
+    # Click on the users dropdown.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.headset_dropdown_button$
+    # Verify that the first user has gone off shift.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.offline_carepartner1_element$
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.offline_carepartner1_element$
+      Greps:
+        - var: CARE_PARTNER_ELEMENT
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: n_contain
+          Var: CARE_PARTNER_ELEMENT
+          Value: "Available"
+    - Type: assert
+      Asserts:
+        - Type: n_contain
+          Var: CARE_PARTNER_ELEMENT
+          Value: "Idle"
+    # Log out of the second user too.
+    - Type: case
+      Value: CarePlatformLogout
