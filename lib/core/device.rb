@@ -2009,4 +2009,223 @@ def verify_all_events_match_todays_date(action)
 
 end
 
+# Custom action to wait for an element to be enabled
+def wait_for_enabled_element(locator)
+  begin
+    # element = @driver.find_element(:xpath, convert_value_pageobjects(locator))
+    wait = Selenium::WebDriver::Wait.new(:timeout => @timeout)
+    element = wait.until {@driver.find_element(:xpath, convert_value_pageobjects(locator))}
+    wait.until {element.enabled?}
+    return element
+  # rescue Selenium::WebDriver::Error::NoSuchElementError
+  rescue Exception => e
+    log_info("Exception: #{e}")
+    return false
+  end
+end
+
+# Custom action to wait for an element to exist
+def wait_for_element_to_exist(locator)
+  begin
+    # element = @driver.find_element(:xpath, convert_value_pageobjects(locator))
+    wait = Selenium::WebDriver::Wait.new(:timeout => @timeout)
+    element = wait.until {@driver.find_element(:xpath, convert_value_pageobjects(locator))}
+    return element
+  # rescue Selenium::WebDriver::Error::NoSuchElementError
+  rescue Exception => e
+    # puts "Element not found"
+    # return nil
+    log_info("Exception: #{e}")
+    return false
+  end
+end
+
+# Custom action to wait for an element collection to exist
+def wait_for_element_collection_to_exist(locator)
+  begin
+    # element = @driver.find_element(:xpath, convert_value_pageobjects(locator))
+    wait = Selenium::WebDriver::Wait.new(:timeout => @timeout)
+    elements = wait.until {@driver.find_elements(:xpath, convert_value_pageobjects(locator))}
+    return elements
+    # rescue Selenium::WebDriver::Error::NoSuchElementError
+  rescue Exception => e
+    # puts "Element not found"
+    # return nil
+    log_info("Exception: #{e}")
+    return false
+  end
+end
+
+# Custom action to clean calls from queue and hanged calls on the care partner site
+def care_partner_clean_call_queue_and_hanged_calls(action)
+  
+  log_info("checking if there is any hanged call")
+  if wait_for_element_to_exist("$PAGE.care_platform_home.active_call_section$")
+    
+    log_info("open the show video if it is hidden")
+    if wait_for_enabled_element("$PAGE.care_platform_floating_video_call.video_show_button$")
+      @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_floating_video_call.video_show_button$")).click
+    end
+    
+    log_info("navigate to the call queue")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_floating_video_call.video_return_button$")).click
+    
+    log_info("verify it was redirected to the call queue, if call is running, click on hang call")
+    if wait_for_element_to_exist("$PAGE.care_platform_call_portal.end_call_button$")
+      @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_call_portal.end_call_button$")).click
+    end
+    
+    log_info("complete the session")
+    wait_for_enabled_element("$PAGE.care_platform_call_portal.video_status$")
+    
+    log_info("fill in Subject and Details field")
+    wait_for_enabled_element("$PAGE.providers_call_queue_page.subject_input$")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.providers_call_queue_page.subject_input$")).send_keys("Automation Tear Down")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.providers_call_queue_page.details_textarea$")).send_keys("Automation Tear Down Details")
+    
+    log_info("wait for the Complete Sesion button to be enabled and click on it")
+    wait_for_enabled_element("$PAGE.care_platform_call_portal.complete_session_btn$")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_call_portal.complete_session_btn$")).click
+    
+    log_info("wait for the post-call survey options")
+    wait_for_enabled_element("$PAGE.care_platform_call_portal.non_medical_radiobtn$")
+    
+    log_info("select the non medical radio button")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_call_portal.non_medical_radiobtn$")).click
+    
+    log_info("select the issue resolved radio button")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_call_portal.issue_resolved_yes_radiobutton$")).click
+    
+    log_info("select the Accidental call category")
+    @driver.find_element(:id, convert_value_pageobjects("$PAGE.care_platform_call_portal.category_select$")).click
+    wait_for_enabled_element("$PAGE.care_platform_call_portal.accidental_call_option$")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_call_portal.accidental_call_option$")).click
+    
+    log_info("Submit and Exit session")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_call_portal.submit_and_exit_session_button$")).click
+    wait_for_enabled_element("$PAGE.care_platform.call_queue_title$")
+  end
+  
+  log_info("checking if there is any pending call on the call queue page")
+  call_queue_call_elements = wait_for_element_collection_to_exist("$PAGE.care_platform_home.call_queue_calls$")
+  if call_queue_call_elements.nil? || call_queue_call_elements.empty?
+    puts "Call queue call elements collection is null/empty."
+  end
+  
+  if call_queue_call_elements.length() > 0
+    call_queue_call_elements.each do |call_element|
+      
+      log_info("wait for call queue element")
+      wait_for_enabled_element("$PAGE.care_platform_home.first_call_of_queue$")
+      @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_home.first_call_of_queue$")).click
+      log_info("answer call")
+      wait_for_element_to_exist("$PAGE.care_platform_home.answer_call$")
+      @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_home.answer_call$")).click
+      
+      if wait_for_element_to_exist("$PAGE.care_platform_notifications.failed_to_join_call_notification$") || wait_for_element_to_exist("$PAGE.care_platform_notifications.call_already_answered_notification$")
+        log_info("Failed to join call/Call already answered notification appeared")
+        @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform.navigation_home$")).click
+        @driver.navigate.refresh
+        wait_for_enabled_element("$PAGE.care_platform.call_queue_title$")
+      else
+        log_info("wait for the end call button")
+        wait_for_element_to_exist("$PAGE.care_platform_call_portal.end_call_button$")
+        
+        log_info("click on the end call")
+        @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_call_portal.end_call_button$")).click
+
+        log_info("Click on the No Message button if it appears")
+        if wait_for_element_to_exist("$PAGE.care_platform_call_portal.no_message_button$")
+          @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_call_portal.no_message_button$")).click
+          @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform.navigation_home$")).click
+          wait_for_enabled_element("$PAGE.care_platform.call_queue_title$")
+          next
+        end
+
+        log_info("fill in the details to complete the session, complete the session")
+        wait_for_element_to_exist("$PAGE.care_platform_call_portal.video_status$")
+        
+        log_info("fill in Subject and Details field")
+        wait_for_enabled_element("$PAGE.providers_call_queue_page.subject_input$")
+        @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.providers_call_queue_page.subject_input$")).send_keys("Automation Tear Down")
+        @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.providers_call_queue_page.details_textarea$")).send_keys("Automation Tear Down Details")
+        
+        log_info("wait for the Complete Sesion button to be enabled and click on it")
+        wait_for_enabled_element("$PAGE.care_platform_call_portal.complete_session_btn$")
+        @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_call_portal.complete_session_btn$")).click
+        
+        log_info("wait for the post-call survey options")
+        wait_for_element_to_exist("$PAGE.care_platform_call_portal.non_medical_radiobtn$")
+        
+        log_info("select the non medical radio button")
+        @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_call_portal.non_medical_radiobtn$")).click
+        
+        log_info("select the issue resolved radio button")
+        @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_call_portal.issue_resolved_yes_radiobutton$")).click
+        
+        log_info("select the Accidental call category")
+        @driver.find_element(:id, convert_value_pageobjects("$PAGE.care_platform_call_portal.category_select$")).click
+        wait_for_element_to_exist("$PAGE.care_platform_call_portal.accidental_call_option$")
+        @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_call_portal.accidental_call_option$")).click
+        
+        log_info("Submit and Exit session")
+        @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_call_portal.submit_and_exit_session_button$")).click
+        @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform.navigation_home$")).click
+        wait_for_enabled_element("$PAGE.care_platform.call_queue_title$")
+      end
+    end
+  end
+end
+
+# Custom action to wait for a mobile element to exist
+def wait_for_mobile_element_to_exist(locator)
+  begin
+    wait = Selenium::WebDriver::Wait.new(:timeout => @timeout)
+    # element = wait.until {@driver.find_element(:class_chain, convert_value_pageobjects(locator))}
+    element = wait.until {@driver.find_element(:class_chain, locator)}
+    return element
+  # rescue Selenium::WebDriver::Error::NoSuchElementError
+  rescue Exception => e
+    # puts "Element not found"
+    # return nil
+    log_info("Exception: #{e}")
+    return false
+  end
+end
+
+# Custom action to wait for a mobile element to disappear
+def wait_for_mobile_element_to_disappear(locator)
+  element_exists = wait_for_mobile_element_to_exist(locator)
+  unless element_exists
+    return true
+  end
+end
+
+# Custom action to clean all the unwanted prompts on Never Alone app before starting test.
+def senior_clean_unwanted_prompts(action)
+  count = 0
+  loop do
+    log_info("check if there is an existing prompt")
+
+    if wait_for_mobile_element_to_disappear("**/XCUIElementTypeButton[`label CONTAINS 'Close'`]") && count <=30
+      log_info("no prompts on the app")
+      break
+    end
+    
+    if wait_for_mobile_element_to_exist("**/XCUIElementTypeButton[`label CONTAINS 'Close'`]")
+      log_info("close the unwanted prompt")
+      prompt = wait_for_mobile_element_to_exist("**/XCUIElementTypeButton[`label CONTAINS 'Close'`]")
+      if prompt
+        prompt.click
+      end
+    end
+    sleep 3
+    
+    if count >= 30
+      log_info("there is too many prompts")
+      break
+    end
+    count += 1
+  end
+end
 # END OF DEVICE CLASS

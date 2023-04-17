@@ -138,10 +138,10 @@ JoinMedicalTransfer:
   Actions:
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_home_page.on_demand_calls$
+      Id: $PAGE.providers_home_page.last_medical_transfer_row$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_home_page.on_demand_calls$
+      Id: $PAGE.providers_home_page.last_medical_transfer_row$
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_call_queue_page.answer_call_button$

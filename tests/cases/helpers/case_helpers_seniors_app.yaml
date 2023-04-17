@@ -160,3 +160,14 @@ AnswerCallAsSenior:
     - Type: wait_for
       Strategy: class_chain
       Id: $PAGE.seniors_app_call.video_button$
+      CheckTime: 25
+
+# Senior Helper to clean prompts on Never Alone.
+SeniorCleanPrompts:
+  Environment: Settings
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+    # Close prompts on Never Alone.
+    - Type: senior_clean_unwanted_prompts

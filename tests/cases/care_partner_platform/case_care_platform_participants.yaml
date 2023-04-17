@@ -629,6 +629,7 @@ TestCarePartnerAnswerAndComplete:
   Precases:
     - SetNonTelehealthAppointmentForSenior
     - LoginNeverAloneHelper
+    - CarePartnerCleanCallQueueAndHangedCalls
   Aftercases:
     - TerminateApp
   Roles:
@@ -901,6 +902,10 @@ TestCarePartnerAnswerAndComplete:
     - Type: case
       Value: PostCallSurveyCarePartner
   # Green indicator for 'Available'
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_header.status_indicator$
     - Type: get_attribute
       Strategy: xpath
       Role: desktopChrome
@@ -920,6 +925,8 @@ TestCarePartnerAnswerAndComplete:
 #CXTB-96: Answer Call from Queue & Complete a Medical Transfer
 TestCarePartnerAnswerCallFromQueueAndCompleteMedicalTransfer:
   Environment: Settings
+  Precases:
+    - CarePartnerCleanCallQueueAndHangedCalls
   Aftercases:
     - TerminateApp
   Roles:
@@ -1097,6 +1104,7 @@ TestCarePartnerBrowsingWhileOnCall:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
+    - CarePartnerCleanCallQueueAndHangedCalls
   Aftercases:
     - TerminateApp
   Roles:
@@ -1313,6 +1321,8 @@ TestCarePartnerCallParticipantsDeviceCallComplete:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
+    - SeniorCleanPrompts
+    - CarePartnerCleanCallQueueAndHangedCalls
   Aftercases:
     - TerminateApp
   Roles:

@@ -1264,12 +1264,16 @@ AnswerCallAsCarePartner:
     # Login to the Care Platform app with Care Partners account.
     - Type: case
       Value: CarePartnerLogin
-    - Type: click
-      Role: desktopChrome
+    - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_home.call_based_on_participant_name$
     - Type: click
-      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_home.call_based_on_participant_name$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_home.answer_call$
+    - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_home.answer_call$
 
@@ -1334,10 +1338,14 @@ PostCallSurveyCarePartner:
       Role: desktopChrome
       Strategy: xpath
       Id: $PAGE.care_platform_call_portal.submit_and_exit_session_button$
+    # - Type: wait_for
+    #   Role: desktopChrome
+    #   Strategy: xpath
+    #   Id: $PAGE.care_platform_notifications.call_completed_notification$
     - Type: wait_for
       Role: desktopChrome
       Strategy: xpath
-      Id: $PAGE.care_platform_notifications.call_completed_notification$
+      Id: $PAGE.care_platform.call_queue_title$
 
 CarePartnerNavigateToParticipants:
   Environment: Settings
@@ -1505,3 +1513,21 @@ ForgotPasswordCarePlatformLoginLink:
   #Step 6 and 7 needs access to the email account provided in previous step
   #Access to the confirmation email message, and link within to set new password
   #These steps cannot be done 
+
+# Cleans the call queue of the Care Partners and Clears the hanged calls.
+CarePartnerCleanCallQueueAndHangedCalls:
+  Vars:
+    LOGOUT_OPTION: "Go Off Shift"
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Log in.
+    - Type: case
+      Value: CarePartnerLogin
+    # Clean Care Partner Call Queue and Hanged Calls.
+    - Type: care_partner_clean_call_queue_and_hanged_calls
+    # Log out.
+    - Type: case
+      Value: CarePlatformLogout

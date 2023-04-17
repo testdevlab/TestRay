@@ -27,6 +27,8 @@ care_platform_home:
   first_call_of_queue: //tbody[@role='rowgroup']/tr[1]
   answer_call: //button[text()='Answer Call']
   call_based_on_participant_name: //tbody[@role='rowgroup']/tr//strong[text() = '$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']
+  active_call_section: //div[contains(@class,'app-video app-video-fixed')] # doesn't matter if its expanded/collapsed
+  call_queue_calls: //table//tbody/tr
 
 care_platform_header:
   app_logo: //header//div[@class='app-header-logo']/img
@@ -194,6 +196,7 @@ care_platform_call_portal:
   medical_question_option: //option[@value='medicalQuestion']
   subcategory_select: subcategory
   located_provider_option: //option[@value='locatedProvider']
+  accidental_call_option: //option[@value='accidentalCall']
   submit_and_exit_session_button: //button[contains(text(),'Submit and Exit Session')]
   participant_schedule_based_on_element: //strong[text()='$AND_CLI_UNIQUE_EVENT_NAME$']
   edit_event_button: //div[@class='accordion-item is-open']//button[text()='Edit']
@@ -204,6 +207,7 @@ care_platform_call_portal:
   unanswered_call_icon: //div[@class='video-unanswered']
   call_participant_records: //a[contains(text(),'Records')]
   telehealth_request_form_header: //div[@id='modals']//h4[@class='font-bold text-md' and text()='Telehealth Request Form']
+  no_message_button: //div[@class='video video-ref']//a/button[@class='button mt-half button-border-white']
 
 care_platform_call_settings_modal:
   video_settings_modal_title: //*[@id='modals']//h4[text()='Call Settings']
@@ -228,6 +232,8 @@ care_platform_notifications:
   event_created_notification: //div[text()='Event created']
   event_saved_notification: //div[@class='Toastify']//div[text()='Event saved']
   event_deleted_notification: //div[@class='Toastify']//div[text()='Event deleted']
+  failed_to_join_call_notification: //div[@class='Toastify']//div[text()='Failed to join call']
+  call_already_answered_notification: //div[@class='Toastify']//div[text()='Call already answered']
 
 care_platform_facility:
   search_button: searchButton
