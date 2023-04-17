@@ -1,12 +1,14 @@
-# Phisical Device only.
+# Physical Device only.
 # CXTB-42: Verify Provider Incoming Call - Answer Call.
 # CXTB-188: Provider Call Facility Device & Completes an On-Demand Call.
 TestSNFProviderIncomingCallAnswerCallOnSNF:
   Environment: Settings
   Precases:
+    - ProviderCleanBeforeTest
     - LoginSNFHelper
   Aftercases:
     - TerminateApp
+    - ProviderCleanSlate
   Roles:
     - Role: localiOS
       App: NeverAlone

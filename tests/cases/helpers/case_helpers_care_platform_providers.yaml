@@ -38,7 +38,7 @@ ProvidersCarePlatformEndCall:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_home_page.home_title$
-  #Selects first on demand call
+  #Selects on demand call
     - Type: click
       Strategy: xpath
       Role: desktopChrome
@@ -720,3 +720,114 @@ ProviderSendsMessageToFacility:
         - Type: contain
           Var: LAST_MESSAGE_HISTORY
           Value: $AND_CLI_MESSAGE_TO_FACILITY$
+
+ProviderCleanSlate:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    - Type: if
+      If_Cases: 
+        - If_Case: IfReturnSession
+        - If_Case: ProviderVisibleEndCall
+        - If_Case: CompleteEndCallOnProviderSide
+
+#Clear un-ended sessions before test. Have Login
+ProviderCleanBeforeTest:
+  Environment: Settings
+  Vars:
+    LOGOUT_OPTION: "Go Off Shift"
+  Aftercases:
+    - CarePlatformLogout
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Login to the Care Platform app with Providers account.
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+    - Type: case
+      Value: ProviderCleanSlate
+
+IfReturnSession:
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.session_return_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.session_return_button$
+    - Type: case
+      Value: ProviderVisibleEndCall
+
+ProviderVisibleEndCall:
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    #End call
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.end_call_btn$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.end_call_btn$
+    - Type: case
+      Value: CompleteEndCallOnProviderSide
+
+CompleteEndCallOnProviderSide:
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:      
+  #Fill the Provider's call notes
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+      Value: 'Automation Test subject'
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_notes_provider_input$
+      Value: 'Automation Test Notes: Test ProvidersCarePlatformEndCall'
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_notes_save_button$
+  #Manual save of notes
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.call_notes_save_button$
+  #Complete Session
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
+      Property: disabled
+      Value: "false"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
+  #Fill survey and end session
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.post_call_survey_title$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.resolved_true_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.recommend_discharge_true_option$
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.home_title$

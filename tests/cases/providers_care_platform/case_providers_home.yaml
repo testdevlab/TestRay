@@ -215,6 +215,7 @@ TestStatusNotOnActiveCallForProviders:
           Var: STATUS_VAR
           Value: "is-green"
 
+# Physical Device only.
 # CXTB-133: Verify that Providers answer SNF call and completes session.
 TestProvidersAnswerSNFCallAndCompletesSession:
   Environment: Settings
@@ -222,9 +223,11 @@ TestProvidersAnswerSNFCallAndCompletesSession:
     PROVIDERS_SUBJECT:  Automation Test Call SNF.
     PROVIDERS_DETAILS:  Automation Test Notes Verify that Providers answer SNF call and completes session.
   Precases:
+    - ProviderCleanBeforeTest
     - LoginSNFHelper
   Aftercases:
     - TerminateApp
+    - ProviderCleanSlate
   Roles:
     - Role: desktopChrome
       App: desktop

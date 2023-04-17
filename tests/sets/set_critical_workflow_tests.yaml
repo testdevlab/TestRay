@@ -8,11 +8,11 @@ SetCriticalWorkflows:
     - Case: TestProvidersAnswerSNFCallAndCompletesSession
     - Case: TestSNFRequestSuccessfulCallConnect
     - Case: TestSNFCheckQueueandReviewDetails
-    - Case: TestSNFProviderIncomingCallAnswerCallOnSNF
+    - Case: TestSNFProviderIncomingCallAnswerCallOnSNF #Physical
     - Case: TestSeniorAppVerifyInAppOfflineBehavior # Physical
     - Case: TestSeniorAppPersonalCarePartnerMessagePromptAndCallBackButton  # Physical
     - Case: TestSeniorAppAnswerCallForProviderCalling # Physical
     - Case: TestSeniorAppCallPersonalCarePartnerOnHomePage  # Physical
     - Case: TestEmployeeHealthPortalUserCall
-    - Case: TestSNFVerifyInAppOfflineBehavior
+    - Case: TestSNFVerifyInAppOfflineBehavior #Physical
 

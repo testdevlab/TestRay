@@ -138,6 +138,8 @@ TestProviderUpdateCredentials:
     # Go back to providers
     - Type: switch_window
       Value: 0
+    - Type: sleep
+      Time: 3
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_home_page.last_on_demand_row$

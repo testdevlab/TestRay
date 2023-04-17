@@ -58,5 +58,6 @@ snf_incoming_call:
 
 snf_post_call_survey:
   great_answer_button: "**/XCUIElementTypeOther[`label == 'Great'`]"
+  bad_answer_button: "Bad"
   thank_you_label: "**/XCUIElementTypeStaticText[`label == 'Thank you for your feedback'`]"
   to_home_button: "**/XCUIElementTypeOther[`label == 'To Home'`]"

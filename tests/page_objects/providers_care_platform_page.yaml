@@ -3,7 +3,7 @@ providers_home_page:
   table : email
   follow_up_calls: (//div[contains(text(),'Follow-up')])[last()]
   missed_calls_text: (//div[contains(text(),'Missed Call')])[last()]
-  scheduled_calls: (//div[contains(text(),'Scheduled Call')])[last()]
+  scheduled_calls: (//tr[not(contains(@class,'is-disabled'))]//div[contains(text(),'Scheduled Call')])[last()]
   on_demand_calls: (//div[contains(text(),'On Demand Call')])[last()]
   datetime: //time
   time_dropdown: //div[div[contains(text(),'Time')]]//button
@@ -20,6 +20,7 @@ providers_home_page:
   save_and_close_ticket_button: //button[text()='Save and Close Ticket']
   dropdown_username: userName
   button_help: //button[text() = 'Help']
+  session_return_button: //button[@class='video-return']
 
 providers_account_modal:
   credentials_navigation_tab: //*[@id='modals']//nav/button[text()='Credentials']
