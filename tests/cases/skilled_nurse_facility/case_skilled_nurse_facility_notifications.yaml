@@ -1,0 +1,110 @@
+#CXTB-26 SNF - Verify Notifications Page
+TestSNFVerifyNotificationsPage:
+  Environment: Settings
+  Vars:
+    MESSAGE_TO_FACILITY: CXTB-26 SNF Verify Notification Page Message
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop  
+  Actions:
+  #Call login for nurses
+    - Type: case
+      Value: LoginSNFHelper
+  #Check Bell Icon
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.notifications_icon$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.notifications_icon$
+  #Check Notifications page header
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.notifications_label$
+  # Get actual number of notifications.
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.seniors_app_notifications.notifications_number_label$
+      Attribute: label
+      ResultVar: NOTIFICATIONS_NUMBER_LABEL
+  #Generate a notification
+    - Type: case
+      Value: ProviderSendsMessageToFacility
+  #Check notification badge change
+    - Type: sleep
+      Time: 10
+    - Type: operation
+      Operation: "$AND_CLI_NOTIFICATIONS_NUMBER_LABEL$ + 1"
+      ResultVar: UPDATED_NOTIFICATION_NUMBER_LABEL
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.seniors_app_notifications.notifications_number_label$
+      Attribute: label
+      ResultVar: NOTIFICATIONS_NUMBER_LABEL
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: UPDATED_NOTIFICATION_NUMBER_LABEL
+          Value: $AND_CLI_NOTIFICATIONS_NUMBER_LABEL$
+  #Close notification Prompt
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_notifications.modal_close_button$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+  #Change toggle to "All"
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.all_tab$
+  #Check notification details
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.first_notification$
+    #Check sender
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.snf_notifications.notification_details_from$
+      Attribute: label
+      ResultVar: FROM_VALUE
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: FROM_VALUE
+          Value: Dr. $AND_CLI_provider_user1_name$ $AND_CLI_provider_user1_lastname$
+    #Check when
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.snf_notifications.notification_details_sent$
+      Attribute: label
+      ResultVar: SENT_VALUE
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: SENT_VALUE
+          Value: "Today at"
+    #Check message sent
+    - Type: wait_for
+      Strategy: id
+      Id: "$AND_CLI_MESSAGE_TO_FACILITY$"
+  #Close details and go back to notifications
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.close_btn$
+    - Type: wait_not_visible
+      Strategy: id
+      Id: "$AND_CLI_MESSAGE_TO_FACILITY$"
+  #Close and go back to home
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.close_btn$
+    - Type: wait_for
+      Role: localiOS
+      Strategy: xpath
+      Id: $PAGE.snf_home.new_request_btn$
+  ##Step 9 can't be reproduced as we don't have (incoming) Missed Calls
