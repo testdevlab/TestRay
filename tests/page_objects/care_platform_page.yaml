@@ -240,3 +240,15 @@ care_platform_facility:
   search_text: searchText
   facility_name: //h3[@class='text-xl color-white font-normal']
   facilities_button: //div[@class='app-sidebar-menu-item-label'][text()='Facilities']
+  overview_button: //button[text()='Overview']
+  local_hospitals_button: //button[text()='Local Hospitals']
+  devices_button: //button[text()='Devices']
+  tabs_content: //div[@class='tabs-content']
+  title_subtab_devices: //h4[text()='Facility Devices']
+  title_subtab_local_hospital: //h4[text()='Local Hospitals & ED Contact']
+
+care_platform_facility_Record:
+  info_title: //h4[text()='Facility Information']
+  devices_button: //button[text()='Devices']
+  device_status: //div[@class='account-status account-status-active']
+  
