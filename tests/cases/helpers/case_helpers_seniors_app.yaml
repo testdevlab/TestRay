@@ -171,3 +171,24 @@ SeniorCleanPrompts:
   Actions:
     # Close prompts on Never Alone.
     - Type: senior_clean_unwanted_prompts
+
+# Ignore Call as a Senior
+IgnoreCallAsSenior:
+  Environment: Settings
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+    # Wait for the call prompt to show up.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.incoming_call_header$
+    # Click on the Answer Call button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.ignore_call_button$
+    # Wait for the call prompt to disappear.
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.close_btn$
+      Time: 15

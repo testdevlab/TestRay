@@ -1439,3 +1439,89 @@ TestCarePartnerCallParticipantsDeviceCallComplete:
         - Type: contain
           Var: INDICATOR
           Value: 'is-green'
+
+# CXTB-126: Call Participant's device - Call Ignored.
+TestCarePartnerCallParticipantsDeviceCallIgnored:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+    - SeniorCleanPrompts
+    - CarePartnerCleanCallQueueAndHangedCalls
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: desktopChrome
+      App: desktop 
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Navigate to Participants.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+  # Click on the corresponding participant.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+  # Click on the "Call Portal" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+  # Page updates to show portal screen with "No active call" text in video window.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+      Greps:
+        - var: CALL_MESSAGE
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALL_MESSAGE
+          Value: 'No active call.'
+  # Click "Call Participant" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_participant_btn$
+  # Video window updates visually as call attempt is made.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.unanswered_call_icon$
+  # Participant must select the "Ignore Call" button.
+    - Type: case
+      Value: IgnoreCallAsSenior
+  # Click "No message" to end the process without sending the participant a message.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.no_message_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.no_message_button$
+      Condition:
+      - Value: 5
+        Operation: visible
+        Result: true
+  # Call portal returns to no active call display.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+      Greps:
+        - var: CALL_MESSAGE
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALL_MESSAGE
+          Value: 'No active call.'

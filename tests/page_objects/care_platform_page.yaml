@@ -207,7 +207,7 @@ care_platform_call_portal:
   unanswered_call_icon: //div[@class='video-unanswered']
   call_participant_records: //a[contains(text(),'Records')]
   telehealth_request_form_header: //div[@id='modals']//h4[@class='font-bold text-md' and text()='Telehealth Request Form']
-  no_message_button: //div[@class='video video-ref']//a/button[@class='button mt-half button-border-white']
+  no_message_button: //div[@class='video video-ref']//a/button[contains(., 'No Message')]
 
 care_platform_call_settings_modal:
   video_settings_modal_title: //*[@id='modals']//h4[text()='Call Settings']

@@ -2067,14 +2067,28 @@ def care_partner_clean_call_queue_and_hanged_calls(action)
       @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_floating_video_call.video_show_button$")).click
     end
     
+    log_info("hover over the video fixed content to pull up the video return button")
+    wait_for_element_to_exist("$PAGE.care_platform_floating_video_call.video_fixed_content$")
+    @driver.action.move_to(wait_for_element_to_exist("$PAGE.care_platform_floating_video_call.video_fixed_content$")).perform
+
     log_info("navigate to the call queue")
     @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_floating_video_call.video_return_button$")).click
     
     log_info("verify it was redirected to the call queue, if call is running, click on hang call")
     if wait_for_element_to_exist("$PAGE.care_platform_call_portal.end_call_button$")
+      log_info("a call on course was found, click on the end call button")
+      wait_for_enabled_element("$PAGE.care_platform_call_portal.end_call_button$")
       @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_call_portal.end_call_button$")).click
     end
     
+    log_info("Click on the No Message button if it appears")
+    if wait_for_element_to_exist("$PAGE.care_platform_call_portal.no_message_button$")
+      @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform_call_portal.no_message_button$")).click
+      @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.care_platform.navigation_home$")).click
+      wait_for_enabled_element("$PAGE.care_platform.call_queue_title$")
+      return
+    end
+
     log_info("complete the session")
     wait_for_enabled_element("$PAGE.care_platform_call_portal.video_status$")
     
