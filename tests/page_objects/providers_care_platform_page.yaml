@@ -34,10 +34,10 @@ providers_account_modal:
   cancel_button: //*[@id='modals']//button[contains(.,'Cancel')]
 
 providers_facilities_page:
-  facilities_header_title: //div[@class='box-unscrollable-content']//h3
-  alpha_center_td: //tr//td[contains(text(),'$AND_CLI_facility_devices_user1_number$')]
+  facilities_header_title: //h3
+  alpha_center_td: //div[@role='button']//div[text()='Alpha Healthcare Center']
   call_portal_btn: //button[text()='Call Portal']
-  facility_based_on_name: //td/strong[text()='$AND_CLI_facility_name1$']
+  facility_based_on_name: //div[@role='button']//div[text()='$AND_CLI_facility_name1$']
   devices_tab: //div[@class='tabs box-scrollable-content -mb']//button[@id='2']
   call_based_on_device_button: //strong[text()='Device $AND_CLI_facility_devices_user1_number$:']/ancestor::tr//a[@class='button button-basic text-xs']
   message_based_on_device_button: //strong[text()='Device $AND_CLI_facility_devices_user1_number$:']/ancestor::tr//button[@class='button button-basic text-xs']
