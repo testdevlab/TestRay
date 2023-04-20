@@ -208,6 +208,9 @@ care_platform_call_portal:
   call_participant_records: //a[contains(text(),'Records')]
   telehealth_request_form_header: //div[@id='modals']//h4[@class='font-bold text-md' and text()='Telehealth Request Form']
   no_message_button: //div[@class='video video-ref']//a/button[contains(., 'No Message')]
+  yes_message_button: //form[contains(@class, 'video-message-form-box')]//button
+  participant_not_available_text: //div[@class='video-message-form text-center']//p
+  leave_message_participant_input: //textarea[@id='message']
 
 care_platform_call_settings_modal:
   video_settings_modal_title: //*[@id='modals']//h4[text()='Call Settings']

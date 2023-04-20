@@ -47,6 +47,13 @@ seniors_app_incoming_call:
   answer_call_button: "**/XCUIElementTypeButton[`label == 'Answer Call'`]"
   ignore_call_button: "**/XCUIElementTypeButton[`label == 'Ignore Call'`]"
 
+seniors_app_missed_call:
+  missed_call_header: "**/XCUIElementTypeStaticText[`label == 'Missed Call'`]"
+  close_btn: "**/XCUIElementTypeButton[`label CONTAINS 'Close'`]"
+  from_label: "**/XCUIElementTypeStaticText[`label == 'From:'`]"
+  from_value: //XCUIElementTypeStaticText[@name='From:']/following-sibling::XCUIElementTypeStaticText
+  when_label: "**/XCUIElementTypeStaticText[`label == 'When:'`]"
+
 seniors_app_call:
   end_call_button: "**/XCUIElementTypeOther[`label ENDSWITH 'End Call'`][-1]"
   mute_call_button: (//XCUIElementTypeOther[contains(@name,'Microphone')])[last()]

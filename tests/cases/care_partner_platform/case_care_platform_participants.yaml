@@ -1445,8 +1445,8 @@ TestCarePartnerCallParticipantsDeviceCallIgnored:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
-    - SeniorCleanPrompts
     - CarePartnerCleanCallQueueAndHangedCalls
+    - SeniorCleanPrompts
   Aftercases:
     - TerminateApp
   Roles:
@@ -1525,3 +1525,217 @@ TestCarePartnerCallParticipantsDeviceCallIgnored:
         - Type: eq
           Var: CALL_MESSAGE
           Value: 'No active call.'
+
+# CXTB-128: Call Participant's device - Call Missed.
+TestCarePartnerCallParticipantsDeviceCallMissed:
+  Vars:
+    MESSAGE_TO_PARTICIPANT: Automation Message CXTB-128
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+    - CarePartnerCleanCallQueueAndHangedCalls
+    - SeniorCleanPrompts
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: desktopChrome
+      App: desktop 
+    - Role: localiOS
+      Capabilities:
+        newCommandTimeout: 100
+      App: NeverAlone
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Navigate to Participants.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+  # Click on the corresponding participant.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+  # Click on the "Call Portal" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+  # Page updates to show portal screen with "No active call" text in video window.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+      Greps:
+        - var: CALL_MESSAGE
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALL_MESSAGE
+          Value: 'No active call.'
+  # Click "Call Participant" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_participant_btn$
+  # Video window updates visually as call attempt is made.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.unanswered_call_icon$
+  # Wait for 1 minute so the call can be missed, do not answer the call
+    - Type: sleep
+      Time: 60
+    - Type: wait_for
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.incoming_call_header$
+    - Type: click
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.incoming_call_header$
+  # End the call on the Care Partner side.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.end_call_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.end_call_button$
+  # Verify that the window updates to indicate the participant is not available.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.participant_not_available_text$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.participant_not_available_text$
+      Greps:
+        - var: PARTICIPANT_NOT_AVAILABLE_TEXT
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: PARTICIPANT_NOT_AVAILABLE_TEXT
+          Value: $AND_CLI_carepartner_user1_name$ is not available.Would you like to leave a text message?
+  # Verify that there is an option for the care partner to leave a text message.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.leave_message_participant_input$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.yes_message_button$
+  # Verify that the Participant received a "Missed Call" prompt indicating who called and when.
+    - Type: wait_for
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_missed_call.missed_call_header$
+    - Type: wait_for
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_missed_call.from_label$
+    - Type: return_element_attribute
+      Role: localiOS
+      Strategy: xpath
+      Id: $PAGE.seniors_app_missed_call.from_value$
+      Attribute: value
+      ResultVar: MSG_FROM_VALUE
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: MSG_FROM_VALUE
+          Value: $AND_CLI_carepartner_user1_name$ $AND_CLI_carepartner_user1_lastname$
+    - Type: wait_for
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_missed_call.when_label$
+  # Close the prompt on the Never Alone Seniors app.
+    - Type: wait_for
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_missed_call.close_btn$
+    - Type: click
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_missed_call.close_btn$
+    - Type: wait_not_visible
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_missed_call.close_btn$
+      Time: 10
+  # Care Partner sends a message in the available box and click on the "Yes, send message" button.
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.leave_message_participant_input$
+      Value: $AND_CLI_MESSAGE_TO_PARTICIPANT$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.yes_message_button$
+  # Call portal returns to no active call display.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+      Greps:
+        - var: CALL_MESSAGE
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALL_MESSAGE
+          Value: 'No active call.'
+  # Verify that the Participant receives a "Personal Care Partner Message" prompt showing the message, who sent it and when.
+    - Type: wait_for
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.message_header$
+    - Type: return_element_attribute
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.message_header$
+      Attribute: label
+      ResultVar: MESSAGE_HEADER_TITLE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: MESSAGE_HEADER_TITLE
+          Value: Personal Care Partner Message
+    - Type: wait_for
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.from_label$
+    - Type: return_element_attribute
+      Role: localiOS
+      Strategy: xpath
+      Id: $PAGE.seniors_app_message_modal.from_value$
+      Attribute: label
+      ResultVar: FROM_VALUE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: FROM_VALUE
+          Value: $AND_CLI_carepartner_user1_name$ $AND_CLI_carepartner_user1_lastname$
+    - Type: wait_for
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.sent_label$
+    - Type: wait_for
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.message_label$
+    - Type: return_element_attribute
+      Role: localiOS
+      Strategy: xpath
+      Id: $PAGE.seniors_app_message_modal.message_value$
+      Attribute: label
+      ResultVar: MESSAGE_VALUE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: MESSAGE_VALUE
+          Value: $AND_CLI_MESSAGE_TO_PARTICIPANT$
