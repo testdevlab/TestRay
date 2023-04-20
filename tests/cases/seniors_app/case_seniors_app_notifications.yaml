@@ -16,6 +16,8 @@ TestNotificationsPageNavigation:
 # CXTB-22: Verify Notifications Page on Senior App
 TestNotificationsPageOnSeniorApp:
   Environment: Settings
+  Vars:
+    LOGOUT_OPTION: "Go Off Shift"
   Precases:
     - LoginNeverAloneHelper
   Aftercases:
@@ -41,6 +43,8 @@ TestNotificationsPageOnSeniorApp:
   # Add a notification
     - Type: case
       Value: SetScheduledCallForSeniors
+    - Type: case
+      Value: CarePlatformLogout
     - Type: wait_not_visible
       Strategy: class_chain
       Id: $PAGE.seniors_app_notifications.no_new_notification$
@@ -90,7 +94,7 @@ TestNotificationsPageOnSeniorApp:
       Id: $PAGE.seniors_app_notifications.appointment_based_on_name_element$
   # Click on the notification.
   # This sleep is to reduce flakyness, if we assert by seconds then there are higher chances that test will fail.
-  # With this sleep we will assert once it has passed a minute and the label says taht was added 1 minute ago.
+  # With this sleep we will assert once it has passed a minute and the label says that was added 1 minute ago.
     - Type: sleep
       Time: 55
     - Type: click
@@ -113,6 +117,68 @@ TestNotificationsPageOnSeniorApp:
         - Type: eq
           Var: APPOINTMENT_ADDED_X_TIME_AGO
           Value: $AND_CLI_ADDED_EVENT_X_TIME_AGO$
+  # Close the appointment modal.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.close_btn$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.close_btn$
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_added_label$
+      Time: 10
+  # Go back to the Home page.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.close_btn$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.close_btn$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.notifications_icon$
+    - Type: case
+      Value: SetScheduledCallForSeniors
+  # Navigate to the notification page.
+    - Type: case
+      Value: NotificationsPageNavigationHelper
+  # Get actual number of notifications.
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.seniors_app_notifications.notifications_number_label$
+      Attribute: label
+      ResultVar: NOTIFICATIONS_NUMBER_LABEL
+  # Click on "All" at the top of the page.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.all_tab$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.first_notification$
+  # Go back to the home age.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.close_btn$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.close_btn$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.notifications_icon$
+  # Verify that there is no new notification.
+    - Type: case
+      Value: NotificationsPageNavigationHelper
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.seniors_app_notifications.notifications_number_label$
+      Attribute: label
+      ResultVar: NOTIFICATIONS_NUMBER_LABEL
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: NOTIFICATIONS_NUMBER_LABEL
+          Value: 0
 
 # CXTB-31: Verify appointment added notifications
 TestAppointmentAddedNotifications:

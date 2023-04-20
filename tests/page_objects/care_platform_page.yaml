@@ -83,7 +83,7 @@ care_platform_participant:
   first_participant_row: //table/thead[contains(.,'Participant')]/following-sibling::tbody/tr[contains(.,'$AND_CLI_senior_user1_name$') and contains(.,'$AND_CLI_senior_user1_lastname$')][1]
   first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
   selected_darkened_letter_button: //button[contains(@class,'is-selected')]
-  senior_complete_name: //td[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
+  senior_complete_name: //div[starts-with(@class, 'SearchableListTemplate_record')]//div[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
   senior_1_row: //*[@id='containerElement']/table[1]/tbody/tr[1]
   first_senior_lastname: //*[@id='containerElement']/table[1]/tbody/tr[1]//strong
   call_portal_btn: //button[text()='Call Portal']
