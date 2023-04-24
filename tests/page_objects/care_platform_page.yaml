@@ -164,8 +164,11 @@ care_platform_call_portal:
   teleheath_appointment_option: //option[@value='telehealthAppointment']
   manual_appointment_option: //option[@value='manualAppointment']
   subject_input: //div[@class='app-modals']//input[@id='subject']
+  subject_input_error_label: //div[@class='app-modals']//input[@id='subject']/following-sibling::div
   location_input: //input[@id='location']
+  location_input_error_label: //input[@id='location']/following-sibling::div
   date_container: //div[@class='react-datepicker__input-container']
+  date_container_error_label: //label[@for='date']/following-sibling::div[@aria-hidden]
   today_date_date_picker: //div[@aria-current='date']
   start_time_picker: startTime
   end_time_picker: endTime

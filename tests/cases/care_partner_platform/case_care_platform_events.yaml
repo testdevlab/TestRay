@@ -1,0 +1,309 @@
+# CXTB-131: Call Portal View - Create Event for Participant.
+TestCarePartnerCreateEventForParticipant:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+    - CarePartnerCleanCallQueueAndHangedCalls
+    - SeniorCleanPrompts
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Navigate to Participants.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+  # Click on the corresponding participant.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+  # Click on the "Call Portal" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+  # Page updates to show portal screen with "No active call" text in video window.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+      Greps:
+        - var: CALL_MESSAGE
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALL_MESSAGE
+          Value: 'No active call.'
+  # Click "Create event" button by Events label.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.create_event_btn$    
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.create_event_btn$   
+  # New "Create event" modal appears to left of section with fields needed to create an event.
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_create_event_modal.modal_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_create_event_modal.modal_title$ 
+      Property: textContent
+      Value: "Create Event"
+  # Write something on the subject to verify they empty later.
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.subject_input$
+      Value: "Automation Text"
+  # Click the "Cancel" button if you’ve started in error or if you change your mind (before or after making any changes).
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_create_event_modal.cancel_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_create_event_modal.modal_title$
+  # Click "Create event" button by Events label.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.create_event_btn$   
+  # New "Create event" modal appears to left of section with fields needed to create an event.
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChromeß
+      Id: $PAGE.care_platform_create_event_modal.modal_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_create_event_modal.modal_title$ 
+      Property: textContent
+      Value: "Create Event"
+  # No information will be pushed to the participant’s schedule, so will not be visible in the Care Platform nor on the participant’s device.
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.subject_input$
+      Property: textContent
+      Value: ""
+  # Select the Telehealth appointment Category for the event.
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.category_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.teleheath_appointment_option$
+  # Verify that the location should automatically update to show "Virtual appointment".
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.location_input$
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.location_input$
+      Attribute: value
+      Value: "Virtual appointment"
+  # Select the Manual appointment Category for the event.
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.category_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.manual_appointment_option$
+  # Verify that the location field remains open for you to type in information.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.location_input$
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.location_input$
+      Attribute: value
+      Value: ""
+  # Verify that the user is not able to Save and Close the event when the user has the following fields empty:
+  # Subject, Date, Start Time and End Time
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.save_and_close_btn$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.subject_input_error_label$
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.subject_input_error_label$
+      Attribute: aria-hidden
+      Value: "false"
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.location_input_error_label$
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.location_input_error_label$
+      Attribute: aria-hidden
+      Value: "false"
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.date_container_error_label$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.date_container_error_label$
+      Property: hidden
+      Value: "false"
+  # Enter remaining details for schedule entry as you would like it to appear on the participant’s device:
+  # Subject, Date, Start Time and End Time
+    - Type: generate_unique_name
+      Name: "Manual Event"
+      ResultVar: UNIQUE_EVENT_NAME
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.subject_input$
+      Value: $AND_CLI_UNIQUE_EVENT_NAME$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.location_input$
+      Value: "Automation Location"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.date_container$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.today_date_date_picker$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.start_time_picker$
+      Value: 1000p
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.end_time_picker$
+      Value: 1100p
+  # Verify that user should not be able to Save and close the event until after all of these fields have been populated.
+  # Select Manual appointment, click "Save and close" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.save_and_close_btn$
+  # Create event window disappears.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_create_event_modal.modal_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.event_created_notification$
+  # Schedule listing is updated to include the event you’ve just created
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.participant_schedule_based_on_element$
+  # The participant’s device schedule will now also reflect this new event with all the details as entered.
+    - Type: wait_for
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.event_based_on_name_element$
+  # Click on Create Event, Select "Telehealth Appointment" and then fill up the required fields.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.create_event_btn$
+    # New "Create event" modal appears to left of section with fields needed to create an event.
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_create_event_modal.modal_title$
+    # Select the Telehealth appointment Category for the event.
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.category_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.teleheath_appointment_option$
+    - Type: generate_unique_name
+      Name: "Telehealth Auto Event"
+      ResultVar: UNIQUE_EVENT_NAME
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.subject_input$
+      Value: $AND_CLI_UNIQUE_EVENT_NAME$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.date_container$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.today_date_date_picker$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.start_time_picker$
+      Value: 1000p
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.end_time_picker$
+      Value: 1100p
+  # Verify there is a "Next Button" instead of "Save and Close".
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.next_btn$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.next_btn$
+  # Verify that create event window is replaced with the "Telehealth request form" 
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.telehealth_request_form_header$
+  # Click on "Submit" and verify that the form can't be submitted without the following fields filled:
+  # Priority level, Reason for request and When did symptoms start.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.submit_create_event_btn$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.urgent_patient_matter_error_label$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.reason_for_request_error_label$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.symptoms_start_input_error_label$
+  # Fill in the required fields:
+  # Priority level, Reason for request and When did symptoms start?
+  # Urgent patient matter
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.urgent_patient_matter_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.urgent_patient_matter_yes_option$
+  # Reason for request
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.reason_for_request_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.first_reason_for_request_available_option$
+  # When did symptoms start      
+    - Type: click
+      Strategy: class
+      Id: $PAGE.care_platform_call_portal.symptoms_start_input_container$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.today_date_date_picker$
+  # Click "Create event" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.submit_create_event_btn$
+  # Telehealth request form window disappears. 
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id : $PAGE.care_platform_call_portal.telehealth_request_form_header$
+  # Schedule listing is updated to include the event you’ve just created.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.participant_schedule_based_on_element$
+  # The participant’s device schedule will now also reflect this new event with all the details as entered.
+    - Type: wait_for
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.event_based_on_name_element$
