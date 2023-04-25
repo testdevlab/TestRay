@@ -46,63 +46,63 @@ ProvidersCarePlatformEndCall:
   #Answer call
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.answer_call_button$
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.answer_call_button$
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
     - Type: sleep
       Time: 3
   #End call
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.end_call_btn$
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.end_call_btn$
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
   #Fill the Provider's call notes
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+      Id: $PAGE.providers_call_handling_page.call_notes_subject_input$
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+      Id: $PAGE.providers_call_handling_page.call_notes_subject_input$
       Value: 'Automation Test subject'
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_provider_input$
+      Id: $PAGE.providers_call_handling_page.call_notes_provider_input$
       Value: 'Automation Test Notes: Test ProvidersCarePlatformEndCall'
     - Type: scroll_to
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_save_button$
+      Id: $PAGE.providers_call_handling_page.call_notes_save_button$
   #Manual save of notes
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_save_button$
+      Id: $PAGE.providers_call_handling_page.call_notes_save_button$
   #Complete Session
     - Type: wait_for_property
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
+      Id: $PAGE.providers_call_handling_page.complete_session_button$ 
       Property: disabled
       Value: "false"
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
+      Id: $PAGE.providers_call_handling_page.complete_session_button$ 
   #Fill survey and end session
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.post_call_survey_title$
+      Id: $PAGE.providers_call_handling_page.post_call_survey_title$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.resolved_true_option$
+      Id: $PAGE.providers_call_handling_page.resolved_true_option$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.recommend_discharge_true_option$
+      Id: $PAGE.providers_call_handling_page.recommend_discharge_yes_by_SNF$
     - Type: scroll_to
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+      Id: $PAGE.providers_call_handling_page.submit_exit_session_button$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+      Id: $PAGE.providers_call_handling_page.submit_exit_session_button$
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_home_page.home_title$
@@ -144,13 +144,13 @@ JoinMedicalTransfer:
       Id: $PAGE.providers_home_page.last_medical_transfer_row$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.answer_call_button$
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.answer_call_button$
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.end_call_btn$
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
 
 # Post Call survey when the call ends.
 PostCallSurveyProvider:
@@ -161,45 +161,45 @@ PostCallSurveyProvider:
     # Verify that the "Complete Session" is disabled.
     - Type: wait_for_property
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
+      Id: $PAGE.providers_call_handling_page.complete_session_button$ 
       Property: disabled
       Value: "true"
     # Fill the notes
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.subject_input$
+      Id: $PAGE.providers_call_handling_page.subject_input$
       Value: Automation Call
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.details_textarea$
+      Id: $PAGE.providers_call_handling_page.details_textarea$
       Value: Automation call    
     - Type: wait_for_property
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
+      Id: $PAGE.providers_call_handling_page.complete_session_button$ 
       Property: disabled
       Value: "false"
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.complete_session_button$             
+      Id: $PAGE.providers_call_handling_page.complete_session_button$             
     # Fill the Post-call Survey
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.yes_issue_resolved_radio_btn$
+      Id: $PAGE.providers_call_handling_page.resolved_true_option$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.yes_issue_resolved_radio_btn$             
+      Id: $PAGE.providers_call_handling_page.resolved_true_option$             
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.yes_recommended_discharge_radio_btn$          
+      Id: $PAGE.providers_call_handling_page.recommend_discharge_yes_by_SNF$          
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.yes_recommended_discharge_radio_btn$
+      Id: $PAGE.providers_call_handling_page.recommend_discharge_yes_by_SNF$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
-#    - Type: wait_for
-#      Strategy: xpath
-#      Id: $PAGE.providers_notifications.call_completed_notification$
+      Id: $PAGE.providers_call_handling_page.submit_exit_session_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_notifications.call_completed_notification$
 
 ProviderNavigateToParticipants:
   Environment: Settings
@@ -256,10 +256,10 @@ ProviderCallParticipant:
     # Call the participant.
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_participant_button$
+      Id: $PAGE.providers_call_handling_page.call_participant_button$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_participant_button$
+      Id: $PAGE.providers_call_handling_page.call_participant_button$
 
 ProviderCallFacility:
   Environment: Settings
@@ -294,10 +294,10 @@ ProviderCallFacility:
     # Page updates to show call portal screen with "No active call" showing in video window.
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.video_status$
+      Id: $PAGE.providers_call_handling_page.video_status$
     - Type: get_attribute
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.video_status$
+      Id: $PAGE.providers_call_handling_page.video_status$
       Greps:
         - var: CALL_MESSAGE
           attr: textContent
@@ -311,10 +311,10 @@ ProviderCallFacility:
     # Click on the Call Device button.
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_device_btn$ 
+      Id: $PAGE.providers_call_handling_page.call_device_btn$ 
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_device_btn$ 
+      Id: $PAGE.providers_call_handling_page.call_device_btn$ 
 
 ProviderSetStateCredential:
   Environment: Settings
@@ -387,7 +387,7 @@ SetFollowUpTicket:
       # Call an SNF Facility
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_device_btn$      
+      Id: $PAGE.providers_call_handling_page.call_device_btn$      
       # Answer the call from SNF
     - Type: wait_for
       Role: localiOS
@@ -400,16 +400,16 @@ SetFollowUpTicket:
       # Fill the notes
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.subject_input$
+      Id: $PAGE.providers_call_handling_page.subject_input$
       Value: Follow-up Subject Automation
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.details_textarea$
+      Id: $PAGE.providers_call_handling_page.details_textarea$
       Value: Follow-up Details Automation 
       # Close the call 
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.end_call_btn$
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
       # Complete the call in SNF
     - Type: click
       Role: localiOS
@@ -422,23 +422,23 @@ SetFollowUpTicket:
       # Complete the session 
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.complete_session_button$
+      Id: $PAGE.providers_call_handling_page.complete_session_button$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.complete_session_button$
+      Id: $PAGE.providers_call_handling_page.complete_session_button$
       # Set and Fill the follow up ticket
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.no_radiobtn$   
+      Id: $PAGE.providers_call_handling_page.resolved_no_option$   
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.reason_last_option$     
+      Id: $PAGE.providers_call_handling_page.reason_last_option$     
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.time_follow_up_two_days_radiobtn$
+      Id: $PAGE.providers_call_handling_page.time_follow_up_two_days_radiobtn$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.submit_session_btn$
+      Id: $PAGE.providers_call_handling_page.submit_session_btn$
 
 SetScheduledCallTicket:
   Environment: Settings 
@@ -619,11 +619,11 @@ SetMissedCallTicket:
       # Fill the notes
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.subject_input$
+      Id: $PAGE.providers_call_handling_page.subject_input$
       Value: Missed Call Subject Automation
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.details_textarea$
+      Id: $PAGE.providers_call_handling_page.details_textarea$
       Value: Missed Call Details Automation     
     - Type: wait_for_property
       Strategy: xpath
@@ -772,10 +772,10 @@ ProviderVisibleEndCall:
     #End call
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.end_call_btn$
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.end_call_btn$
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
     - Type: case
       Value: CompleteEndCallOnProviderSide
 
@@ -785,49 +785,179 @@ CompleteEndCallOnProviderSide:
       App: desktop       
   Actions:      
   #Fill the Provider's call notes
+      #If goes to survey de una vez, no habra call notes
+    - Type: if
+      If_Cases: 
+        - If_Case: IfSaveNotes
+  #Fill survey and end session
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+      Id: $PAGE.providers_call_handling_page.post_call_survey_title$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.resolved_true_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.recommend_discharge_yes_by_SNF$
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.submit_exit_session_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.submit_exit_session_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.home_title$
+
+IfSaveNotes:
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.call_notes_subject_input$
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+      Id: $PAGE.providers_call_handling_page.call_notes_subject_input$
       Value: 'Automation Test subject'
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_provider_input$
+      Id: $PAGE.providers_call_handling_page.call_notes_provider_input$
       Value: 'Automation Test Notes: Test ProvidersCarePlatformEndCall'
     - Type: scroll_to
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_save_button$
+      Id: $PAGE.providers_call_handling_page.call_notes_save_button$
   #Manual save of notes
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_save_button$
+      Id: $PAGE.providers_call_handling_page.call_notes_save_button$
   #Complete Session
     - Type: wait_for_property
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
+      Id: $PAGE.providers_call_handling_page.complete_session_button$ 
       Property: disabled
       Value: "false"
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
-  #Fill survey and end session
+      Id: $PAGE.providers_call_handling_page.complete_session_button$ 
+
+CreateAFollowUpForSNFMissedCall:
+  Roles:
+    - Role: desktopChrome
+      App: desktop  
+  Actions:
+  #Create follow-up call
+    #Generate a call from Provider to Facility Device.
+    - Type: case
+      Value: ProviderCallFacility
+    - Type: sleep
+      Time: 3
+    - Type: case
+      Value: SNFAnswerIncomingCall
+    #End call in Provider
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.post_call_survey_title$
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.resolved_true_option$
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
+    #Fill the Provider's call notes
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.call_notes_subject_input$
+    - Type: clear_field
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.call_notes_subject_input$
+    - Type: send_keys
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.call_notes_subject_input$
+      Value: 'Automation Test subject'
+    - Type: clear_field
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.call_notes_provider_input$
+    - Type: send_keys
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.call_notes_provider_input$
+      Value: 'Automation Test Notes: Test TestSNFMissedCallFromProvider'
+    - Type: if
+      If_Cases: 
+        - If_Case: IfSaveNotes
+    #Fill survey for follow-up
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.post_call_survey_title$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.recommend_discharge_true_option$
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.resolved_no_option$
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.reason_input$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.reason_input$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.follow_up_reason_option$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.follow_up_now_option$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.recommend_discharge_no_option$
     - Type: scroll_to
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.submit_exit_session_button$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.submit_exit_session_button$
+
+CleanUsedFollowUp:
+  Roles:
+    - Role: desktopChrome
+      App: desktop  
+  Actions:
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_follow_up_call_details_page.update_status_dropdown$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_home_page.home_title$
+      Role: desktopChrome
+      Id: $PAGE.providers_follow_up_call_details_page.status_option_close_ticket$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_follow_up_call_details_page.status_option_close_ticket$
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_follow_up_call_details_page.close_ticket_modal_title$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.providers_follow_up_call_details_page.close_ticket_reason_input$
+      Value: 'Automation Test Cleaning'
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_follow_up_call_details_page.close_ticket_save_button$
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_home_page.toast_closed_ticket$  

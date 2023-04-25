@@ -249,10 +249,10 @@ TestProvidersAnswerSNFCallAndCompletesSession:
       Id : $PAGE.providers_home_page.call_based_on_participant_name$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.answer_call_button$
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.answer_call_button$
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
     # Call portal should be displayed and the user status has been automatically updated to "In session" (red dot).
     - Type: wait_for
       Strategy: xpath
@@ -292,10 +292,10 @@ TestProvidersAnswerSNFCallAndCompletesSession:
     # Click the "End Call" button.
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.end_call_btn$
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.end_call_btn$
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
     # Video area updates to show a message showing that the call has ended.
     - Type: get_attribute
       Strategy: xpath
@@ -327,31 +327,31 @@ TestProvidersAnswerSNFCallAndCompletesSession:
     # Fill the Provider's call notes
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+      Id: $PAGE.providers_call_handling_page.call_notes_subject_input$
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+      Id: $PAGE.providers_call_handling_page.call_notes_subject_input$
       Value: $AND_CLI_PROVIDERS_SUBJECT$
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_provider_input$
+      Id: $PAGE.providers_call_handling_page.call_notes_provider_input$
       Value: $AND_CLI_PROVIDERS_DETAILS$
     # Click the "Complete session" button.
     - Type: wait_for_property
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
+      Id: $PAGE.providers_call_handling_page.complete_session_button$ 
       Property: disabled
       Value: "false"
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
+      Id: $PAGE.providers_call_handling_page.complete_session_button$ 
     # Post-call survey screen appears with your current notes pre-populated.
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.post_call_survey_title$
+      Id: $PAGE.providers_call_handling_page.post_call_survey_title$
     - Type: return_element_attribute
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+      Id: $PAGE.providers_call_handling_page.call_notes_subject_input$
       Attribute: value
       ResultVar: SUBJECT_SUBJECT_CURRENT_TEXT
     - Type: assert
@@ -361,7 +361,7 @@ TestProvidersAnswerSNFCallAndCompletesSession:
           Value: $AND_CLI_PROVIDERS_SUBJECT$
     - Type: return_element_attribute
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_provider_input$
+      Id: $PAGE.providers_call_handling_page.call_notes_provider_input$
       Attribute: value
       ResultVar: SUBJECT_NOTES_CURRENT_TEXT
     - Type: assert
@@ -372,49 +372,49 @@ TestProvidersAnswerSNFCallAndCompletesSession:
     # Change to "No" on the "Was issue resolved" question.
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.resolved_no_option$
+      Id: $PAGE.providers_call_handling_page.resolved_no_option$
     # Survey updates based on this response:
     # New "Reason" field appears.
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.reason_label$
+      Id: $PAGE.providers_call_handling_page.reason_label$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.reason_input$
+      Id: $PAGE.providers_call_handling_page.reason_input$
     # "Follow-up recommended" is automatically selected.
     - Type: wait_for_attribute
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.follow_up_recommended_checkbox$
+      Id: $PAGE.providers_call_handling_page.follow_up_recommended_checkbox$
       Attribute: value
       Value: true
     # New time options appear below Follow-up recommended checkbox, with "1 hour" selected.
     - Type: wait_for_attribute
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.selected_follow_up_time_option$
+      Id: $PAGE.providers_call_handling_page.selected_follow_up_time_option$
       Attribute: value
       Value: "1"
     # "Assign to myself" box appears and is automatically selected.
     - Type: wait_for_attribute
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.assign_to_myself_checkbox$
+      Id: $PAGE.providers_call_handling_page.assign_to_myself_checkbox$
       Attribute: value
       Value: true
     # Select a reason and click on the "Submit and Exit Session" button.
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.reason_input$
+      Id: $PAGE.providers_call_handling_page.reason_input$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.first_reason_option$
+      Id: $PAGE.providers_call_handling_page.first_reason_option$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.recommend_discharge_no_option$
+      Id: $PAGE.providers_call_handling_page.recommend_discharge_no_option$
     - Type: scroll_to
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+      Id: $PAGE.providers_call_handling_page.submit_exit_session_button$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+      Id: $PAGE.providers_call_handling_page.submit_exit_session_button$
     # User is redirected to the Home Listing page with the new Follow-up ticket included in the listing.
     - Type: wait_for
       Strategy: xpath

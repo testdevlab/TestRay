@@ -1090,7 +1090,7 @@ TestCarePartnerAnswerCallFromQueueAndCompleteMedicalTransfer:
     - Type: click
       Role: desktopChrome1
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.end_call_btn$
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
   # Provider fills up Post call Survey.
     - Type: case
       Value: PostCallSurveyProvider
@@ -1380,10 +1380,10 @@ TestCarePartnerCallParticipantsDeviceCallComplete:
       Id: $PAGE.care_platform_call_portal.call_volume_button$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.subject_input$
+      Id: $PAGE.providers_call_handling_page.subject_input$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.details_textarea$
+      Id: $PAGE.providers_call_handling_page.details_textarea$
   # End the call.
     - Type: click
       Strategy: xpath

@@ -1,7 +1,8 @@
 providers_home_page:
+  home_button: //nav/a[contains(.,'Home')]
   home_title: //h3[text()='Home']
   table : email
-  follow_up_calls: (//div[contains(text(),'Follow-up')])[last()]
+  follow_up_calls: //tr[contains(.,'Follow-up')][last()]
   missed_calls_text: (//div[contains(text(),'Missed Call')])[last()]
   scheduled_calls: (//tr[not(contains(@class,'is-disabled'))]//div[contains(text(),'Scheduled Call')])[last()]
   on_demand_calls: (//div[contains(text(),'On Demand Call')])[last()]
@@ -21,6 +22,7 @@ providers_home_page:
   dropdown_username: userName
   button_help: //button[text() = 'Help']
   session_return_button: //button[@class='video-return']
+  toast_closed_ticket: //div[@class='Toastify']//div[text()='Follow-up ticket closed']
 
 providers_account_modal:
   credentials_navigation_tab: //*[@id='modals']//nav/button[text()='Credentials']
@@ -45,14 +47,11 @@ providers_facilities_page:
   send_message_button: //span[@class='icon-send text-md']/ancestor::button
   last_message_sent: (//div[@class='message message-to message-to-inverted'])[last()]
 
-providers_call_queue_page:
+providers_call_handling_page:
   end_call_btn: //button[span[text()='End Call']]
   call_device_btn: //button[text()='Call Device']
   subject_input: //div[label[text()='Subject']]//input
   details_textarea: //div[label[text()='Details']]//textarea
-  yes_issue_resolved_radio_btn: //label[input[@name='resolved'][@value='true']]
-  no_radiobtn: //label[input[@name='resolved'][@value='false']]
-  yes_recommended_discharge_radio_btn: //label[input[@name='recommendedDischarge'][@value='true']]
   reason_last_option: //option[last()]
   time_follow_up_two_days_radiobtn: //label[input[@name='followUpTime'][@value=48]]
   submit_session_btn: //button[@type='submit']
@@ -67,8 +66,11 @@ providers_call_queue_page:
   reason_label: //div[@aria-hidden='false']//div[@class='font-bold mb-half mt']
   reason_input: //select[@id='reason']
   first_reason_option: //select[@id='reason']/option[not(@value)][1]
-  recommend_discharge_true_option: //input[@name='recommendedDischarge' and @value='true']/following-sibling::span
-  recommend_discharge_no_option: //input[@name='recommendedDischarge' and @value='false']/following-sibling::span
+  follow_up_reason_option: //*[@id='reason']/option[contains(text(),'Follow-up')]
+  follow_up_now_option: //input/following-sibling::div[text()='Now']
+  recommend_discharge_yes_by_telehealth: //input[@name='recommendedDischarge' and @value='Yes, by telehealth']/following-sibling::span
+  recommend_discharge_yes_by_SNF: //input[@name='recommendedDischarge' and @value='Yes, by facility']/following-sibling::span
+  recommend_discharge_no_option: //input[@name='recommendedDischarge' and @value='No']/following-sibling::span
   follow_up_recommended_checkbox: //input[@id='followUpRecommended']
   assign_to_myself_checkbox: //input[@id='assignToMyself']
   selected_follow_up_time_option: //input[@name='followUpTime' and @checked]
@@ -81,6 +83,15 @@ providers_call_queue_page:
   assign_to_me_button: //button[contains(text(),'Assign to Me')]
   unnasign_button: //button[contains(text(),'Unassign')]
   video_status: //div[contains(@class,'video')]//div[@class='video-status']
+  no_message_button: //button[contains(.,'No Message')]
+
+providers_follow_up_call_details_page:
+  call_device_button: //button[contains(.,'Call Device')]
+  update_status_dropdown: //button[@class='status-filter-dropdown-toggle']
+  status_option_close_ticket: //button[@class='status-filter-dropdown-button' and contains(.,'Close Ticket')]
+  close_ticket_modal_title: //*[@id='dialogs']//h4[text()='Close Ticket']
+  close_ticket_reason_input: //*[@id='dialogs']//input[@name='reasonForClosing']
+  close_ticket_save_button: //*[@id='dialogs']//button[text()='Save and Close Ticket']
   
 providers_employees_page:
   employees_label: //h3[text()='Employees']

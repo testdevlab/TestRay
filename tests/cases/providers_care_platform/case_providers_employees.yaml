@@ -174,16 +174,16 @@ TestProviderAnswerCompleteSessionFromEHP:
   #Answer call
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.answer_call_button$
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.answer_call_button$
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
     - Type: sleep
       Time: 3
   #End call
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.end_call_btn$
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
   #Check In Session indicator
     - Type: wait_for
       Strategy: xpath
@@ -200,51 +200,51 @@ TestProviderAnswerCompleteSessionFromEHP:
           Value: is-red
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.end_call_btn$
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
   #Fill the Provider's call notes
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+      Id: $PAGE.providers_call_handling_page.call_notes_subject_input$
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_subject_input$
+      Id: $PAGE.providers_call_handling_page.call_notes_subject_input$
       Value: 'Automation Test subject'
     - Type: send_keys
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_provider_input$
+      Id: $PAGE.providers_call_handling_page.call_notes_provider_input$
       Value: 'Automation Test Notes: Test TestAnswerCompleteSessionFromEHP'
     - Type: scroll_to
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_save_button$
+      Id: $PAGE.providers_call_handling_page.call_notes_save_button$
   #Manual save of notes
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.call_notes_save_button$
+      Id: $PAGE.providers_call_handling_page.call_notes_save_button$
   #Complete Session
     - Type: wait_for_property
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
+      Id: $PAGE.providers_call_handling_page.complete_session_button$ 
       Property: disabled
       Value: "false"
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.complete_session_button$ 
+      Id: $PAGE.providers_call_handling_page.complete_session_button$ 
   #Fill survey and end session
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.post_call_survey_title$
+      Id: $PAGE.providers_call_handling_page.post_call_survey_title$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.resolved_no_option$
+      Id: $PAGE.providers_call_handling_page.resolved_no_option$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.recommend_discharge_true_option$
+      Id: $PAGE.providers_call_handling_page.recommend_discharge_yes_by_SNF$
     - Type: scroll_to
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+      Id: $PAGE.providers_call_handling_page.submit_exit_session_button$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.submit_exit_session_button$
+      Id: $PAGE.providers_call_handling_page.submit_exit_session_button$
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_home_page.home_title$

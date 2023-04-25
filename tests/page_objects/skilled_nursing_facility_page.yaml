@@ -46,6 +46,8 @@ snf_notifications:
   modal_close_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Close'`]"
   notification_details_from: "**/XCUIElementTypeOther[`label BEGINSWITH 'From:'`][-1]"
   notification_details_sent: "**/XCUIElementTypeOther[`label BEGINSWITH 'Sent:'`]"
+  notification_details_when: "**/XCUIElementTypeOther[`label BEGINSWITH 'When:'`][-1]"
+  notification_details_follow_up: "**/XCUIElementTypeOther[`label BEGINSWITH 'Follow-up:'`][-1]"
 
 snf_offline_prompt:
   connection_error_header:  "**/XCUIElementTypeStaticText[`label == 'Connection Error'`]"

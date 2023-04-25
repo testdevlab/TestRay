@@ -186,12 +186,12 @@ TestSeniorAppCallPersonalCarePartnerOnHomePage:
     - Type: send_keys
       Role: desktopChrome
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.subject_input$
+      Id: $PAGE.providers_call_handling_page.subject_input$
       Value: Missed Call Subject Automation
     - Type: send_keys
       Role: desktopChrome
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.details_textarea$
+      Id: $PAGE.providers_call_handling_page.details_textarea$
       Value: Missed Call Details Automation     
     - Type: wait_for_property
       Role: desktopChrome

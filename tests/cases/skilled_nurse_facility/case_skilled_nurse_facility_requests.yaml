@@ -330,16 +330,16 @@ TestSNFRequestSuccessfulCallConnect:
     - Type: click
       Strategy: xpath
       Role: desktopChrome
-      Id: $PAGE.providers_call_queue_page.answer_call_button$
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
   #End Call
     - Type: wait_for
       Strategy: xpath
       Role: desktopChrome
-      Id: $PAGE.providers_call_queue_page.end_call_btn$
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
     - Type: click
       Strategy: xpath
       Role: desktopChrome
-      Id: $PAGE.providers_call_queue_page.end_call_btn$
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
   #Complete Session
     - Type: case
       Value: PostCallSurveyProvider
@@ -523,7 +523,7 @@ TestSNFCheckQueueandReviewDetails:
     - Type: get_attribute
       Strategy: xpath
       Role: desktopChrome
-      Id: $PAGE.providers_call_queue_page.details_title$
+      Id: $PAGE.providers_call_handling_page.details_title$
       Greps:
       - var: CALL_FACILITY_NAME
         attr: innerText
@@ -538,16 +538,16 @@ TestSNFCheckQueueandReviewDetails:
     - Type: click
       Strategy: xpath
       Role: desktopChrome
-      Id: $PAGE.providers_call_queue_page.assign_to_me_button$
+      Id: $PAGE.providers_call_handling_page.assign_to_me_button$
     - Type: wait_for
       Strategy: xpath
       Role: desktopChrome
-      Id: $PAGE.providers_call_queue_page.unnasign_button$
+      Id: $PAGE.providers_call_handling_page.unnasign_button$
   #Check patient name
     - Type: get_attribute
       Strategy: xpath
       Role: desktopChrome
-      Id: $PAGE.providers_call_queue_page.details_patient_name$
+      Id: $PAGE.providers_call_handling_page.details_patient_name$
       Greps:
       - var: PATIENT_NAME
         attr: innerText
@@ -562,7 +562,7 @@ TestSNFCheckQueueandReviewDetails:
     - Type: get_attribute
       Strategy: xpath
       Role: desktopChrome
-      Id: $PAGE.providers_call_queue_page.details_requester_name$
+      Id: $PAGE.providers_call_handling_page.details_requester_name$
       Greps:
       - var: REQUESTER_NAME
         attr: innerText
@@ -583,12 +583,12 @@ TestSNFCheckQueueandReviewDetails:
     - Type: click
       Strategy: xpath
       Role: desktopChrome
-      Id: $PAGE.providers_call_queue_page.answer_call_button$
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
   #Provider ends call.
     - Type: click
       Role: desktopChrome
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.end_call_btn$
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
   #Provider fills up Post call Survey.
     - Type: case
       Value: PostCallSurveyProvider

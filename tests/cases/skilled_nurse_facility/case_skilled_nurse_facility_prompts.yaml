@@ -145,3 +145,126 @@ TestSNFMessagePromptFromProvider:
     - Type: click
       Strategy: class_chain
       Id: $PAGE.snf_notifications.modal_close_button$
+
+#CXTB-43 SNF - Provider Incoming Call - Missed
+TestSNFMissedCallFromProvider:
+  Environment: Settings
+  Precases:
+    - ProviderCleanBeforeTest
+  Aftercases:
+    - TerminateApp
+    - CleanUsedFollowUp
+    - ProviderCleanSlate
+  Roles:
+    - Role: localiOS
+      Capabilities:
+        newCommandTimeout: 100
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop 
+  Actions:
+    #Call login for nurses
+    - Type: case
+      Role: localiOS
+      Value: LoginSNFHelper
+    #Clean any prompt notification from the start
+    - Type: case
+      Role: localiOS
+      Value: SeniorCleanPrompts
+    - Type: case
+      Value: CreateAFollowUpForSNFMissedCall
+    # Skip the survey.
+    - Type: wait_for
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.seniors_app_post_call_survey.skip_survey_button$
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.seniors_app_post_call_survey.skip_survey_button$
+    #Navigate again to home
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_home_page.home_button$
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_home_page.home_title$
+    #Select a Follow-Up Call
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_home_page.follow_up_calls$
+    - Type: sleep
+      Role: desktopChrome
+      Time: 1
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_follow_up_call_details_page.call_device_button$
+    - Type: sleep
+      Time: 61
+      Role: desktopChrome
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.end_call_btn$
+    #Check sender
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_notifications.notification_details_from$
+      Attribute: label
+      ResultVar: FROM_VALUE
+    - Type: assert
+      Role: localiOS
+      Asserts:
+        - Type: contain
+          Var: FROM_VALUE
+          Value: Dr. $AND_CLI_provider_user1_name$ $AND_CLI_provider_user1_lastname$
+    #Check when
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_notifications.notification_details_when$
+      Attribute: label
+      ResultVar: SENT_VALUE
+    - Type: assert
+      Role: localiOS
+      Asserts:
+        - Type: contain
+          Var: SENT_VALUE
+          Value: "Today at"
+    #Check follow up:
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_notifications.notification_details_follow_up$
+      Attribute: label
+      ResultVar: FOLLOW_VALUE
+    - Type: get_local_timestamp
+      Format: "%B %d, %Y"
+      Var: FOLLOW_UP_TIMESTAMP
+    - Type: assert
+      Role: localiOS
+      Asserts:
+        - Type: contain
+          Var: FOLLOW_VALUE
+          Value: $AND_CLI_provider_user1_name$ $AND_CLI_provider_user1_lastname$
+    - Type: assert
+      Role: localiOS
+      Asserts:
+        - Type: contain
+          Var: FOLLOW_VALUE
+          Value: $AND_CLI_FOLLOW_UP_TIMESTAMP$
+    #Close Message Prompt
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_notifications.modal_close_button$
+    #Close Message in Provider
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.no_message_button$
