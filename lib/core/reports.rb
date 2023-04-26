@@ -1,4 +1,7 @@
+require 'warning'
 require 'fileutils'
+require 'report_builder'
+Warning.ignore(/Passing/)
 
 module Reports
   @@report = {
@@ -74,7 +77,11 @@ module Reports
               keyword = step_description.match(/\w+ /)[0] 
             end
           end
-          step_description.slice! keyword
+          begin
+           step_description.slice! keyword
+          rescue => e
+            step_description.dup.slice! keyword
+          end
           # GETS MAIN CASE INFO: FILE AND LINE WHERE IT START, LINE WHERE THE STEP IS CALLED
           case_info = get_case_info(main_case, case_file, step_description)
           # GETS STEP CASE INFO: FILE AND LINE WHERE IT START
@@ -127,6 +134,15 @@ module Reports
         jsonfile_path = File.join(Dir.pwd, "Reports", "logs", "cucumber_#{file_name}.json")
         File.open(jsonfile_path, "w+") { |f| f.write(process_report_cucumber().to_json) }
     end
+    #generates html report with report_builder gem. Report is saved on the Reports/logs directory
+    options = {
+      input_path: jsonfile_path,
+      report_path: File.join(Dir.pwd, "Reports", "logs", "cucumber_#{file_name}"),
+      report_types: ['html'],
+      report_title: file_name,
+    }  
+    ReportBuilder.build_report options
+
     return jsonfile_path
   end
 end

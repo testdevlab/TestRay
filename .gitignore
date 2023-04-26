@@ -16,6 +16,7 @@ Gemfile.lock
 *.json
 *.html
 *.js
+!cucumber_report_generator.js
 .rubocop.yml
 
 # rspec failure tracking

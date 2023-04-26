@@ -32,4 +32,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "colorize"
   spec.add_runtime_dependency "keisan"
   spec.add_runtime_dependency "ffi"
+  spec.add_runtime_dependency "report_builder"
+  spec.add_runtime_dependency "warning"
 end

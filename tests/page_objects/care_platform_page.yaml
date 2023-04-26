@@ -52,7 +52,7 @@ care_platform_header:
   onshift_carepartner1_element: //div[contains(text(),'On Shift')]//following-sibling::div[not(contains(@class,'is-offline'))]/div[@class='users-dropdown-name' and contains(., '$AND_CLI_CARE_PARTNER_USER1_FULLNAME$')]
 
 care_platform_myaccount_info:
-  modal_title: //*[@id='modals']//h4[contains(text(),'My account')]
+  modal_title: //*[@id='modals']//h4[contains(text(),'My Account')]
   close_modal_button: //*[@id="modals"]//button[contains(text(),'Close')]
   firstname_input: //input[@id='firstName']
   email_input: //input[@id='email']
