@@ -496,5 +496,3 @@ TestProviderHelpMenuOption:
         - Type: contain
           Var: HELP_PAGE_URL
           Value: .pdf
-
- 
