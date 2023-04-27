@@ -758,6 +758,9 @@ IfReturnSession:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_home_page.session_return_button$
+      Condition:
+        - Value: 5
+          Operation: visible
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_home_page.session_return_button$
@@ -773,6 +776,9 @@ ProviderVisibleEndCall:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_call_handling_page.end_call_btn$
+      Condition:
+        - Value: 5
+          Operation: visible
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_call_handling_page.end_call_btn$
@@ -817,6 +823,9 @@ IfSaveNotes:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_call_handling_page.call_notes_subject_input$
+      Condition:
+        - Value: 5
+          Operation: visible
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.providers_call_handling_page.call_notes_subject_input$

@@ -146,6 +146,54 @@ TestSNFMessagePromptFromProvider:
       Strategy: class_chain
       Id: $PAGE.snf_notifications.modal_close_button$
 
+#CXTB-41 SNF - Provider Incoming Call - Ignore Call
+TestSNFIgnoreCallFromProvider:
+  Environment: Settings
+  Precases:
+    - ProviderCleanBeforeTest
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop 
+  Actions:
+  #Call login for nurses
+    - Type: case
+      Role: localiOS
+      Value: LoginSNFHelper
+  #Clean any prompt notification from the start
+    - Type: case
+      Role: localiOS
+      Value: SeniorCleanPrompts
+  #Generate a call from Provider to Facility Device.
+    - Type: case
+      Value: ProviderCallFacility
+  #SNF Device begins ringing and automatically displays "Incoming Call".
+    - Type: wait_for
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_incoming_call.incoming_call_header$
+    - Type: wait_for
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_incoming_call.ignore_call_button$
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_incoming_call.ignore_call_button$
+  #Back Home
+    - Type: wait_for
+      Strategy: xpath
+      Role: localiOS
+      Id: $PAGE.snf_home.new_request_btn$
+  #Close Message in Provider
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_call_handling_page.no_message_button$
+
 #CXTB-43 SNF - Provider Incoming Call - Missed
 TestSNFMissedCallFromProvider:
   Environment: Settings
