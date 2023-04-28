@@ -430,3 +430,119 @@ TestCarePartnerEditEventForParticipant:
       Role: localiOS
       Strategy: class_chain
       Id: $PAGE.seniors_app_home.event_based_on_name_element$
+
+# CXTB-134: Call Portal View - Delete Event for Participant.
+TestCarePartnerDeleteEventForParticipant:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+    - CarePartnerCleanCallQueueAndHangedCalls
+    - SeniorCleanPrompts
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+    - Role: localiOS
+      App: NeverAlone
+  Actions:
+  # Create an event for today in the future.
+    - Type: case
+      Value: SetScheduledCallForSeniorsToStartIn11Minutes
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Navigate to Participants.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+  # Click on the corresponding participant.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+  # Click on the "Call Portal" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+  # Page updates to show portal screen with "No active call" text in video window.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_status$
+      Greps:
+        - var: CALL_MESSAGE
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALL_MESSAGE
+          Value: 'No active call.'
+  # Calendar shows today's date by default, Select the date of the event created for this test.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.participant_schedule_based_on_element$
+  # Expand the event.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.participant_schedule_based_on_element$
+  # Verify that the row should now show the Edit and Delete buttons.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.edit_event_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.delete_event_button$
+  # Click the "Delete Event" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.delete_event_button$
+  # "Delete event" window appears at the center of the screen to confirm if you want to permanently remove the event from the participant’s calendar.
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_portal_dialog_title$ 
+      Property: textContent
+      Value: "Delete Event"
+  # Click the "Cancel" button if you’ve started in error or if you change your mind.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.cancel_delete_event_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.cancel_delete_event_button$
+  # Returns to active call portal page, without any changes being made to the participant’s schedule, event will stay as is.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_portal_dialog_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.participant_schedule_based_on_element$
+  # Click the "Delete" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.delete_event_button$
+  # "Delete event" window appears at the center of the screen to confirm if you want to permanently remove the event from the participant’s calendar.
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_portal_dialog_title$ 
+      Property: textContent
+      Value: "Delete Event"
+  # Click the "Yes, delete" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.yes_delete_button$
+  # Delete event window disappears.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_portal_dialog_title$
+  # The schedule listing is updated to reflect the removal of the event you just deleted.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.participant_schedule_based_on_element$
+  # The participant’s device schedule will also reflect the removal of the event, with the event no longer being included on their schedule views.
+    - Type: wait_not_visible
+      Role: localiOS
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.event_based_on_name_element$
