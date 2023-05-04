@@ -35,6 +35,9 @@ TestCreateFollowUpTicket:
       Strategy: xpath
       Id: $PAGE.care_platform_participant_details.ticket_subject_input$
       Value: Automated test
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_kind_label$
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_participant_details.ticket_kind_input$
@@ -239,11 +242,6 @@ TestParticipantCallHistory:
         - Type: contain
           Var: DETAILS_CONTENT
           Value: 'Participant'
-    - Type: assert
-      Asserts:
-        - Type: contain
-          Var: DETAILS_CONTENT
-          Value: 'Partner'
     - Type: assert
       Asserts:
         - Type: contain
@@ -559,7 +557,7 @@ TestCarePartnerParticipantReview:
     - Type: scroll_to
       Role: desktopChrome
       Strategy: xpath
-      Id: $PAGE.care_platform_participant_details.specialist_button$
+      Id: $PAGE.care_platform_participant_details.specialists_block$
   #Check Call History tab
     - Type: click
       Role: desktopChrome

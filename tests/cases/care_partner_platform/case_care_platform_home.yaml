@@ -104,6 +104,8 @@ TestHomePage:
 #CXTB-223: Validating changes of status (Not in Call)
 TestStatusDropdown_NotInCall:
   Environment: Settings 
+  Precases:
+    - CarePartnerCleanCallQueueAndHangedCalls
   Roles:
     - Role: desktopChrome
       App: "desktop"

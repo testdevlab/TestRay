@@ -660,12 +660,12 @@ AnswerCallAndRescheduleForOneHourLater:
     - Type: send_keys
       Role: desktopChrome
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.subject_input$
+      Id: $PAGE.providers_call_handling_page.subject_input$
       Value: Automation Post call survey data
     - Type: send_keys
       Role: desktopChrome
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.details_textarea$
+      Id: $PAGE.providers_call_handling_page.details_textarea$
       Value: Automation Post call survey data   
     - Type: wait_for_property
       Role: desktopChrome
@@ -847,12 +847,12 @@ AnswerPastCallAndRescheduleForOneHourLater:
     - Type: send_keys
       Role: desktopChrome
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.subject_input$
+      Id: $PAGE.providers_call_handling_page.subject_input$
       Value: Automation Post call survey data
     - Type: send_keys
       Role: desktopChrome
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.details_textarea$
+      Id: $PAGE.providers_call_handling_page.details_textarea$
       Value: Automation Post call survey data   
     - Type: wait_for_property
       Role: desktopChrome
@@ -1288,12 +1288,12 @@ PostCallSurveyCarePartner:
     - Type: send_keys
       Role: desktopChrome
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.subject_input$
+      Id: $PAGE.providers_call_handling_page.subject_input$
       Value: Missed Call Subject Automation
     - Type: send_keys
       Role: desktopChrome
       Strategy: xpath
-      Id: $PAGE.providers_call_queue_page.details_textarea$
+      Id: $PAGE.providers_call_handling_page.details_textarea$
       Value: Automation Tear Down post call survey    
     - Type: wait_for_property
       Role: desktopChrome
@@ -1338,10 +1338,10 @@ PostCallSurveyCarePartner:
       Role: desktopChrome
       Strategy: xpath
       Id: $PAGE.care_platform_call_portal.submit_and_exit_session_button$
-    # - Type: wait_for
-    #   Role: desktopChrome
-    #   Strategy: xpath
-    #   Id: $PAGE.care_platform_notifications.call_completed_notification$
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.call_completed_notification$
     - Type: wait_for
       Role: desktopChrome
       Strategy: xpath

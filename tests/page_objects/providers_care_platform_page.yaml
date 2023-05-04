@@ -110,12 +110,12 @@ providers_follow_up_call_details_page:
 providers_employees_page:
   employees_label: //h3[text()='Employees']
   search_button: //button[span[@class='icon-search']]
-  search_input: //input[contains(@placeholder,'Search by employee name')]
+  search_input: //input[@id='searchText']
   clear_search_button: //button[contains(@class,'button-circle')]
   first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
   selected_darkened_letter_button: //button[contains(@class,'is-selected')]
-  first_employee_in_list_strong: //*[@id='containerElement']/table[1]/tbody/tr[1]//strong
-  first_employee: //*[@id='containerElement']/table[1]/tbody/tr[1]
+  first_employee_in_list_strong: //*[@id='containerElement']/div[@role='button'][1]//strong
+  first_employee: //*[@id='containerElement']/div[@role='button'][1]
   employee_dob_label: //strong[@class='color-green-300' and text()='DOB']
   employee_dob_content: //div[@class='flex-col flex-col-auto']/time
   employee_contact_label: //strong[@class='color-green-300' and text()='Contact']
