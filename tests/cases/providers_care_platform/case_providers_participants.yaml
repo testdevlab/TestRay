@@ -1,0 +1,143 @@
+#CXTB-170: Participant Page Navigation
+#CXTB-171: Access Participant Directory & Filter
+#CXTB-172: Can Click and View Participant Record from Listing
+TestAccessParticipantDirectoryandViewDeviceRecordfromListing:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  # Log in Care Platform as an Provider
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+  # Go to Participants
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.participants_navigation$      
+  # Get the value to compare.
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.first_darkened_letter_button$
+      Greps:
+        - var: LASTNAME_FILTER_LETTER
+          match: "(.*)"
+  # Click the first darkened letter button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.first_darkened_letter_button$
+  # Verify it was filtered by the selected letter.
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.first_senior_lastname$
+      Greps:
+        - var: LASTNAME_FIRST_LETTER
+          match: ^[a-zA-Z]  
+    - Type: assert
+      Asserts: 
+      - Type: eq
+        Var: LASTNAME_FIRST_LETTER
+        Value: $AND_CLI_LASTNAME_FILTER_LETTER$
+  # Remove the filter by clicking on the letter.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.selected_darkened_letter_button$
+  # Get the first lastname in the list.
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.first_senior_lastname$
+      Greps:
+        - var: LASTNAME_FIRST_PARTICIPANT_NO_FILTER
+          match: (.*)
+  # Add the search filter.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.search_button$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.search_input$
+      Value: $AND_CLI_LASTNAME_FIRST_PARTICIPANT_NO_FILTER$
+  # Verify there is at least one participant with that name.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.first_senior_lastname$
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.first_senior_lastname$
+      Greps:
+        - var: LASTNAME_FIRST_PARTICIPANT
+          match: (.*)
+  # Clear the search by clicking small "x" on right of the field.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.clear_search_button$
+  # Verify there is at least one participant.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.first_senior_lastname$
+  # Click on a participant.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.senior_1_row$
+  # Verify that the info is showing after selecting the participant.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.senior_1_row$
+  # filter by status
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.status_dropdown_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.status_dropdown_suspended$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.status_dropdown_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.status_dropdown_active$
+  # Verify that the info is showing after selecting the filter.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.senior_1_row$
+  # Click on Records Button
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.records_button$
+  # Click to Demographics Tab
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_records_page.demographics_tab$ 
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_records_page.demographics_vendors_subtab$ 
+  # Click to Medical Tab
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_records_page.medical_tab$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_records_page.medications_subtab$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_records_page.medical_needs_subtab$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_records_page.medical_behavioral_subtab$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_records_page.medical_history_subtab$
+  # Click to Call History Tab
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_records_page.call_history_tab$
+  # Click to Emergency Calls tab
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_records_page.emergency_calls_tab$
+ # Click to Follow-up Tickets Tab
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_participants_records_page.follow_up_tickets_tab$
+
+
+

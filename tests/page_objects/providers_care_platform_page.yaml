@@ -12,6 +12,7 @@ providers_home_page:
   last_medical_transfer_row: (//div[contains(text(),'Medical Transfer')])[last()]
   first_row: //table/tbody/tr[@role='row'][1]
   last_on_demand_row: //tbody/tr//div[text()='On Demand Call'][last()]/ancestor::tr
+  participants_navigation: //a//div[contains(text(),'Participants')]
   facilities_navigation: //a//div[contains(text(),'Facilities')]
   employees_navigation: //a//div[contains(text(),'Employees')]
   call_based_on_participant_name: //tbody[@role='rowgroup']//strong[text()='$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']
@@ -39,12 +40,19 @@ providers_facilities_page:
   facilities_header_title: //h3
   alpha_center_td: //div[@role='button']//div[text()='Alpha Healthcare Center']
   call_portal_btn: //button[text()='Call Portal']
+  records_button: //a/button[text()='Records']
   facility_based_on_name: //*[@id='containerElement']//div[text()='$AND_CLI_facility_name1$']
+  first_facility_name: //div[@class='SearchableListTemplate_record__gc5a6']  
+  devices_button: //button[text()='Devices']
+  tabs_content: //div[@class='tabs-content']
+  title_subtab_devices: //h4[text()='Facility Devices']
   call_based_on_device_button: //strong[text()='Device $AND_CLI_facility_devices_user1_number$:']/ancestor::tr//a[@class='button button-basic text-xs']
   message_based_on_device_button: //strong[text()='Device $AND_CLI_facility_devices_user1_number$:']/ancestor::tr//button[@class='button button-basic text-xs']
   message_input: //input[@id='message']
   send_message_button: //span[@class='icon-send text-md']/ancestor::button
   last_message_sent: (//div[@class='message message-to message-to-inverted'])[last()]
+  info_title: //h4[text()='Facility Information']
+  device_status_active: //div[@class='account-status account-status-active']  
   search_button: searchButton
   search_text: searchText
   facility_name: //h3[@class='text-xl color-white font-normal']
@@ -52,14 +60,12 @@ providers_facilities_page:
   overview_button: //button[text()='Overview']
   local_hospitals_button: //button[text()='Local Hospitals']
   devices_tab: //button[text()='Devices']
-  tabs_content: //div[@class='tabs-content']
-  title_subtab_devices: //h4[text()='Facility Devices']
   title_subtab_local_hospital: //h4[text()='Local Hospitals & ED Contact']
 
 providers_facilities_records_page:
   info_title: //h4[text()='Facility Information']
   devices_tab: //button[text()='Devices']
-  device_status: //div[@class='account-status account-status-active']
+  device_status: //div[@class='account-status-label']
 
 providers_call_handling_page:
   end_call_btn: //button[span[text()='End Call']]
@@ -123,8 +129,34 @@ providers_employees_page:
   employee_call_history_tab: //button[text()='Call History']
 
 providers_participants_page:
-  participants_title: //div[@class='text-lg font-bold']//h3[@class='text-lg font-bold']
-  participant_based_on_name: //td[text()='$AND_CLI_senior_user1_name$']/strong[text()='$AND_CLI_senior_user1_lastname$']
+  participants_label: //h3[text()='Participants']
+  search_button: //button[span[@class='icon-search']]
+  search_input: //input[contains(@class,'input text-sm input-rounded')]
+  clear_search_button: //button[contains(@class,'button-circle')]
+  first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
+  selected_darkened_letter_button: //button[contains(@class,'is-selected')]
+  senior_complete_name: //div[starts-with(@class, 'SearchableListTemplate_record')]//div[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
+  senior_1_row: //div[contains(@class, 'SearchableListTemplate_record__gc5a6')]
+  first_senior_lastname: (//div[starts-with(@class, 'SearchableListTemplate_record')]//strong)[1]
+  call_portal_btn: //button[text()='Call Portal']
+  status_dropdown_button: //button[contains(@class,'queue-filter-dropdown-toggle')]
+  status_dropdown_active: //button[text()='Active']
+  status_dropdown_suspended: //button[text()='Suspended']
+  records_button: //button[text()='Records']
+
+
+providers_participants_records_page:
+  demographics_tab: //nav[contains(@class,'box-tabs-nav')]/button[text()='Demographics']
+  demographics_vendors_subtab: //nav/button[text()='Vendors']
+  medical_tab: //nav[contains(@class,'box-tabs-nav')]/button[text()='Medical']
+  medications_subtab: //nav/button[text()='Medications']
+  medical_needs_subtab: //nav/button[text()='Medical Needs']
+  medical_behavioral_subtab: //nav/button[text()='Behavioral']
+  medical_history_subtab: //nav/button[text()='Medical History']  
+  call_history_tab: //nav/button[contains(text(),'Call History')]
+  emergency_calls_tab: //nav/button[contains(text(),'Emergency Calls')]
+  follow_up_tickets_tab: //nav/button[contains(text(),'Follow-up Tickets')]
+
 
 providers_participant_modal:
   call_portal_button: //button[text()='Call Portal']
