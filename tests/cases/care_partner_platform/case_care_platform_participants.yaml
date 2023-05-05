@@ -26,7 +26,8 @@ TestCreateFollowUpTicket:
   #Click on Create Ticket
     - Type: scroll_to
       Strategy: xpath
-      Id: $PAGE.care_platform_participant_details.create_ticket_button$
+      Id: $PAGE.care_platform_participant_details.create_ticket_division$
+      Options: false
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_participant_details.create_ticket_button$
@@ -1737,3 +1738,281 @@ TestCarePartnerCallParticipantsDeviceCallMissed:
         - Type: eq
           Var: MESSAGE_VALUE
           Value: $AND_CLI_MESSAGE_TO_PARTICIPANT$
+
+# CXTB-148: Participant Component - Track Time and Edit Follow-up Tickets for Participant
+TestCarePartnerTrackTimeAndEditFollowUpTicketsParticipantComponent:
+  Environment: Settings
+  Precases:
+    - CarePartnerCleanCallQueueAndHangedCalls
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Generate unique name for the follow up ticket.
+    - Type: generate_unique_name
+      Name: "FollowUp Ticket"
+      ResultVar: FOLLOW_UP_TICKET
+  # Generate a Follow Up Ticket.
+    - Type: case
+      Value: CarePartnerCreateFollowUpTicket
+  # Navigate to Participants.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+  # Click on the corresponding participant.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+  # Click on the "Call Portal" button.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+  # Click on the "Follow-up Tickets" tab on the left bottom of the page.
+    - Type: sleep
+      Time: 5
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_tab_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_tab_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.call_history_list$
+  # User should see a list of Follow-up Tickets.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_tickets_list$
+  # Click on a follow-up ticket in the listing.
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_ticket_based_on_name$
+      Options: true
+    - Type: click_js
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_ticket_based_on_name$
+  # Participant component appears on the left side of the screen, with the related follow-up ticket expanded for review.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.completed_follow_up_ticket_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.edit_follow_up_ticket_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.time_to_complete_input$
+  # Click "Edit" button on expanded follow-up ticket.
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.edit_follow_up_ticket_button$
+      Options: false
+    - Type: click_js
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.edit_follow_up_ticket_button$
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.completed_follow_up_ticket_button$
+  # Section updates to show the current follow-up ticket details in editable fields.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_subject_input$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_kind_input$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_assigned_input$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_date_input$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.delayed_checkbox$
+  # Note: "Details of delay" field will only be present if the "This is delayed" box is selected
+  # Click on the "This is delayed" checkbox and verify that the "Details of Delay" appears.
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_subject_input$
+      Options: false
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.delayed_label$
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.details_of_delay_element$
+      Attribute: aria-hidden
+      Value: "false"
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_subject_input$
+      Options: false
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.delayed_label$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.delayed_checkbox$
+      Property: value
+      Value: "false"
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.details_of_delay_element$
+      Attribute: aria-hidden
+      Value: "true"
+  # Update, or add, the details of the follow-up ticket by changing any of the field entries (e.g. assign and add details), then click "Save edits".
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.delayed_label$
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_subject_input$
+      Options: false
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.delayed_label$
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.details_of_delay_element$
+      Attribute: aria-hidden
+      Value: "false"
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.details_of_delay_input$
+      Value: $AND_CLI_FOLLOW_UP_TICKET$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.save_edits_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.follow_up_ticket_saved_notification$
+  # Follow-up ticket listing returns, with any updates you made now visible.
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_ticket_based_on_name$
+    - Type: click_js
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_ticket_based_on_name$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_ticket_details_label$
+      Property: textContent
+      Value:  $AND_CLI_FOLLOW_UP_TICKET$
+  # Click "Edit" again on expanded follow-up ticket.
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.edit_follow_up_ticket_button$
+    - Type: click_js
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.edit_follow_up_ticket_button$
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.completed_follow_up_ticket_button$
+  # Section updates to show the current follow-up ticket details in editable fields.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_subject_input$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_kind_input$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_assigned_input$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_date_input$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.delayed_checkbox$
+  # "Details of delay" text box should be visible because of the previous steps.
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.details_of_delay_element$
+      Attribute: aria-hidden
+      Value: "false"
+  # Enter a note in the details of delay box, make any additional changes you would like to the ticket, then click "Save edits".
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.details_of_delay_input$
+      Value: Automated Details box text.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.save_edits_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.follow_up_ticket_saved_notification$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.follow_up_ticket_saved_notification$
+  # Verify that ticket you marked delayed now has a red "!" icon next to the category label
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_ticket_category_label$
+    - Type: get_attribute
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_participant_details.follow_up_ticket_category_label$
+      Greps:
+        - var: IS_MARKED
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: IS_MARKED
+          Value: 'has-alert'
+  # Verify that when you expand the ticket to view details, your note regarding the delay shows in red below the subject line
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_ticket_based_on_name$
+    - Type: click_js
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_ticket_based_on_name$
+  # Put some time in the "Track time to complete" box.
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.time_to_complete_input$
+      Options: false
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.time_to_complete_input$
+      Value: 1
+  # Page allows you to enter the information then click away without issue.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_tab_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.follow_up_ticket_saved_notification$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.follow_up_ticket_saved_notification$
+  # Close the follow up ticket.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.completed_follow_up_ticket_button$
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_ticket_details_label$
+      Options: false
+    - Type: click_js
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.completed_follow_up_ticket_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.save_and_archive_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.save_and_archive_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.follow_up_ticket_completed_notification$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.follow_up_ticket_completed_notification$

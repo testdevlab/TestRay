@@ -1543,3 +1543,74 @@ CarePartnerCleanCallQueueAndHangedCalls:
     # Log out.
     - Type: case
       Value: CarePlatformLogout
+
+# Creates a Follow-up Ticket.
+CarePartnerCreateFollowUpTicket:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Go to participants
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform.navigation_participant$
+    # Select the participant used on the config file.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+    # Go to follow-up tickets tab.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.follow_up_tab_button$
+    # Click on Create Ticket.
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.create_ticket_division$
+      Options: false
+    - Type: click_js
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.create_ticket_button$
+    # Fill Create Ticket's form.
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_subject_input$
+      Value: $AND_CLI_FOLLOW_UP_TICKET$
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_kind_label$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_kind_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.kind_medical_appointment_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_assigned_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.assigned_option_based_on_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.ticket_date_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.current_date_option$
+  # Save form.
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.save_ticket_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.save_ticket_button$
+  # Wait for notification.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.new_ticket_notification$
+  # Navigate to Home.  
+    - Type: case
+      Value: CarePartnerNavigateToHome
