@@ -61,3 +61,38 @@ ESCarePartnerCleanCallQueueAndHangedCalls:
     # Log out.
     - Type: case
       Value: CarePlatformLogout
+
+ESCarePartnerCallSenior:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Log in.
+    - Type: case
+      Value: ESCarePartnerLogin
+    # Navigate to Participants.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+    # Click on the desired participant.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.esidd_senior_complete_name$
+    # Click on the Call Portal button.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+    # Click "Call Participant" button.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_participant_btn$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_participant_btn$
+    # Verify that the call has started.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_camera_button$

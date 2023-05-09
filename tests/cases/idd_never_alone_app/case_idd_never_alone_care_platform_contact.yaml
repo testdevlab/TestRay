@@ -1,6 +1,6 @@
 # Only for physical devices.
-# CXTB-367: Call Now Button on Home Page for IDD Never Alone.
-TestIDDESCallNowButtonOnHomePage:
+# CXTB-399: Verify “Answer Call” for Care Partner Calling Device.
+TestIDDESAnswerCallForCarePartnerCallingDeviceCallCompleted:
   Vars:
     TIME: 5
     INTERFACE: en0
@@ -26,52 +26,46 @@ TestIDDESCallNowButtonOnHomePage:
     - Role: command1
       App: command
   Actions:
-  # On the Home page, Click the "Call Now" button.
-    - Type: click
-      Strategy: class_chain
-      Id: $PAGE.idd_never_alone_app_home.call_now_button$
-  # Device screen updates to show screen to verify you would like to call:
-  # Yes, Place Call and Cancel Call
-    - Type: wait_for
-      Strategy: class_chain
-      Id: $PAGE.idd_never_alone_app_call.yes_place_call_button$
-    - Type: wait_for
-      Strategy: class_chain
-      Id: $PAGE.idd_never_alone_app_call.cancel_call_button$
-  # Click the "Cancel Call" button.
-    - Type: click
-      Strategy: class_chain
-      Id: $PAGE.idd_never_alone_app_call.cancel_call_button$
-  # Device screen is returned to home page.
-    - Type: wait_for
-      Strategy: class_chain
-      Id: $PAGE.idd_never_alone_app_home.call_now_button$
-  # Click the "Call Now" button again.
-    - Type: click
-      Strategy: class_chain
-      Id: $PAGE.idd_never_alone_app_home.call_now_button$
-  # Device screen updates to show screen to verify you would like to call:
-  # Yes, Place Call and Cancel Call
-    - Type: wait_for
-      Strategy: class_chain
-      Id: $PAGE.idd_never_alone_app_call.yes_place_call_button$
-    - Type: wait_for
-      Strategy: class_chain
-      Id: $PAGE.idd_never_alone_app_call.cancel_call_button$
-  # Click "Yes, Place Call" button.
-    - Type: wait_for
-      Strategy: class_chain
-      Id: $PAGE.idd_never_alone_app_call.yes_place_call_button$
-    - Type: click
-      Strategy: class_chain
-      Id: $PAGE.idd_never_alone_app_call.yes_place_call_button$
-  # Device screen updates showing you the waiting room.
-    - Type: wait_for
-      Strategy: class_chain
-      Id: $PAGE.idd_never_alone_app_call.waiting_room_label$
-  # Care Partner answers the call.
+  # Generate a call to the ES IDD Participant from ES Care Platform.
     - Type: case
-      Value: AnswerCallAsESCarePartner
+      Value: ESCarePartnerCallSenior
+  # Device displays an "Incoming Call" prompt, showing the details of who is calling, and giving the option to answer or ignore call.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.incoming_call_header$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.incoming_call_header$
+      Attribute: label
+      ResultVar: HEADER_TITLE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: HEADER_TITLE
+          Value: Incoming Call...
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.called_name$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.called_name$
+      Attribute: label
+      ResultVar: CALLER_VALUE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALLER_VALUE
+          Value: $AND_CLI_es_carepartner_user_name$ $AND_CLI_es_carepartner_user_lastname$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.answer_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.ignore_call_button$
+  # Click on the "Answer Call" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.answer_call_button$
   # Turn your camera on using the button along the bottom of the page.
     - Type: click
       Strategy: class_chain
@@ -80,7 +74,7 @@ TestIDDESCallNowButtonOnHomePage:
     - Type: wait_for
       Strategy: class_chain
       Id: $PAGE.seniors_app_call.video_window$
-    # Video Quality Step
+  # Video Quality Step
     - Type: click
       Role: desktopChrome
       Strategy: xpath
@@ -110,7 +104,7 @@ TestIDDESCallNowButtonOnHomePage:
       Role: desktopChrome
       Strategy: xpath
       Id: $PAGE.care_platform_call_portal.full_screen_call_btn$
-  # Click "End Call" button on Participant side.
+  # Click "End Call" button.
     - Type: wait_for
       Strategy: class_chain
       Id: $PAGE.seniors_app_call.end_call_button$
@@ -118,24 +112,12 @@ TestIDDESCallNowButtonOnHomePage:
       Strategy: class_chain
       Id: $PAGE.seniors_app_call.end_call_button$
   # Call is disconnected and screen updates to show the Post Call Survey.
-  # Select any option on the page.
-    - Type: wait_for
-      Strategy: class_chain
-      Id: $PAGE.seniors_app_post_call_survey.great_answer_button$
-    - Type: click
-      Strategy: class_chain
-      Id: $PAGE.seniors_app_post_call_survey.great_answer_button$
+  # Select any option on the page (Bad).
   # Page updates to show Thank you for your feedback message.
-    - Type: wait_for
-      Strategy: class_chain
-      Id: $PAGE.seniors_app_post_call_survey.thank_you_label$
-  # Do not click the "To Home" button on Thank you for your feedback screen.
-    - Type: sleep
-      Time: 8
-  # Device is automatically returned to home page after a few seconds.
-    - Type: wait_for
-      Strategy: class_chain
-      Id: $PAGE.idd_never_alone_app_home.call_now_button$
-  # Care Partner fills in post survey call.
+  # Click "To Home" button.
+  # Device is returned to home page.
+    - Type: case
+      Value: ESIDDSeniorBadPostSurveyCallHelper
+  # Fill up the Post Call Survey on the provider side.
     - Type: case
       Value: PostCallSurveyCarePartner

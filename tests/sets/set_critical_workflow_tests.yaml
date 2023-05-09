@@ -1,19 +1,25 @@
 SetCriticalWorkflows:
   Cases:
+  # Care Partner tests
     - Case: TestCarePartnerAnswerCallFromQueueAndCompleteMedicalTransfer
     - Case: TestCarePartnerAnswerAndComplete
     - Case: TestCarePartnerBrowsingWhileOnCall
     - Case: TestCarePartnerCallParticipantsDeviceCallComplete
+  # Provider tests
     - Case: TestProviderAnswerCompleteSessionFromEHP
     - Case: TestProvidersAnswerSNFCallAndCompletesSession
+  # Never Alone SNF tests
     - Case: TestSNFRequestSuccessfulCallConnect
     - Case: TestSNFCheckQueueandReviewDetails
     - Case: TestSNFProviderIncomingCallAnswerCallOnSNF #Physical
+    - Case: TestSNFVerifyInAppOfflineBehavior #Physical
+  # Never Alone Seniors tests
     - Case: TestSeniorAppVerifyInAppOfflineBehavior # Physical
     - Case: TestSeniorAppPersonalCarePartnerMessagePromptAndCallBackButton  # Physical
     - Case: TestSeniorAppAnswerCallForProviderCalling # Physical
     - Case: TestSeniorAppCallPersonalCarePartnerOnHomePage  # Physical
+  # Employee Health Portal tests
     - Case: TestEmployeeHealthPortalUserCall
-    - Case: TestSNFVerifyInAppOfflineBehavior #Physical
-    - Case: TestCallNowButtonOnHomePageESIDDNeverAlone #Physical
-
+  # ES IDD Never Alone tests
+    - Case: TestIDDESCallNowButtonOnHomePage #Physical
+    - Case: TestIDDESAnswerCallForCarePartnerCallingDeviceCallCompleted #Physical
