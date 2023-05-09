@@ -1,0 +1,7 @@
+idd_never_alone_app_home:
+  call_now_button: "**/XCUIElementTypeOther[`label ENDSWITH 'Call Now'`][-1]"
+
+idd_never_alone_app_call:
+  yes_place_call_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Yes, Place Call'`]"
+  cancel_call_button: "**/XCUIElementTypeButton[`label ENDSWITH 'Cancel Call'`]"
+  waiting_room_label: "**/XCUIElementTypeOther[`label == 'Waiting Room'`]"

@@ -1,0 +1,63 @@
+ESCarePartnerLogin:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    - Type: navigate
+      Role: desktopChrome
+      Value: $AND_CLI_easterseals_care_platform_url$
+    - Type: maximize
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_login.email_input$
+      Value: $AND_CLI_es_carepartner_user$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_login.password_input$
+      Value: $AND_CLI_es_carepartner_user_pwd$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_login.login_button$
+    - Type: sleep
+      Time: 2
+
+AnswerCallAsESCarePartner:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Login to the Care Platform app with Care Partners account.
+    - Type: case
+      Value: ESCarePartnerLogin
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_home.call_based_on_es_idd_participant_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_home.call_based_on_es_idd_participant_name$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_home.answer_call$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_home.answer_call$
+
+ESCarePartnerCleanCallQueueAndHangedCalls:
+  Vars:
+    LOGOUT_OPTION: "Go Off Shift"
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Log in.
+    - Type: case
+      Value: ESCarePartnerLogin
+    # Clean Care Partner Call Queue and Hanged Calls.
+    - Type: care_partner_clean_call_queue_and_hanged_calls
+    # Log out.
+    - Type: case
+      Value: CarePlatformLogout

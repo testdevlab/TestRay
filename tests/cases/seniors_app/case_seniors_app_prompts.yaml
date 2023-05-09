@@ -126,7 +126,7 @@ TestSeniorAppPersonalCarePartnerMessagePromptAndCallBackButton:
     - Type: click
       Strategy: class_chain
       Id: $PAGE.seniors_app_call.video_button$
-  # Verify that a video tumbnail will appear in the upper right corner giving a preview of what the Care Partner is seeing.
+  # Verify that a video thumbnail will appear in the upper right corner giving a preview of what the Care Partner is seeing.
     - Type: wait_for
       Strategy: class_chain
       Id: $PAGE.seniors_app_call.video_window$

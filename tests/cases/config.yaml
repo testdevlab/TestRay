@@ -38,6 +38,7 @@ Environments:
   Settings:
     Vars:
       care_platform_url: https://care-platform-qa.chs-ds.com/
+      easterseals_care_platform_url: https://es.care-platform-qa.chs-ds.com/
       employee_health_url: https://employee-health-portal-qa.chs-ds.com/
       backend_qa_url: https://never-alone-backend-qa.chs-ds.com/
       facility_ahc: alpha health center
@@ -52,7 +53,7 @@ Environments:
       onboarder_user2_pwd: add_your_info
       onboarder_user2_name: add_your_info
       onboarder_user2_lastname: add_your_info
-#Carepartmer users
+#Carepartner users
       carepartner_user1: add_your_info
       carepartner_user1_pwd: add_your_info
       carepartner_user1_name: add_your_info
@@ -61,6 +62,15 @@ Environments:
       carepartner_user2_pwd: add_your_info
       carepartner_user2_name: add_your_info
       carepartner_user2_lastname: add_your_info
+#EasterSeals Care Partner users
+      es_carepartner_user:  add_your_info
+      es_carepartner_user_pwd: add_your_info
+      es_carepartner_user_name: add_your_info
+      es_carepartner_user_lastname: add_your_info
+      ch_carepartner_user: add_your_info
+      ch_carepartner_user_pwd: add_your_info
+      ch_carepartner_user_name: add_your_info
+      ch_carepartner_user_lastname: add_your_info
 #Provider users      
       provider_user1: add_your_info
       provider_user1_pwd: add_your_info
@@ -89,6 +99,15 @@ Environments:
       senior_user2_pwd: add_your_info
       senior_user2_name: add_your_info
       senior_user2_lastname: add_your_info
+#IDD Never Alone users    
+      idd_es_never_alone_user1: add_your_info
+      idd_es_never_alone_user1_pwd: add_your_info
+      idd_es_never_alone_user1_name: add_your_info
+      idd_es_never_alone_user1_lastname: add_your_info
+      idd_chs_never_alone_user2: add_your_info
+      idd_chs_never_alone_user2_pwd: add_your_info
+      idd_chs_never_alone_user2_name: add_your_info
+      idd_chs_never_alone_user2_lastname: add_your_info
 #Facility devices users   
       facility_devices_user1: add_your_info
       facility_devices_user1_pwd: add_your_info

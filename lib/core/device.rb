@@ -2012,12 +2012,10 @@ end
 # Custom action to wait for an element to be enabled
 def wait_for_enabled_element(locator)
   begin
-    # element = @driver.find_element(:xpath, convert_value_pageobjects(locator))
-    wait = Selenium::WebDriver::Wait.new(:timeout => @timeout)
+    wait = Selenium::WebDriver::Wait.new(:timeout => 5)
     element = wait.until {@driver.find_element(:xpath, convert_value_pageobjects(locator))}
     wait.until {element.enabled?}
     return element
-  # rescue Selenium::WebDriver::Error::NoSuchElementError
   rescue Exception => e
     log_info("Exception: #{e}")
     return false
@@ -2027,14 +2025,10 @@ end
 # Custom action to wait for an element to exist
 def wait_for_element_to_exist(locator)
   begin
-    # element = @driver.find_element(:xpath, convert_value_pageobjects(locator))
-    wait = Selenium::WebDriver::Wait.new(:timeout => @timeout)
+    wait = Selenium::WebDriver::Wait.new(:timeout => 5)
     element = wait.until {@driver.find_element(:xpath, convert_value_pageobjects(locator))}
     return element
-  # rescue Selenium::WebDriver::Error::NoSuchElementError
   rescue Exception => e
-    # puts "Element not found"
-    # return nil
     log_info("Exception: #{e}")
     return false
   end
@@ -2043,14 +2037,10 @@ end
 # Custom action to wait for an element collection to exist
 def wait_for_element_collection_to_exist(locator)
   begin
-    # element = @driver.find_element(:xpath, convert_value_pageobjects(locator))
-    wait = Selenium::WebDriver::Wait.new(:timeout => @timeout)
+    wait = Selenium::WebDriver::Wait.new(:timeout => 5)
     elements = wait.until {@driver.find_elements(:xpath, convert_value_pageobjects(locator))}
     return elements
-    # rescue Selenium::WebDriver::Error::NoSuchElementError
   rescue Exception => e
-    # puts "Element not found"
-    # return nil
     log_info("Exception: #{e}")
     return false
   end

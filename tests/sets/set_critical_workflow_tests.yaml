@@ -15,4 +15,5 @@ SetCriticalWorkflows:
     - Case: TestSeniorAppCallPersonalCarePartnerOnHomePage  # Physical
     - Case: TestEmployeeHealthPortalUserCall
     - Case: TestSNFVerifyInAppOfflineBehavior #Physical
+    - Case: TestCallNowButtonOnHomePageESIDDNeverAlone #Physical
 
