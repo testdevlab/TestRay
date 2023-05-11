@@ -8,3 +8,4 @@ SetPhysicalDevicesTests:
     - Case: TestSNFVerifyInAppOfflineBehavior
     - Case: TestIDDESCallNowButtonOnHomePage
     - Case: TestIDDESAnswerCallForCarePartnerCallingDeviceCallCompleted
+    - Case: TestIDDESCompleteCallBackButtonCallAfterReceivingMessage

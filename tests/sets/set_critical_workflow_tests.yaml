@@ -23,3 +23,4 @@ SetCriticalWorkflows:
   # ES IDD Never Alone tests
     - Case: TestIDDESCallNowButtonOnHomePage #Physical
     - Case: TestIDDESAnswerCallForCarePartnerCallingDeviceCallCompleted #Physical
+    - Case: TestIDDESCompleteCallBackButtonCallAfterReceivingMessage #Physical
