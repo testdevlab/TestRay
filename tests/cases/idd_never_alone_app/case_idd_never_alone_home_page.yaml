@@ -139,3 +139,67 @@ TestIDDESCallNowButtonOnHomePage:
   # Care Partner fills in post survey call.
     - Type: case
       Value: PostCallSurveyCarePartner
+
+# Only for physical devices.
+# CXTB-402: Verify “Offline Mode” for IDD ES iPad app.
+TestIDDESVerifyOfflineMode:
+  Environment: Settings
+  Precases:
+    - LoginESIDDNeverAloneHelper
+    - ESCarePartnerCleanCallQueueAndHangedCalls
+    - ESCarePartnerSetScheduledCallForSeniors
+    - IDDESParticipantCleanPrompts
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Disconnect from wi-fi to get device offline while viewing the home page.
+    - Type: toggle_wifi
+      Role: localiOS
+  # After a moment, page update to show the home page in offline mode:
+  # Yellow message bar appears indicating offline and to dial 911 in emergency.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.offline_yellow_bar$
+      Time: 30
+  # Call button is replaced with gray inactive button reading "Calling is Unavailable".
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.idd_never_alone_app_home.idd_es_offline_call_button$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.idd_never_alone_app_home.idd_es_offline_call_button$
+      Attribute: label
+      ResultVar: OFFLINE_CALL_BUTTON_VALUE
+      NoNewLine: true
+    - Type: assert
+      Asserts:
+        - Type: contain_encode_utf8
+          Var: OFFLINE_CALL_BUTTON_VALUE
+          Value: "Calling Is Unavailable"
+  # Click to open an event detail window of any type from the schedule listing.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.first_event$
+  # Connection Error message window appears indicating device is offline.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_connection_error_modal.connection_header_header_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_connection_error_modal.device_offline_label$
+  # Click "Close x" in message window.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_connection_error_modal.close_btn$  
+  # Returned to home page in offline mode.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.idd_never_alone_app_home.idd_es_offline_call_button$
+  # Connect back to the wi-fi.
+    - Type: toggle_wifi
+      Role: localiOS

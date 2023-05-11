@@ -1816,9 +1816,14 @@ class Device
       src_var = ENV[convert_value(assert["Var"])]
       cmp_var = assert["Value"].is_a?(Numeric) ? assert["Value"] : convert_value(assert["Value"])
       op = assert["Type"].downcase
-    
+      
+      if ["contain_encode_utf8"].include?(op)
+        src_not_frozen_var = src_var.dup.force_encoding("ASCII-8BIT")
+        utf8_string = src_not_frozen_var.encode("UTF-8", "ASCII-8BIT", invalid: :replace, undef: :replace, replace: "")
+      end
+
       # check for class mismatches
-      if ["contain", "n_contain"].include?(op)
+      if ["contain", "n_contain", "contain_encode_utf8"].include?(op)
         raise "#{@role}: Value '#{cmp_var}' should be a String!" unless cmp_var.is_a?(String)
       elsif ["eq", "ne"].include?(op)
         if cmp_var.is_a?(Numeric)
@@ -1843,6 +1848,9 @@ class Device
       case op
       when "contain"
         on_fail_text = "contain" unless src_var.include?(cmp_var)
+      # Custom option made to handle those non UTF-8 characters that Never Alone returns.
+      when "contain_encode_utf8"
+        on_fail_text = "contain" unless utf8_string.include?(cmp_var)
       when "n_contain"
         on_fail_text = "NOT contain" unless !src_var.include?(cmp_var)
       when "eq"
@@ -1865,7 +1873,11 @@ class Device
         raise "#{@role}: The Var was '#{src_var}', but it was expected " + 
               "to #{on_fail_text} '#{cmp_var}'#{screenshot_error}"
       end 
-      log_info "#{@role}: Succesful Assert -> '#{src_var}' - #{assert["Type"]} - '#{cmp_var}'"
+      if ["contain_encode_utf8"].include?(op)
+        log_info "#{@role}: Succesful Assert -> '#{utf8_string}' - #{assert["Type"]} - '#{cmp_var}'"
+      else
+        log_info "#{@role}: Succesful Assert -> '#{src_var}' - #{assert["Type"]} - '#{cmp_var}'"
+      end
     end
   end 
 

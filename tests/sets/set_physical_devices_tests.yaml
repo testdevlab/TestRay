@@ -9,3 +9,4 @@ SetPhysicalDevicesTests:
     - Case: TestIDDESCallNowButtonOnHomePage
     - Case: TestIDDESAnswerCallForCarePartnerCallingDeviceCallCompleted
     - Case: TestIDDESCompleteCallBackButtonCallAfterReceivingMessage
+    - Case: TestIDDESVerifyOfflineMode

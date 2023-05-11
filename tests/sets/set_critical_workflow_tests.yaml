@@ -24,3 +24,4 @@ SetCriticalWorkflows:
     - Case: TestIDDESCallNowButtonOnHomePage #Physical
     - Case: TestIDDESAnswerCallForCarePartnerCallingDeviceCallCompleted #Physical
     - Case: TestIDDESCompleteCallBackButtonCallAfterReceivingMessage #Physical
+    - Case: TestIDDESVerifyOfflineMode #Physical
