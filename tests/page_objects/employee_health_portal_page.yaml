@@ -95,8 +95,23 @@ employee_health_on_demand_call_page:
   video_settings_modal_camera_select: //div[text()='Camera']/following-sibling::div//select
   video_settings_modal_close_button: //*[@id='modals']//button[text()='Close']
 
-
-
-
-
-
+employee_health_telehealth_request_form:
+  request_appointment_button: //button[text()='Request Appointment']
+  form_modal: //form[@class='box-scrollable-content']
+  create_event_button: //button[text() = 'Create Event']
+  alert_location: //div[@class ='text-xs color-red-400']
+  alert_describe_reason: //div[@class = 'input-group text-sm mb-half']//div[@class = 'text-xs color-red-400']
+  alert_calendar: //div[@class='flex-col max-w-330']//div[@class = 'text-xs color-red-400']
+  cancel_button: //button[text()= 'Cancel']
+  select_location_drop_down: //select[@id='state']
+  select_location_option: //select[@id='state']/option[2]
+  select_patient_drop_down: //select[@id='dependentIdentifier']
+  select_patient_option: //select[@id='dependentIdentifier']/option[1]
+  calendar_right_button: //div[@id='modals']//span[@class='icon-chevron-right']
+  calendar_day_button: //div[@class='app-modals']//div[text()='15']
+  calendar_hour_button: //div[@id='modals']//div[text()= '11:30 am']
+  appointment_list: //div[@class = 'accordion-item']
+  appointment_list_description: //div/div[contains(text(), '$AND_CLI_PAIN_DESCRIPTION$')]
+  calendar_month_view: //div[@id='modals']//div[@class = 'calendar-days fade-quick-enter-done']
+  tab_section: //div[contains(@class, 'box has-scrollable-content')]
+  comments : comments

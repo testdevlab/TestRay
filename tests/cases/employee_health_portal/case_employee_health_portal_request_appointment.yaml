@@ -1,0 +1,124 @@
+#CXTB-109 Employee Health Portal - Request an Appointment for User
+TestEmployeeHealthPortalRequestAnAppointmentForUser:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  #Going to Request an Appointment
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.tab_section$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.request_appointment_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.form_modal$
+  # closing form
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.cancel_button$
+    # waiting for appointment view
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.request_appointment_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.create_event_button$
+  # Checking error message
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.alert_location$
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.alert_location$
+      Greps:
+        - var: ERROR_MESSAGE
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ERROR_MESSAGE
+          Value: Please select a state.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.alert_describe_reason$
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.alert_describe_reason$
+      Greps:
+        - var: ERROR_MESSAGE
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ERROR_MESSAGE
+          Value: Please enter a reason for this request.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.alert_calendar$
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.alert_calendar$
+      Greps:
+        - var: ERROR_MESSAGE
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ERROR_MESSAGE
+          Value: 'Please select a date. '
+  # filling form
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.select_location_drop_down$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.select_location_option$
+    - Type: generate_unique_name
+      Name: "I have something to say about my health."
+      ResultVar: PAIN_DESCRIPTION
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.employee_health_telehealth_request_form.comments$
+      Value: $AND_CLI_PAIN_DESCRIPTION$
+    # choosing Date and time
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_right_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_month_view$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_day_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_hour_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.create_event_button$
+  # Verify if the appointment is showing on the list
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.appointment_list$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.appointment_list_description$
+      Greps:
+        - var: SHOWED_DESCRIPTION
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: SHOWED_DESCRIPTION
+          Value: $AND_CLI_PAIN_DESCRIPTION$
