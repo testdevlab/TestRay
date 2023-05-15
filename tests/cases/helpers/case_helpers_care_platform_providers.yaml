@@ -158,13 +158,26 @@ PostCallSurveyProvider:
     - Role: desktopChrome
       App: desktop
   Actions:
+    # Verify that the "Complete Session" is enabled.
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.complete_session_button$ 
+      Property: disabled
+      Value: "false"
+    # Click on the complete session button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.complete_session_button$ 
+    # Fill the notes
     # Verify that the "Complete Session" is disabled.
     - Type: wait_for_property
       Strategy: xpath
       Id: $PAGE.providers_call_handling_page.complete_session_button$ 
       Property: disabled
       Value: "true"
-    # Fill the notes
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.subject_input$
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.providers_call_handling_page.subject_input$
@@ -172,15 +185,7 @@ PostCallSurveyProvider:
     - Type: send_keys
       Strategy: xpath
       Id: $PAGE.providers_call_handling_page.details_textarea$
-      Value: Automation call    
-    - Type: wait_for_property
-      Strategy: xpath
-      Id: $PAGE.providers_call_handling_page.complete_session_button$ 
-      Property: disabled
-      Value: "false"
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.providers_call_handling_page.complete_session_button$             
+      Value: Automation call            
     # Fill the Post-call Survey
     - Type: wait_for
       Strategy: xpath
@@ -970,3 +975,22 @@ CleanUsedFollowUp:
       Strategy: xpath
       Role: desktopChrome
       Id: $PAGE.providers_home_page.toast_closed_ticket$  
+
+AnswerCallAsProvider:
+  Roles:
+    - Role: desktopChrome
+      App: desktop  
+  Actions:
+  # Click on the corresponding call on the Home page to and click on the "Answer" button.
+    - Type: wait_for
+      Strategy: xpath
+      Id : $PAGE.providers_home_page.call_based_on_participant_name$
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.providers_home_page.call_based_on_participant_name$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.answer_call_button$

@@ -603,3 +603,121 @@ TestSeniorAppAnswerCallCarePartnerCall:
   # Fill up the Post Call Survey on the provider side.
     - Type: case
       Value: PostCallSurveyCarePartner
+
+# CXTB-84: Starting soon notification should wait until call survey is completed.
+TestSeniorStartingSoonNotificationWaitUntilCallSurveyIsCompleted:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+    - CarePartnerCleanCallQueueAndHangedCalls
+    - SeniorCleanPrompts
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      Capabilities:
+        newCommandTimeout: 320
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop
+    - Role: desktopChrome1
+      App: desktop
+  Actions:
+    # Generate a call that will start in around 5 minutes.
+    - Type: case
+      Value: SetScheduledCallForSeniorsToStartIn7Minutes
+    # Clean Senior prompts.
+    - Type: case
+      Value: SeniorCleanPrompts
+    # Verify that the call that will start in around 5 minutes, is listed.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.event_based_on_name_element$
+    # Generate a call that will start in around 10 minutes.
+    - Type: case
+      Value: SetScheduledCallForSeniorsToStartIn11Minutes
+    # Clean Senior prompts.
+    - Type: case
+      Value: SeniorCleanPrompts
+    # Verify that the call that will start in around 10 minutes, is listed.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.event_based_on_name_element$
+    # Wait for the modal that appears 5 minutes before the appointment starts.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.join_button$
+      Time: 120
+    # Join the call.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.join_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.end_call_button$
+      Time: 30
+    # Join the call as a Provider.
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+      Role: desktopChrome1
+    - Type: case
+      Value: AnswerCallAsProvider
+      Role: desktopChrome1
+    # Wait until its time for the other notification.
+    - Type: sleep
+      Time: 300
+    # Verify that the call should continue without issues.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.end_call_button$
+    # Verify that the Starting soon notification should not be visible.
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_header_modal$
+    # Complete the call.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.end_call_button$
+    # The survey survey should be displayed and the Starting soon notification should not show up yet.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_post_call_survey.great_answer_button$
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_header_modal$
+    # Complete the survey and go to home page.
+    - Type: case
+      Value: SeniorGreatPostSurveyCallHelper
+    # Home page should be displayed and the Starting soon notification should show up.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_header_modal$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_header_modal$
+      Attribute: label
+      ResultVar: APPOINTMENT_HEADER_TEXT
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: APPOINTMENT_HEADER_TEXT
+          Value: Appointment Starting Soon
+    # Fill up the post call survey on provider side.
+    - Type: case
+      Value: PostCallSurveyProvider
+      Role: desktopChrome1
+    # Click on the join call for the other schedule event and then hang the call so it does not leave anything hanging for provider once the test ends.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.join_button$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.join_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.end_call_button$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.end_call_button$
+    - Type: case
+      Value: SeniorGreatPostSurveyCallHelper
