@@ -721,3 +721,174 @@ TestSeniorStartingSoonNotificationWaitUntilCallSurveyIsCompleted:
       Id: $PAGE.seniors_app_call.end_call_button$
     - Type: case
       Value: SeniorGreatPostSurveyCallHelper
+
+# CXTB-381: Verify Care Partner - "Missed Call" Prompt & Call Back Button.
+TestSeniorVerifyMissedCallPromptAndCallBackButton:
+  Vars:
+    TIME: 5
+    INTERFACE: en0
+    VIDEO_IN: "1"
+    TEST_FOLDER: $AND_CMD_pwd$/Reports/executions/$AND_CMD_date +%s$
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+    - CarePartnerCleanCallQueueAndHangedCalls
+    - SeniorCleanPrompts
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      Capabilities:
+        newCommandTimeout: 100
+        chromeOptions:
+          args:
+            - use-file-for-fake-audio-capture=$AND_CMD_pwd$/video_audio_samples/sample3.wav
+            - use-file-for-fake-video-capture=$AND_CMD_pwd$/video_audio_samples/sample_640x360.mjpeg
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Generate a call from the Care Partner side to the Participant.
+    - Type: case
+      Value: CarePartnerCallSenior
+    # Verify that there is an incoming call prompt on the Senior side.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.incoming_call_header$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.incoming_call_header$
+      Attribute: label
+      ResultVar: HEADER_TITLE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: HEADER_TITLE
+          Value: Incoming Call...
+    # Wait for at least one minute.
+    - Type: sleep
+      Time: 60
+    # End the call on the Care Partner side.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.end_call_button$
+      Role: desktopChrome
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.end_call_button$
+      Role: desktopChrome
+    # Log out of Care Partner side.
+    - Type: case
+      Value: CarePlatformLogout
+    # "Missed Call" window appears showing the information related to the call (From, When) and offering a call back button.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_missed_call.missed_call_header$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_missed_call.from_label$
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.seniors_app_missed_call.from_value$
+      Attribute: value
+      ResultVar: MSG_FROM_VALUE
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: MSG_FROM_VALUE
+          Value: $AND_CLI_carepartner_user1_name$ $AND_CLI_carepartner_user1_lastname$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_missed_call.when_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.call_back_button$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.call_back_button$
+      Attribute: label
+      ResultVar: CALL_BACK_BUTTON
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALL_BACK_BUTTON
+          Value: Call Back Personal Care Partner
+    # Click the "Call Back Personal Care Partner" Button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.call_back_button$
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_message_modal.call_back_button$
+      Time: 15
+    # Device screen updates to show screen asking what kind of need you help:
+    # Medical, Non-Medical and Cancel
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.non_medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.cancel_call_button$
+    # Click "Medical" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.medical_call_button$
+    # Device screen updates showing you connecting, in the waiting room.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.waiting_room_label$
+    # Care Partner answers the call.
+    - Type: case
+      Value: AnswerCallAsCarePartner
+    # Turn your camera on using the button along the bottom of the page.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.video_button$
+    # Thumbnail will appear in upper right corner of the video window, indicating your camera is on and giving a preview of what the Care Partner is seeing.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.video_window$
+    # Video Quality Step
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_btn$
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_mirror_care_partner$
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.full_screen_call_btn$
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.verify_video_is_full_screen$
+    # Record the call.
+    - Type: case
+      Value: GetCallRecordings
+    # Analyze the call.
+    - Type: case
+      Value: AnalyzeRecordings
+    # Make video quality assertions
+    - Type: case
+      Value: VideoQualityAssertions
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.full_screen_call_btn$
+    # Click "End Call" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.end_call_button$
+    # Fill in the post call survey with the Great option.
+    # Senior fills up post call Survey.
+    - Type: case
+      Value: SeniorGreatPostSurveyCallHelper
+    # Care Partner fills up the post call survey.
+    - Type: case
+      Value: PostCallSurveyCarePartner

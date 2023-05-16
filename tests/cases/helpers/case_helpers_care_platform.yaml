@@ -1276,6 +1276,9 @@ AnswerCallAsCarePartner:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_home.answer_call$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.end_call_button$
 
 PostCallSurveyCarePartner:
   Environment: Settings
