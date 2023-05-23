@@ -19,17 +19,17 @@ care_platform_verify_account:
 care_platform:
   page_title: //h3
   call_queue_title: //h3[text()='Call Queue']
-  navigation_participant: //nav//div[contains(text(),'Participants')]
-  navigation_followup: //nav//div[contains(text(),'Follow-up')]
-  navigation_home: //nav//div[contains(text(),'Home')]
+  navigation_participant: //nav//a[contains(text(),'Participants')]
+  navigation_followup: //nav//a[contains(text(),'Follow-up')]
+  navigation_home: //nav//a[contains(text(),'Home')]
 
 care_platform_home:
-  first_call_of_queue: //tbody[@role='rowgroup']/tr[1]
+  first_call_of_queue: //div[@id='containerElement']/div[starts-with(@class, 'ListRow_listRow')][1]
   answer_call: //button[text()='Answer Call']
   call_based_on_participant_name: //tbody[@role='rowgroup']/tr//strong[text() = '$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']
   call_based_on_es_idd_participant_name: //tbody[@role='rowgroup']/tr//strong[text() = '$AND_CLI_idd_es_never_alone_user1_name$ $AND_CLI_idd_es_never_alone_user1_lastname$']
   active_call_section: //div[contains(@class,'app-video app-video-fixed')] # doesn't matter if its expanded/collapsed
-  call_queue_calls: //table//tbody/tr
+  call_queue_calls: //div[@id='containerElement']/div[starts-with(@class, 'ListRow_listRow')]
 
 care_platform_header:
   app_logo: //header//div[@class='app-header-logo']/img
@@ -84,8 +84,8 @@ care_platform_participant:
   first_participant_row: //table/thead[contains(.,'Participant')]/following-sibling::tbody/tr[contains(.,'$AND_CLI_senior_user1_name$') and contains(.,'$AND_CLI_senior_user1_lastname$')][1]
   first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
   selected_darkened_letter_button: //button[contains(@class,'is-selected')]
-  senior_complete_name: //div[starts-with(@class, 'SearchableListTemplate_record')]//div[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
-  esidd_senior_complete_name: //div[starts-with(@class, 'SearchableListTemplate_record')]//div[contains(text(),'$AND_CLI_idd_es_never_alone_user1_name$')][strong[contains(text(),'$AND_CLI_idd_es_never_alone_user1_lastname$')]]
+  senior_complete_name: //div[starts-with(@class, 'ListRow_listRow')]//div[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
+  esidd_senior_complete_name: //div[starts-with(@class, 'ListRow_listRow')]//div[contains(text(),'$AND_CLI_idd_es_never_alone_user1_name$')][strong[contains(text(),'$AND_CLI_idd_es_never_alone_user1_lastname$')]]
   senior_1_row: //*[@id='containerElement']/div[@role='button'][1]
   first_senior_lastname: //*[@id='containerElement']/div[@role='button'][1]//strong
   call_portal_btn: //button[text()='Call Portal']

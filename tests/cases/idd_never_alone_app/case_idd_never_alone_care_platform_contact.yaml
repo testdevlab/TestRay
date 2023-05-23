@@ -283,3 +283,70 @@ TestIDDESCompleteCallBackButtonCallAfterReceivingMessage:
   # Care partner tear down
     - Type: case
       Value: PostCallSurveyCarePartner
+
+# CXTB-414: “Ignore Call” for Care Partner Calling Device.
+TestIDDESAnswerCallForCarePartnerCallingDeviceIgnoreCall:
+  Environment: Settings
+  Precases:
+    - LoginESIDDNeverAloneHelper
+    - ESCarePartnerCleanCallQueueAndHangedCalls
+    - IDDESParticipantCleanPrompts
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop
+    - Role: command1
+      App: command
+  Actions:
+  # Generate a call to the ES IDD Participant from ES Care Platform.
+    - Type: case
+      Value: ESCarePartnerCallSenior
+  # Device displays an "Incoming Call" prompt, showing the details of who is calling, and giving the option to answer or ignore call.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.incoming_call_header$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.incoming_call_header$
+      Attribute: label
+      ResultVar: HEADER_TITLE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: HEADER_TITLE
+          Value: Incoming Call...
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.called_name$
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.called_name$
+      Attribute: label
+      ResultVar: CALLER_VALUE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALLER_VALUE
+          Value: $AND_CLI_es_carepartner_user_name$ $AND_CLI_es_carepartner_user_lastname$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.answer_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.ignore_call_button$
+    # Click the "Ignore Call" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.ignore_call_button$
+  # Verify that the device returns you to the screen without entering the call.
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_incoming_call.ignore_call_button$
+      Time: 10
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.video_button$
+      Time: 10

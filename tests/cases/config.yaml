@@ -37,10 +37,10 @@ Devices:
 Environments:
   Settings:
     Vars:
-      care_platform_url: https://care-platform-qa.chs-ds.com/
-      easterseals_care_platform_url: https://es.care-platform-qa.chs-ds.com/
-      employee_health_url: https://employee-health-portal-qa.chs-ds.com/
-      backend_qa_url: https://never-alone-backend-qa.chs-ds.com/
+      care_platform_url: https://chs.careplatform.qa.neveralone.com
+      easterseals_care_platform_url: https://es.careplatform.qa.neveralone.com
+      employee_health_url: https://employee.qa.neveralone.com
+      backend_qa_url: https://api.qa.neveralone.com
       facility_ahc: alpha health center
       facility_bhc:  beta health center
       facility_chc:  charlie health center
@@ -104,10 +104,10 @@ Environments:
       idd_es_never_alone_user1_pwd: add_your_info
       idd_es_never_alone_user1_name: add_your_info
       idd_es_never_alone_user1_lastname: add_your_info
-      idd_chs_never_alone_user2: add_your_info
-      idd_chs_never_alone_user2_pwd: add_your_info
-      idd_chs_never_alone_user2_name: add_your_info
-      idd_chs_never_alone_user2_lastname: add_your_info
+      idd_ch_never_alone_user2: add_your_info
+      idd_ch_never_alone_user2_pwd: add_your_info
+      idd_ch_never_alone_user2_name: add_your_info
+      idd_ch_never_alone_user2_lastname: add_your_info
 #Facility devices users   
       facility_devices_user1: add_your_info
       facility_devices_user1_pwd: add_your_info
