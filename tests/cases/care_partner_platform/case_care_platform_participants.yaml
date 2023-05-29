@@ -1,5 +1,5 @@
 #CXTB-228 Create Follow-Up Ticket for Participant
-TestCreateFollowUpTicket:
+TestCarePartnerCreateFollowUpTicket:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
@@ -24,6 +24,8 @@ TestCreateFollowUpTicket:
       Strategy: xpath
       Id: $PAGE.care_platform_participant_details.follow_up_tab_button$
   #Click on Create Ticket
+    - Type: sleep
+      Time: 2
     - Type: scroll_to
       Strategy: xpath
       Id: $PAGE.care_platform_participant_details.create_ticket_division$
@@ -80,7 +82,7 @@ TestCreateFollowUpTicket:
       Id: $PAGE.care_platform_participant_details.new_ticket_date$
 
 #CXTB-251 Access Participant Directory and Filter
-TestParticipantDirectoryFilter:
+TestCarePartnerParticipantDirectoryFilter:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
@@ -169,7 +171,7 @@ TestParticipantDirectoryFilter:
       Id: $PAGE.care_platform_participant.call_portal_btn$
 
 #CXTB-106 Click and View Participant’s Call History
-TestParticipantCallHistory:
+TestCarePartnerParticipantCallHistory:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
@@ -250,7 +252,7 @@ TestParticipantCallHistory:
           Value: 'Notes'
 
 #CXTB-105 Click and View Participant Record from Listing
-TestParticipantRecordListing:
+TestCarePartnerParticipantRecordListing:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
@@ -389,6 +391,8 @@ TestCarePartnerParticipantReview:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
+    - CarePartnerCleanCallQueueAndHangedCalls
+    - SeniorCleanPrompts
   Aftercases:
     - TerminateApp
   Roles:

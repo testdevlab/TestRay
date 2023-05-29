@@ -1,5 +1,5 @@
 #CXTB-214: Validating Home elements
-TestHomePage:
+TestCarePartnerHomePage:
   Environment: Settings 
   Roles:
     - Role: desktopChrome

@@ -82,7 +82,7 @@ TestCarePartnerCreateEventForParticipant:
   # New "Create event" modal appears to left of section with fields needed to create an event.
     - Type: wait_for
       Strategy: xpath
-      Role: desktopChromeß
+      Role: desktopChrome
       Id: $PAGE.care_platform_create_event_modal.modal_title$
     - Type: wait_for_property
       Strategy: xpath

@@ -395,7 +395,7 @@ TestSeniorAppVerifyInAppOfflineBehavior:
       Role: localiOS
 
 # CXTB-38: Verify app automatically returns to Home page after inactivity period.
-TestAutoReturnToHomePageAfterInactivityPeriod:
+TestSeniorAutoReturnToHomePageAfterInactivityPeriod:
   Environment: Settings
   Precases:
     - SetScheduledCallForSeniors
@@ -459,7 +459,7 @@ TestAutoReturnToHomePageAfterInactivityPeriod:
       Id: $PAGE.seniors_app_home.full_schedule_btn$
 
 # CXTB-68: Verify Appointments appear as expected in Home page
-TestAppointmentsAppearAsExpectedHomePage:
+TestSeniorAppointmentsAppearAsExpectedHomePage:
   Environment: Settings
   Vars:
     LOGOUT_OPTION: "Stay On Shift"
@@ -502,7 +502,7 @@ TestAppointmentsAppearAsExpectedHomePage:
       EventName: $AND_CLI_UNIQUE_EVENT_NAME$
 
 # CXTB-83: Verify starting soon notification while in the notification window.
-TestStartingSoonNotification:
+TestSeniorStartingSoonNotification:
   Environment: Settings
   Precases:
     - SetScheduledCallForSeniorsToStartIn7Minutes
@@ -601,7 +601,7 @@ TestStartingSoonNotification:
           Value: Appointment Starting Soon
 
 # CXTB-83: Verify starting soon notification while in the notification window.
-TestAlertAndStartingSoonVisuals:
+TestSeniorAlertAndStartingSoonVisuals:
   Environment: Settings
   Precases:
     - SetScheduledCallForSeniorsToStartIn7Minutes
@@ -759,7 +759,7 @@ TestAlertAndStartingSoonVisuals:
       EventName: $AND_CLI_UNIQUE_EVENT_NAME$
 
 # CXTB-50: Verify active appointment time window when not joined prior.
-TestActiveAppointmentTimeWindowWhenNotJoinedPrior:
+TestSeniorActiveAppointmentTimeWindowWhenNotJoinedPrior:
   Environment: Settings
   Precases:
     - SetScheduledCallForSeniorsToStartIn7Minutes

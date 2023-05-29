@@ -1,5 +1,5 @@
 # CXTB-33: “My Details” Settings Page is Present and Populated
-TestVerifyMyDetailsSettingsPageElements:
+TestSeniorVerifyMyDetailsSettingsPageElements:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
@@ -134,7 +134,7 @@ TestVerifyMyDetailsSettingsPageElements:
           Value: 'true'
 
 # CXTB-34: Settings "My Details" Page Navigation
-TestSettingsPageNavigation:
+TestSeniorSettingsPageNavigation:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
@@ -149,7 +149,7 @@ TestSettingsPageNavigation:
       Value: SettingsPageNavigationHelper
 
 # CXTB-35: Wi-fi settings page to review, add or update wi-fi network information
-TestWifiSettingsPage:
+TestSeniorWifiSettingsPage:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper

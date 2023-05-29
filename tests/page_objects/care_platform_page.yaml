@@ -26,8 +26,8 @@ care_platform:
 care_platform_home:
   first_call_of_queue: //div[@id='containerElement']/div[starts-with(@class, 'ListRow_listRow')][1]
   answer_call: //button[text()='Answer Call']
-  call_based_on_participant_name: //tbody[@role='rowgroup']/tr//strong[text() = '$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']
-  call_based_on_es_idd_participant_name: //tbody[@role='rowgroup']/tr//strong[text() = '$AND_CLI_idd_es_never_alone_user1_name$ $AND_CLI_idd_es_never_alone_user1_lastname$']
+  call_based_on_participant_name: //div[contains(@class, 'ListRow_listRow')]//strong[text() = '$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']
+  call_based_on_es_idd_participant_name: //div[contains(@class, 'ListRow_listRow')]//strong[text() = '$AND_CLI_idd_es_never_alone_user1_name$ $AND_CLI_idd_es_never_alone_user1_lastname$']
   active_call_section: //div[contains(@class,'app-video app-video-fixed')] # doesn't matter if its expanded/collapsed
   call_queue_calls: //div[@id='containerElement']/div[starts-with(@class, 'ListRow_listRow')]
 
@@ -81,7 +81,7 @@ care_platform_logout_modal:
 
 care_platform_participant:
   participants_title: //div[@class='text-lg font-bold']//h3[@class='text-lg font-bold']
-  first_participant_row: //table/thead[contains(.,'Participant')]/following-sibling::tbody/tr[contains(.,'$AND_CLI_senior_user1_name$') and contains(.,'$AND_CLI_senior_user1_lastname$')][1]
+  first_participant_row: (//div[contains(@class, 'SearchableListTemplate')]/div[@id='containerElement']/div[starts-with(@class, 'ListRow_listRow')]//strong[text()='$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$'])[1]
   first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
   selected_darkened_letter_button: //button[contains(@class,'is-selected')]
   senior_complete_name: //div[starts-with(@class, 'ListRow_listRow')]//div[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
@@ -113,8 +113,8 @@ care_platform_participant_details:
   specialists_block: //*[@id='providers']//*[contains(text(),'Specialists')][@class='is-block']
   specialist_button: //button[text()='Specialist']
   call_history_tab_button: //nav/button[contains(text(),'Call History')]
-  first_call_history_row: //div[@tab-title='Call History']//div[contains(@class,'accordion-item call')][1]
-  first_call_history_content: //div[@tab-title='Call History']//div[contains(@class,'accordion-item call')][1]//table[@class='call-details']
+  first_call_history_row: //div[@tab-title='Call History']//div[contains(@class,'accordion-item')][1]
+  first_call_history_content: //div[@tab-title='Call History']//div[contains(@class,'accordion-item')][1]//table[@class='call-details']
   follow_up_tab_button: //nav/button[contains(text(),'Follow-up Tickets')]
   follow_up_tickets_list: //div[@class='tabs-content' and @id='follow-up-tickets-tab']
   call_history_list: ///div[@class='tabs-content' and @id='call-history-tab']

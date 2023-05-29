@@ -1,5 +1,5 @@
 # CXTB-10: Full Schedule display
-TestVerifyFullScheduleDisplay:
+TestSeniorVerifyFullScheduleDisplay:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
@@ -98,7 +98,7 @@ TestVerifyFullScheduleDisplay:
       EventName: $AND_CLI_UNIQUE_EVENT_NAME$
 
 # CXTB-12: Schedules Page Navigation
-TestSchedulesPageNavigation:
+TestSeniorSchedulesPageNavigation:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
@@ -113,7 +113,7 @@ TestSchedulesPageNavigation:
       Value: SchedulesPageNavigationHelper
 
 # CXTB-39: Automatically Return to Full Schedule Page After Period of Inactivity
-TestAutomaticReturnAfterInactivty:
+TestSeniorAutomaticReturnAfterInactivty:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
@@ -212,7 +212,7 @@ TestSeniorAppCallPersonalCareButtonOnFullSchedule:
       Value: PostCallSurveyCarePartner
 
 # CXTB-87: Verify no prompts for cancelled appointments
-TestNoPromptsForCancelledAppointments:
+TestSeniorNoPromptsForCancelledAppointments:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
@@ -253,7 +253,7 @@ TestNoPromptsForCancelledAppointments:
       Time: 10
 
 # CXTB-18: Verify Future Non-Telehealth Event Window Access
-TestFutureNonTelehealthEventWindowAccess:
+TestSeniorFutureNonTelehealthEventWindowAccess:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
@@ -313,7 +313,7 @@ TestFutureNonTelehealthEventWindowAccess:
       Id: $PAGE.seniors_app_schedule.schedule_label$
 
 # CXTB-19: Verify Future Telehealth Appointment Cancel or Reschedule button
-TestFutureAppointmentCancelOrRescheduleButton:
+TestSeniorFutureAppointmentCancelOrRescheduleButton:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
@@ -381,7 +381,7 @@ TestFutureAppointmentCancelOrRescheduleButton:
       Id: $PAGE.seniors_app_home.event_based_on_name_element$
 
 # CXTB-21: Verify Past appointment window (non-missed)
-TestNonMissedPastAppointmentWindow:
+TestSeniorNonMissedPastAppointmentWindow:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
@@ -468,7 +468,7 @@ TestNonMissedPastAppointmentWindow:
       Id: $PAGE.seniors_app_schedule.schedule_label$
 
 # CXTB-20: Verify Telehealth Appointment Missed Window Access
-TestTelehealthAppointmentMissedWindowAccess:
+TestSeniorTelehealthAppointmentMissedWindowAccess:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
