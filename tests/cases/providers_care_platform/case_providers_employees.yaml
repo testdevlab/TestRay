@@ -1,5 +1,5 @@
 #CXTB-191: Access Employees Directory and Filter
-TestAccessEmployeesDirectoryAndFilter:
+TestProviderAccessEmployeesDirectoryAndFilter:
   Environment: Settings 
   Roles:
     - Role: desktopChrome

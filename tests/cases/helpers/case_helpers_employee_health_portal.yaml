@@ -161,12 +161,27 @@ EmployeeHealthPortalUpdateAccountPassword:
       Strategy: xpath
       Id: $PAGE.employee_health_my_account_modal.update_password_tab$
   #Check requirements
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.employee_health_my_account_modal.update_password_requirements_link$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.employee_health_my_account_modal.update_password_requirements_text$  
+      Id: $PAGE.employee_health_my_account_modal.update_password_requirements_text_section$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_requirements_text_section$
+      Greps:
+        - var: PASSWORD_REQUIREMENTS
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: PASSWORD_REQUIREMENTS
+          Value: 'at least 8 characters'
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: PASSWORD_REQUIREMENTS
+          Value: 'one special character'
   #Fill the fields correctly
     - Type: send_keys
       Strategy: xpath

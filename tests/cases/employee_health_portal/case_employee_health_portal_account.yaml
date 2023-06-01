@@ -1,5 +1,5 @@
 #CXTB-242: Set “Notifications” in “My account” Modal
-TestSettingNotification:
+TestEmployeeSettingNotification:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
@@ -131,7 +131,7 @@ TestSettingNotification:
       Id: $PAGE.employee_health_home_page.alert_updated_notification$
 
 #CXTB-252 Information & Update Contact Number
-TestInformationUpdateNumber:
+TestEmployeeInformationUpdateNumber:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
@@ -260,7 +260,7 @@ TestInformationUpdateNumber:
       Id: $PAGE.employee_health_home_page.alert_updated_info$
 
 #CXTB-241 “Update password” Workflow in My account Modal
-TestUpdateAccountPassword:
+TestEmployeeUpdateAccountPassword:
   Environment: Settings
   Roles:
     - Role: desktopChrome

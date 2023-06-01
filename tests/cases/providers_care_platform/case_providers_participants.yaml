@@ -1,7 +1,7 @@
 #CXTB-170: Participant Page Navigation
 #CXTB-171: Access Participant Directory & Filter
 #CXTB-172: Can Click and View Participant Record from Listing
-TestAccessParticipantDirectoryandViewDeviceRecordfromListing:
+TestProviderAccessParticipantDirectoryandViewDeviceRecordfromListing:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
@@ -138,6 +138,3 @@ TestAccessParticipantDirectoryandViewDeviceRecordfromListing:
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_participants_records_page.follow_up_tickets_tab$
-
-
-

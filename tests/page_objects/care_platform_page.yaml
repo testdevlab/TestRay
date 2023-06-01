@@ -270,13 +270,17 @@ care_platform_facility:
   search_button: searchButton
   search_text: searchText
   facility_name: //h3[@class='text-xl color-white font-normal']
-  facilities_button: //div[@class='app-sidebar-menu-item-label'][text()='Facilities']
-  overview_button: //button[text()='Overview']
+  facility_first_active_letter: //button[contains(@class,'alphabet-letter')][not(@disabled)][1]
+  facilities_button: //nav//a[text()='Facilities']
+  facility_based_on_name: //*[@id='containerElement']//div[text()='$AND_CLI_facility_name1$']
+  first_facility: //*[@id='containerElement']/div[@role='button'][1]/div[contains(@class,'bold')]
+  overview_button: //button[contains(text(),'Overview')]
   local_hospitals_button: //button[text()='Local Hospitals']
   devices_button: //button[text()='Devices']
   tabs_content: //div[@class='tabs-content']
   title_subtab_devices: //h4[text()='Facility Devices']
   title_subtab_local_hospital: //h4[text()='Local Hospitals & ED Contact']
+  clear_search_button: //button[contains(@class,'button-circle')]
 
 care_platform_facility_Record:
   info_title: //h4[text()='Facility Information']

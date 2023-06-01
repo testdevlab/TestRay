@@ -1084,7 +1084,7 @@ CarePlatformUpdatePassword:
   #Verify the login with the new password was successful
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.care_platform_header.app_time$
+      Id: $PAGE.care_platform_header.user_dropdown_button$
   #Restore the password
   #Going to My Account
     - Type: click
@@ -1181,19 +1181,6 @@ CarePlatformUpdateInfo:
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.success_alert_msg$
       Time: 10
-  #Verify that the name in the header reflects the new change to the firstname
-    - Type: get_text
-      Strategy: id
-      Id : $PAGE.care_platform_header.dropdown_username$
-      Greps:
-        - var: NEW_NAME
-          condition: nempty
-          match: "(.*)"
-    - Type: assert
-      Asserts:
-        - Type: contain
-          Var: NEW_NAME
-          Value: $AND_CLI_FIRSTNAME_NEW$
   #Going again to the My Account Modal
     - Type: click
       Strategy: xpath

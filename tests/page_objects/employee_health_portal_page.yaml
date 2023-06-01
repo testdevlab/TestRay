@@ -1,7 +1,7 @@
 employee_health_login_page:
   sign_up_button: //div[@class='login-screen-form']//button[text()='Sign Up']
   log_in_button: //div[@class='login-screen']//form/button[text()='Log In']
-  email_input: //input[@id='email']
+  email_input: //*[@id='username']
   password_input: //input[@id='password']
   forgot_password_button: //button[text()='Forgot Password']
   dialog_email_input: //div[contains(@class,'dialog')]//input
@@ -36,7 +36,7 @@ employee_health_home_page:
   user_dropdown_menu: //nav[@class='user-dropdown-menu']
   dropdown_option_myaccount: //nav/button[text()='My Account']
   dropdown_option_help: //nav//button[text()='Help']
-  dropdown_option_logout: //nav/button[text()='Log out']
+  dropdown_option_logout: //nav/button[text()='Log Out']
   alert_updated_notification: //div[@class='Toastify']//div[contains(text(),'Notification preferences updated')]
   alert_updated_info: //div[@class='Toastify']//div[contains(text(),'Account info updated')]
   alert_failed_update_password: //div[@role='alert']//div[contains(text(),'Failed to update password')]
@@ -58,7 +58,7 @@ employee_health_my_account_modal:
   notifications_email_checkbox: //*[@id='minBeforeAppointmentToEmail']/following-sibling::span
   notifications_sms_checkbox: //*[@id='minBeforeAppointmentToText']/following-sibling::span
   my_info_phone_input: //input[@id='phone']
-  my_info_phone_alert_message: //*[@id='modals']//input[@id='phone']//following-sibling::div[@aria-hidden='false']//div[contains(@class,'color-red-400')]
+  my_info_phone_alert_message: //label[@for='phone']//following-sibling::div[@aria-hidden='false']//div[contains(@class,'color-red-400')]
   my_info_firstname_input: //input[@id='firstName']
   my_info_lastname_input: //*[@id='lastName']
   my_info_email_input: //*[@id='email']
@@ -71,6 +71,7 @@ employee_health_my_account_modal:
   update_password_cancel_button: //*[@tab-title='Update Password']//button[text()='Cancel']
   update_password_requirements_link: //span[text()='see requirements']
   update_password_requirements_text: //*[@id='passwordRequirements']
+  update_password_requirements_text_section: //*[@tab-title='Update Password']//div[contains(@class,'login-screen-password-help')]
 
 employee_health_telehealth_on_demand_modal:
   modal_title: //*[@id='modals']//h4[text()='Telehealth On Demand Form']

@@ -22,135 +22,171 @@ TestOnboarderCarePartnerUpdatePassword:
       Value: CarePlatformUpdatePassword
 
 #CXTB-164: Manually Log out of the Portal 
-TestManuallyLogOutOfThePortalOnboarder:
+TestOnboarderManuallyLogOutOfThePortal:
   Environment: Settings 
   Vars:
     LOGOUT_OPTION: "Go Off Shift"
   Roles: 
-  - Role: desktopChrome
-    App: "desktop"
+    - Role: desktopChrome
+      App: "desktop"
   Actions:
   # Calling Login case
-  - Type: case
-    Value: OnboarderCarePartnerLogin
+    - Type: case
+      Value: OnboarderCarePartnerLogin
   # Click the name in upper right corner.
-  - Type: click
-    Strategy: xpath
-    Id: $PAGE.care_platform_header.user_dropdown_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.user_dropdown_button$
   # Menu appears offering the following options:
   # My Account and Log out.
-  - Type: wait_for
-    Strategy: xpath
-    Id: $PAGE.care_platform_header.myaccount_menu_button$
-  - Type: wait_for
-    Strategy: xpath
-    Id: $PAGE.care_platform_header.logout_menu_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.myaccount_menu_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.logout_menu_button$
   # Click on the logout button.
-  - Type: click
-    Strategy: xpath
-    Id: $PAGE.care_platform_header.logout_menu_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.logout_menu_button$
   # Validate that the logout modal appears offering options relating to your status after logging out.
-  - Type: wait_for
-    Strategy: xpath
-    Id: $PAGE.care_platform_logout_modal.stay_on_shift_button$
-  - Type: wait_for
-    Strategy: xpath
-    Id: $PAGE.care_platform_logout_modal.go_off_shift_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_logout_modal.stay_on_shift_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_logout_modal.go_off_shift_button$
   # Click on the cancel button.
-  - Type: click
-    Strategy: xpath
-    Id: $PAGE.care_platform_logout_modal.cancel_logout_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_logout_modal.cancel_logout_button$
   # Repeat the steps from above and log out.
-  - Type: case
-    Value: CarePlatformLogout
+    - Type: case
+      Value: CarePlatformLogout
   
 # CXTB-161-Access Facilities Directory & Filter
 TestOnboardersAccessFacilitiesDirectoryFilter:
-   Environment: Settings
-   Roles: 
-   - Role: desktopChrome
-     App: "desktop"
-   Actions:
+  Environment: Settings
+  Roles: 
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
   # log in with my onboarder user
-   - Type: case
-     Value: OnboarderCarePartnerLogin
+    - Type: case
+      Value: OnboarderCarePartnerLogin
   # Click on the facilites button
-   - Type: click
-     Strategy: xpath
-     Id: $PAGE.care_platform_facility.facilities_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.facilities_button$
+  # Click the first active letter button
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.facility_first_active_letter$
   # Get the value to compare later
-   - Type: get_text
-     Strategy: xpath
-     Id: $PAGE.care_platform_participant.first_darkened_letter_button$
-     Greps:
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.facility_first_active_letter$
+      Greps:
         - var: FILTER_LETTER
           match: "(.*)"
-  # Click the first darkened letter button
-   - Type: click
-     Strategy: xpath
-     Id: $PAGE.care_platform_participant.first_darkened_letter_button$
+  #Verify is selected
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.facility_first_active_letter$
+      Greps:
+        - var: SELECTED_CLASS
+          attr: class
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: SELECTED_CLASS
+          Value: 'is-selected'
   #Verify it was filtered by the selected letter
-   - Type: get_text
-     Strategy: xpath
-     Id: $PAGE.care_platform_participant.first_senior_lastname$
-     Greps:
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.first_facility$
+      Greps:
         - var: FIRST_LETTER
           match: ^[a-zA-Z]   #The match selects: The first char from the starter word (^) that is a letter ([a-zA-Z])
-   - Type: assert
-     Asserts: 
-     - Type: eq
-       Var: FIRST_LETTER
-       Value: $AND_CLI_FILTER_LETTER$
+    - Type: assert
+      Asserts: 
+        - Type: eq
+          Var: FIRST_LETTER
+          Value: $AND_CLI_FILTER_LETTER$
   #Remove the filter by letter
-   - Type: click
-     Strategy: xpath
-     Id: $PAGE.care_platform_participant.selected_darkened_letter_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.facility_first_active_letter$
+  #Check is not selected anymore
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.facility_first_active_letter$
+      Greps:
+        - var: NOT_SELECTED_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+      - Type: n_contain
+        Var: NOT_SELECTED_CLASS
+        Value: 'is-selected'
   #Get the first lastname in the list
-   - Type: get_text
-     Strategy: xpath
-     Id: $PAGE.care_platform_participant.first_senior_lastname$
-     Greps:
-        - var: FIRST_facility_NO_FILTER
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.first_facility$
+      Greps:
+        - var: FIRST_FACILITY_NO_FILTER
           match: (.*)
   #Add the search filter
-   - Type: click
-     Strategy: id
-     Id: $PAGE.care_platform_facility.search_button$
-   - Type: send_keys
-     Strategy: id
-     Id: $PAGE.care_platform_facility.search_text$
-     Value: $AND_CLI_FIRST_facility_NO_FILTER$
-  #Verify there is at least 1 user with that name
-   - Type: wait_for
-     Strategy: xpath
-     Id: $PAGE.care_platform_participant.first_senior_lastname$
-   - Type: get_text
-     Strategy: xpath
-     Id: $PAGE.care_platform_participant.first_senior_lastname$
-     Greps:
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_facility.search_button$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_facility.search_text$
+      Value: $AND_CLI_FIRST_FACILITY_NO_FILTER$
+  #Verify there is at least 1 facility with that name
+    - Type: set_env_var
+      Value: $AND_CLI_FIRST_FACILITY_NO_FILTER$
+      Var: facility_name1
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.facility_based_on_name$
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.first_facility$
+      Greps:
         - var: FIRST_FACILITY
           match: (.*)
-  #Verify the first participant lastname contains the text filtered
-   - Type: assert
-     Asserts: 
-      - Type: contain
-        Var: FIRST_FACILITY
-        Value: $AND_CLI_FIRST_facility_NO_FILTER$
+  #Verify the first facility contains the text filtered
+    - Type: assert
+      Asserts: 
+        - Type: contain
+          Var: FIRST_FACILITY
+          Value: $AND_CLI_FIRST_FACILITY_NO_FILTER$
   #Clear the search by clicking small "x" at right of field
-   - Type: click
-     Strategy: xpath
-     Id: $PAGE.care_platform_participant.clear_search_button$
-  #Verify there is at least 1 user
-   - Type: wait_for
-     Strategy: xpath
-     Id: $PAGE.care_platform_participant.first_senior_lastname$
-  #Click on an user
-   - Type: click
-     Strategy: xpath
-     Id: $PAGE.care_platform_participant.senior_1_row$
-   - Type : wait_for
-     Strategy: xpath
-     Id: $PAGE.care_platform_facility.facility_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.clear_search_button$
+  #Verify there is at least 1 facility
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.first_facility$
+  #Click on a facility
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.first_facility$
+    - Type : wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.facility_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.overview_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_facility.local_hospitals_button$
 
 #CXTB-174 - Onboarders - Use “Forgot password” Link on Login Page  
 TestOnboardersForgotPasswordLoginLink:
@@ -173,11 +209,11 @@ TestOnboardersAccessMyAcountWindowAndReviewMyInfo:
      App: "desktop"
    Actions:
   # Log in with my onboarder user.
-   - Type: case
-     Value: OnboarderCarePartnerLogin
+    - Type: case
+      Value: OnboarderCarePartnerLogin
   # Call case to access "My Account" Window and Review "My Info" Page.
-   - Type: case
-     Value: CarePlatformUpdateInfo
+    - Type: case
+      Value: CarePlatformUpdateInfo
 
 # CXTB-143: Access Participant Directory & Filter
 TestOnboarderAccessParticipantDirectoryandFilter:
@@ -390,7 +426,7 @@ TestOnboarderClickAndViewFacilitiesDevice:
     # click on the first listing record
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_participant.first_senior_lastname$
+      Id: $PAGE.care_platform_facility.first_facility$
     # click on Overview button and verify if tab showing belongs to Overview
     - Type: click
       Strategy: xpath

@@ -1,5 +1,5 @@
 # CXTB-217 Providers Care Platform - Homepage Listing View
-TestHomePageListingView:
+TestProviderHomePageListingView:
   Environment: Settings
   Vars:
     LOGOUT_OPTION: "Stay On Shift"   
@@ -108,7 +108,7 @@ TestHomePageListingView:
         raise: true
 
 # CXTB-231 Status Drop-down Options - Not on Active Call
-TestStatusNotOnActiveCallForProviders:
+TestProviderStatusNotOnActiveCall:
   Environment: Settings  
   Roles:
     - Role: desktopChrome

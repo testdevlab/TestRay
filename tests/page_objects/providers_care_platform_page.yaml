@@ -5,7 +5,7 @@ providers_home_page:
   follow_up_calls: //tr[contains(.,'Follow-up')][last()]
   missed_calls_text: (//div[contains(text(),'Missed Call')])[last()]
   scheduled_calls: (//tr[not(contains(@class,'is-disabled'))]//div[contains(text(),'Scheduled Call')])[last()]
-  on_demand_calls: (//div[contains(text(),'On Demand Call')])[last()]
+  on_demand_calls: //*[@role='button'][contains(.,'On Demand Call')][last()]
   datetime: //time
   time_dropdown: //div[div[contains(text(),'Time')]]//button
   time_all_option: //div[div[contains(text(),'Time')]]//button[contains(text(),'All')]
@@ -56,8 +56,8 @@ providers_facilities_page:
   search_button: searchButton
   search_text: searchText
   facility_name: //h3[@class='text-xl color-white font-normal']
-  facilities_button: //div[@class='app-sidebar-menu-item-label'][text()='Facilities']
-  overview_button: //button[text()='Overview']
+  facilities_button: //nav//a[text()='Facilities']
+  overview_button: //button[contains(text(),'Overview')]
   local_hospitals_button: //button[text()='Local Hospitals']
   devices_tab: //button[text()='Devices']
   title_subtab_local_hospital: //h4[text()='Local Hospitals & ED Contact']
