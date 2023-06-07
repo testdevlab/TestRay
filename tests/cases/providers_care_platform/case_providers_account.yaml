@@ -142,26 +142,32 @@ TestProviderUpdateCredentials:
       Time: 3
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.providers_home_page.last_on_demand_row$
-    #Check that the on demand call is from the state selected and disable to take by the provider
-    - Type: get_attribute
+      Id: $PAGE.providers_home_page.on_demand_calls$
+    #Check that the on demand call is from the state selected and the answer call button is disable to take by the provider
+    - Type: get_text
       Strategy: xpath
-      Id: $PAGE.providers_home_page.last_on_demand_row$
+      Id: $PAGE.providers_home_page.on_demand_call_state$
       Greps:
         - var: DETAILS_CONTENT
-          attr: outerHTML
-          condition: nempty
           match: "(.*)"
     - Type: assert
       Asserts:
         - Type: contain
           Var: DETAILS_CONTENT
           Value: $AND_CLI_STATE$
-    - Type: assert
-      Asserts:
-        - Type: contain
-          Var: DETAILS_CONTENT
-          Value: "is-disabled"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.on_demand_calls$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
+      Property: disabled
+      Value: "true"
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.assign_to_me_button$
+      Property: disabled
+      Value: "true"
     #Going to My Account
     - Type: click
       Strategy: xpath
@@ -189,20 +195,40 @@ TestProviderUpdateCredentials:
     - Type: wait_not_visible
       Strategy: xpath
       Id: $PAGE.providers_account_modal.credentials_content$
-    #call should be changed to enabled
-    - Type: get_attribute
+    #buttons should be changed to enabled
+    - Type: wait_not_visible
       Strategy: xpath
-      Id: $PAGE.providers_home_page.last_on_demand_row$
-      Greps:
-        - var: OUTER_HTML
-          attr: outerHTML
-          condition: nempty
-          match: "(.*)"
-    - Type: assert
-      Asserts:
-        - Type: n_contain
-          Var: OUTER_HTML
-          Value: "is-disabled"
+      Id: $PAGE.providers_home_page.toast_credentials_updated$
+    #shuffle between tabs for updating
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.call_history_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.call_history_title_tab$
+    #Navigate again to home
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_home_page.home_button$
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_home_page.home_title$
+    #Check button status again
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.on_demand_by_state$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
+      Property: disabled
+      Value: "false"
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.assign_to_me_button$
+      Property: disabled
+      Value: "false"
     - Type: case
       Value: ProvidersCarePlatformEndCall
 
@@ -232,7 +258,7 @@ TestProviderLogOutPortalGoOffShift:
     # Continued on Step 8.
     # Log in with the second user.
     - Type: case
-      Value: CarePartnerLoginSecondaryUser
+      Value: ProviderLoginSecondaryUser
     # Click on the users dropdown.
     - Type: click
       Strategy: xpath

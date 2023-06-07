@@ -3,6 +3,8 @@ TestProviderHomePageListingView:
   Environment: Settings
   Vars:
     LOGOUT_OPTION: "Stay On Shift"   
+  Precases:
+    - CarePartnerCleanCallQueueAndHangedCalls
   Aftercases:
     - TerminateApp
   Roles:
@@ -474,7 +476,7 @@ TestProviderHelpMenuOption:
       Value: ProvidersCarePlatformLogin
   # Click your name in upper Right corner after click on help option
     - Type: click
-      Strategy: id
+      Strategy: xpath
       Id: $PAGE.providers_home_page.dropdown_username$
     - Type: click
       Strategy: xpath

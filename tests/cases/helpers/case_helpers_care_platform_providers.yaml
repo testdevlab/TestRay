@@ -235,11 +235,22 @@ ProviderNavigateToFacilities:
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_home_page.facilities_navigation$
-    - Type: wait_for_property
+    - Type: get_attribute
       Strategy: xpath
-      Id: $PAGE.providers_facilities_page.facilities_header_title$ 
-      Property: textContent
-      Value: "Facilities"
+      Id: $PAGE.providers_home_page.facilities_navigation$
+      Greps:
+        - var: ACTIVE_CLASS
+          attr: class
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: ACTIVE_CLASS
+          Value: "active"
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_facilities_page.facilities_header_title$
 
 ProviderCallParticipant:
   Environment: Settings
@@ -950,6 +961,14 @@ CleanUsedFollowUp:
     - Role: desktopChrome
       App: desktop  
   Actions:
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_home_page.follow_up_calls$
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.providers_follow_up_call_details_page.update_status_dropdown$
     - Type: click
       Strategy: xpath
       Role: desktopChrome

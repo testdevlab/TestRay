@@ -15,13 +15,14 @@ TestSNFNewRequestFormBehavior:
     - Type: click
       Strategy: xpath
       Id: $PAGE.snf_home.new_request_btn$
-  #Check behavior
-    #Submit button should be disabled until required data entered
-    - Type: wait_for_attribute
+    - Type: send_keys
       Strategy: class_chain
-      Id: $PAGE.snf_new_request_form.submit_button$
-      Attribute: enabled
-      Value: "false"
+      Id: $PAGE.snf_new_request_form.requester_first_name$
+      Value: $AND_CLI_facility_devices_requester_name$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_information_title$
+  #Check behavior
     #Selecting patient by name
     - Type: wait_for
       Strategy: class_chain
@@ -141,12 +142,69 @@ TestSNFNewRequestFormBehavior:
       - Value: 5
         Operation: visible
         Result: true
-    #Submit button gets enabled
-    - Type: wait_for_attribute
+    #Check if it lets you submit. If it do, it will error out in the next step
+    - Type: click
       Strategy: class_chain
       Id: $PAGE.snf_new_request_form.submit_button$
-      Attribute: enabled
-      Value: "true"
+    #Fill *new* required fields
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.symptom_shortness_breath_chkbx$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.symptom_shortness_breath_chkbx$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.notes_input$
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.notes_input$
+      Value: "Automation notes"
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.notes_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.baseline_mental_dropdown$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.baseline_mental_dropdown$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.baseline_mental_option$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.baseline_mental_option$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.contributing_dx_dropdown$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.contributing_dx_option$
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.blood_pressure_input$
+      Value: "120"
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.blood_pressure_hg_input$
+      Value: "80"
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.heart_rate_input$
+      Value: "83"
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.respiratory_input$
+      Value: "95"
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.temperature_input$
+      Value: "37"
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.oxygen_input$
+      Value: "99"
     #Erase a required field: Requester First Name. Submit button should be disable after that.
     - Type: clear_field
       Strategy: class_chain
@@ -154,11 +212,10 @@ TestSNFNewRequestFormBehavior:
     - Type: click
       Strategy: class_chain
       Id: $PAGE.snf_new_request_form.patient_information_title$
-    - Type: wait_for_attribute
+    #Check if it lets you submit. If it do, it will error out in the next step
+    - Type: click
       Strategy: class_chain
       Id: $PAGE.snf_new_request_form.submit_button$
-      Attribute: enabled
-      Value: "false"
     #Fill the required data to submit. Submit button gets enabled again.
     - Type: send_keys
       Strategy: class_chain
@@ -167,11 +224,6 @@ TestSNFNewRequestFormBehavior:
     - Type: click
       Strategy: class_chain
       Id: $PAGE.snf_new_request_form.patient_information_title$
-    - Type: wait_for_attribute
-      Strategy: class_chain
-      Id: $PAGE.snf_new_request_form.submit_button$
-      Attribute: enabled
-      Value: "true"
     - Type: click
       Strategy: class_chain
       Id: $PAGE.snf_new_request_form.submit_button$
@@ -227,96 +279,9 @@ TestSNFRequestSuccessfulCallConnect:
       Role: localiOS
       Value: LoginSNFHelper
   #New request
-    - Type: click
-      Strategy: xpath
+    - Type: case
       Role: localiOS
-      Id: $PAGE.snf_home.new_request_btn$
-    - Type: wait_for
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.snf_new_request_form.patient_information_title$
-  #Submit button should be disabled until required data entered
-    - Type: wait_for_attribute
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.snf_new_request_form.submit_button$
-      Attribute: enabled
-      Value: "false"
-    - Type: send_keys
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.snf_new_request_form.requester_first_name$
-      Value: $AND_CLI_facility_devices_requester_name$
-    - Type: send_keys
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.snf_new_request_form.requester_last_name$
-      Value: $AND_CLI_facility_devices_requester_lastname$
-    - Type: click
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.snf_new_request_form.patient_information_title$
-    - Type: click
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.snf_new_request_form.patient_name_select$
-    - Type: click
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.snf_new_request_form.first_patient_select_option$
-      Condition:
-      - Value: 5
-        Operation: visible
-        Result: true
-    - Type: click
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.snf_new_request_form.urgent_reason_dropdown$
-    - Type: click
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.snf_new_request_form.urgent_reason_dropdown$
-    - Type: click
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.snf_new_request_form.urgent_reason_option_no$
-      Condition:
-      - Value: 5
-        Operation: visible
-        Result: true
-    - Type: click
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.snf_new_request_form.reason_for_request_dropdown$
-    - Type: click
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.snf_new_request_form.reason_for_request_option_one$
-      Condition:
-      - Value: 5
-        Operation: visible
-        Result: true
-  # Submit button gets enabled
-    - Type: wait_for_attribute
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.snf_new_request_form.submit_button$
-      Attribute: enabled
-      Value: "true"
-    - Type: click
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.snf_new_request_form.submit_button$
-  # Select "Yes, Call provider"
-    - Type: click
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.snf_submit_options.yes_call_provider_button$
-  # Verify that screen redirects to the call waiting room.
-    - Type: wait_for
-      Strategy: class_chain
-      Role: localiOS
-      Id: $PAGE.seniors_app_call.waiting_room_label$
+      Value: SNFNewRequestHelper
   # Provider side
     - Type: case
       Value: ProvidersCarePlatformLogin

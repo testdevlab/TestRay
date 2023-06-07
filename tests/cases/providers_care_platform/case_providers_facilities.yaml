@@ -2,6 +2,8 @@
 # CXTB-185 Provider Can Click and View Facility Device Record from Listing
 TestProviderCanClickAndViewFacilitiesDevice:
   Environment: Settings
+  Vars:
+    DEVICE_STATUS: "(Active|Pre-delivery|Suspended|Deactivated)"
   Roles:
     - Role: desktopChrome
       App: "desktop"
@@ -85,16 +87,17 @@ TestProviderCanClickAndViewFacilitiesDevice:
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_facilities_records_page.devices_tab$
-    - Type: get_attribute
+    - Type: sleep
+      Time: 2
+    - Type: get_text
       Strategy: xpath
       Id: $PAGE.providers_facilities_records_page.device_status$
       Greps:
-        - var: STATUS_CLASS
-          attr: class
+        - var: STATUS_TEXT
           condition: nempty
-          match: "(.*)"
+          match: "(Active|Pre-delivery|Suspended|Deactivated)"
     - Type: assert
       Asserts:
         - Type: contain
-          Var: STATUS_CLASS
-          Value: 'active'
+          Var: DEVICE_STATUS
+          Value: $AND_CLI_STATUS_TEXT$

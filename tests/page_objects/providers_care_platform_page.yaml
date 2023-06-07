@@ -1,29 +1,30 @@
 providers_home_page:
-  home_button: //nav/a[contains(.,'Home')]
+  home_button: //nav//a[contains(.,'Home')]
   home_title: //h3[text()='Home']
-  table : email
-  follow_up_calls: //tr[contains(.,'Follow-up')][last()]
+  follow_up_calls: //*[@role='button'][contains(.,'Follow-up')][last()]
   missed_calls_text: (//div[contains(text(),'Missed Call')])[last()]
-  scheduled_calls: (//tr[not(contains(@class,'is-disabled'))]//div[contains(text(),'Scheduled Call')])[last()]
+  scheduled_calls: //*[@role='button'][contains(.,'Scheduled Call') and not(contains(@class,'disabled'))][last()]
   on_demand_calls: //*[@role='button'][contains(.,'On Demand Call')][last()]
-  datetime: //time
+  on_demand_call_state: //*[@role='button'][contains(.,'On Demand Call')][last()]/div[5]
+  on_demand_by_state: (//*[@role='button'][contains(.,'On Demand Call')]/div[5][contains(text(),'$AND_CLI_STATE$')])[last()]
   time_dropdown: //div[div[contains(text(),'Time')]]//button
   time_all_option: //div[div[contains(text(),'Time')]]//button[contains(text(),'All')]
   last_medical_transfer_row: (//div[contains(text(),'Medical Transfer')])[last()]
-  first_row: //table/tbody/tr[@role='row'][1]
-  last_on_demand_row: //tbody/tr//div[text()='On Demand Call'][last()]/ancestor::tr
-  participants_navigation: //a//div[contains(text(),'Participants')]
-  facilities_navigation: //a//div[contains(text(),'Facilities')]
-  employees_navigation: //a//div[contains(text(),'Employees')]
-  call_based_on_participant_name: //div[contains(@class, 'ListRow_listRow')]//strong[text() = '$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']
-  follow_up_ticket_based_on_participant_name: //div[contains(text(), 'Follow-up')]/ancestor::tr//strong[text()='$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']
+  participants_navigation: //header//nav//a[contains(text(),'Participants')]
+  facilities_navigation: //header//nav//a[contains(text(),'Facilities')]
+  employees_navigation: //header//nav//a[contains(text(),'Employees')]
+  call_based_on_participant_name: //*[@id='containerElement']/div[contains(@class,'ListRow_listRow')]/div[4]/strong[text()='$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$'][last()]
+  follow_up_ticket_based_on_participant_name: //div[contains(@class,'ListRow_listRow')][contains(.,'Follow-up')]//strong[text()='$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$'][last()]
   close_ticket_button: //button[text()='Close Ticket']
   reason_for_closing_ticket_input:  //input[@name='reasonForClosing']
   save_and_close_ticket_button: //button[text()='Save and Close Ticket']
-  dropdown_username: userName
+  dropdown_username: //header//div[contains(@class,'user-dropdown')]/button
   button_help: //button[text() = 'Help']
   session_return_button: //button[@class='video-return']
   toast_closed_ticket: //div[@class='Toastify']//div[text()='Follow-up ticket closed']
+  toast_credentials_updated: //*[@role='alert']//div[contains(text(),'Credentials updated')]
+  call_history_navigation: //header//a[text()='Call History']
+  call_history_title_tab: //nav/button[text()='Call History']
 
 providers_account_modal:
   credentials_navigation_tab: //*[@id='modals']//nav/button[text()='Credentials']
@@ -37,7 +38,7 @@ providers_account_modal:
   cancel_button: //*[@id='modals']//button[contains(.,'Cancel')]
 
 providers_facilities_page:
-  facilities_header_title: //h3
+  facilities_header_title: //h3[text()='Facilities']
   alpha_center_td: //div[@role='button']//div[text()='Alpha Healthcare Center']
   call_portal_btn: //button[text()='Call Portal']
   records_button: //a/button[text()='Records']
@@ -69,7 +70,7 @@ providers_facilities_records_page:
 
 providers_call_handling_page:
   end_call_btn: //button[span[text()='End Call']]
-  call_device_btn: //button[text()='Call Device']
+  call_device_btn: //button[text()='Call Device' or text()='Answer Call']
   subject_input: //div[label[text()='Subject']]//input
   details_textarea: //div[label[text()='Details']]//textarea
   reason_last_option: //option[last()]
@@ -135,15 +136,14 @@ providers_participants_page:
   clear_search_button: //button[contains(@class,'button-circle')]
   first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
   selected_darkened_letter_button: //button[contains(@class,'is-selected')]
-  senior_complete_name: //div[starts-with(@class, 'ListRow_listRow')]//div[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
-  senior_1_row: //div[contains(@class, 'SearchableListTemplate_record__gc5a6')]
-  first_senior_lastname: (//div[starts-with(@class, 'SearchableListTemplate_record')]//strong)[1]
+  senior_complete_name: //div[starts-with(@class, 'SearchableListTemplate_record')]//div[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
+  senior_1_row: //*[@id='containerElement']/div[@role='button'][1]
+  first_senior_lastname: //*[@id='containerElement']/div[@role='button'][1]//strong
   call_portal_btn: //button[text()='Call Portal']
   status_dropdown_button: //button[contains(@class,'queue-filter-dropdown-toggle')]
   status_dropdown_active: //button[text()='Active']
   status_dropdown_suspended: //button[text()='Suspended']
   records_button: //button[text()='Records']
-
 
 providers_participants_records_page:
   demographics_tab: //nav[contains(@class,'box-tabs-nav')]/button[text()='Demographics']
@@ -156,7 +156,6 @@ providers_participants_records_page:
   call_history_tab: //nav/button[contains(text(),'Call History')]
   emergency_calls_tab: //nav/button[contains(text(),'Emergency Calls')]
   follow_up_tickets_tab: //nav/button[contains(text(),'Follow-up Tickets')]
-
 
 providers_participant_modal:
   call_portal_button: //button[text()='Call Portal']

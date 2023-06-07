@@ -53,6 +53,8 @@ TestSNFProviderIncomingCallAnswerCallOnSNF:
       Strategy: class_chain
       Id: $PAGE.snf_incoming_call.ignore_call_button$
     # Nurse answers the call from Provider.
+    - Type: sleep
+      Time: 3
     - Type: case
       Value: SNFAnswerIncomingCall
     # Turn on Nurse camera.
@@ -112,6 +114,8 @@ TestSNFMessagePromptFromProvider:
     - Type: case
       Role: localiOS
       Value: LoginSNFHelper
+    - Type: case
+      Value: SeniorCleanPrompts
   #Create message from provider
     - Type: case
       Value: ProviderSendsMessageToFacility
@@ -292,7 +296,7 @@ TestSNFMissedCallFromProvider:
       Attribute: label
       ResultVar: FOLLOW_VALUE
     - Type: get_local_timestamp
-      Format: "%B %d, %Y"
+      Format: "%B %-e, %Y"
       Var: FOLLOW_UP_TIMESTAMP
     - Type: assert
       Role: localiOS
