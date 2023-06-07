@@ -55,6 +55,9 @@ SchedulesPageNavigationHelper:
       App: NeverAlone
   Actions:
   # In the Home page, click on the button "Full Schedule"
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.full_schedule_btn$
     - Type: click
       Strategy: class_chain
       Id: $PAGE.seniors_app_home.full_schedule_btn$

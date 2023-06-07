@@ -116,7 +116,7 @@ seniors_app_schedule:
   schedule_label: "**/XCUIElementTypeStaticText[`label == 'Schedule'`]"
   schedule_date_label: "**/XCUIElementTypeOther[`label BEGINSWITH 'Today' AND label ENDSWITH 'Calendar'`]/**/XCUIElementTypeStaticText"
   left_arrow_schedule: "**/XCUIElementTypeOther[`label BEGINSWITH 'Today'`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[`enabled == 1 AND visible == 0 AND accessible == 1`][1]"
-  right_arrow_schedule: "**/XCUIElementTypeOther[`label BEGINSWITH 'Today'`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[`enabled == 1 AND visible == 0 AND accessible == 1`][-1]"
+  right_arrow_schedule: "**/XCUIElementTypeOther[`label BEGINSWITH 'Today'`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[`enabled == 1 AND visible == 1 AND accessible == 1`][-1]"
   today_btn: "**/XCUIElementTypeButton[`label == 'Today'`]"
   events_elements: "**/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/**/XCUIElementTypeOther[`enabled == 1 AND accessible == 1`]"
   close_btn: "**/XCUIElementTypeButton[`label CONTAINS 'Close'`]"

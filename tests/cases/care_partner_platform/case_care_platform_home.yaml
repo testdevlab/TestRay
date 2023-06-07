@@ -60,12 +60,6 @@ TestCarePartnerHomePage:
       Id: $PAGE.care_platform_header.app_logo$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.care_platform_header.app_time$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.user_toggle_input$
-    - Type: wait_for
-      Strategy: xpath
       Id: $PAGE.care_platform_header.user_dropdown_button$
     - Type: wait_for
       Strategy: xpath
@@ -76,21 +70,7 @@ TestCarePartnerHomePage:
       Id : $PAGE.care_platform_header.user_dropdown_button$
     - Type: wait_for
       Strategy: xpath
-  #Status
-      Id: $PAGE.care_platform_header.status_menu_header$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.status_available_button$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.status_away_button$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.status_insession_button$
-    - Type: wait_for
-      Strategy: xpath
-  #Other options
-      Id: $PAGE.care_platform_header.account_menu_header$
+      Id: $PAGE.care_platform_header.user_toggle_input$
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_header.help_menu_button$
@@ -101,8 +81,8 @@ TestCarePartnerHomePage:
       Strategy: xpath
       Id: $PAGE.care_platform_header.logout_menu_button$
 
-#CXTB-223: Validating changes of status (Not in Call)
-TestStatusDropdown_NotInCall:
+#CXTB-90: Validating changes of status (Not in Call)
+TestCarePartnerStatusDropdown_NotInCall:
   Environment: Settings 
   Precases:
     - CarePartnerCleanCallQueueAndHangedCalls
@@ -124,16 +104,13 @@ TestStatusDropdown_NotInCall:
     - Type: click
       Strategy: xpath
       Id : $PAGE.care_platform_header.user_dropdown_button$
+  #Changing status to Off Shift
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.care_platform_header.status_menu_header$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.status_available_button$
-  #Changing status to away
+      Id: $PAGE.care_platform_header.user_toggle_input$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_header.status_away_button$
+      Id: $PAGE.care_platform_header.user_toggle_input$
   #Navigating to participants page
     - Type: click
       Strategy: xpath
@@ -148,7 +125,7 @@ TestStatusDropdown_NotInCall:
         - Type: eq
           Var: HOME_TITLE
           Value: "Participants"
-  #Checking indicator is set to Away status
+  #Checking indicator is set to Off Shift status
     - Type: get_attribute
       Strategy: xpath
       Id: $PAGE.care_platform_header.status_indicator$
@@ -159,46 +136,19 @@ TestStatusDropdown_NotInCall:
           match: "(.*)has-status(.*)"
     - Type: assert
       Asserts:
-        - Type: contain
+        - Type: n_contain
           Var: STATUS_VAR
-          Value: "is-empty"
-  #Trying to change status to In Session (shouldn't let you do it manually)
-    - Type: click
-      Strategy: xpath
-      Id : $PAGE.care_platform_header.user_dropdown_button$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.status_insession_button$
-    - Type: click_js
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.status_insession_button$
-    - Type: click
-      Strategy: xpath
-      Id : $PAGE.care_platform.navigation_followup$
-  #Verifying the status indicator didn't change to In Session
-    - Type: get_attribute
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.status_indicator$
-      Greps:
-        - var: STATUS_VAR
-          attr: class
-          condition: nempty
-          match: "(.*)has-status(.*)"
-    - Type: assert
-      Asserts:
-        - Type: contain
-          Var: STATUS_VAR
-          Value: "is-empty"
+          Value: "has-status"
   #Changing status back to available
     - Type: click
       Strategy: xpath
       Id : $PAGE.care_platform_header.user_dropdown_button$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.care_platform_header.status_menu_header$
+      Id: $PAGE.care_platform_header.user_toggle_input$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_header.status_available_button$
+      Id: $PAGE.care_platform_header.user_toggle_input$
     - Type: click
       Strategy: xpath
       Id : $PAGE.care_platform.navigation_followup$
@@ -225,10 +175,10 @@ TestStatusDropdown_NotInCall:
       Asserts:
         - Type: contain
           Var: STATUS_VAR
-          Value: "is-green"
+          Value: "has-status"
 
-#CXTB-227 Account - Update info
-TestUpdateInfoAccount:
+#CXTB-67 Account - Update info
+TestCarePartnerUpdateInfoAccount:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
@@ -241,7 +191,7 @@ TestUpdateInfoAccount:
       Value: CarePlatformUpdateInfo
 
 #CXTB-237 Account - Help
-TestAccountHelp:
+TestCarePartnerAccountHelp:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
@@ -277,7 +227,7 @@ TestAccountHelp:
           Value: .pdf
 
 #CXTB-236 Account - Update Password
-TestUpdatePassword:
+TestCarePartnerUpdatePassword:
   Environment: Settings 
   Vars:
     LOGOUT_OPTION: "Stay On Shift"
@@ -294,7 +244,7 @@ TestUpdatePassword:
       Value: CarePlatformUpdatePassword
 
 #CXTB-268 Log Out - Manually of Portal and Go Off Shift
-TestLogoutGoOffShift:
+TestCarePartnerLogoutGoOffShift:
   Environment: Settings 
   Vars:
     LOGOUT_OPTION: "Go Off Shift"
@@ -356,7 +306,7 @@ TestLogoutGoOffShift:
       Value: CarePlatformLogout
 
 #CXTB-234 Log Out - Manually of Portal and Stay On Shift
-TestLogoutStayOnShift:
+TestCarePartnerLogoutStayOnShift:
   Environment: Settings 
   Vars:
     LOGOUT_OPTION: "Stay On Shift"
@@ -387,7 +337,7 @@ TestLogoutStayOnShift:
       Id: $PAGE.care_platform_header.onshift_carepartner1_element$
       
 #CXTB-92: Verify Access and Review Team Member's Availability
-TestAccessAndReviewTeamMembersAvailability:
+TestCarePartnerAccessAndReviewTeamMembersAvailability:
   Environment: Settings
   Vars:
     CARE_PARTNER_USER1_FULLNAME: $AND_CLI_carepartner_user1_name$ $AND_CLI_carepartner_user1_lastname$

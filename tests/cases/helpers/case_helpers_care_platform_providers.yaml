@@ -216,9 +216,12 @@ ProviderNavigateToParticipants:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform.navigation_participant$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_participants_page.participants_label$ 
     - Type: wait_for_property
       Strategy: xpath
-      Id: $PAGE.providers_participants_page.participants_title$ 
+      Id: $PAGE.providers_participants_page.participants_label$ 
       Property: textContent
       Value: "Participants"
 
@@ -253,7 +256,7 @@ ProviderCallParticipant:
     # Click the desired participant.
     - Type: click
       Strategy: xpath
-      Id: $PAGE.providers_participants_page.participant_based_on_name$
+      Id: $PAGE.providers_participants_page.senior_complete_name$
     # Click on the call portal button.
     - Type: click
       Strategy: xpath

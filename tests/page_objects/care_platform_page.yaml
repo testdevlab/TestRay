@@ -32,19 +32,15 @@ care_platform_home:
   call_queue_calls: //div[@id='containerElement']/div[starts-with(@class, 'ListRow_listRow')]
 
 care_platform_header:
-  app_logo: //header//div[@class='app-header-logo']/img
-  app_time: //header//time
-  user_toggle_input: //header//div[@class='radio-toggle']//input
+  app_logo: //header//div[@class='app-header-small-logo']/img
+  user_toggle_input: //header//label[@class='radio-toggle-button']
   user_dropdown_button: //header//div[contains(@class,'user-dropdown')]/button
   headset_dropdown_button: //button[@class='users-dropdown-toggle']
   users_dropdown_list: //button[@class='users-dropdown-toggle']/ancestor::div[contains(@class, 'users-dropdown')]
   dropdown_username: userName
+  user_dropdown_user_name: //nav[@class='user-dropdown-menu']/div/span[@class='mt-tiny font-bold']
   headset_icon: //header//button/span[@class='icon-headset']
-  status_menu_header: //header//nav//div[contains(text(),'Status')]
-  status_available_button: //header//nav/button[contains(.,'Available')]
-  status_away_button: //header//nav/button[contains(.,'Away')]
-  status_insession_button: //header//nav/button[contains(.,'In Session')]
-  status_indicator: //header//button[contains(@class,'user-dropdown-toggle')]/div[contains(@class,'has-status')]
+  status_indicator: //header//button[contains(@class,'user-dropdown-toggle')]/div[contains(@class,'user-dropdown-avatar')]
   account_menu_header: //header//nav//div[contains(text(),'Account')]
   help_menu_button: //header//nav//button[contains(.,'Help')]
   myaccount_menu_button: //header//nav//button[contains(.,'My Account')]

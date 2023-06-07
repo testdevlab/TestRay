@@ -1324,8 +1324,8 @@ TestCarePartnerCallParticipantsDeviceCallComplete:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
-    - SeniorCleanPrompts
     - CarePartnerCleanCallQueueAndHangedCalls
+    - SeniorCleanPrompts
   Aftercases:
     - TerminateApp
   Roles:

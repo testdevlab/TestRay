@@ -26,8 +26,7 @@ First and most important thing - you need an Apple ID, which will be used contin
 5. On computer: in terminal, run `xcrun xctrace list devices`
         The command will return a bunch of installed iOS devices. Most of these are simulators, but the first ones on the list should be real devices, and your iDevice name should be among them.
         The entry will also include the device's OS version and UDID (identification string) - you do not need them if you only want to run tests on this device, but if you plan to also develop them, note down the device name and UDID!
-6. Appium communicates with your iDevice using the WebDriverAgent tool, which is packaged as an Xcode project. First switch to its directory in the terminal, by running `cd /usr/local/lib/node_modules/appium/node_modules/appium-webdriveragent` 
-*NOTE* In Appium 2.x the server and drivers are separated, so you won't find WDA sources in the same package where the server is installed. WDA sources only get fetched as soon as XCUITest driver is installed using the server CLI, e.g. `appium driver install xcuitest`, run the following: `echo "$(dirname "$(find "$HOME/.appium" -name WebDriverAgent.xcodeproj)")"` and then switch the directory on the output.
+6. In Appium 2.x the server and drivers are separated, so you won't find WDA sources in the same package where the server is installed. WDA sources only get fetched as soon as XCUITest driver is installed using the server CLI, Do `appium driver install xcuitest`, run the following: `echo "$(dirname "$(find "$HOME/.appium" -name WebDriverAgent.xcodeproj)")"` and then switch the directory on the output.
 7. Run `mkdir -p Resources/WebDriverAgent.bundle`
 8. Open the Xcode project by running `open WebDriverAgent.xcodeproj`
 9. In the left side panel, click on WebDriverAgent at the top

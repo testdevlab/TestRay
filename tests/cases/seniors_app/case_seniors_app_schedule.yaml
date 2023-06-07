@@ -3,6 +3,8 @@ TestSeniorVerifyFullScheduleDisplay:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
+    - CarePartnerCleanCallQueueAndHangedCalls
+    - SeniorCleanPrompts
   Aftercases:
     - TerminateApp
   Roles:
@@ -14,18 +16,12 @@ TestSeniorVerifyFullScheduleDisplay:
   # Set up past event on Care Platform.
     - Type: case
       Value: SetPastEventForSeniors
-    - Type: click
-      Strategy: class_chain
-      Id: $PAGE.seniors_app_appointment_modal.close_btn$
-      Condition:
-      - Value: 5
-        Operation: visible
-        Result: true
+    - Type: case
+      Value: SeniorCleanPrompts
   # iPad steps started now.
   # Navigate to the Schedule page.
-    - Type: click
-      Strategy: class_chain
-      Id: $PAGE.seniors_app_home.full_schedule_btn$
+    - Type: case
+      Value: SchedulesPageNavigationHelper
     - Type: get_timestamp
       Format: "%A %B %-d"
       Var: TODAY_DATE

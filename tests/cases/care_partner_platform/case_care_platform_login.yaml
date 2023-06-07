@@ -1,5 +1,5 @@
 #CXTB-222: Log In - Forgot Password
-TestForgotPassword:
+TestCarePartnerForgotPassword:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
