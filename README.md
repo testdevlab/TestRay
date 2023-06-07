@@ -406,7 +406,9 @@ This is not a type but can be used in different Types as a Validation for the ac
 2. [verify_event_went_to_bottom](#verify_event_went_to_bottom)
 3. [verify_all_events_match_todays_date](#verify_all_events_match_todays_date)
 4. [credentials_checkbox](#credentials_checkbox)
-
+5. [get_day](#get_day)
+6. [get_next_month](#get_next_month)
+7. [generate_random_day](#generate_random_day)
 ## Appium/Selenium
 
 #### <a id="click"></a>click 
@@ -1164,3 +1166,25 @@ Guarantee that the checkbox is checked or unchecked depending on the option.
       Strategy: xpath | id | etc.
       Option: check | uncheck
       Id: //some//path
+
+### <a id="generate_random_day"></a>generate_random_day
+
+Obtain a random day difference to inserted day (InsertedDay could be undefined) and day = 31 is not included
+
+    - Type: generate_random_day
+      InsertedDay: $AND_CLI_DAY$
+      ResultVar: DAY
+
+### <a id="get_day"></a>get_day
+
+Recieve a timestamp and return the related day
+
+    - Type: get_day
+      Timestamp: $AND_CLI_FIRST_SCHEDULED_DAY$
+      ResultVar: DAY
+
+### <a id="get_next_month"></a>get_next_month
+
+Return the following month of the current date
+     - Type: get_next_month
+      ResultVar: NEXT_MONTH

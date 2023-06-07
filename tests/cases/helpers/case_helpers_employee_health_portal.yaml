@@ -364,3 +364,46 @@ EmployeeHealthPortalUserCall:
     - Type: wait_not_visible
       Strategy: xpath
       Id: $PAGE.employee_health_home_page.alert_call_ended$
+
+EmployeeHealthPortalAppointmentsRequest: 
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions: 
+    # waiting for appointment view
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.request_appointment_button$
+  # filling form
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.select_location_drop_down$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.select_location_option$
+    - Type: generate_unique_name
+      Name: "I have something to say about my health."
+      ResultVar: PAIN_DESCRIPTION
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.employee_health_telehealth_request_form.comments$
+      Value: $AND_CLI_PAIN_DESCRIPTION$
+    # choosing Date and time
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_right_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_month_view$
+    - Type: generate_random_day
+      InsertedDay: $AND_CLI_DAY$
+      ResultVar: DAY
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_day_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_hour_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.create_event_button$
