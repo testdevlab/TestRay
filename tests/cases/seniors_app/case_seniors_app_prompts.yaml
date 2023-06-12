@@ -896,3 +896,91 @@ TestSeniorVerifyMissedCallPromptAndCallBackButton:
     # Care Partner fills up the post call survey.
     - Type: case
       Value: PostCallSurveyCarePartner
+
+# CXTB-85: Verify call will not redirect you back to home page after 10 minutes without action.
+TestSeniorVerifyCallWillNotRedirectToHomePageAfter10MinutesWithoutAction:
+  Environment: Settings
+  Precases:
+    - LoginNeverAloneHelper
+    - CarePartnerCleanCallQueueAndHangedCalls
+    - SeniorCleanPrompts
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      Capabilities:
+        newCommandTimeout: 920
+        chromeOptions:
+          args:
+            - use-file-for-fake-audio-capture=$AND_CMD_pwd$/video_audio_samples/sample3.wav
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Generate a call from the Care Partner side to the Participant for the future.
+    - Type: case
+      Value: SetScheduledCallForSeniorsToStartIn7Minutes
+    - Type: sleep
+      Time: 120
+    - Type: case
+      Value:  SeniorCleanPrompts
+    # Navigate to the notifications page.
+    - Type: case
+      Value: NotificationsPageNavigationHelper
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.all_tab$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.all_tab$
+    # Select the call in the notifications page and join the call.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_based_on_name_element$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_notifications.appointment_based_on_name_element$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.appointment_header_modal$
+    # The lobby of the call should be displayed.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.join_button$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.join_button$
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_appointment_modal.join_button$
+      Time: 30
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.waiting_room_label$
+      Time: 30
+    # Provider step - Join the call.
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+    - Type: case
+      Value: ProviderCleanSlate
+    - Type: case
+      Value: AnswerCallAsProvider
+    # The call should start.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.end_call_button$
+    # Speak for a moment in the call and then wait 15 minutes without doing any action.
+    - Type: sleep
+      Time: 900 # 15 minutes
+    # The call should continue normally without issues.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.end_call_button$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.end_call_button$
+    # End the call and fill up post call surveys.
+    - Type: case
+      Value: SeniorGreatPostSurveyCallHelper
+    - Type: case
+      Value: PostCallSurveyProvider

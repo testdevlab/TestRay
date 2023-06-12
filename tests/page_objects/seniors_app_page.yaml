@@ -67,6 +67,7 @@ seniors_app_call:
   video_window: "**/XCUIElementTypeImage[-1]"
   
 seniors_app_post_call_survey:
+  post_call_survey_title: "**/XCUIElementTypeStaticText[`label == 'Post Call Survey'`]"
   great_answer_button: "**/XCUIElementTypeOther[`label == 'Great'`]"
   ok_answer_button: "**/XCUIElementTypeOther[`label == 'Ok'`]"
   bad_answer_button: "**/XCUIElementTypeOther[`label == 'Bad'`]"

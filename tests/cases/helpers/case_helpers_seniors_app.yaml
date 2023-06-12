@@ -105,6 +105,9 @@ SeniorGreatPostSurveyCallHelper:
     # Select the Great option.
     - Type: wait_for
       Strategy: class_chain
+      Id: $PAGE.seniors_app_post_call_survey.post_call_survey_title$
+    - Type: wait_for
+      Strategy: class_chain
       Id: $PAGE.seniors_app_post_call_survey.great_answer_button$
     - Type: click
       Strategy: class_chain
