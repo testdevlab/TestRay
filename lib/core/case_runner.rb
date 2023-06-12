@@ -27,7 +27,7 @@ class CaseRunner
   def run(case_name, parent_params = {})
     unless @main_case
       @main_case = case_name
-      @main_case_id = "$#{Time.now.to_s}$"
+      @main_case_id = " #{Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")}"
       log_info("Starting main case #{case_name}")
       steps = @main_steps
     else
@@ -48,8 +48,10 @@ class CaseRunner
       end
     end
     begin
+          
+      logger_step(case_name + ' Started ' + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L"), @main_case, @main_case_id)
       steps_handler(case_name, parent_params["Role"], steps)
-      logger_step(case_name, @main_case, @main_case_id)
+      logger_step(case_name + ' Completed ' + Time.now.strftime("%Y-%m-%d %H:%M:%S.%L"), @main_case, @main_case_id)
       log_info("All cases have finished") if case_name == @main_case
     rescue => e
       # if encountered error, first run any aftercases
@@ -217,8 +219,10 @@ class CaseRunner
       log_step(role, action)
       if action["Type"] == "sleep"
         @device_handler.devices[role].pause(action["Time"])
+        report_step(prepare_report_step(role, action) , @main_case, @main_case_id) #Logging action into report
       else
         @device_handler.devices[role].send(action["Type"], action)
+        report_step(prepare_report_step(role, action) , @main_case, @main_case_id) #Logging action into report
       end
     rescue RuntimeError => e
       raise e unless action["FailCase"]
@@ -263,4 +267,38 @@ def log_step(role, action)
         "Value: '#{convert_value(action["Value"])}'")
     end
   end
+end
+#method to add report step for action type
+def prepare_report_step(role, action)
+    if action["Type"] == "command"
+      return "Role: '#{role}', Action: '#{action["Type"]}', " +
+      "Value: '#{action["Value"]}', '#{Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")}'"
+    elsif action["Type"] == "sleep"
+      return "Role: '#{role}', Action: '#{action["Type"]}', " +
+      "Time: '#{action["Time"]}', '#{Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")}'"
+    elsif action["Type"] == "get_call"
+      return "Role: '#{role}', Action: '#{action["Type"]}', " +
+      "Url: '#{action["Url"]}', '#{Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")}'"
+    elsif action["Type"] == "post_call"
+     return "Role: '#{role}', Action: '#{action["Type"]}', " +
+      "Body: '#{action["Body"]}', Url: '#{action["Url"]}', '#{Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")}'"
+    elsif action["Type"] == "swipe_coord"
+     return "Role: '#{role}', Action: '#{action["Type"]}', " +
+      "Coords: Start -> X:'#{action["StartX"]}', Y: '#{action["StartY"]}' - " +
+      "End -> X:'#{action["EndX"]}', Y: '#{action["EndY"]}', '#{Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")}'"
+    elsif action["Type"] == "maximize"
+      return "Role: '#{role}', Action: '#{action["Type"]}', '#{Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")}'"
+    else
+      if action["Strategy"] && action["Value"]
+       return "Role: '#{role}', Action: '#{action["Type"]}', " +
+              "Element: '#{action["Strategy"]}:#{action["Id"]}', " +
+              "Value: '#{action["Value"]}', '#{Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")}'"
+      elsif action["Strategy"]
+       return "Role: '#{role}', Action: '#{action["Type"]}', " +
+            "Element: '#{action["Strategy"]}:#{action["Id"]}', '#{Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")}'"
+      else
+        return "Role: '#{role}', Action: '#{action["Type"]}', " +
+          "Value: '#{action["Value"]}', '#{Time.now.strftime("%Y-%m-%d %H:%M:%S.%L")}'"
+      end
+    end
 end

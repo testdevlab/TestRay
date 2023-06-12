@@ -298,7 +298,8 @@ end
 
 # Load grepped values from case actions into the environment
 def load_grep(grep, value)
-  matching = value.match(/#{grep["match"]}/)
+  actual_value = convert_value(value);
+  matching = actual_value.match(/#{grep["match"]}/)
   begin
     end_value = matching[0]
     end_value.slice! grep["remove"] if grep["remove"]
@@ -306,6 +307,6 @@ def load_grep(grep, value)
     log_info("Var '#{grep["var"]}' with Match: '#{end_value}'")
   rescue => e
     ENV[grep["var"]] = ""
-    log_warn("No Match for '#{value}' and grep '#{grep}'")
+    log_warn("No Match for '#{actual_value}' and grep '#{grep}'")
   end
 end

@@ -49,7 +49,7 @@ module Reports
   def process_report_cucumber()
     cucumber_report = []
     @@report["CASES"].each do |main_case_id, main_case_info|
-      main_case = main_case_id.match(/(.*)\$.*\$/)[1]
+      main_case = main_case_id.match(/(.*)\ [0-9]*-[0-9]*-[0-9]* [0-2][0-9]:[0-5][0-9]:[0-5][0-9].\d*/)[1] #Extracting case name
       cucumber_report_s = {
       "description" => main_case, # Case File Description
       "keyword" => main_case, # Case File Keywords
@@ -63,44 +63,63 @@ module Reports
       case_info = nil
       steps_cucumber = []
       case_file = find_case_file(main_case)
+      end_time = nil #Holds the end time of the action 
+      starting_time = nil #Holds the starting time of the action
+      case_line = 0
       # GETTING CASE LOGS FROM @@report TO INCLUDE THEM IN CUCUMBER REPORT
       main_case_info.each do |step_type, steps_report|
         # step_type CAN BE failed/succeed FOR NOW, BUT MIGHT INCREASE TO warn/others
-        steps_report.each do |step|
-          keyword, step_description = "Then ", ""
-          if step["error_message"]
+        steps_report.each do |step|       
+          #Checks if the step is an Action  
+          if(step["step"].include? "Action: ")
+            keyword, step_description = "Step ", step["step"] #Assigns Step as the keyword and the action as description for the report log
+            if end_time.nil?
+              starting_time = main_case_id.match(/[0-9]*-[0-9]*-[0-9]* [0-2][0-9]:[0-5][0-9]:[0-5][0-9].\d*/)[0] #For the first action it takes the case starting time as the action starting time
+            end
+            end_time = step["step"].match(/[0-9]*-[0-9]*-[0-9]* [0-2][0-9]:[0-5][0-9]:[0-5][0-9].\d*/)[0] 
+            duration = ((Time.parse(end_time) - Time.parse(starting_time))*1000000000) #Duration needs to be multiple by 10^9 because the report duration is based on nanoseconds.
+            starting_time = end_time #The end time of an action is the starting time of the next action
+          elsif step["error_message"]
             # ERROR STEPS DO NOT HAVE GHERKIN PREFIX
-            step_description = keyword + step["step"] if step["step"]
-          else
+            step_description = step["step"] if step["step"]
+          #Checks if the step is a case step. 
+          elsif step["step"].match(/\w+ /)
             step_description = step["step"]
-            if step_description.match(/\w+ /)
-              keyword = step_description.match(/\w+ /)[0] 
+            keyword = step["step"].match(/\w+ /)[0].strip! #Keyword is the case name so that it shows in bold on the report
+                                  #GETS MAIN CASE INFO: FILE AND LINE WHERE IT START, LINE WHERE THE STEP IS CALLED
+            case_info = get_case_info(main_case, case_file, step_description)
+            #GETS STEP CASE INFO: FILE AND LINE WHERE IT START
+            step_info = get_case_info(keyword, find_case_file(keyword))
+            unless case_info.nil? 
+              step_line = case_info["step_line"].to_i 
+              case_line = case_info["case_line"].to_i
+            end
+            unless step_info.nil? 
+              location = "#{step_info["case_file"]}:#{step_info["case_line"]}"
+            end
+           #Removing keyword from the description so that the case name is not repeated
+            begin
+                step_description.slice! keyword 
+            rescue => e
+                step_description.dup.slice! keyword #Rescues the frozen string exception. 
             end
           end
-          begin
-           step_description.slice! keyword
-          rescue => e
-            step_description.dup.slice! keyword
-          end
-          # GETS MAIN CASE INFO: FILE AND LINE WHERE IT START, LINE WHERE THE STEP IS CALLED
-          case_info = get_case_info(main_case, case_file, step_description)
-          # GETS STEP CASE INFO: FILE AND LINE WHERE IT START
-          step_info = get_case_info(step_description, find_case_file(step_description))
+
           data = _convert_into_cucumber_emb(step)
           steps_cucumber.append(
             {
               "arguments" => [],
-              "keyword" => keyword,
+              "keyword" => keyword ||= step_description,
               "embeddings" => data,
-              "line" => case_info["step_line"].to_i,
+              "line" => step_line,
               "name" => step_description,
               "match" => {
-              "location" => "#{step_info["case_file"]}:#{step_info["case_line"]}"
+              "location" => location
               },
               "result" => {
               "status" => step_type,
               "error_message" => step["error_message"],
-              "duration" => 0
+              "duration" => duration
               }
             }
           )
@@ -111,7 +130,7 @@ module Reports
         {
           "id" => main_case,
           "keyword" => "Scenario",
-          "line" => case_info["case_line"],
+          "line" => case_line,
           "name" => main_case,
           "tags" => [], # Case Tags,
           "type" => "scenario",
