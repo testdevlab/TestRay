@@ -35,11 +35,17 @@ AnalyzeRecordings:
           match: "(.*)"   
     # Get pixel count of video (resolution)
     - Type: command
-      Value: "ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 $AND_CLI_TEST_FOLDER$/output.mp4"
+      Value: "ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=s=x:p=0 $AND_CLI_TEST_FOLDER$/output.mp4"
       Role: command1
       Greps:
-        - var: VIDEO_PIXEL_COUNT
-          match: "(.*)"   
+        - var: VIDEO_PIXEL_COUNT_WIDTH
+          match: "(.*)" 
+    - Type: command
+      Value: "ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=s=x:p=0 $AND_CLI_TEST_FOLDER$/output.mp4"
+      Role: command1
+      Greps:
+        - var: VIDEO_PIXEL_COUNT_HEIGHT
+          match: "(.*)" 
     # Get average frame rate
     - Type: command
       Value: "ffprobe -v error -select_streams v:0 -show_entries stream=avg_frame_rate -of default=noprint_wrappers=1:nokey=1 $AND_CLI_TEST_FOLDER$/output.mp4"
@@ -61,7 +67,7 @@ VideoQualityAssertions:
           Var: BIT_RATE
           Value: 1500000 #low rate
     # Assert that frame count is framerate * seconds (150 on this case is the most accurate)
-    # Let's give ffmpeg a margin o 1 seconds so it's expected to record betweeen 4~6 seconds.
+    # Let's give ffmpeg a margin o 1 seconds so it's expected to record between 4~6 seconds.
     - Type: assert
       Asserts:
         - Type: ge
@@ -72,12 +78,19 @@ VideoQualityAssertions:
         - Type: le
           Var: FRAME_COUNT
           Value: 180 #maximum for 6 seconds.
-    # Assert that pixel count (resolution) of the video is 3584x2240.
+    # Assert that pixel count (resolution) of the video complies with the <HD Ready> metrics:
+    # 1280x720 pixels (720p) => HD Ready
+    # 1920x1080 pixels (1080p) => Full HD
+    # 3840x2160 pixels (2160p) => 4k UHD
+    # 4096x2160 pixels (DCI 4K) => Cinema 4k
     - Type: assert
       Asserts:
-        - Type: eq
-          Var: VIDEO_PIXEL_COUNT
-          Value: "3584x2240"
+        - Type: ge
+          Var: VIDEO_PIXEL_COUNT_WIDTH
+          Value: 1280
+        - Type: ge
+          Var: VIDEO_PIXEL_COUNT_HEIGHT
+          Value: 720
     # Assert that the average frame rate is 30/1
     - Type: assert
       Asserts:
