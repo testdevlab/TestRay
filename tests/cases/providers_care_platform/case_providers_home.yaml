@@ -109,9 +109,11 @@ TestProviderHomePageListingView:
         Value: "Follow-up"
         raise: true
 
-# CXTB-231 Status Drop-down Options - Not on Active Call
+# CXTB-104 Provider's Status - Not on Active Call
 TestProviderStatusNotOnActiveCall:
-  Environment: Settings  
+  Environment: Settings
+  Precases:
+    - ProviderCleanBeforeTest
   Roles:
     - Role: desktopChrome
       App: desktop
@@ -119,90 +121,10 @@ TestProviderStatusNotOnActiveCall:
       # Login to the Care Platform app with Providers account
     - Type: case
       Value: ProvidersCarePlatformLogin
-      # Status
-    - Type: click
-      Strategy: xpath
-      Id : $PAGE.care_platform_header.user_dropdown_button$
+      # Status should be available after login
     - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.status_menu_header$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.status_available_button$
-      # Changing status to away
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.status_away_button$
-      # Navigate to Facilities
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.providers_home_page.facilities_navigation$
-      # Checking indicator is set to Away status
-    - Type: get_attribute
       Strategy: xpath
       Id: $PAGE.care_platform_header.status_indicator$
-      Greps:
-        - var: STATUS_VAR
-          attr: class
-          condition: nempty
-          match: "(.*)has-status(.*)"
-    - Type: assert
-      Asserts:
-        - Type: contain
-          Var: STATUS_VAR
-          Value: "is-empty"
-      # Trying to change status to In Session (shouldn't let you do it manually)
-    - Type: click
-      Strategy: xpath
-      Id : $PAGE.care_platform_header.user_dropdown_button$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.status_insession_button$
-    - Type: click_js
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.status_insession_button$
-      # Navigate to Employees
-    - Type: click
-      Strategy: xpath
-      Id : $PAGE.providers_home_page.employees_navigation$
-      # Verifying the status indicator didn't change to In Session
-    - Type: get_attribute
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.status_indicator$
-      Greps:
-        - var: STATUS_VAR
-          attr: class
-          condition: nempty
-          match: "(.*)has-status(.*)"
-    - Type: assert
-      Asserts:
-        - Type: contain
-          Var: STATUS_VAR
-          Value: "is-empty"
-      # Changing status back to available
-    - Type: click
-      Strategy: xpath
-      Id : $PAGE.care_platform_header.user_dropdown_button$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.status_menu_header$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform_header.status_available_button$
-    - Type: click
-      Strategy: xpath
-      Id : $PAGE.providers_home_page.employees_navigation$
-    - Type: get_text
-      Strategy: xpath
-      Id : $PAGE.care_platform.page_title$
-      Greps:
-        - var: HOME_TITLE
-          match: "Employees*"
-      Asserts:
-        - Type: eq
-          Var: HOME_TITLE
-          Value: "Employees"
-      # Checking the status indicator correspond to Available
     - Type: get_attribute
       Strategy: xpath
       Id: $PAGE.care_platform_header.status_indicator$
@@ -216,6 +138,83 @@ TestProviderStatusNotOnActiveCall:
         - Type: contain
           Var: STATUS_VAR
           Value: "is-green"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.user_dropdown_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_user_dropdown_menu.user_status_available$
+      #Shift status "ON SHIFT"
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.providers_user_dropdown_menu.user_shift_toggle_label$
+      Greps:
+        - var: SHIFT_VAR
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: SHIFT_VAR
+          Value: "On"
+      #Change shift status to off
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_user_dropdown_menu.user_shift_toggle_checkbox$
+    - Type: sleep
+      Time: 2
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.providers_user_dropdown_menu.user_shift_toggle_label$
+      Greps:
+        - var: SHIFT_VAR
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: SHIFT_VAR
+          Value: "Off"
+      #Change back to available
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_user_dropdown_menu.user_shift_toggle_checkbox$
+    - Type: sleep
+      Time: 2
+      #Log out and stay on shift, to check if the status is Idle
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.home_button$
+      # Calling Logout case.
+    - Type: set_env_var
+      Value: "Stay On Shift"
+      Var: LOGOUT_OPTION
+    - Type: case
+      Value: CarePlatformLogout
+      # Log in with the second user.
+    - Type: case
+      Value: ProviderLoginSecondaryUser
+    # Click on the users dropdown.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.headset_dropdown_button$
+    # Verify that the first user has stayed on shift, and Idle
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_user_dropdown_menu.user_list_item_provider1$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.providers_user_dropdown_menu.user_list_item_provider1$
+      Greps:
+        - var: STATUS_PROVIDER1
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: STATUS_PROVIDER1
+          Value: "Idle"
 
 # Physical Device only.
 # CXTB-133: Verify that Providers answer SNF call and completes session.

@@ -26,6 +26,12 @@ providers_home_page:
   call_history_navigation: //header//a[text()='Call History']
   call_history_title_tab: //nav/button[text()='Call History']
 
+providers_user_dropdown_menu:
+  user_status_available: //header//nav[@class='user-dropdown-menu']//span[text()='available']
+  user_shift_toggle_label: //nav[@class='user-dropdown-menu']//div[contains(@class,'radio-toggle-label')]
+  user_shift_toggle_checkbox: //nav[@class='user-dropdown-menu']//label[contains(@class,'radio-toggle-button')]
+  user_list_item_provider1: //div[contains(text(),'On Shift')]//following-sibling::div[not(contains(@class,'is-offline'))]//div[@class='users-dropdown-name'][contains(text(),'$AND_CLI_provider_user1_name$')][contains(.,'$AND_CLI_provider_user1_lastname$')][contains(.,'Provider')]
+
 providers_account_modal:
   credentials_navigation_tab: //*[@id='modals']//nav/button[text()='Credentials']
   credentials_content: //*[@id='modals']//div[@class='tabs-content' and @tab-title='Credentials']
