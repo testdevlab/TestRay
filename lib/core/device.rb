@@ -2064,7 +2064,7 @@ def verify_all_events_match_todays_date(action)
 
 end
 
-# Custom action to wait for an element to be enabled
+# Custom internal method to wait for an element to be enabled
 def wait_for_enabled_element(locator)
   begin
     wait = Selenium::WebDriver::Wait.new(:timeout => 5)
@@ -2077,7 +2077,7 @@ def wait_for_enabled_element(locator)
   end
 end
 
-# Custom action to wait for an element to exist
+# Custom internal method to wait for an element to exist
 def wait_for_element_to_exist(locator)
   begin
     wait = Selenium::WebDriver::Wait.new(:timeout => 5)
@@ -2089,7 +2089,17 @@ def wait_for_element_to_exist(locator)
   end
 end
 
-# Custom action to wait for an element collection to exist
+# Custom internal method to wait for element to dissapear
+def wait_for_element_not_visible(locator)
+  begin
+    wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+    wait.until { !@driver.find_element(:xpath, convert_value_pageobjects(locator)).visible? }
+  rescue Selenium::WebDriver::Error::TimeoutError
+    log_info("Exception: Element still visible")
+  end
+end
+
+# Custom internal method to wait for an element collection to exist
 def wait_for_element_collection_to_exist(locator)
   begin
     wait = Selenium::WebDriver::Wait.new(:timeout => 5)
@@ -2098,6 +2108,47 @@ def wait_for_element_collection_to_exist(locator)
   rescue Exception => e
     log_info("Exception: #{e}")
     return false
+  end
+end
+
+# Custome action to clean hanged calls and sessions
+def provider_clean_hanged_call_or_session(action)
+  have_call = false
+  if wait_for_element_to_exist("$PAGE.providers_home_page.session_return_button$")
+    log_info("There's a return session")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.providers_home_page.session_return_button$")).click
+    have_call = true
+  end
+  if wait_for_element_to_exist("$PAGE.providers_call_handling_page.end_call_btn$")
+    log_info("there's an end call button")
+    wait_for_enabled_element("$PAGE.providers_call_handling_page.end_call_btn$")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.providers_call_handling_page.end_call_btn$")).click
+    have_call = true
+  end
+  if wait_for_enabled_element("$PAGE.providers_call_handling_page.complete_session_button$")
+    log_info("there's a complete session button")
+    wait_for_enabled_element("$PAGE.providers_call_handling_page.complete_session_button$")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.providers_call_handling_page.complete_session_button$")).click
+    have_call = true
+  end
+  if wait_for_element_to_exist("$PAGE.providers_call_handling_page.post_call_survey_title$")
+    log_info("We are at the provider's survey")
+    have_call = true
+  end
+  if have_call
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.providers_call_handling_page.resolved_true_option$")).click
+    wait_for_enabled_element("$PAGE.providers_call_handling_page.recommend_discharge_yes_by_SNF$")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.providers_call_handling_page.recommend_discharge_yes_by_SNF$")).click
+    wait_for_enabled_element("$PAGE.providers_call_handling_page.call_notes_subject_input$")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.providers_call_handling_page.call_notes_subject_input$")).send_keys("Automation Test subject")
+    wait_for_enabled_element("$PAGE.providers_call_handling_page.call_notes_provider_input$")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.providers_call_handling_page.call_notes_provider_input$")).send_keys("Automation Test Notes: Ended by provider's cleaner")
+    wait_for_enabled_element("$PAGE.providers_call_handling_page.submit_exit_session_button$")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.providers_call_handling_page.submit_exit_session_button$")).click
+    
+    wait_for_element_not_visible("$PAGE.providers_call_handling_page.submit_exit_session_button$")
+    @driver.find_element(:xpath, convert_value_pageobjects("$PAGE.providers_home_page.home_button$")).click
+    wait_for_enabled_element("$PAGE.providers_home_page.home_title$")
   end
 end
 

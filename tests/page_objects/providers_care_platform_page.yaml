@@ -49,7 +49,6 @@ providers_facilities_page:
   call_portal_btn: //button[text()='Call Portal']
   records_button: //a/button[text()='Records']
   facility_based_on_name: //*[@id='containerElement']//div[text()='$AND_CLI_facility_name1$']
-  first_facility_name: //div[@class='SearchableListTemplate_record__gc5a6']  
   devices_button: //button[text()='Devices']
   tabs_content: //div[@class='tabs-content']
   title_subtab_devices: //h4[text()='Facility Devices']

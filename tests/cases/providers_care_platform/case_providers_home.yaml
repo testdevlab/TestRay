@@ -113,7 +113,7 @@ TestProviderHomePageListingView:
 TestProviderStatusNotOnActiveCall:
   Environment: Settings
   Precases:
-    - ProviderCleanBeforeTest
+    - ProviderNewCleaner
   Roles:
     - Role: desktopChrome
       App: desktop
@@ -224,11 +224,11 @@ TestProvidersAnswerSNFCallAndCompletesSession:
     PROVIDERS_SUBJECT:  Automation Test Call SNF.
     PROVIDERS_DETAILS:  Automation Test Notes Verify that Providers answer SNF call and completes session.
   Precases:
-    - ProviderCleanBeforeTest
+    - ProviderNewCleaner
     - LoginSNFHelper
   Aftercases:
     - TerminateApp
-    - ProviderCleanSlate
+    - ProviderEndCurrentCall
   Roles:
     - Role: desktopChrome
       App: desktop

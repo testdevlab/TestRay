@@ -50,7 +50,7 @@ TestEmployeeHealthPortalMinorUserCall:
     ENV_PASS_STORE: $AND_CLI_employee_user1_pwd$
     ENV_MEMBER_ID_STORE: $AND_CLI_employee_user1_card_member_id$
   Precases:
-    - ProviderCleanBeforeTest
+    - ProviderNewCleaner
   Roles:
     - Role: desktopChrome
       App: "desktop"

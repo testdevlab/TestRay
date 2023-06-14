@@ -285,10 +285,10 @@ TestSNFNewRequestFormBehavior:
 TestSNFRequestSuccessfulCallConnect:
   Environment: Settings
   Precases:
-    - ProviderCleanBeforeTest
+    - ProviderNewCleaner
   Aftercases:
     - TerminateApp
-    - ProviderCleanSlate
+    - ProviderEndCurrentCall
   Roles:
     - Role: localiOS
       App: NeverAlone
@@ -385,10 +385,10 @@ TestSNFRequestSuccessfulCallConnect:
 TestSNFCheckQueueandReviewDetails:
   Environment: Settings
   Precases:
-    - ProviderCleanBeforeTest
+    - ProviderNewCleaner
   Aftercases:
     - TerminateApp
-    - ProviderCleanSlate
+    - ProviderEndCurrentCall
   Roles:
     - Role: localiOS
       Capabilities:

@@ -4,11 +4,11 @@
 TestSNFProviderIncomingCallAnswerCallOnSNF:
   Environment: Settings
   Precases:
-    - ProviderCleanBeforeTest
+    - ProviderNewCleaner
     - LoginSNFHelper
   Aftercases:
     - TerminateApp
-    - ProviderCleanSlate
+    - ProviderEndCurrentCall
   Roles:
     - Role: localiOS
       App: NeverAlone
@@ -101,7 +101,7 @@ TestSNFMessagePromptFromProvider:
   Vars:
     MESSAGE_TO_FACILITY: Automation Message CXTB-40
   Precases:
-    - ProviderCleanBeforeTest
+    - ProviderNewCleaner
   Aftercases:
     - TerminateApp
   Roles:
@@ -154,7 +154,7 @@ TestSNFMessagePromptFromProvider:
 TestSNFIgnoreCallFromProvider:
   Environment: Settings
   Precases:
-    - ProviderCleanBeforeTest
+    - ProviderNewCleaner
   Aftercases:
     - TerminateApp
   Roles:
@@ -202,11 +202,11 @@ TestSNFIgnoreCallFromProvider:
 TestSNFMissedCallFromProvider:
   Environment: Settings
   Precases:
-    - ProviderCleanBeforeTest
+    - ProviderNewCleaner
   Aftercases:
     - TerminateApp
     - CleanUsedFollowUp
-    - ProviderCleanSlate
+    - ProviderEndCurrentCall
   Roles:
     - Role: localiOS
       Capabilities:

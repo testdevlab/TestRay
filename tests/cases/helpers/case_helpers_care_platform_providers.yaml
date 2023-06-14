@@ -740,20 +740,7 @@ ProviderSendsMessageToFacility:
           Var: LAST_MESSAGE_HISTORY
           Value: $AND_CLI_MESSAGE_TO_FACILITY$
 
-ProviderCleanSlate:
-  Environment: Settings
-  Roles:
-    - Role: desktopChrome
-      App: desktop       
-  Actions:
-    - Type: if
-      If_Cases: 
-        - If_Case: IfReturnSession
-        - If_Case: ProviderVisibleEndCall
-        - If_Case: CompleteEndCallOnProviderSide
-
-#Clear un-ended sessions before test. Have Login
-ProviderCleanBeforeTest:
+ProviderNewCleaner:
   Environment: Settings
   Vars:
     LOGOUT_OPTION: "Go Off Shift"
@@ -767,72 +754,14 @@ ProviderCleanBeforeTest:
     - Type: case
       Value: ProvidersCarePlatformLogin
     - Type: case
-      Value: ProviderCleanSlate
+      Value: ProviderEndCurrentCall
 
-IfReturnSession:
+ProviderEndCurrentCall:
   Roles:
     - Role: desktopChrome
       App: desktop       
   Actions:
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.providers_home_page.session_return_button$
-      Condition:
-        - Value: 5
-          Operation: visible
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.providers_home_page.session_return_button$
-    - Type: case
-      Value: ProviderVisibleEndCall
-
-ProviderVisibleEndCall:
-  Roles:
-    - Role: desktopChrome
-      App: desktop       
-  Actions:
-    #End call
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.providers_call_handling_page.end_call_btn$
-      Condition:
-        - Value: 5
-          Operation: visible
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.providers_call_handling_page.end_call_btn$
-    - Type: case
-      Value: CompleteEndCallOnProviderSide
-
-CompleteEndCallOnProviderSide:
-  Roles:
-    - Role: desktopChrome
-      App: desktop       
-  Actions:      
-  #Fill the Provider's call notes
-      #If goes to survey de una vez, no habra call notes
-    - Type: if
-      If_Cases: 
-        - If_Case: IfSaveNotes
-  #Fill survey and end session
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.providers_call_handling_page.post_call_survey_title$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.providers_call_handling_page.resolved_true_option$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.providers_call_handling_page.recommend_discharge_yes_by_SNF$
-    - Type: scroll_to
-      Strategy: xpath
-      Id: $PAGE.providers_call_handling_page.submit_exit_session_button$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.providers_call_handling_page.submit_exit_session_button$
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.providers_home_page.home_title$
+    - Type: provider_clean_hanged_call_or_session
 
 IfSaveNotes:
   Roles:

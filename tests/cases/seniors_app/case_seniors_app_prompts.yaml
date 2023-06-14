@@ -614,7 +614,7 @@ TestSeniorStartingSoonNotificationWaitUntilCallSurveyIsCompleted:
     - LoginNeverAloneHelper
     - CarePartnerCleanCallQueueAndHangedCalls
     - SeniorCleanPrompts
-    - ProviderCleanBeforeTest
+    - ProviderNewCleaner
   Aftercases:
     - TerminateApp
   Roles:
@@ -962,7 +962,7 @@ TestSeniorVerifyCallWillNotRedirectToHomePageAfter10MinutesWithoutAction:
     - Type: case
       Value: ProvidersCarePlatformLogin
     - Type: case
-      Value: ProviderCleanSlate
+      Value: ProviderEndCurrentCall
     - Type: case
       Value: AnswerCallAsProvider
     # The call should start.
