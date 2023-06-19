@@ -1320,7 +1320,10 @@ TestCarePartnerBrowsingWhileOnCall:
       Value: PostCallSurveyCarePartner
 
 # CXTB-124: Call Participant's device - Call Complete.
+# CXTB-130: Message Participant's device from active call.
 TestCarePartnerCallParticipantsDeviceCallComplete:
+  Vars:
+    MESSAGE_TO_PARTICIPANT: Automation test message CXTB-130
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
@@ -1365,10 +1368,25 @@ TestCarePartnerCallParticipantsDeviceCallComplete:
         - Type: eq
           Var: CALL_MESSAGE
           Value: 'No active call.'
+  # Check there's no chat box or message box
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.on_active_call_message_input$
   # Click "Call Participant" button.
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_call_portal.call_participant_btn$
+  # Check that the chat box or message box appears
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.on_active_call_message_input$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.on_active_call_message_input$
+      Value: $AND_CLI_MESSAGE_TO_PARTICIPANT$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.on_active_call_send_message_button$
   # Video window updates visually as call attempt is made.
     - Type: wait_for
       Strategy: xpath
@@ -1428,6 +1446,22 @@ TestCarePartnerCallParticipantsDeviceCallComplete:
   # Fill up Senior post call survey.
     - Type: case
       Value: SeniorGreatPostSurveyCallHelper
+  # Check there's a message sent from the care partner
+    - Type: wait_for
+      Role: localiOS
+      Strategy: xpath
+      Id: $PAGE.seniors_app_message_modal.message_value$
+    - Type: return_element_attribute
+      Role: localiOS
+      Strategy: xpath
+      Id: $PAGE.seniors_app_message_modal.message_value$
+      Attribute: label
+      ResultVar: MESSAGE_VALUE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: MESSAGE_VALUE
+          Value: $AND_CLI_MESSAGE_TO_PARTICIPANT$
   # Verify you are returned to the Call queue page and your user status is no longer showing as "In session" (red dot).
     - Type: get_attribute
       Strategy: xpath

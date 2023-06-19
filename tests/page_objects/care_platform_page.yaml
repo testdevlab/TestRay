@@ -233,6 +233,8 @@ care_platform_call_portal:
   yes_message_button: //form[contains(@class, 'video-message-form-box')]//button
   participant_not_available_text: //div[@class='video-message-form text-center']//p
   leave_message_participant_input: //textarea[@id='message']
+  on_active_call_message_input: //input[@id='message']
+  on_active_call_send_message_button: //div[contains(@class,'text-sm')]/button[@type='submit']
 
 care_platform_call_settings_modal:
   video_settings_modal_title: //*[@id='modals']//h4[text()='Call Settings']
