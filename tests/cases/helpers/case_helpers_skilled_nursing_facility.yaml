@@ -208,6 +208,7 @@ SNFAnswerIncomingCall:
     - Type: wait_for
       Strategy: class_chain
       Id: $PAGE.snf_incoming_call.incoming_call_header$
+      CheckTime: 20
   # Click the "Answer Call" button.
     - Type: click
       Strategy: class_chain

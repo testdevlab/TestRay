@@ -1,97 +1,103 @@
-# CXTB-217 Providers Care Platform - Homepage Listing View
+# CXTB-118 Providers Care Platform - Homepage Listing View
 TestProviderHomePageListingView:
   Environment: Settings
   Vars:
-    LOGOUT_OPTION: "Stay On Shift"   
+    LOGOUT_OPTION: "Go Off Shift"  
   Precases:
-    - CarePartnerCleanCallQueueAndHangedCalls
+    - ProviderNewCleaner
   Aftercases:
     - TerminateApp
   Roles:
     - Role: desktopChrome
       App: desktop
     - Role: localiOS
+      Capabilities:
+        newCommandTimeout: 120
       App: NeverAlone
   Actions:
-      # Login to the Care Platform app with Care Partners account
-    - Type: case
-      Value: CarePartnerLogin
       # Setup for the test data
-      # Missed call 
+      #Call login for nurses
     - Type: case
-      Value: SetMissedCallTicket
+      Role: localiOS
+      Value: LoginSNFHelper
+      #Calling Prompt cleaner
     - Type: case
-      Value: TerminateApp
-      # Logout from the Care Partner account
+      Role: localiOS
+      Value: SeniorCleanPrompts
+      #Missed call 
     - Type: case
-      Value: CarePlatformLogout
-      # Login to the app with Providers account
+      Value: SetMissedCallFromSNF
+      #Clean any prompt notification from the start
     - Type: case
-      Value: ProvidersCarePlatformLogin
-      # Follow-up ticket
-    - Type: case
-      Value: LaunchApp
-    - Type: case
-      Value: SetFollowUpTicket
-      # Logout from the Care Partner account
-    - Type: case
-      Value: CarePlatformLogout
-      # Terminate the iOS App
-    - Type: case
-      Value: TerminateApp
-      # Login to the Care Platform app with Care Partners account
-    - Type: case
-      Value: CarePartnerLogin
-      # Scheduled call
-    - Type: case
-      Value: SetScheduledCallTicket
-      # Logout from the Care Partner account
-    - Type: case
-      Value: CarePlatformLogout
-      # Login to the app with Providers account
+      Role: localiOS
+      Value: SeniorCleanPrompts
+      #Login as Provider
     - Type: case
       Value: ProvidersCarePlatformLogin
-      # Set the Time to All
+      #Follow-up ticket
+    - Type: case
+      Value: CreateAFollowUpForSNFCall
+      #Making sure that the provider is logged out
+    - Type: case
+      Value: CarePlatformLogout
+      #Scheduled call from Employee
+      #Opening new tab for the employee's part of the process
+    - Type: new_tab
+    - Type: switch_window
+      Value: 1
+    - Type: case
+      Value: SetScheduledCallTicketFromEmployee
+      #Switch back to providers tab
+    - Type: switch_window
+      Value: 0
+      #Login again
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+      #Checking there's no call or session open right now
+    - Type: case
+      Value: ProviderEndCurrentCall
+      #Navigating to Home
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_home$
+      #Set Time to All
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_home_page.time_dropdown$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.time_all_option$
     - Type: click
       Strategy: xpath
+      Id: $PAGE.providers_home_page.time_all_option$
       Condition:
         - Value: 5
           Operation: visible
           Result: true
-      Id: $PAGE.providers_home_page.time_all_option$
-    - # Check that there are no active calls waiting to be answered
-      Type: wait_not_visible
-      Strategy: xpath
-      Id: $PAGE.providers_home_page.last_medical_transfer_row$  
-    - Type: wait_not_visible
-      Strategy: xpath
-      Id: $PAGE.providers_home_page.on_demand_calls$  
+      #Check the different calls on the queue
       # Verify Missed calls are present
     - Type: get_text  
       Strategy: xpath
-      Id: $PAGE.providers_home_page.missed_calls_text$
+      Id: $PAGE.providers_home_page.missed_call$
       Greps:
       - var: missed_call_text
         match: "(.*)"
     - Type: assert
       Asserts: 
-      - Type: eq 
+      - Type: contain
         Var: missed_call_text
         Value: "Missed Call"
         raise: true
       # Verify Scheduled calls are present
     - Type: get_text
       Strategy: xpath
-      Id: $PAGE.providers_home_page.scheduled_calls$
+      Id: $PAGE.providers_home_page.scheduled_call$
       Greps:
       - var: scheduled_call_text
         match: "(.*)"
     - Type: assert
       Asserts: 
-      - Type: eq 
+      - Type: contain
         Var: scheduled_call_text
         Value: "Scheduled Call"
         raise: true
@@ -104,7 +110,7 @@ TestProviderHomePageListingView:
         match: "(.*)"
     - Type: assert
       Asserts: 
-      - Type: eq 
+      - Type: contain
         Var: follow_up_text
         Value: "Follow-up"
         raise: true

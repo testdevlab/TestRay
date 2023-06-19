@@ -224,7 +224,7 @@ TestSNFMissedCallFromProvider:
       Role: localiOS
       Value: SeniorCleanPrompts
     - Type: case
-      Value: CreateAFollowUpForSNFMissedCall
+      Value: CreateAFollowUpForSNFCall
     # Skip the survey.
     - Type: wait_for
       Strategy: class_chain

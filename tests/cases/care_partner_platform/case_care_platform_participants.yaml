@@ -1,6 +1,8 @@
 #CXTB-228 Create Follow-Up Ticket for Participant
 TestCarePartnerCreateFollowUpTicket:
   Environment: Settings 
+  Precases:
+    - CarePartnerCleanCallQueueAndHangedCalls
   Roles:
     - Role: desktopChrome
       App: "desktop"

@@ -127,6 +127,9 @@ employee_health_telehealth_request_form:
   select_patient_drop_down: //select[@id='dependentIdentifier']
   select_patient_option: //select[@id='dependentIdentifier']/option[1]
   calendar_right_button: //div[@id='modals']//span[@class='icon-chevron-right']
+  first_day_available_button: //*[@id='modals']//div[contains(@class,'calendar')]//div[contains(@class,'calendar-days')]/button[not(contains(@class,'is-past'))][1]
+  first_hour_available_button: //div[@id='modals']//input[@name='startTime'][not(@disabled)][1]/following-sibling::div
+  calendar_18hr_button: //div[@id='modals']//input[@name='startTime' and @value='18:00']/following-sibling::div
   calendar_day_button: //div[@class='app-modals']//div[text()=$AND_CLI_DAY$]
   calendar_hour_button: //div[@id='modals']//div[text()= '11:30 am']
   appointment_list: //div[@class = 'accordion-item']

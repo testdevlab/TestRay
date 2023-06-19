@@ -504,7 +504,7 @@ TestSNFCheckQueueandReviewDetails:
     - Type: click
       Strategy: xpath
       Role: desktopChrome
-      Id: $PAGE.providers_home_page.scheduled_calls$
+      Id: $PAGE.providers_home_page.scheduled_call_enabled$
   #Check data matches
     - Type: get_attribute
       Strategy: xpath
