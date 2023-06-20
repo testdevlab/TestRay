@@ -9,7 +9,7 @@ ProvidersCarePlatformLogin:
       Value: $AND_CLI_care_platform_url$
     - Type: get_text
       Strategy: xpath
-      Id : $PAGE.care_platform_login_page.login_button$
+      Id : $PAGE.care_platform_login.login_button$
       Greps:
       - var: login_text
         match: "Log In"
@@ -20,15 +20,15 @@ ProvidersCarePlatformLogin:
         Value: "Log In"  
     - Type: send_keys
       Strategy: id
-      Id: $PAGE.care_platform_login_page.email_input$
+      Id: $PAGE.care_platform_login.email_input$
       Value: $AND_CLI_provider_user1$
     - Type: send_keys
       Strategy: id
-      Id: $PAGE.care_platform_login_page.password_input$
+      Id: $PAGE.care_platform_login.password_input$
       Value: $AND_CLI_provider_user1_pwd$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_login_page.login_button$
+      Id: $PAGE.care_platform_login.login_button$
 
 ProvidersCarePlatformEndCall:
   Roles:
