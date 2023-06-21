@@ -1620,3 +1620,64 @@ CarePartnerCreateFollowUpTicket:
   # Navigate to Home.  
     - Type: case
       Value: CarePartnerNavigateToHome
+
+# Care Partner sets the EMS Enabled to option the user sends, either true(yes) or false(no).
+CarePartnerSetsEMSEnabledToXOption:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Navigate to Participants.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+    # Click on the desired participant.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+    # Click on "Records".
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.records_button$
+    # Click on the "Edit Info" button.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.edit_info_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.edit_info_button$
+    # Select the "Address/Emergency Phone" option on the navigation bar at the left.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.address_emergency_phone_navigation$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.address_emergency_phone_navigation$
+    # Verify the user is redirected to the Address & Emergency Phone page.
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.edit_participant_form_label$
+      Property: textContent
+      Value: "Address & Emergency Phone"
+    # Set "EMS Enabled" to "Yes/No" depending on the user input on participant profile and save changes.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.enable_ems_calls_option_based_on_user_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.enable_ems_calls_option_based_on_user_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.ems_data_updated_notification$
+      Time: 30
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.ems_data_updated_notification$
+      Time: 30
+    # Navigate back to home 
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_home$

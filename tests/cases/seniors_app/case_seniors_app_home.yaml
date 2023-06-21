@@ -918,3 +918,83 @@ TestSeniorActiveAppointmentTimeWindowWhenNotJoinedPrior:
       Strategy: class_chain
       Id: $PAGE.seniors_app_home.events_elements$
       EventName: $AND_CLI_UNIQUE_EVENT_NAME$
+
+# CXTB-429:  Verify Emergency Services Button Visibility Is Controlled by EMS Enabled Flag
+TestSeniorEmergencyServicesButtonVisibilityEMSEnabledFlag:
+  Environment: Settings
+  Vars:
+    EMS_OPTION: 'true'
+  Precases:
+    - LoginNeverAloneHelper
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Set the EMS Enabled flag to "Yes" with the Care Partner.
+    - Type: case
+      Value: CarePartnerLogin
+    - Type: case
+      Value: CarePartnerSetsEMSEnabledToXOption
+    # When log in, device Emergency Services button is present on Home Screen.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.call_care_partner$
+    # Navigate to Schedules
+    - Type: case
+      Value: SchedulesPageNavigationHelper
+    # Verify that the Emergency Services button is present on Full Schedule Screen.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.emergency_services_button$
+    # Set the EMS Enabled flag to "No" with the Care Partner.
+    - Type: set_env_var
+      Value: 'false'
+      Var: EMS_OPTION
+    - Type: case
+      Value: CarePartnerSetsEMSEnabledToXOption
+    # Restart the Never Alone app.
+    - Type: case
+      Value: TerminateApp
+    - Type: case
+      Value: LaunchApp
+    - Type: case
+      Value: LoginNeverAloneHelper
+    # When log in, device Emergency Services button is not present on Home Screen.
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.emergency_services_button$
+    # Navigate to Schedules
+    - Type: case
+      Value: SchedulesPageNavigationHelper
+    # Verify that the Emergency Services button is not present on Full Schedule Screen.
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.emergency_services_button$
+    # Set the EMS Enabled flag to "Yes" with the Care Partner.
+    - Type: set_env_var
+      Value: 'true'
+      Var: EMS_OPTION
+    - Type: case
+      Value: CarePartnerSetsEMSEnabledToXOption
+    # Restart the Never Alone app.
+    - Type: case
+      Value: TerminateApp
+    - Type: case
+      Value: LaunchApp
+    - Type: case
+      Value: LoginNeverAloneHelper
+    # When log in, device Emergency Services button is present on Home Screen.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.emergency_services_button$
+    # Navigate to Schedules
+    - Type: case
+      Value: SchedulesPageNavigationHelper
+    # Verify that the Emergency Services button is present on Full Schedule Screen.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.emergency_services_button$
