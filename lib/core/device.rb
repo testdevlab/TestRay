@@ -750,6 +750,17 @@ class Device
     end
   end
 
+  #Clears a provided text field with JavaScript
+  # Accepts:
+  #   Strategy
+  #   Id
+  def clear_field_js(action) 
+    action = convert_value_pageobjects(action);
+    el = wait_for(action)
+    
+    @driver.execute_script("arguments[0].value='';", el)
+    sleep(1.0)
+  end
 
   # Accepts:
   #   Strategy

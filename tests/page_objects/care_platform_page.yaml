@@ -164,10 +164,23 @@ care_platform_participant_records:
   edit_info_button: //div[@class='participant-profile-contact']//button/span[contains(@class, 'icon-edit')]
 
 care_platform_edit_participant_records:
+  edit_title: //span[contains(text(),'Edit')]
   edit_participant_form_label: //form//h4
-  address_emergency_phone_navigation: //ul[@class='form-navigation']/li/button[text()='Address / Emergency Phone']
-  enable_ems_calls_option_based_on_user_input: //input[@name='deviceEmsOverride' and @value='$AND_CLI_EMS_OPTION$']/following-sibling::span # boolean values
+  address_emergency_phone_navigation: //ul[contains(@class,'form-navigation')]//button[contains(text(),'Address') and contains(text(),'Emergency Phone')]
+  enable_ems_calls_option_based_on_user_input: //input[@name='deviceEmsOverride' and @value='$AND_CLI_EMS_OPTION$']/following-sibling::span # values: true, false and default
   save_changes_button: //form//button[@type='submit']
+  adress_input: address
+  adress_2_input: address2
+  state_dropdown: state
+  state_in_dropdown_option: //*[@id='state']/option[@value='IN']
+  zip_code_input: zip
+  city_input: city
+  phone_number_input: phoneEmergency
+  empty_address_error: //div[contains(@class,'red') and contains(text(),'Please enter an address')]
+  fix_address_error: //div[contains(text(),'Please fix address')]
+  ems_address_suggestion_dialog: //*[@id='dialogs'][contains(.,'Suggested') and contains(.,'Address')]
+  ems_address_suggestion_go_back_button: //*[@id='dialogs'][contains(.,'Suggested') and contains(.,'Address')]//button[text()='Go Back']
+  ems_address_suggestion_confirm_button: //*[@id='dialogs'][contains(.,'Suggested') and contains(.,'Address')]//button[text()='Confirm']
 
 care_platform_call_portal:
   call_volume_button: //span[contains(@class,'icon-volume')]/ancestor::button
@@ -272,6 +285,9 @@ care_platform_notifications:
   follow_up_ticket_completed_notification: //div[@class='Toastify']//div[text()='Follow-up ticket completed']
   ems_data_updating_notification: //div[@class='Toastify']//div[text()='Updating EMS data...']
   ems_data_updated_notification: //div[@class='Toastify']//div[text()='EMS data updated']
+  ems_address_error_notification: //div[@class='Toastify']//div[text()='Unable to validate address']
+  ems_adjustments_needed_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Some adjustments needed']
+  dismiss_notification_button: //div[@class='Toastify']//button[text()='Dismiss']
 
 care_platform_facility:
   search_button: searchButton

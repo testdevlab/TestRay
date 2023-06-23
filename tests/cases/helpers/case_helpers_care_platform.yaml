@@ -1659,7 +1659,7 @@ CarePartnerSetsEMSEnabledToXOption:
       Id: $PAGE.care_platform_edit_participant_records.edit_participant_form_label$
       Property: textContent
       Value: "Address & Emergency Phone"
-    # Set "EMS Enabled" to "Yes/No" depending on the user input on participant profile and save changes.
+    # Set "EMS Enabled" to "Yes/No/Default" depending on the user input on participant profile and save changes.
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participant_records.enable_ems_calls_option_based_on_user_input$

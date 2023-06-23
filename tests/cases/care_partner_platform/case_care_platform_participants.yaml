@@ -2056,3 +2056,197 @@ TestCarePartnerTrackTimeAndEditFollowUpTicketsParticipantComponent:
     - Type: wait_not_visible
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.follow_up_ticket_completed_notification$
+
+#CXTB-435 Participant Pane - Edit EMS Setting & Address
+TestCarePartnerEditEMSSettingAndAddressParticipant:
+  Environment: Settings
+  Vars:
+    EMS_OPTION: 'false'
+    LOGOUT_OPTION: 'Go Off Shift'
+  Precases:
+    - CarePartnerCleanCallQueueAndHangedCalls
+  Aftercases:
+    - CarePlatformLogout
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Navigate to Participants
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform.navigation_participant$
+  # Select first participant by name in the list
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+  # Go to Records
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.records_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_name$
+  # Click on the "Edit Info" button.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.edit_info_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.edit_info_button$
+  # Check title
+    - Type: sleep
+      Time: 1
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.edit_title$
+      Greps:
+        - var: EDIT_TITLE
+          match: "Edit*"
+      Asserts:
+        - Type: contain
+          Var: EDIT_TITLE
+          Value: $AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$
+  # Select the "Address/Emergency Phone" option on the navigation bar at the left.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.address_emergency_phone_navigation$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.address_emergency_phone_navigation$
+  # Select EMS option 'NO'
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.enable_ems_calls_option_based_on_user_input$
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+    - Type: clear_field_js
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+      Value: Automated test wrong address
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.ems_data_updated_notification$
+  # Select EMS option 'Yes' and use random/invalid address
+    - Type: set_env_var
+      Value: 'true'
+      Var: EMS_OPTION
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.enable_ems_calls_option_based_on_user_input$
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+    - Type: clear_field_js
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+      Value: Automated test wrong address
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.ems_address_error_notification$
+      Time: 10
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.fix_address_error$
+    # Use valid phone number and enter an address value that’s almost fully valid
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+    - Type: clear_field_js
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+      Value: 230 Welcome Way Boulevard
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.city_input$
+    - Type: clear_field_js
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.city_input$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.city_input$
+      Value: Indianapolis
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.state_dropdown$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.state_in_dropdown_option$
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.zip_code_input$
+    - Type: clear_field_js
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.zip_code_input$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.zip_code_input$
+      Value: 46214
+    - Type: clear_field_js
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.phone_number_input$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.phone_number_input$
+      Value: 3175542652
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.save_changes_button$
+    # Appears notification for needed adjustments
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.ems_adjustments_needed_notification$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.ems_address_suggestion_dialog$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.ems_address_suggestion_go_back_button$
+    # Make a light change in the number of street or apartment
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.adress_2_input$
+    - Type: clear_field_js
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.adress_2_input$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_records.adress_2_input$
+      Value: Apt 400
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.ems_adjustments_needed_notification$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.ems_address_suggestion_dialog$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.ems_address_suggestion_confirm_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.ems_data_updated_notification$
+      Time: 40

@@ -352,6 +352,7 @@ Actions:
 9. [click_js](#click_js)
 10. [add_cookie](#add_cookie)
 11. [wait_for_property](#wait_for_property)
+12. [clear_field_js](#clear_field_js)
 
 ## Only Mobile
 
@@ -763,6 +764,15 @@ Waits for the element to have a specific JS property value.
     Property: Js Property e.g. className
     Value:  Desired value
     Time: Time (int) e.g. 10
+
+### <a id="clear_field_js"></a>clear_field_js
+
+Sets empty value for element.
+
+  - Type: clear_field_js
+    Role: role1 (Optional)
+    Strategy: xpath | id | etc.
+    Id: //some//path
 
 ## Only Mobile
 
