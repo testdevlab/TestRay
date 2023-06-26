@@ -21,3 +21,51 @@ OnboarderCarePartnerLogin:
       Id: $PAGE.care_platform_login.login_button$
     - Type: sleep
       Time: 2
+
+OnboarderSetsAccountStatus:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Navigate to Participants.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+    # Click on the desired participant.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+    # Click on "Edit Info".
+    - Type: sleep
+      Time: 2
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_participant_details_pane.edit_info$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.onboarders_participant_details_pane.edit_info$
+    # Set the account status to "Pre-delivery" in the "Demographics" pane.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.account_status_select$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.account_status_option_based_on_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.account_status_option_based_on_input$
+    # Click on "Save Changes".
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.save_changes_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_notifications.participant_changes_saved_notification$
+    # Navigate back to participants 
+    - Type: case
+      Value: CarePartnerNavigateToParticipants

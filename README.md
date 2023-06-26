@@ -338,6 +338,7 @@ Actions:
 21. [return_element_attribute](#return_element_attribute)
 22. [hover](#hover)
 23. [clear_field](#clear_field)
+24. [return_element_location](#return_element_location)
 
 ## Only Browser
 
@@ -654,6 +655,13 @@ Hovers over an element.
 	  Strategy: id/css/xpath/uiautomator/class_chain/...
 	  Id: //some/path
 	  NoRaise: false/true (Default - false -> will rise error on fail)
+### <a id="return_element_location"></a>return_element_location
+
+	- Type: return_element_location
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+	  ResultVar: var1
 
 
 ## Only Browser

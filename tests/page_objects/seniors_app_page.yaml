@@ -19,6 +19,8 @@ seniors_app_home:
   events_elements: "**/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/**/XCUIElementTypeOther[`enabled == 1 AND accessible == 1`]"
   date_value_appointment_modal: "//XCUIElementTypeStaticText[@name='Date:']/following-sibling::XCUIElementTypeOther"
   event_based_on_name_element: "**/XCUIElementTypeOther[`label CONTAINS '$AND_CLI_UNIQUE_EVENT_NAME$'`][-1]"
+  status_yellow_banner: "//XCUIElementTypeOther[@name='headerContainer']/following-sibling::XCUIElementTypeOther[1]"
+  no_events_today_label: "**/XCUIElementTypeStaticText[`label == 'No events today'`]"
 
 seniors_app_settings:
   my_details_tab: "**/XCUIElementTypeOther[`label CONTAINS 'My Details'`][-1]"

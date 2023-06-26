@@ -1,0 +1,218 @@
+# Physical Device
+# CXTB-434: Verify “Pre-Delivery” Account Status Visuals & Behavior on Never Alone
+TestSeniorPreDeliveryAccountStatusVisualsAndBehavior:
+  Environment: Settings
+  Vars:
+    # Account Status variable
+    ACCOUNT_STATUS: 'predelivery'
+    # Video quality variables
+    TIME: 5
+    INTERFACE: en0
+    VIDEO_IN: "1"
+    TEST_FOLDER: $AND_CMD_pwd$/Reports/executions/$AND_CMD_date +%s$
+  Precases:
+    - LoginNeverAloneHelper
+    - CarePartnerCleanCallQueueAndHangedCalls
+  Aftercases:
+    - TerminateApp
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop
+    - Role: command1
+      App: command
+  Actions:
+    # Set the Account Status to "Pre-delivery" to the Participant with the Onboarder on Care Platform.
+    - Type: case
+      Value: OnboarderCarePartnerLogin
+    - Type: case
+      Value: OnboarderSetsAccountStatus
+    - Type: case
+      Value: CarePlatformLogout
+    # Device is automatically logged out when account status change is saved.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_login.provision_device_btn$
+      Time: 20
+    - Type: case
+      Value: LoginNeverAloneHelper
+    # Validate that visuals of the device appear in the following way:
+    # Calendar on home - no events.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.no_events_today_label$
+    # Yellow banner message has the following message:
+    # This device has not yet been delivered to its final user, press button to place a test call and verify configuration.
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.seniors_app_home.status_yellow_banner$
+      Attribute: label
+      Value:  "This device has not yet been delivered to its final user, press button to place a test call and verify configuration."
+    # Emergency Services button is not present.
+    - Type: wait_not_visible
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.emergency_services_button$
+    # Settings and Notifications buttons are disabled.
+    - Type: wait_for_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.settings_icon$
+      Attribute: enabled
+      Value: false
+    - Type: wait_for_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.notifications_icon$
+      Attribute: enabled
+      Value: false
+    # Full Schedule button is disabled.
+    - Type: wait_for_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.full_schedule_btn$
+      Attribute: enabled
+      Value: false
+    # Rotate device and verify that the device is locked into landscape view.
+    - Type: return_element_location
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.notifications_icon$
+      ResultVar: ORIGINAL_ELEMENT_LOCATION
+    - Type: set_orientation
+      Role: localiOS
+      Value: portrait
+      ErrorMessage: ERROR_MESSAGE_VAR
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ERROR_MESSAGE_VAR
+          Value: "An unknown server-side error occurred while processing the command. Original error: Unable To Rotate Device"
+    - Type: return_element_location
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.notifications_icon$
+      ResultVar: NEW_ELEMENT_LOCATION
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ORIGINAL_ELEMENT_LOCATION
+          Value: $AND_CLI_NEW_ELEMENT_LOCATION$
+    # Rotate device back to normal and verify that the device is locked into landscape view.
+    - Type: set_orientation
+      Role: localiOS
+      Value: landscape
+      ErrorMessage: SECOND_ERROR_MESSAGE_VAR
+    - Type: assert
+      Asserts:
+        - Type: ne
+          Var: SECOND_ERROR_MESSAGE_VAR
+          Value: "An unknown server-side error occurred while processing the command. Original error: Unable To Rotate Device"
+    # Click the "Call Personal Care Partner" button.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.call_care_partner$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.call_care_partner$
+    # Device screen updates to show screen asking what kind of need you help:
+    # Medical, Non-Medical and Cancel
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.non_medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.cancel_call_button$
+    # Click the "Cancel Call" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.cancel_call_button$
+    # Device is returned to home page.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.call_care_partner$
+    # Click the "Call Personal Care Partner" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.call_care_partner$
+    # Device screen updates to show screen asking what kind of need you help:
+    # Medical, Non-Medical and Cancel
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.non_medical_call_button$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.cancel_call_button$
+    # Click "Non-Medical" button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.non_medical_call_button$
+    # Verify that screen redirects to the call waiting room.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.waiting_room_label$
+    # Care Partner answers the call.
+    - Type: case
+      Value: AnswerCallAsCarePartner
+    # Turn on Senior camera.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.video_button$
+  # Verify that a video thumbnail will appear in the upper right corner giving a preview of what the Care Partner is seeing.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.video_window$
+  # Video Quality Step
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_btn$
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.video_mirror_care_partner$
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.full_screen_call_btn$
+    - Type: wait_for
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.verify_video_is_full_screen$
+    # Record the call.
+    - Type: case
+      Value: GetCallRecordings
+    # Analyze the call.
+    - Type: case
+      Value: AnalyzeRecordings
+    # Make video quality assertions
+    - Type: case
+      Value: VideoQualityAssertions
+    - Type: click
+      Role: desktopChrome
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.full_screen_call_btn$
+    # Click the end call button.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.end_call_button$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_call.end_call_button$
+    # Select the great option on the Post Survey call and then go home.
+    - Type: case
+      Value: SeniorGreatPostSurveyCallHelper
+    # Automation clean up, fill up the care partner post survey.
+    - Type: case
+      Value: PostCallSurveyCarePartner
+    - Type: case
+      Value: CarePlatformLogout
+    # Set back the Account Status to "Active" to the Participant.
+    - Type: set_env_var
+      Value: 'active'
+      Var: ACCOUNT_STATUS
+    - Type: case
+      Value: OnboarderCarePartnerLogin
+    - Type: case
+      Value: OnboarderSetsAccountStatus
