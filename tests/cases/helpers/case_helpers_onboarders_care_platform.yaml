@@ -123,3 +123,19 @@ OnboarderCarePartnerSetParticipantStateToActive:
       Strategy: xpath
       Role: desktopChrome
       Id: $PAGE.onboarders_notifications.participant_changes_saved_notification$
+
+#This helper is used to pre-set the Senior state to other than active,
+#to have the expected behavior when making the final change to active
+OnboarderPrecaseforActiveState:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  - Type: case
+    Value: OnboarderCarePartnerLogin
+  - Type: case
+    Value: OnboarderSetsAccountStatus
+  - Type: case
+    Value: CarePlatformLogout
+  - Type: sleep
+    Time: 2

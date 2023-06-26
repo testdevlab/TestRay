@@ -355,3 +355,99 @@ TestSeniorAppSuspendedAccountStatus:
         - Type: eq
           Var: CALENDAR_NO_EVENTS
           Value: true
+
+# CXTB-437 Senior app - Verify “Active” Account Status Visuals
+TestSeniorAppActiveAccountStatusAndBehavior:
+  Environment: Settings
+  Vars:
+    LOGOUT_OPTION: "Go Off Shift"
+    ACCOUNT_STATUS: 'predelivery' #this is for the precase
+  Precases:
+    - OnboarderPrecaseforActiveState
+  Aftercases:
+    - TerminateApp
+    - OnboarderCarePartnerSetParticipantStateToActive
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop    
+  Actions:
+  # Calling Onboarder Login case
+    - Type: case
+      Value: OnboarderCarePartnerLogin
+  # Calling Senior Login case
+    - Type: case
+      Value: LoginNeverAloneHelper
+  # Change Onboarder to Active
+    - Type: set_env_var
+      Value: 'active'
+      Var: ACCOUNT_STATUS
+    - Type: case
+      Value: OnboarderSetsAccountStatus
+    - Type: case
+      Value: CarePlatformLogout
+  # Device is automatically logged out when account status change is saved.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_login.provision_device_btn$
+      Time: 20
+    - Type: case
+      Value: LoginNeverAloneHelper
+  # Check Active behavior
+    # Emergency Services button is present.
+    - Type: wait_for_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_schedule.emergency_services_button$
+      Attribute: enabled
+      Value: true
+    # Settings and Notifications buttons are enabled.
+    - Type: wait_for_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.settings_icon$
+      Attribute: enabled
+      Value: true
+    - Type: wait_for_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.notifications_icon$
+      Attribute: enabled
+      Value: true
+    # Full Schedule button is enabled.
+    - Type: wait_for_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.full_schedule_btn$
+      Attribute: enabled
+      Value: true
+    # Rotate device and verify that the device is locked into landscape view.
+    - Type: return_element_location
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.notifications_icon$
+      ResultVar: ORIGINAL_ELEMENT_LOCATION
+    - Type: set_orientation
+      Role: localiOS
+      Value: portrait
+      ErrorMessage: ERROR_MESSAGE_VAR
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ERROR_MESSAGE_VAR
+          Value: "An unknown server-side error occurred while processing the command. Original error: Unable To Rotate Device"
+    - Type: return_element_location
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.notifications_icon$
+      ResultVar: NEW_ELEMENT_LOCATION
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ORIGINAL_ELEMENT_LOCATION
+          Value: $AND_CLI_NEW_ELEMENT_LOCATION$
+    # Rotate device back to normal and verify that the device is locked into landscape view.
+    - Type: set_orientation
+      Role: localiOS
+      Value: landscape
+      ErrorMessage: SECOND_ERROR_MESSAGE_VAR
+    - Type: assert
+      Asserts:
+        - Type: ne
+          Var: SECOND_ERROR_MESSAGE_VAR
+          Value: "An unknown server-side error occurred while processing the command. Original error: Unable To Rotate Device"
