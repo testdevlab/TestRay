@@ -7,7 +7,7 @@ seniors_app_login:
   
 seniors_app_home:
   schedule_label: "**/XCUIElementTypeStaticText[`label == 'Schedule'`]"
-  call_care_partner: "**/XCUIElementTypeOther[`label BEGINSWITH 'Call Personal' AND label ENDSWITH 'Care Partner'`]"
+  call_care_partner: "**/XCUIElementTypeOther[`label BEGINSWITH 'Call Personal' AND label ENDSWITH 'Care Partner'`][-1]"
   full_schedule_btn: "**/XCUIElementTypeButton[`label CONTAINS 'Full Schedule'`][-1]"
   settings_icon: "**/XCUIElementTypeOther[`name == 'headerContainer'`]/XCUIElementTypeOther/XCUIElementTypeOther[-1]/XCUIElementTypeOther/XCUIElementTypeOther[1]"
   notifications_icon: "**/XCUIElementTypeOther[`name == 'headerContainer'`]/XCUIElementTypeOther/XCUIElementTypeOther[-1]/XCUIElementTypeOther/XCUIElementTypeOther[-1]"
@@ -16,6 +16,8 @@ seniors_app_home:
   appointment_header_modal: "**/XCUIElementTypeStaticText[`label BEGINSWITH 'Appointment'`][-1]"
   offline_call_button: "**/XCUIElementTypeOther[`label BEGINSWITH 'Personal' AND label ENDSWITH 'Offline'`][-1]"
   offline_yellow_bar: "**/XCUIElementTypeStaticText[`label ENDSWITH 'please call 911.'`][-1]"
+  suspended_yellow_bar: "**/XCUIElementTypeOther[`label CONTAINS 'please contact' AND label CONTAINS 'to address and restore functionality'`][-1]"
+  calendar_no_events: "**/XCUIElementTypeStaticText[`label == 'No events today'`]"
   events_elements: "**/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/**/XCUIElementTypeOther[`enabled == 1 AND accessible == 1`]"
   date_value_appointment_modal: "//XCUIElementTypeStaticText[@name='Date:']/following-sibling::XCUIElementTypeOther"
   event_based_on_name_element: "**/XCUIElementTypeOther[`label CONTAINS '$AND_CLI_UNIQUE_EVENT_NAME$'`][-1]"

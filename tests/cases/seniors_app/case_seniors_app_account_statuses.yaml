@@ -14,6 +14,7 @@ TestSeniorPreDeliveryAccountStatusVisualsAndBehavior:
     - LoginNeverAloneHelper
     - CarePartnerCleanCallQueueAndHangedCalls
   Aftercases:
+    - OnboarderCarePartnerSetParticipantStateToActive
     - TerminateApp
   Roles:
     - Role: localiOS
@@ -216,3 +217,141 @@ TestSeniorPreDeliveryAccountStatusVisualsAndBehavior:
       Value: OnboarderCarePartnerLogin
     - Type: case
       Value: OnboarderSetsAccountStatus
+
+# CXTB-436 Senior app - Verify “Suspended” Account Status Visuals
+TestSeniorAppSuspendedAccountStatus:
+  Environment: Settings
+  Vars:
+    LOGOUT_OPTION: "Go Off Shift"
+  Aftercases:
+    - TerminateApp
+    - OnboarderCarePartnerSetParticipantStateToActive
+  Roles:
+    - Role: localiOS
+      App: NeverAlone
+    - Role: desktopChrome
+      App: desktop    
+  Actions:
+  # Calling Onboarder Login case
+    - Type: case
+      Value: OnboarderCarePartnerLogin
+  # Calling Senior Login case
+    - Type: case
+      Value: LoginNeverAloneHelper
+  # Go to Participants
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform.navigation_participant$
+  # Select first participant by name in the list
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+  # Click on the "Edit Info" button.
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.onboarders_participant_details_pane.edit_info$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.onboarders_participant_details_pane.edit_info$
+  # Select "Suspended" in the status dropdown
+    - Type: wait_for
+      Strategy: id
+      Role: desktopChrome
+      Id: $PAGE.onboarders_edit_participant_records.account_status_select$
+    - Type: click
+      Strategy: id
+      Role: desktopChrome
+      Id: $PAGE.onboarders_edit_participant_records.account_status_select$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.onboarders_edit_participant_records.participant_suspended_status_option$
+  # Save changes
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.onboarders_edit_participant_records.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.onboarders_notifications.participant_changes_saved_notification$
+  # Logout Onboarder
+    - Type: case
+      Value: CarePlatformLogout
+      Role: desktopChrome
+    - Type: sleep
+      Role: localiOS
+      Time: 5
+  # Log back in to Seniors
+    - Type: case
+      Value: LoginNeverAloneHelper
+  # Check visuals for suspended behavior
+    #Alert banner
+    - Type: wait_for
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.seniors_app_home.suspended_yellow_bar$
+      Time: 20
+    #Call partner button
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.call_care_partner$
+      Attribute: enabled
+      ResultVar: CALL_BUTTON_STATE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALL_BUTTON_STATE
+          Value: false
+    #Schedule button
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.full_schedule_btn$
+      Attribute: enabled
+      ResultVar: SCHEDULE_BUTTON_STATE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: SCHEDULE_BUTTON_STATE
+          Value: false
+    #Settings button
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.settings_icon$
+      Attribute: enabled
+      ResultVar: SETTINGS_BUTTON_STATE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: SETTINGS_BUTTON_STATE
+          Value: false
+    #Notification button
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.notifications_icon$
+      Attribute: enabled
+      ResultVar: NOTIFICATION_BUTTON_STATE
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: NOTIFICATION_BUTTON_STATE
+          Value: false
+    #No event label
+    - Type: return_element_attribute
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_home.calendar_no_events$
+      Attribute: visible
+      ResultVar: CALENDAR_NO_EVENTS
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CALENDAR_NO_EVENTS
+          Value: true
