@@ -629,6 +629,7 @@ TestCarePartnerParticipantReview:
       Role: desktopChrome
 
 # CXTB-95 - Answer Call from Queue & Complete the Session (without Medical Transfer)
+# CXTB-443 - Select Call in Queue and Get Call Answered Notification
 TestCarePartnerAnswerAndComplete:
   Environment: Settings
   Precases:
