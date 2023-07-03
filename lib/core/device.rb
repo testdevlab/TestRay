@@ -702,13 +702,13 @@ class Device
     while (Time.now - start) < @timeout
       begin
         if convert_value(value) == "backspace"
-            el.send_keys(:backspace)
+          el.send_keys(:backspace)
+        elsif convert_value(value) == "enter"
+          el.send_keys(:enter)
         elsif !action["Actions"] && el
           el.send_keys(convert_value(value))
         else
-          if convert_value(value) == "enter"
-            @driver.action.send_keys(:enter).perform
-          elsif convert_value(value) == "arrow_down"
+          if convert_value(value) == "arrow_down"
             @driver.action.send_keys(:arrow_down).perform
           elsif convert_value(value) == "tab"
             @driver.action.send_keys(:tab).perform
@@ -729,6 +729,31 @@ class Device
     end
   end
 
+  #Clears by using backspace
+  # Accepts:
+  #   Strategy
+  #   Id
+  def clear_field_by_backspace(action) 
+    action = convert_value_pageobjects(action);
+    el = nil
+    el = wait_for(action) if (!action["Actions"] && action["Strategy"])
+    start = Time.now
+    error = nil
+    len = 0
+    len = el.attribute('value').length().to_i
+    while (Time.now - start) < @timeout
+      begin
+        (len).downto(0) {el.send_keys(:backspace)}
+        return
+      rescue => e
+        error = e
+      end
+    end
+    if error && !action["NoRaise"]
+      path = take_error_screenshot()
+      raise "#{@role}: #{error.message}\nError Screenshot: #{path}"
+    end
+  end
 
   #Clears a provided text field
   # Accepts:
@@ -1426,7 +1451,7 @@ class Device
   #   Strategy
   #   Id
   #   Option -> check or uncheck
-  def credentials_checkbox(action)
+  def set_checkbox_status(action)
     action = convert_value_pageobjects(action);
     option = convert_value(action["Option"])
     el = @driver.find_element(convert_value(action["Strategy"]), convert_value(action["Id"]))

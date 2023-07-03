@@ -2122,16 +2122,16 @@ TestCarePartnerEditEMSSettingAndAddressParticipant:
   # Select EMS option 'NO'
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_edit_participant_records.enable_ems_calls_option_based_on_user_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.enable_ems_calls_option_based_on_user_input$
     - Type: click
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.adress_input$
     - Type: clear_field_js
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.adress_input$
     - Type: send_keys
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.adress_input$
       Value: Automated test wrong address
     - Type: click
       Strategy: xpath
@@ -2145,16 +2145,16 @@ TestCarePartnerEditEMSSettingAndAddressParticipant:
       Var: EMS_OPTION
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_edit_participant_records.enable_ems_calls_option_based_on_user_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.enable_ems_calls_option_based_on_user_input$
     - Type: click
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.adress_input$
     - Type: clear_field_js
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.adress_input$
     - Type: send_keys
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.adress_input$
       Value: Automated test wrong address
     - Type: click
       Strategy: xpath
@@ -2165,50 +2165,50 @@ TestCarePartnerEditEMSSettingAndAddressParticipant:
       Time: 10
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.care_platform_edit_participant_records.fix_address_error$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.fix_address_error$
     # Use valid phone number and enter an address value that’s almost fully valid
     - Type: click
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.adress_input$
     - Type: clear_field_js
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.adress_input$
     - Type: send_keys
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.adress_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.adress_input$
       Value: 230 Welcome Way Boulevard
     - Type: click
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.city_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.city_input$
     - Type: clear_field_js
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.city_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.city_input$
     - Type: send_keys
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.city_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.city_input$
       Value: Indianapolis
     - Type: click
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.state_dropdown$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.state_dropdown$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_edit_participant_records.state_in_dropdown_option$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.state_in_dropdown_option$
     - Type: click
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.zip_code_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.zip_code_input$
     - Type: clear_field_js
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.zip_code_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.zip_code_input$
     - Type: send_keys
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.zip_code_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.zip_code_input$
       Value: 46214
     - Type: clear_field_js
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.phone_number_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.phone_number_input$
     - Type: send_keys
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.phone_number_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.phone_number_input$
       Value: 3175542652
     - Type: click
       Strategy: xpath
@@ -2219,20 +2219,20 @@ TestCarePartnerEditEMSSettingAndAddressParticipant:
       Id: $PAGE.care_platform_notifications.ems_adjustments_needed_notification$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.care_platform_edit_participant_records.ems_address_suggestion_dialog$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.ems_address_suggestion_dialog$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_edit_participant_records.ems_address_suggestion_go_back_button$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.ems_address_suggestion_go_back_button$
     # Make a light change in the number of street or apartment
     - Type: click
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.adress_2_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.adress_2_input$
     - Type: clear_field_js
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.adress_2_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.adress_2_input$
     - Type: send_keys
       Strategy: id
-      Id: $PAGE.care_platform_edit_participant_records.adress_2_input$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.adress_2_input$
       Value: Apt 400
     - Type: click
       Strategy: xpath
@@ -2242,10 +2242,10 @@ TestCarePartnerEditEMSSettingAndAddressParticipant:
       Id: $PAGE.care_platform_notifications.ems_adjustments_needed_notification$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.care_platform_edit_participant_records.ems_address_suggestion_dialog$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.ems_address_suggestion_dialog$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.care_platform_edit_participant_records.ems_address_suggestion_confirm_button$
+      Id: $PAGE.care_platform_edit_participant_address_emergency_phone.ems_address_suggestion_confirm_button$
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.ems_data_updated_notification$
@@ -2551,3 +2551,782 @@ TestCarePartnerParticipantInfoEditOrAddContactsInfo:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.contact_deleted_notification$
+
+#CXTB-438 Edit Info for Existing Participant
+TestCarePartnerEditInfoForExistingParticipant:
+  Environment: Settings
+  Vars:
+    EMS_OPTION: 'false'
+    LOGOUT_OPTION: 'Go Off Shift'
+  Precases:
+    - CarePartnerCleanCallQueueAndHangedCalls
+  Aftercases:
+    - CarePlatformLogout
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Go to Edit Participant
+    - Type: case
+      Value: CarePartnerEditParticipantNavigation
+  # Update existing info in Demographics
+    # If you leave a required field blank should show you an alert
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_demographics.first_name_input$
+    - Type: get_attribute
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_demographics.first_name_input$
+      Greps:
+        - var: FIRST_NAME_PARTICIPANT
+          attr: value
+          condition: nempty
+          match: "(.*)"
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_demographics.empty_first_name_error$
+      Attribute: aria-hidden
+      Value: "true"
+    - Type: clear_field_by_backspace
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_demographics.first_name_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.edit_title$
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_demographics.empty_first_name_error$
+      Attribute: aria-hidden
+      Value: "false"
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_demographics.first_name_input$
+      Value: $AND_CLI_FIRST_NAME_PARTICIPANT$
+  # Click on Medical History Page
+    # Dropdown behaviour
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.medical_history_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medical_history.medical_history_subtitle$
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_medical_history.coronary_artery_diseases_select$
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_medical_history.coronary_artery_diseases_select$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medical_history.coronary_artery_diseases_none_option$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medical_history.coronary_artery_diseases_active_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medical_history.coronary_artery_diseases_resolved_option$
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medical_history.coronary_artery_diseases_resolved_option$
+      Attribute: selected
+      Value: "true"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medical_history.medical_history_subtitle$
+  # Click on Special Treatment
+    # Checkboxes behaviour
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.special_treatment_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_special_treatment.special_treatment_subtitle$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_special_treatment.chemotherapy_input_checkbox$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.care_platform_edit_participant_special_treatment.chemotherapy_input_checkbox$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: uncheck
+      Id: $PAGE.care_platform_edit_participant_special_treatment.radiation_therapy_input_checkbox$
+    # Asserting is actually checked
+    - Type: wait_for_attribute
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_special_treatment.chemotherapy_input$
+      Attribute: checked
+      Value: "true"
+  # Checking DME
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.dme_navigation$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.changes_saved_notification$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_dme.dme_subtitle$
+    # Checkboxes behaviour
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_dme.wheelchair_input_checkbox$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.care_platform_edit_participant_dme.wheelchair_input_checkbox$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.care_platform_edit_participant_dme.lift_input_checkbox$
+    # Asserting is actually checked
+    - Type: wait_for_attribute
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_dme.wheelchair_input$
+      Attribute: checked
+      Value: "true"
+    - Type: wait_for_attribute
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_dme.lift_input$
+      Attribute: checked
+      Value: "true"
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: uncheck
+      Id: $PAGE.care_platform_edit_participant_dme.lift_input_checkbox$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_dme.dme_subtitle$
+    - Type: get_attribute
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_dme.lift_input$
+      Greps:
+        - var: UNCHECKED
+          attr: checked
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: ne
+          Var: UNCHECKED
+          Value: 'true'
+    - Type: get_attribute
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_dme.wheelchair_input$
+      Greps:
+        - var: CHECKED
+          attr: checked
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: CHECKED
+          Value: 'true'
+  # Checking Hospitalization
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.hospitalization_navigation$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.changes_saved_notification$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.hospitalization_subtitle$
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_hospitalization.hospitalization_textarea$
+    - Type: clear_field_js
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_hospitalization.hospitalization_textarea$
+    - Type: generate_unique_name
+      Name: "Automation text"
+      ResultVar: UNIQUE_TEXT
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_hospitalization.hospitalization_textarea$
+      Value: $AND_CLI_UNIQUE_TEXT$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.changes_saved_notification$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.changes_saved_notification$
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_hospitalization.hospitalization_textarea$
+    - Type: get_attribute
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_hospitalization.hospitalization_textarea$
+      Greps:
+        - var: TEXTAREA_TEXT
+          attr: value
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: TEXTAREA_TEXT
+          Value: $AND_CLI_UNIQUE_TEXT$
+  #Check Social History
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.social_history_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_social_history.social_history_subtitle$
+    # Edit fields and dropdown selections
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_social_history.education_status_input$
+    - Type: clear_field_by_backspace
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_social_history.education_status_input$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_social_history.education_status_input$
+      Value: "Automation Academy"
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_social_history.relationship_status_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_social_history.relationship_single_option$
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_social_history.relationship_single_option$
+      Attribute: selected
+      Value: "true"
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_social_history.relationship_status_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_social_history.relationship_married_option$
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_social_history.relationship_married_option$
+      Attribute: selected
+      Value: "true"
+  # Check Housing
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.housing_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_housing.housing_subtitle$
+    # Change dropdown
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_housing.own_or_rent_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_housing.own_select_option$
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_housing.own_select_option$
+      Attribute: selected
+      Value: "true"
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_housing.own_or_rent_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_housing.rent_select_option$
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_housing.rent_select_option$
+      Attribute: selected
+      Value: "true"
+  # Check Member Safety
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.member_safety_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_member_safety.member_safety_subtitle$
+    # Change radio button values
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_member_safety.feels_safe_yes_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_member_safety.feels_safe_yes_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_member_safety.feels_safe_no_option$
+    # Change tabs, it should save and show the change when going back to Member Safety
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.housing_navigation$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.changes_saved_notification$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.member_safety_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_member_safety.feels_safe_no_option$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_member_safety.feels_safe_no_option$
+      Greps:
+        - var: SELECTED_NO
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: SELECTED_NO
+          Value: 'checked'
+  # Community Support / Backup Plan
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.community_support_backup_plan_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_community_backup.community_backup_family_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: uncheck
+      Id: $PAGE.care_platform_edit_participant_community_backup.community_backup_family_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.care_platform_edit_participant_community_backup.community_backup_friends_option$
+  # Community Engagement
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.community_engagement_navigation$
+    # Change radio button values
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_community_engagement.community_engagement_yes_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_community_engagement.community_engagement_yes_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_community_engagement.community_engagement_no_option$
+    # Change tabs, it should save and show the change when going back to Community Engagement
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.housing_navigation$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.community_engagement_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_community_engagement.community_engagement_no_option$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_community_engagement.community_engagement_no_option$
+      Greps:
+        - var: SELECTED_NO
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: SELECTED_NO
+          Value: 'checked'
+  # Spiritual
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.spiritual_navigation$
+    # Change radio button values
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_spiritual.spiritual_no_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_spiritual.spiritual_no_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_spiritual.spiritual_yes_option$
+    # Change tabs, it should save and show the change when going back to Spiritual
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.housing_navigation$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.changes_saved_notification$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.spiritual_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_spiritual.spiritual_yes_option$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_spiritual.spiritual_yes_option$
+      Greps:
+        - var: SELECTED_YES
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: SELECTED_YES
+          Value: 'checked'
+  # Cognitive / Learning
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.cognitive_learning_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_cognitive_learning.cognitive_learning_subtitle$
+    # Checking and unchecking some checkboxes
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_cognitive_learning.reading_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.care_platform_edit_participant_cognitive_learning.reading_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.care_platform_edit_participant_cognitive_learning.games_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: uncheck
+      Id: $PAGE.care_platform_edit_participant_cognitive_learning.writing_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: uncheck
+      Id: $PAGE.care_platform_edit_participant_cognitive_learning.discovery_option$
+  # Dietary Restrictions
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.dietary_destrictions_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_dietary_restrictions.dietary_restrictions_subtitle$
+    # Check and uncheck some checkboxes
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_dietary_restrictions.diabetic_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.care_platform_edit_participant_dietary_restrictions.diabetic_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.care_platform_edit_participant_dietary_restrictions.dash_option$
+    # Changing tabs to ensure that the data is preserved
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.housing_navigation$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.dietary_destrictions_navigation$
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_dietary_restrictions.diabetic_input$
+    # Checking the attributes match the selection done to the checkboxes
+    - Type: wait_for_attribute
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_dietary_restrictions.diabetic_input$
+      Attribute: checked
+      Value: "true"
+    - Type: wait_for_attribute
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_dietary_restrictions.dash_input$
+      Attribute: checked
+      Value: "true"
+  # Financial
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.financial_navigation$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.changes_saved_notification$  
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_financial.financial_subtitle$
+    # Check and uncheck some checkboxes
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_financial.transportation_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.care_platform_edit_participant_financial.transportation_option$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_financial.transportation_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.care_platform_edit_participant_financial.rent_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: uncheck
+      Id: $PAGE.care_platform_edit_participant_financial.rent_option$
+    # Changing tabs to ensure the data is getting preserved
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.housing_navigation$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.changes_saved_notification$ 
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.financial_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_financial.transportation_option$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_financial.rent_option$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_financial.rent_option$
+      Greps:
+        - var: UNCHECK_RENT
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: n_contain
+          Var: UNCHECK_RENT
+          Value: 'checked'
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_financial.transportation_option$
+      Greps:
+        - var: CHECK_TRANSPORTATION
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: CHECK_TRANSPORTATION
+          Value: 'checked'
+  # ADL's
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.adls_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_adls.adls_subtitle$
+    # Check and uncheck some checkboxes
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_adls.toileting_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.care_platform_edit_participant_adls.toileting_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.care_platform_edit_participant_adls.house_cleaning_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: uncheck
+      Id: $PAGE.care_platform_edit_participant_adls.shopping_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.changes_saved_notification$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.housing_navigation$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.changes_saved_notification$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.adls_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_adls.toileting_option$
+    # Check that the attributes matches the status of the checkboxes
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_adls.shopping_option$
+      Greps:
+        - var: UNCHECK_SHOPPING
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: n_contain
+          Var: UNCHECK_SHOPPING
+          Value: 'checked'
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_adls.toileting_option$
+      Greps:
+        - var: CHECK_TOILETING
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: CHECK_TOILETING
+          Value: 'checked'
+    - Type: wait_for_attribute
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_adls.house_cleaning_input$
+      Attribute: checked
+      Value: "true"
+  # Surgical History
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.surgical_history_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_surgical_history.surgical_history_subtitle$
+    # Check and uncheck some checkboxes
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_surgical_history.resection_of_tumor_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.care_platform_edit_participant_surgical_history.resection_of_tumor_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: uncheck
+      Id: $PAGE.care_platform_edit_participant_surgical_history.sinus_surgery_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.care_platform_edit_participant_surgical_history.valve_replacement_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: uncheck
+      Id: $PAGE.care_platform_edit_participant_surgical_history.endoscopy_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.changes_saved_notification$
+  # Prevention Care Screening
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.prevention_care_screening_navigation$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.changes_saved_notification$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_prevention_care_screening.prevention_care_screening_subtitle$
+    # Check some checkboxes
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_prevention_care_screening.col_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.care_platform_edit_participant_prevention_care_screening.col_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: uncheck
+      Id: $PAGE.care_platform_edit_participant_prevention_care_screening.art_screening_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.surgical_history_navigation$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.prevention_care_screening_navigation$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.changes_saved_notification$
+    # Check that the attributes match the checking and unchecking of the checkboxes
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_prevention_care_screening.col_option$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_prevention_care_screening.col_option$
+      Greps:
+        - var: CHECK_COL
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: CHECK_COL
+          Value: 'checked'
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_prevention_care_screening.art_screening_option$
+      Greps:
+        - var: UNCHECK_ART
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: n_contain
+          Var: UNCHECK_ART
+          Value: 'checked'
+  # Notes
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.notes_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_notes.notes_subtitle$
+    # Add new text to the notes
+    - Type: clear_field_js
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_notes.notes_text_area$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_notes.notes_text_area$
+      Value: $AND_CLI_UNIQUE_TEXT$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.changes_saved_notification$
+    #Change tabs and check the change persist
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.prevention_care_screening_navigation$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.changes_saved_notification$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.notes_navigation$  
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_notes.notes_text_area$
+    - Type: get_attribute
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_notes.notes_text_area$
+      Greps:
+        - var: NOTES_TEXT
+          attr: value
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: NOTES_TEXT
+          Value: $AND_CLI_UNIQUE_TEXT$

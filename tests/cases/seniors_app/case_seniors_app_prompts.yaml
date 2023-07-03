@@ -242,7 +242,7 @@ TestSeniorAppAnswerCallForProviderCalling:
     TEST_FOLDER: $AND_CMD_pwd$/Reports/executions/$AND_CMD_date +%s$
   Precases:
     - LoginNeverAloneHelper
-    - ProviderCleanBeforeTest
+    - ProviderNewCleaner
     - SeniorCleanPrompts
   Aftercases:
     - TerminateApp

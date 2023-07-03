@@ -94,7 +94,7 @@ TestProviderUpdateCredentials:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_account_modal.credentials_content$
-    - Type: credentials_checkbox
+    - Type: set_checkbox_status
       Strategy: xpath
       Option: uncheck
       Id: $PAGE.providers_account_modal.indiana_option$
@@ -185,7 +185,7 @@ TestProviderUpdateCredentials:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_account_modal.credentials_content$
-    - Type: credentials_checkbox
+    - Type: set_checkbox_status
       Strategy: xpath
       Option: check
       Id: $PAGE.providers_account_modal.indiana_option$
