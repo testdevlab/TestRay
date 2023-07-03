@@ -221,7 +221,7 @@ class CaseRunner
         @device_handler.devices[role].pause(action["Time"])
         report_step(prepare_report_step(role, action) , @main_case, @main_case_id) #Logging action into report
       else
-        @device_handler.devices[role].send(action["Type"], action)
+        @device_handler.devices[role].send(action["Type"], action, @main_case, @main_case_id)
         report_step(prepare_report_step(role, action) , @main_case, @main_case_id) #Logging action into report
       end
     rescue RuntimeError => e

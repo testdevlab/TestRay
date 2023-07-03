@@ -96,7 +96,7 @@ class Device
   #   Value
   #   Greps
   #   Detach
-  def command(action)
+  def command(action, main_case, main_case_id)
     command, greps, detach, log = action["Value"], action["Greps"], action["Detach"], action["Log"]
     run_type = action["RunType"]
     raise "Command Value cannot be empty!" unless command
@@ -121,7 +121,7 @@ class Device
         Open3.popen3(command) do |stdin, stdout, stderr, wait_thr|
           exit_status = wait_thr.value
           unless exit_status.success?
-            path = take_error_screenshot unless ["adb", "command"].include?(@application)
+            path = take_error_screenshot(main_case, main_case_id) unless ["adb", "command"].include?(@application)
             screenshot_error = (path ? "\nError Screenshot: #{path}" : "")
             raise "#{@role}: failed command '#{command}'#{screenshot_error}" if action["Raise"]
           end
@@ -149,7 +149,7 @@ class Device
   # retrieves the URL of currently open page.
   # Accepts:
   #   Greps
-  def get_url(action)
+  def get_url(action, main_case, main_case_id)
     greps = action["Greps"]
     value = @driver.current_url
     log_info("URL value: #{value}")
@@ -162,12 +162,12 @@ class Device
   end
 
   # calls an HTTP GET request to provided URL.
-  def get_call(action)
-    Api.get_call(action)
+  def get_call(action, main_case, main_case_id)
+    Api.get_call(action, main_case, main_case_id)
   end
 
   # set orientation of the phone.
-  def set_orientation(action)
+  def set_orientation(action, main_case, main_case_id)
     try = 0
     while try < 5
       begin
@@ -191,8 +191,8 @@ class Device
   end
 
   # calls an HTTP POST request to provided URL.
-  def post_call(action)
-    Api.post_call(action)
+  def post_call(action, main_case, main_case_id)
+    Api.post_call(action, main_case, main_case_id)
   end
 
   # starts the Appium driver (Selenium driver starts on its own).
@@ -242,23 +242,23 @@ class Device
   # navigates to the provided URL.
   # Accepts:
   #   Value
-  def navigate(action)
+  def navigate(action, main_case, main_case_id)
     url = convert_value(action["Value"])
     @driver.get(url)
   end
 
   # closes the currently opened app and puts it in the background
-  def close_app(action = nil)
+  def close_app(action = nil, main_case, main_case_id)
     @driver.background_app(-1)
   end
 
   # hides keyboard (Only Mobile)
-  def hide_keyboard(action = nil)
+  def hide_keyboard(action = nil, main_case, main_case_id)
     @driver.hide_keyboard
   end
 
   # Toggles wifi using the iOS Control Center (available only for iOS with Physical Devices, not simulators)
-  def toggle_wifi(action = nil)
+  def toggle_wifi(action = nil, main_case, main_case_id)
     # Get the window size 
     size = @driver.window_size
 
@@ -298,7 +298,7 @@ class Device
   # defaults to the app under test if Value is not provided
   # Accepts:
   #   Value (optional)
-  def launch_app(action)
+  def launch_app(action, main_case, main_case_id)
     app_id = action["Value"]
     if app_id
       if @platform == "iOS"
@@ -315,7 +315,7 @@ class Device
   # defaults to the app under test if Value is not provided
   # Accepts:
   #   Value (optional)
-  def terminate_app(action)
+  def terminate_app(action, main_case, main_case_id)
     app_id = action["Value"]
     if app_id
       if @platform == "iOS"
@@ -337,7 +337,7 @@ class Device
   #   FPS (not available for Android)
   #   Bitrate (not available for desktop)
   #   Time
-  def start_record(action)
+  def start_record(action, main_case, main_case_id)
     output = action["Value"] ? action["Value"] : "recording"
     fps = action["FPS"] ? action["FPS"] : "30"
     bitrate = action["Bitrate"] ? convert_value(action["Bitrate"]) : 5000000
@@ -428,7 +428,7 @@ class Device
   #   Value
   #   Height
   #   Width
-  def end_record(action)
+  def end_record(action, main_case, main_case_id)
     name, height, width = convert_value(action["Value"]), convert_value(action["Height"]), convert_value(action["Width"])
     if @udid
       if @options && !@options.empty? && @options["screenPercentage"] && !@options["screenPercentage"].empty? &&
@@ -474,15 +474,15 @@ class Device
   #   OffsetX
   #   OffsetY
   #   NoRaise
-  def click(action)
+  def click(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
     start = Time.now
-    return unless wait_for(action)
+    return unless wait_for(action, main_case, main_case_id)
 
     action["Condition"] = nil
     start_error = Time.now
 
-    el = wait_for(action)
+    el = wait_for(action, main_case, main_case_id)
 
     now = Time.now
     log_info("Time to find element: #{now - start - (now - start_error) / 2}s " +
@@ -515,7 +515,8 @@ class Device
     end
 
     if error && !action["NoRaise"]
-      path = take_error_screenshot()
+      path = take_error_screenshot(main_case, main_case_id)
+
       raise "#{@role}: Element '#{action["Id"]}': #{error.message}\nError Screenshot: #{path}"
     end
   end
@@ -527,15 +528,15 @@ class Device
   #   Condition
   #   CheckTime
   #   NoRaise
-  def hover(action)
+  def hover(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
     start = Time.now
-    return unless wait_for(action)
+    return unless wait_for(action, main_case, main_case_id)
 
     action["Condition"] = nil
     start_error = Time.now
 
-    el = wait_for(action)
+    el = wait_for(action, main_case, main_case_id)
 
     now = Time.now
     log_info("Time to find element: #{now - start - (now - start_error) / 2}s " +
@@ -561,7 +562,8 @@ class Device
       end
     end
     if error && !action["NoRaise"]
-      path = take_error_screenshot()
+      path = take_error_screenshot(main_case, main_case_id)
+
       raise "#{@role}: #{error.message}\nError Screenshot: #{path}"
     end
   end
@@ -574,18 +576,18 @@ class Device
   #   Condition
   #   CheckTime
   #   NoRaise
-  def tap_by_coord(action)
+  def tap_by_coord(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
-    el = wait_for(action)
+    el = wait_for(action, main_case, main_case_id)
     el_location = el.location
     log_info("#{@role}: element coordinates: x -> #{el_location.x}, y -> #{el_location.y}")
     action = Appium::TouchAction.new(@driver).press(x: el_location.x, y: el_location.y).wait(600).release.perform
   end
 
   # taps on an element, only mobile.
-  def tap(action)
+  def tap(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
-    el = wait_for(action)
+    el = wait_for(action, main_case, main_case_id)
     action = Appium::TouchAction.new(@driver).tap(element: el).release.perform
   end
 
@@ -596,15 +598,15 @@ class Device
   #   Condition
   #   CheckTime
   #   NoRaise
-  def press(action)
+  def press(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
     start = Time.now
-    return unless wait_for(action)
+    return unless wait_for(action, main_case, main_case_id)
 
     action["Condition"] = nil
     start_error = Time.now
 
-    el = wait_for(action)
+    el = wait_for(action, main_case, main_case_id)
 
     now = Time.now
     log_info("Time to find element: #{now - start - (now - start_error) / 2}s " +
@@ -631,7 +633,8 @@ class Device
       end
     end
     if error && !action["NoRaise"]
-      path = take_error_screenshot()
+      path = take_error_screenshot(main_case, main_case_id)
+
       raise "#{@role}: #{error.message}\nError Screenshot: #{path}"
     end
   end
@@ -643,15 +646,15 @@ class Device
   #   Condition
   #   CheckTime
   #   NoRaise
-  def click_and_hold(action)
+  def click_and_hold(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
     start = Time.now
-    return unless wait_for(action)
+    return unless wait_for(action, main_case, main_case_id)
 
     action["Condition"] = nil
     start_error = Time.now
 
-    el = wait_for(action)
+    el = wait_for(action, main_case, main_case_id)
 
     now = Time.now
     log_info("Time to find element: #{now - start - (now - start_error) / 2}s " +
@@ -677,7 +680,8 @@ class Device
       end
     end
     if error && !action["NoRaise"]
-      path = take_error_screenshot()
+      path = take_error_screenshot(main_case, main_case_id)
+
       raise "#{@role}: #{error.message}\nError Screenshot: #{path}"
     end
   end
@@ -687,14 +691,14 @@ class Device
   #   Strategy
   #   Id
   #   Value
-  def send_keys(action)
+  def send_keys(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
     value = action["Value"]
     el = nil
     value = value.gsub("$AND_ROLE$", @role) if value && value.is_a?(String) && value.include?("$AND_ROLE$")
     log_info("#{@role}: Sending keys: #{value}")
 
-    el = wait_for(action) if (!action["Actions"] && action["Strategy"])
+    el = wait_for(action, main_case, main_case_id) if (!action["Actions"] && action["Strategy"])
 
     start = Time.now
     error = nil
@@ -718,6 +722,33 @@ class Device
             @driver.action.send_keys(convert_value(value)).perform
           end
         end
+        return
+      rescue => e
+        error = e
+      end
+    end
+    if error && !action["NoRaise"]
+      path = take_error_screenshot(main_case, main_case_id)
+
+      raise "#{@role}: #{error.message}\nError Screenshot: #{path}"
+    end
+  end
+
+  #Clears by using backspace
+  # Accepts:
+  #   Strategy
+  #   Id
+  def clear_field_by_backspace(action) 
+    action = convert_value_pageobjects(action);
+    el = nil
+    el = wait_for(action) if (!action["Actions"] && action["Strategy"])
+    start = Time.now
+    error = nil
+    len = 0
+    len = el.attribute('value').length().to_i
+    while (Time.now - start) < @timeout
+      begin
+        (len).downto(0) {el.send_keys(:backspace)}
         return
       rescue => e
         error = e
@@ -759,10 +790,10 @@ class Device
   # Accepts:
   #   Strategy
   #   Id
-  def clear_field(action) 
+  def clear_field(action, main_case, main_case_id) 
     action = convert_value_pageobjects(action);
     el = nil
-    el = wait_for(action) if (!action["Actions"] && action["Strategy"])
+    el = wait_for(action, main_case, main_case_id) if (!action["Actions"] && action["Strategy"])
     start = Time.now
     error = nil
     while (Time.now - start) < @timeout
@@ -774,7 +805,8 @@ class Device
       end
     end
     if error && !action["NoRaise"]
-      path = take_error_screenshot()
+      path = take_error_screenshot(main_case, main_case_id)
+
       raise "#{@role}: #{error.message}\nError Screenshot: #{path}"
     end
   end
@@ -783,7 +815,7 @@ class Device
   # Accepts:
   #   Strategy
   #   Id
-  def clear_field_js(action) 
+  def clear_field_js(action, main_case, main_case_id) 
     action = convert_value_pageobjects(action);
     el = wait_for(action)
     
@@ -794,9 +826,9 @@ class Device
   # Accepts:
   #   Strategy
   #   Id
-  def swipe_up(action)
+  def swipe_up(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
-    el = wait_for(action)
+    el = wait_for(action, main_case, main_case_id)
     el_location = el.location
     opts = {
       start_x: el_location.x,
@@ -810,9 +842,9 @@ class Device
   # Accepts:
   #   Strategy
   #   Id
-  def swipe_down(action)
+  def swipe_down(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
-    el = wait_for(action)
+    el = wait_for(action, main_case, main_case_id)
     el_location = el.location
 
     opts = {
@@ -825,7 +857,7 @@ class Device
     action = Appium::TouchAction.new(@driver).swipe(opts).perform
   end
 
-  def swipe_elements(action)
+  def swipe_elements(action, main_case, main_case_id)
     # swipe from element1 to element2
     el1 = wait_for(action["Element1"])
     el2 = wait_for(action["Element2"])
@@ -845,14 +877,14 @@ class Device
   end
 
   # TODO
-  def driver_method(action)
+  def driver_method(action, main_case, main_case_id)
     log_info("TODO")
     # HERE USER WILL INPUT A TEXT AND THEN THE METHOD WILL PARSE IT INTO A METHOD
     # @driver.send(action["Method"], action["Var"]) # Check how to send multiple vars
   end
 
   # TODO
-  def touch_actions(action)
+  def touch_actions(action, main_case, main_case_id)
     log_info("TODO")
     # HERE USER WILL PUT SEVERAL ACTIONS IN A LIST:
     # - Action: press
@@ -872,7 +904,7 @@ class Device
   #   StartY
   #   OffsetX
   #   OffsetY
-  def swipe_coord(action)
+  def swipe_coord(action, main_case, main_case_id)
     opts = {
       start_x: action["StartX"],
       start_y: action["StartY"],
@@ -887,7 +919,7 @@ class Device
   # Accepts:
   # X
   # Y
-  def click_coord(action = nil)
+  def click_coord(action = nil, main_case, main_case_id)
     if action["X"] && action["Y"]
       action = Appium::TouchAction.new(@driver).press(x: action["X"], y: action["Y"]).release.perform
     else
@@ -902,7 +934,7 @@ class Device
   # sets the app context to the specified value (native, web, etc.)
   # Accepts:
   #   Value
-  def context(action)
+  def context(action, main_case, main_case_id)
     context = convert_value(action["Value"])
     @driver.set_context(context)
   end
@@ -912,8 +944,8 @@ class Device
   #   Strategy
   #   Id
   #   Greps
-  def get_attribute(action)
-    el = wait_for(action)
+  def get_attribute(action, main_case, main_case_id)
+    el = wait_for(action, main_case, main_case_id)
     return unless el
     
     greps = action["Greps"]
@@ -933,9 +965,9 @@ class Device
   #   Id
   #   Attribute
   #   Value
-  def set_attribute(action)
+  def set_attribute(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
-    el = wait_for(action)
+    el = wait_for(action, main_case, main_case_id)
 
     attribute = convert_value(action["Attribute"])
     value = convert_value(action["Value"])
@@ -950,9 +982,9 @@ class Device
   #   Strategy
   #   Id
   #   Attribute
-  def remove_attribute(action)
+  def remove_attribute(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
-    el = wait_for(action)
+    el = wait_for(action, main_case, main_case_id)
 
     attribute = convert_value(action["Attribute"])
 
@@ -962,7 +994,7 @@ class Device
   # retrieves the current app context
   # Accepts:
   #   Greps
-  def get_current_context(action)
+  def get_current_context(action, main_case, main_case_id)
     greps = action["Greps"]
     cur_context = @driver.current_context
     log_info("Current app context: #{cur_context}")
@@ -974,13 +1006,13 @@ class Device
   end
 
   # returns all available app contexts (native, web, etc.)
-  def get_contexts(action)
+  def get_contexts(action, main_case, main_case_id)
     log_info(@driver.available_contexts.to_s)
     # TODO: Grep context into variables
   end
 
   # parses and saves the source code for currect page.
-  def get_source(action)
+  def get_source(action, main_case, main_case_id)
     source = if @platform.nil? || @platform == "desktop"
       @driver.page_source
     else
@@ -992,7 +1024,7 @@ class Device
   # parses value that is currently in clipboard.
   # Accepts:
   #   Greps
-  def clipboard(action)
+  def clipboard(action, main_case, main_case_id)
     greps = action["Greps"]
     value = @driver.get_clipboard
     log_info("#{@role}: Clipboard value: #{value}")
@@ -1008,7 +1040,7 @@ class Device
   # Accepts:
   #   Value
   #   CheckTime
-  def switch_window(action)
+  def switch_window(action, main_case, main_case_id)
     index = action["Value"]
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
     start = Time.now
@@ -1020,7 +1052,8 @@ class Device
     end
 
     if !found
-      path = take_error_screenshot()
+      path = take_error_screenshot(main_case, main_case_id)
+
       raise "#{@role}: Could not find enough window handles: requested index" +
             " #{index}, found total #{@driver.window_handles.length}\nError Screenshot: #{path}"
     end
@@ -1030,17 +1063,26 @@ class Device
   end
 
   # open new tab
-  def new_tab(action = nil)
+  def new_tab(action = nil,main_case, main_case_id)
+    begin
     @driver.manage.new_window(:tab)
+    rescue => e 
+      log_info("#{@role}: There was an error while switching frames: #{e.message}", "error")
+      if !action["NoRaise"]
+        path = take_error_screenshot(main_case, main_case_id)
+        raise "\n#{@role}: Element '#{id}' is not visible after #{wait_time} " +
+                "seconds \nException: #{exception}\nError Screenshot: #{path}"
+      end
+    end 
   end
 
   # switches to the provided window index.
   # Accepts:
   #   Value
-  def switch_frame(action)
+  def switch_frame(action, main_case, main_case_id)
     index = action["Value"]
     if action["Id"] && action["Strategy"]
-      el = wait_for(action)
+      el = wait_for(action, main_case, main_case_id)
       if el
         log_info("#{@role}: Switching to frame element: #{action["Strategy"]}:#{action["Id"]}")
         index = el
@@ -1067,17 +1109,17 @@ class Device
   #   Strategy
   #   Id
   #   Greps
-  def get_text(action)
+  def get_text(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
     greps = action["Greps"] ? action["Greps"] : []
-    el = wait_for(action)
+    el = wait_for(action, main_case, main_case_id)
     return unless el
 
     start = Time.now
     found = false
 
     while (Time.now - start) < @timeout
-      el = wait_for(action)
+      el = wait_for(action, main_case, main_case_id)
       value = el.text
       log_info("#{@role}: Element text: #{value}") if value
 
@@ -1093,7 +1135,8 @@ class Device
     end
 
     if !found
-      path = take_error_screenshot()
+      path = take_error_screenshot(main_case, main_case_id)
+
       raise "#{@role}: Could not match element text to requirements: \n#{greps}\nError Screenshot: #{path}"
     end
   end
@@ -1105,11 +1148,11 @@ class Device
   #   Index
   #   Time or CheckTime
   #   Condition
-  def wait_for(action)
+  def wait_for(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
     locator_strategy, id = action["Strategy"], action["Id"]
     if action["Condition"]
-      return unless check_condition(action)
+      return unless check_condition(action, main_case, main_case_id)
     end
 
     wait_time = (action["Time"] ? action["Time"] : @timeout)
@@ -1159,7 +1202,7 @@ class Device
     end
 
     if !action["NoRaise"]
-      path = take_error_screenshot()
+      path = take_error_screenshot(main_case, main_case_id)
       raise "\n#{@role}: Element '#{id}' is not visible after #{wait_time} " +
               "seconds \nException: #{exception}\nError Screenshot: #{path}"
     end
@@ -1168,7 +1211,7 @@ class Device
   # sets provided network condition to driver.
   # Accepts:
   #   Condition
-  def set_network(action)
+  def set_network(action, main_case, main_case_id)
     conditions = action["Condition"]
     @driver.network_conditions = conditions
   end
@@ -1176,14 +1219,14 @@ class Device
   # Accepts:
   #   Width
   #   Height
-  def maximize(action = nil)
+  def maximize(action = nil,main_case, main_case_id )
     @driver.manage.window.maximize
     if action["Width"] && action["Height"]
       @driver.manage.window.resize_to action["Width"], action["Height"]
     end
   end
 
-  def minimize(action = nil)
+  def minimize(action = nil, main_case, main_case_id)
     @driver.manage.window.minimize
   end
 
@@ -1191,7 +1234,7 @@ class Device
   #   Name
   #   Folder
   #   Options
-  def write_file(action)
+  def write_file(action, main_case, main_case_id)
     log_info("#{@role}: writing file")
     name = (action["Name"] ? convert_value(action["Name"]) : "name.txt")
     log_info("File Name: #{name}")
@@ -1205,19 +1248,19 @@ class Device
     File.open(name, "w") { |f| f.write(value) }
   end
 
-  def submit(action)
-    el = wait_for(action)
+  def submit(action, main_case, main_case_id)
+    el = wait_for(action, main_case, main_case_id)
     el.submit
   end
 
-  def scroll_to(action)
-    el = wait_for(action)
+  def scroll_to(action, main_case, main_case_id)
+    el = wait_for(action, main_case, main_case_id)
     options = (action["Options"] ? action["Options"] : "true")
     @driver.execute_script("arguments[0].scrollIntoView(#{options});", el)
   end
- 
-  def click_js(action)
-    el = wait_for(action)
+
+  def click_js(action, main_case, main_case_id)
+    el = wait_for(action, main_case, main_case_id)
     @driver.execute_script("arguments[0].click();", el)
   end
 
@@ -1229,7 +1272,7 @@ class Device
   #   Interval
   #     For
   #     Every
-  def screenshot(action)
+  def screenshot(action, main_case, main_case_id)
     name = convert_value(action["Name"])
     filename_base = "screenshot_#{name}"
     folder = File.join(Dir.pwd, "Reports", "screenshots")
@@ -1279,7 +1322,7 @@ class Device
   #   Attribute
   #   Value
   #   Time
-  def wait_for_attribute(action)
+  def wait_for_attribute(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
     locator_strategy = convert_value(action["Strategy"])
     id, att, value = convert_value(action["Id"]), convert_value(action["Attribute"]), convert_value(action["Value"])
@@ -1299,7 +1342,8 @@ class Device
       end
     end
 
-    path = take_error_screenshot()
+    path = take_error_screenshot(main_case, main_case_id)
+
     raise "\n#{@role}: Element '#{locator_strategy}:#{id}' does not have " +
             "attribute #{att} = #{value} after " +
             "#{default_wait_time} seconds \nException: #{exception}\nError Screenshot: #{path}"
@@ -1312,7 +1356,7 @@ class Device
   #   Property
   #   Value
   #   Time
-  def wait_for_property(action)
+  def wait_for_property(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
     locator_strategy = convert_value(action["Strategy"])
     id, prop, value = convert_value(action["Id"]), convert_value(action["Property"]), convert_value(action["Value"])
@@ -1334,7 +1378,8 @@ class Device
       end
     end
 
-    path = take_error_screenshot()
+    path = take_error_screenshot(main_case, main_case_id)
+
     raise "\n#{@role}: Element '#{locator_strategy}:#{id}' does not have " +
             "property #{prop} = #{value} after " +
             "#{default_wait_time} seconds \nException: #{exception}\nError Screenshot: #{path}"
@@ -1342,20 +1387,20 @@ class Device
 
   # Accepts:
   #   Time
-  def visible_for(action)
+  def visible_for(action, main_case, main_case_id)
     time = (action["Time"] ? action["Time"] : @timeout)
     start = Time.now
     while (Time.now - start) < time.to_f
       action["Time"] = 0.2
-      self.wait_for(action)
+      self.wait_for(action, main_case, main_case_id)
     end
   end
 
-  def add_cookie(action)
+  def add_cookie(action, main_case, main_case_id)
     @driver.manage.add_cookie :name => convert_value(action["Name"]), :value => convert_value(action["Value"])
   end
 
-  def wait_for_page_to_load(action)
+  def wait_for_page_to_load(action, main_case, main_case_id)
     action["Time"] = (action["Time"] ? action["Time"] : 10)
     wait = Selenium::WebDriver::Wait.new(:timeout => action["Time"])
     wait.until {@driver.execute_script('var browserState = document.readyState; return browserState;') == "complete" }
@@ -1364,14 +1409,14 @@ class Device
   # Accepts:
   # Time
   # Value
-  def visible_for_not_raise(action)
+  def visible_for_not_raise(action, main_case, main_case_id)
     time = (action["Time"] ? action["Time"] : @timeout)
     start = Time.now
     value = action["Value"]
     action["Value"] = true
     while (Time.now - start) < time.to_f
       action["Time"] = 0.2 
-      if visible(action)
+      if visible(action, main_case, main_case_id)
         sleep 0.2
       else
         action["Time"] = @timeout
@@ -1388,7 +1433,7 @@ class Device
 
   # Accepts:
   #   Time
-  def collection_visible_for(action)
+  def collection_visible_for(action, main_case, main_case_id)
     time = (action["Time"] ? action["Time"] : @timeout)
     start = Time.now
     while (Time.now - start) < time
@@ -1405,7 +1450,7 @@ class Device
   #   Id
   #   Time
   #   Value
-  def visible(action)
+  def visible(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
     default_wait_time = (action["Time"] ? action["Time"] : 0.2)
     start = Time.now
@@ -1427,7 +1472,7 @@ class Device
   #   Strategy
   #   Id
   #   Time
-  def wait_not_visible(action)
+  def wait_not_visible(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
     id = convert_value(action["Id"])
     default_wait_time = (action["Time"] ? action["Time"] : @timeout)
@@ -1441,7 +1486,8 @@ class Device
         return
       end
     end
-    path = take_error_screenshot()
+    path = take_error_screenshot(main_case, main_case_id)
+
     raise "\nElement '#{id}' is still visible after " +
             "#{default_wait_time} seconds\nError Screenshot: #{path}"
   end
@@ -1451,7 +1497,7 @@ class Device
   #   Strategy
   #   Id
   #   Option -> check or uncheck
-  def set_checkbox_status(action)
+  def set_checkbox_status(action, main_case, main_case_id)
     action = convert_value_pageobjects(action);
     option = convert_value(action["Option"])
     el = @driver.find_element(convert_value(action["Strategy"]), convert_value(action["Id"]))
@@ -1471,37 +1517,39 @@ class Device
   end
 
   # opens driver notifications.
-  def notifications(action)
+  def notifications(action, main_case, main_case_id)
     begin
       @driver.open_notifications()
       return
     rescue => e
       exception = e
     end
-    path = take_error_screenshot()
+    path = take_error_screenshot(main_case, main_case_id)
+
     raise "\n#{@role}: Could not open notifications' bar: #{exception}\nError Screenshot: #{path}"
   end
 
   # Does the action "back" as it would happen in a mobile device
-  def back(action)
+  def back(action, main_case, main_case_id)
     begin
       @driver.back()
       return
     rescue => e
       exception = e
     end
-    path = take_error_screenshot()
+    path = take_error_screenshot(main_case, main_case_id)
+
     raise "\n#{@role}: Could not go back: #{exception}\nError Screenshot: #{path}"
   end
 
   # Presses the home button (Android only)
-  def home_button(action)
+  def home_button(action, main_case, main_case_id)
     raise "\n#{@role}: Home button is only defined for Android!" if @platform != "Android"
     Android.home_button(nil, @udid)
   end
 
   # Prints and Writes timestamp with given format
-  def get_timestamp(action)
+  def get_timestamp(action, main_case, main_case_id)
     format_t = convert_value(action["Format"])
     time = Time.now.utc.strftime(format_t)
     log_info("Timestamp is: #{time}")
@@ -1518,7 +1566,7 @@ class Device
   # Format
   # Var
   # File
-  def get_local_timestamp(action)
+  def get_local_timestamp(action, main_case, main_case_id)
     format_t = convert_value(action["Format"])
     time = Time.now.getlocal.strftime(format_t)
     log_info("Timestamp is: #{time}")
@@ -1535,7 +1583,7 @@ class Device
   # Format
   # Var
   # File
-  def get_yesterday_date(action)
+  def get_yesterday_date(action, main_case, main_case_id)
     format_t = convert_value(action["Format"])
     time = Date.today.prev_day.strftime(format_t)
     log_info("Yesterday's date is: #{time}")
@@ -1552,7 +1600,7 @@ class Device
   # Format
   # Var
   # File
-  def get_tomorrow_date(action)
+  def get_tomorrow_date(action, main_case, main_case_id)
     format_t = convert_value(action["Format"])
     time = (Date.today + 1).strftime(format_t)
     log_info("Tomorrow's date is: #{time}")
@@ -1569,7 +1617,7 @@ class Device
   # Format
   # Var
   # File
-   def get_past_timestamp(action)
+   def get_past_timestamp(action, main_case, main_case_id)
     format_t = convert_value(action["Format"])
     time = (Time.now.getlocal - 5*60).strftime(format_t)
     log_info("Timestamp - 5 minute is: #{time}")
@@ -1587,7 +1635,7 @@ class Device
   # Mintes
   # Var
   # File
-   def get_timestamp_plus_minutes(action)
+   def get_timestamp_plus_minutes(action, main_case, main_case_id)
     format_t = convert_value(action["Format"])
     user_minutes = convert_value(action["Minutes"])
     time = (Time.now.getlocal + user_minutes.to_i*60).strftime(format_t)
@@ -1601,7 +1649,7 @@ class Device
     end
   end
 
-  def set_env_var(action)
+  def set_env_var(action, main_case, main_case_id)
     log_info("Assigned value: \"#{convert_value(action["Value"])}\" to Var: \"#{convert_value(action["Var"])}\"")
     ENV[convert_value(action["Var"])] = convert_value(action["Value"])
   end
@@ -1612,37 +1660,37 @@ class Device
   end
 
   # Private method to check conditions from wait_for method
-  def check_condition(action)
+  def check_condition(action, main_case, main_case_id)
     action["Condition"].each do |condition|
       if condition["Operation"].downcase == "visible"
         action["Time"] = condition["Value"]
         action["Value"] = condition["Result"]
 
-        unless visible(action)
-          return assert_condition(action, condition)
+        unless visible(action, main_case, main_case_id)
+          return assert_condition(action, main_case, main_case_id, condition)
         end
       elsif condition["Operation"].downcase == "visible_for"
         action["Time"] = condition["Value"]
         action["Value"] = condition["Result"]
 
-        unless visible_for_not_raise(action)
-          return assert_condition(action, condition)
+        unless visible_for_not_raise(action, main_case, main_case_id)
+          return assert_condition(action, main_case, main_case_id, condition)
         end
       elsif condition["Operation"].downcase == "eq"
         unless convert_value(condition["Value"]) == convert_value(condition["Result"])
-          return assert_condition(action, condition)
+          return assert_condition(action, main_case, main_case_id, condition)
         end
       elsif condition["Operation"].downcase == "ne"
         if convert_value(condition["Value"]) == convert_value(condition["Result"])
-          return assert_condition(action, condition)
+          return assert_condition(action, main_case, main_case_id, condition)
         end
       elsif condition["Operation"].downcase == "att" # Attribute Equal
-        unless wait_for(action).attribute(convert_value(condition["Value"])) == convert_value(condition["Result"])
-          return assert_condition(action, condition)
+        unless wait_for(action, main_case, main_case_id).attribute(convert_value(condition["Value"])) == convert_value(condition["Result"])
+          return assert_condition(action, main_case, main_case_id, condition)
         end
       elsif condition["Operation"].downcase == "natt" # Attribute not Equal
-        if wait_for(action).attribute(convert_value(condition["Value"])) == convert_value(condition["Result"])
-          return assert_condition(action, condition)
+        if wait_for(action, main_case, main_case_id).attribute(convert_value(condition["Value"])) == convert_value(condition["Result"])
+          return assert_condition(action, main_case, main_case_id, condition)
         end
       end
     end
@@ -1651,10 +1699,11 @@ class Device
   end
 
   # Private method to check conditions from check_condition method
-  def assert_condition(action, condition)
+  def assert_condition(action,main_case, main_case_id, condition)
     operation = condition["Operation"].downcase
     if condition["Raise"]
-      path = take_error_screenshot()
+      path = take_error_screenshot(main_case, main_case_id)
+
       raise "#{@role}: Info: condition '#{operation}' for element " +
       "'#{action["Strategy"]}:#{action["Id"]}', with 'Value: " +
       "#{convert_value(condition["Value"])}' and expected " +
@@ -1678,7 +1727,7 @@ class Device
   # continuously check the state of the call for the specified time
   # (connected, connecting, dropped, etc)
   # used in transport performance tests
-  def state_checker(action)
+  def state_checker(action, main_case, main_case_id)
     strategy, idlist, message, app = action["Strategy"], action["Id"], action["Message"], action["App"]
     default_wait_time = (action["Time"] ? action["Time"] : @timeout)
     $network_state = 0
@@ -1764,7 +1813,7 @@ class Device
 
   # common method for taking screenshot on error
   # should not be called from test file - use screenshot() instead
-  def take_error_screenshot()
+  def take_error_screenshot(main_case, main_case_id)
     return if "command" == @application
     if ENV.has_key?('folderPath')
       folder = File.join(Dir.pwd, convert_value(ENV['folderPath']))
@@ -1773,7 +1822,8 @@ class Device
     else
       folder = File.join(Dir.pwd, "Reports", "screenshots")
     end
-    path = File.join(folder, "screenshot_#{@role}.png")
+    main_case_id = main_case_id.gsub(/\-| |:/, "_")
+    path = File.join(folder, "screenshot_#{@role}_#{main_case}#{main_case_id}.png") 
   
     begin
       FileUtils.mkdir_p(folder) unless Dir.exist? folder
@@ -1798,7 +1848,7 @@ class Device
   #     WindowNumber
   #     WindowTitle
   #     Application
-  def reload_driver(action)
+  def reload_driver(action, main_case, main_case_id)
     stop_driver()
     build_driver()
     start_driver()
@@ -1810,7 +1860,7 @@ class Device
   #     WindowNumber
   #     WindowTitle
   #     Application
-  def reload_driver_with_new_window_handle(action)
+  def reload_driver_with_new_window_handle(action, main_case, main_case_id)
     if @platform != 'Windows'
       log_warn('Tried to execute this on ', @platform, 'when this is supposed to only work on windows')
       return
@@ -1848,7 +1898,7 @@ class Device
   #     Type
   #     Var
   #     Value
-  def assert(action)
+  def assert(action, main_case, main_case_id)
     raise "#{@role}: Assert action requires an 'Asserts' section!" unless action.key?("Asserts")
     action["Asserts"].each do |assert|
       raise "#{@role}: 'Asserts' section requires attributes 'Type', 'Var', " +
@@ -1908,7 +1958,7 @@ class Device
       end
     
       unless on_fail_text.empty?
-        path = take_error_screenshot unless "command" == @application
+        path = take_error_screenshot(main_case, main_case_id) unless "command" == @application
         screenshot_error = (path ? "\nError Screenshot: #{path}" : "")
         raise "#{@role}: The Var was '#{src_var}', but it was expected " + 
               "to #{on_fail_text} '#{cmp_var}'#{screenshot_error}"
@@ -1926,14 +1976,14 @@ class Device
   #  Operation
   #  ExpectedResult
   #  ResultVar
-  def operation(action)
+  def operation(action, main_case, main_case_id)
     calculator = Keisan::Calculator.new
     operation_val = convert_value(action["Operation"])
     result = nil
     begin
       result = calculator.evaluate(operation_val)
     rescue => e
-      path = take_error_screenshot unless "command" == @application
+      path = take_error_screenshot(main_case, main_case_id) unless "command" == @application
       screenshot_error = (path ? "\nError Screenshot: #{path}" : "")
       raise "The operation was NOT valid: #{e.message}.#{screenshot_error}"
     end
@@ -1943,7 +1993,7 @@ class Device
       if (result.is_a?(Numeric) && exp_result.to_f != result) || 
       (result.is_a?(String) && exp_result != result) || 
       (!!result == result && result.to_s != exp_result.downcase)
-        path = take_error_screenshot unless "command" == @application
+        path = take_error_screenshot(main_case, main_case_id) unless "command" == @application
         screenshot_error = (path ? "\nError Screenshot: #{path}" : "")
         raise "#{@role}: The Result was '#{result}', but it was expected " + 
         "to be '#{exp_result}'.#{screenshot_error}"
@@ -1956,8 +2006,8 @@ class Device
 end
 
 # returns the attribute of the element in a variable
-def return_element_attribute(action)
-  el = wait_for(action)
+def return_element_attribute(action, main_case, main_case_id)
+  el = wait_for(action, main_case, main_case_id)
   return unless el
 
   attr_value = el.attribute(action["Attribute"])
@@ -1974,7 +2024,7 @@ def return_element_attribute(action)
 end
 
 # returns the location of the element in a variable
-def return_element_location(action)
+def return_element_location(action, main_case, main_case_id)
   el = wait_for(action)
   return unless el
 
@@ -1988,7 +2038,7 @@ $days_month = ["1", "2", "3", "4", "5","6","7","8","9","10","11","12","13","14",
 "24","25","26","27","28","29","30"]
 
 # Recieve a timestamp and return the related day
-def get_day(action)
+def get_day(action, main_case, main_case_id)
   timestamp_string = convert_value(action["Timestamp"])
   timestamp = timestamp_string.to_i
   time = Time.at(timestamp/1000)
@@ -2003,7 +2053,7 @@ def get_day(action)
 end
 
 # Return the following month of the current date
-def get_next_month(action)
+def get_next_month(action, main_case, main_case_id)
   current_date = Time.now
   next_month = current_date.month + 1
   ENV[convert_value(action["ResultVar"])] = format('%02d',next_month)
@@ -2011,7 +2061,7 @@ end
 
 #Obtain a random day difference to inserted day (InsertedDay could be undefined) 
 #and day = 31 is not included
-def generate_random_day(action)
+def generate_random_day(action, main_case, main_case_id)
   inserted_day = convert_value(action["InsertedDay"])
   if inserted_day.nil?
     unique_number = format('%02d', rand(0..($days_month.length-1))).to_i
@@ -2028,7 +2078,7 @@ end
 
 # Returns a variable with a unique name using timestamps at the end
 # i.e. method receives "Hey" and then returns "Hey <timestamp>"
-def generate_unique_name(action)
+def generate_unique_name(action, main_case, main_case_id)
   name = convert_value(action["Name"])
   unique_name = "#{name} #{Time.now.utc.strftime("%d%m%y%H%M%S")}"
   ENV[convert_value(action["ResultVar"])] = unique_name
@@ -2036,7 +2086,7 @@ end
 
 # Custom method to calculate the minutes/seconds from when an event was created
 # i.e. returns "Added x minutes ago" or "Added x seconds ago"
-def calculate_minutes_passed_by_from_event_creation(action)
+def calculate_minutes_passed_by_from_event_creation(action, main_case, main_case_id)
   timestamp = Time.parse(convert_value(action["Timestamp"]))
   now = Time.now.getlocal
   diff = now - timestamp
@@ -2056,7 +2106,7 @@ def calculate_minutes_passed_by_from_event_creation(action)
 end
 
 # Custom method to verify that an event on Never Alone went to the bottom after its time has passed.
-def verify_event_went_to_bottom(action)
+def verify_event_went_to_bottom(action, main_case, main_case_id)
   action = convert_value_pageobjects(action);
   event_name = convert_value(action["EventName"])
 
@@ -2086,7 +2136,7 @@ def verify_event_went_to_bottom(action)
 end
 
 # Custom method to verify that all events are matching today's date.
-def verify_all_events_match_todays_date(action)
+def verify_all_events_match_todays_date(action, main_case, main_case_id)
   action = convert_value_pageobjects(action);
 
   events = @driver.find_elements(convert_value(action["Strategy"]), convert_value(action["Id"]))
@@ -2162,7 +2212,7 @@ def wait_for_element_collection_to_exist(locator)
 end
 
 # Custome action to clean hanged calls and sessions
-def provider_clean_hanged_call_or_session(action)
+def provider_clean_hanged_call_or_session(action, main_case, main_case_id)
   have_call = false
   if wait_for_element_to_exist("$PAGE.providers_home_page.session_return_button$")
     log_info("There's a return session")
@@ -2203,7 +2253,7 @@ def provider_clean_hanged_call_or_session(action)
 end
 
 # Custom action to clean calls from queue and hanged calls on the care partner site
-def care_partner_clean_call_queue_and_hanged_calls(action)
+def care_partner_clean_call_queue_and_hanged_calls(action, main_case, main_case_id)
   
   log_info("checking if there is any hanged call")
   if wait_for_element_to_exist("$PAGE.care_platform_home.active_call_section$")
@@ -2362,7 +2412,7 @@ def wait_for_mobile_element_to_disappear(locator)
 end
 
 # Custom action to clean all the unwanted prompts on Never Alone app before starting test.
-def senior_clean_unwanted_prompts(action)
+def senior_clean_unwanted_prompts(action, main_case, main_case_id)
   count = 0
   loop do
     log_info("check if there is an existing prompt")
