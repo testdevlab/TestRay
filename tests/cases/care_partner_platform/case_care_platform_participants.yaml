@@ -2551,3 +2551,24 @@ TestCarePartnerParticipantInfoEditOrAddContactsInfo:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.contact_deleted_notification$
+# CXTB-111 Participant Profile- Review, Edit or Addi Info
+TestReviewEditAddVendorInfo:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # looking for a participant profile and click on it
+    -
+      
+  # Click on "records" button   
+  # wait for Demographic tabs and click on "VENDORS" tab 
+  # Steps to review vendor Info
+  # Steps to add a vendor
+  # Stesp to remove a vendor
+
+
+   
