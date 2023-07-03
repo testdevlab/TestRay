@@ -2561,11 +2561,31 @@ TestReviewEditAddVendorInfo:
   # Calling Login case.
     - Type: case
       Value: CarePartnerLogin
-  # looking for a participant profile and click on it
-    -
-      
-  # Click on "records" button   
+  # looking for a senior profile and click on it
+    - Type: click
+      Strategy: id 
+      Id: searchButton
+    - Type: send_keys
+      Strategy: id
+      Id: searchButton
+      Value: $AND_CLI_senior_user1_name$
+    - Type: click 
+      Strategy: xpath
+      Id: //div[contains(text(), $AND_CLI_senior_user1_name$)] 
+  # Click on "records" button 
+    - Type: wait_for
+      Strategy: xpath
+      Id: //div[contains(@class, 'box has-scrollable-content')]
+    - Type: click
+      Strategy: xpath 
+      Id: //a/button[text()="Records"]
   # wait for Demographic tabs and click on "VENDORS" tab 
+    - Type: wait_for
+      Strategy: xpath
+      Id: //div[contains(@class, 'box has-scrollable-content')]
+    - Type: click
+      Strategy: xpath
+      Id: //nav[@class="tabs-nav"]/button[text()='Vendors']
   # Steps to review vendor Info
   # Steps to add a vendor
   # Stesp to remove a vendor
