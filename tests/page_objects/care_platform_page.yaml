@@ -167,6 +167,7 @@ care_platform_edit_participant_records:
   edit_title: //span[contains(text(),'Edit')]
   edit_participant_form_label: //form//h4
   address_emergency_phone_navigation: //ul[contains(@class,'form-navigation')]//button[contains(text(),'Address') and contains(text(),'Emergency Phone')]
+  medication_navigation: //button[contains(@class,'form-navigation-link') and contains(text(),'Medications')]
   contacts_navigation: //ul[contains(@class,'form-navigation')]//button[contains(text(),'Contacts')]
   medical_history_navigation: //button[contains(@class,'form-navigation-link') and contains(text(),'Medical History')]
   special_treatment_navigation: //button[contains(@class,'form-navigation-link') and contains(text(),'Special Treatments')]
@@ -187,6 +188,8 @@ care_platform_edit_participant_records:
   notes_navigation: //button[contains(@class,'form-navigation-link') and contains(text(),'Notes')]
   save_changes_button: //form//button[@type='submit']
   changes_saved_notification: //div[@class='Toastify']//div[contains(text(),'Participant changes saved')]
+  medication_saved_notification: //div[@class='Toastify']//div[contains(text(),'Medication created')]
+  medication_deleted_notification: //div[@class='Toastify']//div[contains(text(),'Medication deleted')]
   
 care_platform_edit_participant_demographics:
   first_name_input: firstName
@@ -208,7 +211,27 @@ care_platform_edit_participant_address_emergency_phone:
   ems_address_suggestion_go_back_button: //*[@id='dialogs'][contains(.,'Suggested') and contains(.,'Address')]//button[text()='Go Back']
   ems_address_suggestion_confirm_button: //*[@id='dialogs'][contains(.,'Suggested') and contains(.,'Address')]//button[text()='Confirm']
   enable_ems_calls_option_based_on_user_input: //input[@name='deviceEmsOverride' and @value='$AND_CLI_EMS_OPTION$']/following-sibling::span # values: true, false and default
-  
+
+care_platform_edit_participant_medication:
+  medication_subtitle: //h4[contains(text(),'Medications')]
+  add_medication_button: //button[contains(text(),'Add Medication')]
+  edit_medication_by_name_button: //h4[contains(text(),'$AND_CLI_MEDICATION$')]/following-sibling::div/button[text()='Edit']
+  delete_medication_by_name_button: //h4[contains(text(),'$AND_CLI_MEDICATION$')]/following-sibling::div/button[text()='Delete']
+  modal_add_title: //h4[text()='Add Medication']
+  modal_edit_title: //h4[text()='Edit Medication']
+  modal_cancel_button: //div[@id='modals']//button[text()='Cancel']
+  modal_save_button: //div[@id='modals']//button[text()='Save and Close']
+  modal_medication_name_input: name
+  modal_medication_dose_input: dose
+  modal_medication_frequency_input: frequency
+  modal_medication_diagnosis_input: diagnosis
+  modal_medication_affordability_input: affordabilityIssues
+  modal_medication_self_administration_input: selfAdministrationCapability
+  delete_modal_title: //*[@id='dialogs']//h4[text()='Delete Medication']
+  delete_modal_medication_name: //*[@id='dialogs']//p[text()='$AND_CLI_MEDICATION$']
+  delete_modal_confirm_button: //*[@id='dialogs']//button[text()='Yes, Delete']
+  delete_modal_cancel_button: //*[@id='dialogs']//button[text()='Cancel']
+
 care_platform_edit_participant_medical_history:
   medical_history_subtitle: //h4[contains(text(),'Medical History')]
   coronary_artery_diseases_select: mhCaCoronaryArteryDiseaseCad

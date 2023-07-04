@@ -743,10 +743,10 @@ class Device
   # Accepts:
   #   Strategy
   #   Id
-  def clear_field_by_backspace(action) 
+  def clear_field_by_backspace(action, main_case, main_case_id) 
     action = convert_value_pageobjects(action);
     el = nil
-    el = wait_for(action) if (!action["Actions"] && action["Strategy"])
+    el = wait_for(action, main_case, main_case_id) if (!action["Actions"] && action["Strategy"])
     start = Time.now
     error = nil
     len = 0
@@ -760,33 +760,7 @@ class Device
       end
     end
     if error && !action["NoRaise"]
-      path = take_error_screenshot()
-      raise "#{@role}: #{error.message}\nError Screenshot: #{path}"
-    end
-  end
-
-  #Clears by using backspace
-  # Accepts:
-  #   Strategy
-  #   Id
-  def clear_field_by_backspace(action) 
-    action = convert_value_pageobjects(action);
-    el = nil
-    el = wait_for(action) if (!action["Actions"] && action["Strategy"])
-    start = Time.now
-    error = nil
-    len = 0
-    len = el.attribute('value').length().to_i
-    while (Time.now - start) < @timeout
-      begin
-        (len).downto(0) {el.send_keys(:backspace)}
-        return
-      rescue => e
-        error = e
-      end
-    end
-    if error && !action["NoRaise"]
-      path = take_error_screenshot()
+      path = take_error_screenshot(main_case, main_case_id)
       raise "#{@role}: #{error.message}\nError Screenshot: #{path}"
     end
   end
@@ -822,10 +796,25 @@ class Device
   #   Id
   def clear_field_js(action, main_case, main_case_id) 
     action = convert_value_pageobjects(action);
-    el = wait_for(action)
+    el = nil
+    el = wait_for(action, main_case, main_case_id) if (!action["Actions"] && action["Strategy"])
     
-    @driver.execute_script("arguments[0].value='';", el)
-    sleep(1.0)
+    start = Time.now
+    error = nil
+    while (Time.now - start) < @timeout
+      begin
+        @driver.execute_script("arguments[0].value='';", el)
+        sleep(1.0)
+        return
+      rescue => e
+        error = e
+      end
+    end
+    if error && !action["NoRaise"]
+      path = take_error_screenshot(main_case, main_case_id)
+
+      raise "#{@role}: #{error.message}\nError Screenshot: #{path}"
+    end
   end
 
   # Accepts:

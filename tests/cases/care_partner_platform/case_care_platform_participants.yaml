@@ -3331,3 +3331,156 @@ TestCarePartnerEditInfoForExistingParticipant:
         - Type: contain
           Var: NOTES_TEXT
           Value: $AND_CLI_UNIQUE_TEXT$
+
+#CXTB-445 Edit Participant Info - Edit or Add Medication Info
+TestCarePartnerParticipantInfoEditOrAddMedicationInfo:
+  Environment: Settings
+  Vars:
+    LOGOUT_OPTION: 'Go Off Shift'
+    MEDICATION: 'AutomationMed'
+  Aftercases:
+    - CarePlatformLogout
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Go to Edit Participant
+    - Type: case
+      Value: CarePartnerEditParticipantNavigation
+  # Go to Medication
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.medication_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.medication_subtitle$
+  # Add Medication and Cancel
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.add_medication_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.modal_add_title$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.modal_cancel_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.modal_cancel_button$
+  # Add Medication
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.add_medication_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.modal_add_title$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_medication.modal_medication_name_input$
+      Value: $AND_CLI_MEDICATION$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_medication.modal_medication_dose_input$
+      Value: '5 mg'
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_medication.modal_medication_frequency_input$
+      Value: '1 x daily'
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_medication.modal_medication_diagnosis_input$
+      Value: 'bugs'
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_medication.modal_medication_affordability_input$
+      Value: 'yes'
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_medication.modal_medication_self_administration_input$
+      Value: 'yes'
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.modal_save_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.medication_saved_notification$
+  # Edit Medication and cancel
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.edit_medication_by_name_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.edit_medication_by_name_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.modal_edit_title$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.modal_cancel_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.modal_cancel_button$
+  # Edit Medication
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.edit_medication_by_name_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.edit_medication_by_name_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.modal_edit_title$
+    - Type: clear_field_by_backspace
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_medication.modal_medication_dose_input$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_medication.modal_medication_dose_input$
+      Value: '8 mg'
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.modal_save_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.medication_saved_notification$
+  # Delete and cancel
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.medication_saved_notification$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.delete_medication_by_name_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.delete_medication_by_name_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.delete_modal_title$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.delete_modal_cancel_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.delete_modal_cancel_button$
+  # Delete existing medication
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.delete_medication_by_name_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.delete_medication_by_name_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.delete_modal_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.delete_modal_medication_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_medication.delete_modal_confirm_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.medication_deleted_notification$  
