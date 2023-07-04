@@ -1,0 +1,99 @@
+#CXTB-427 Status Drop-down Options - Not on Active Call
+TestESCarePartnerStatusDropdownNotInCall:
+  Environment: Settings 
+  Precases:
+    - ESCarePartnerCleanCallQueueAndHangedCalls
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: ESCarePartnerLogin
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform.page_title$
+      Condition:
+      - Value: 2
+        Operation: visible
+        Result: true
+  #Status
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+  #Changing status to Off Shift
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.user_toggle_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.user_toggle_input$
+  #Navigating to participants page
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_participant$
+    - Type: sleep
+      Time: 1
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.care_platform.page_title$
+      Greps:
+        - var: HOME_TITLE
+          match: "Participants"
+      Asserts:
+        - Type: eq
+          Var: HOME_TITLE
+          Value: "Participants"
+  #Checking indicator is set to Off Shift status
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Greps:
+        - var: STATUS_VAR
+          attr: class
+          condition: nempty
+          match: "(.*)user-dropdown-avatar (.*)"
+    - Type: assert
+      Asserts:
+        - Type: n_contain
+          Var: STATUS_VAR
+          Value: "has-status"
+  #Changing status back to available
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.user_dropdown_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.user_toggle_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.user_toggle_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_followup$
+    - Type: sleep
+      Time: 1
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.care_platform.page_title$
+      Greps:
+        - var: HOME_TITLE
+          match: "Follow-up(.*)"
+      Asserts:
+        - Type: eq
+          Var: HOME_TITLE
+          Value: "Follow-up Tickets"
+  #Checking the status indicator correspond to Available
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.status_indicator$
+      Greps:
+        - var: STATUS_VAR
+          attr: class
+          condition: nempty
+          match: "(.*)user-dropdown-avatar (.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: STATUS_VAR
+          Value: "has-status"
