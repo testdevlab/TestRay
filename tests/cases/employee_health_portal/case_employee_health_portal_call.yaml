@@ -76,3 +76,55 @@ TestEmployeeHealthPortalMinorUserCall:
     - Type: set_env_var
       Value: $AND_CLI_ENV_MEMBER_ID_STORE$
       Var: employee_user1_card_member_id
+
+#CXTB-441: No "Call already answered" Notification if EHP Call Ended By Employee Log Out
+TestEmployeeHealthPortalCallAlreadyAnsweredNotificationWhenEmployeeLogsOut:
+  Environment: Settings
+  Aftercases:
+    - EmployeeHealthPortalLogOutAction
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+    - Role: desktopChrome1
+      App: desktop
+  Actions:
+  # Calling EHP Login case.
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  # Clean EHP hanged calls.
+    - Type: case
+      Value: EmployeeHealthPortalCleanHangedCalls
+  # Generate a call from EHP.
+    - Type: case
+      Value: EmployeeHealthPortalCallNow    
+  # Calling Login case on Provider Care Platform side.
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+      Role: desktopChrome1
+  # Select the call on Providers Care Platform.
+    - Type: click
+      Role: desktopChrome1
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.on_demand_calls$
+  # Verify that the call information appears on the right side.
+    - Type: wait_for
+      Role: desktopChrome1
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
+  # Log out of EHP.
+    - Type: case
+      Value: EmployeeHealthPortalLogOut 
+  # Verify that the "Call already answered".
+    - Type: wait_for
+      Role: desktopChrome1
+      Strategy: xpath
+      Id: $PAGE.providers_notifications.call_already_answered_notification$
+  # Verify that the user is returned to the Provider Home view.
+    - Type: wait_not_visible
+      Role: desktopChrome1
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
+    - Type: wait_for
+      Role: desktopChrome1
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.home_title$

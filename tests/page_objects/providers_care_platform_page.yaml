@@ -170,5 +170,4 @@ providers_participant_modal:
 providers_notifications:
   call_completed_notification:  //div[text()='Call completed']
   follow_up_ticket_closed_notification:  //div[text()='Follow-up ticket closed']
-
- 
+  call_already_answered_notification:  //div[text()='Call already answered']
