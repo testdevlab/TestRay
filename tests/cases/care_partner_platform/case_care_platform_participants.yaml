@@ -2586,8 +2586,39 @@ TestReviewEditAddVendorInfo:
     - Type: click
       Strategy: xpath
       Id: //nav[@class="tabs-nav"]/button[text()='Vendors']
+  # variables to use for Add Vendor
+      Vars:
+        NAME: Airport Rides 'R' Us
+        ADDRESS: 1000 Street Name, Somewhere, GA 30024
+        WEBSITE: www.airportridesrus.com
+        CATEGORY: careCoordination
+        PHONE: 4365565897
   # Steps to review vendor Info
   # Steps to add a vendor
+    # clicking on Add "Vendor" button
+    - Type: click
+      Strategy: xpath
+      Id: //button[text()="Add Vendor"]
+    # waiting for modal
+    - Type: wait_for
+      Strategy: id
+      Id: modals
+  # filling Vendor form 
+    - Type: click
+      Strategy: id
+      Id: category
+    # selecting a Category
+    - type:  click
+      Strategy: xpath
+      Id: //option[@value ="careCoordination"]
+    # putting a name
+    - type: send_keys
+      Strategy: id
+      Id: name
+      Value: $AND_CLI_NAME$
+
+
+
   # Stesp to remove a vendor
 
 
