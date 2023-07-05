@@ -2551,6 +2551,7 @@ TestCarePartnerParticipantInfoEditOrAddContactsInfo:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.contact_deleted_notification$
+
 # CXTB-111 Participant Profile- Review, Edit or Addi Info
 TestReviewEditAddVendorInfo:
   Environment: Settings
@@ -2563,15 +2564,20 @@ TestReviewEditAddVendorInfo:
       Value: CarePartnerLogin
   # looking for a senior profile and click on it
     - Type: click
+      Strategy: xpath
+      Id: //a[text()='Participants']
+    - Type: click
       Strategy: id 
       Id: searchButton
     - Type: send_keys
       Strategy: id
-      Id: searchButton
+      Id: searchText
       Value: $AND_CLI_senior_user1_name$
     - Type: click 
       Strategy: xpath
-      Id: //div[contains(text(), $AND_CLI_senior_user1_name$)] 
+      Id: //div[@id='containerElement']//div[contains(text(), "$AND_CLI_senior_user1_name$")]
+      #//div[contains(text(), $AND_CLI_senior_user1_name$)] 
+      
   # Click on "records" button 
     - Type: wait_for
       Strategy: xpath
@@ -2587,35 +2593,58 @@ TestReviewEditAddVendorInfo:
       Strategy: xpath
       Id: //nav[@class="tabs-nav"]/button[text()='Vendors']
   # variables to use for Add Vendor
-      Vars:
-        NAME: Airport Rides 'R' Us
-        ADDRESS: 1000 Street Name, Somewhere, GA 30024
-        WEBSITE: www.airportridesrus.com
-        CATEGORY: careCoordination
-        PHONE: 4365565897
+      # Vars:
+      #   NAME: Airport Rides 'R' Us
+      #   ADDRESS: 1000 Street Name, Somewhere, GA 30024
+      #   WEBSITE: www.airportridesrus.com
+      #   CATEGORY: careCoordination
+      #   PHONE: 4365565897
   # Steps to review vendor Info
   # Steps to add a vendor
     # clicking on Add "Vendor" button
     - Type: click
       Strategy: xpath
-      Id: //button[text()="Add Vendor"]
+      Id: //button[text()='Add Vendor']
     # waiting for modal
     - Type: wait_for
       Strategy: id
       Id: modals
+    - Type: sleep
+      Time: 1
   # filling Vendor form 
     - Type: click
       Strategy: id
       Id: category
     # selecting a Category
-    - type:  click
+    - Type:  wait_for
       Strategy: xpath
-      Id: //option[@value ="careCoordination"]
-    # putting a name
-    - type: send_keys
+      Id: //select[@id='category']/option[@value ='careCoordination']
+    - Type: click
+      Strategy: xpath
+      Id: //select[@id='category']/option[@value ='careCoordination']
+    # filling input form
+    - Type: send_keys
       Strategy: id
       Id: name
-      Value: $AND_CLI_NAME$
+      Value: Airport Rides 'R' Us
+    - Type: send_keys
+      Strategy: id
+      Id: address
+      Value: 1000 Street Name, Somewhere, GA 30024
+    - Type: send_keys
+      Strategy: id
+      Id: phone
+      Value: 4365565897
+    - Type: send_keys
+      Strategy: id
+      Id: website
+      Value: www.airportridesrus.com
+  # clicking on "save and close" button
+    - Type: click
+      Strategy: xpath
+      Id: //button[text()='Save and Close']
+
+    
 
 
 
