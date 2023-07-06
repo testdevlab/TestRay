@@ -186,6 +186,7 @@ care_platform_edit_participant_records:
   surgical_history_navigation: //button[contains(@class,'form-navigation-link') and contains(text(),'Surgical History')]
   prevention_care_screening_navigation: //button[contains(@class,'form-navigation-link') and contains(text(),'Preventative Care Screening')]
   notes_navigation: //button[contains(@class,'form-navigation-link') and contains(text(),'Notes')]
+  allergies_navigation: //ul[contains(@class,'form-navigation')]//button[contains(text(),'Allergies')]
   save_changes_button: //form//button[@type='submit']
   changes_saved_notification: //div[@class='Toastify']//div[contains(text(),'Participant changes saved')]
   medication_saved_notification: //div[@class='Toastify']//div[contains(text(),'Medication created')]
@@ -337,6 +338,19 @@ care_platform_edit_participant_notes:
   notes_subtitle: //h4[contains(text(),'Notes')]
   notes_text_area: notes
 
+care_platform_edit_participant_allergies:
+  add_allergy_button: //button[text()='Add Allergy']
+  edit_button_based_on_allergy_name: //strong[contains(text(),'$AND_CLI_UNIQUE_NAME$')]/../following-sibling::div//button[text()='Edit']
+  delete_button_based_on_allergy_name: //strong[contains(text(),'$AND_CLI_UNIQUE_NAME$')]/../following-sibling::div//button[text()='Delete']
+  reason_label_based_on_allergy_name: //strong[contains(text(),'$AND_CLI_UNIQUE_NAME$')]/../following-sibling::div//div[not(child::*)]
+  add_or_edit_allergy_modal_title: //div[@id='modals']//h4
+  add_allergy_name_input: //input[@id='name']
+  add_allergy_reaction_input:  //input[@id='reaction']
+  save_and_close_button: //button[@type='submit']
+  cancel_button: //button[text()='Cancel']
+  delete_allergy_dialog_title: //div[@id='dialogs']//h4
+  yes_delete_button: //button[text()='Yes, Delete']
+
 care_platform_edit_participant_contacts:
   add_contact_button: //button[text()='Add Contact']
   edit_button_based_on_contact_name: //span[text()='$AND_CLI_UNIQUE_FIRST_NAME$' and text()='$AND_CLI_UNIQUE_LAST_NAME$']/../following-sibling::div//button[text()='Edit']
@@ -459,6 +473,9 @@ care_platform_notifications:
   contact_created_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Contact created']
   contact_saved_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Contact saved']
   contact_deleted_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Contact deleted']
+  allergy_created_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Allergy created']
+  allergy_saved_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Allergy saved']
+  allergy_deleted_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Allergy deleted']
   dismiss_notification_button: //div[@class='Toastify']//button[text()='Dismiss']
 
 care_platform_facility:

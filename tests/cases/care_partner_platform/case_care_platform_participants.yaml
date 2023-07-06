@@ -3484,3 +3484,234 @@ TestCarePartnerParticipantInfoEditOrAddMedicationInfo:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participant_records.medication_deleted_notification$  
+
+#CXTB-446 Edit Participant Info - Edit or Add Allergies Info
+TestCarePartnerParticipantInfoEditOrAddAllergiesInfo:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Go to Edit Participant
+    - Type: case
+      Value: CarePartnerEditParticipantNavigation
+  # Click Allergies page in Navigation panel.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.allergies_navigation$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.allergies_navigation$
+  # Page refreshes to show the edit mode for allergies on the participant’s profile.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_allergy_button$
+  # Click "Add Allergy" button in upper right corner.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_allergy_button$
+  # "Add Allergy" window appears in center of screen.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_or_edit_allergy_modal_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_or_edit_allergy_modal_title$
+      Property: textContent
+      Value:  Add allergy
+  # Enter some information, then click the "Cancel" button.
+    - Type: generate_unique_name
+      Name: Name
+      ResultVar: UNIQUE_NAME
+    - Type: generate_unique_name
+      Name: Reaction
+      ResultVar: UNIQUE_REACTION
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_allergy_name_input$
+      Value: $AND_CLI_UNIQUE_NAME$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_allergy_reaction_input$
+      Value: $AND_CLI_UNIQUE_REACTION$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.cancel_button$
+  # Window closes and no allergy is added for participant.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_or_edit_allergy_modal_title$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.cancel_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.edit_button_based_on_allergy_name$
+  # Click "Add Allergy" button in upper right corner.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_allergy_button$
+  # "Add Allergy" window appears in center of screen.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_or_edit_allergy_modal_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_or_edit_allergy_modal_title$
+      Property: textContent
+      Value:  Add allergy
+  # Populate allergy details before clicking "Save and Close" button.
+    - Type: generate_unique_name
+      Name: Name
+      ResultVar: UNIQUE_NAME
+    - Type: generate_unique_name
+      Name: Reaction
+      ResultVar: UNIQUE_REACTION
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_allergy_name_input$
+      Value: $AND_CLI_UNIQUE_NAME$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_allergy_reaction_input$
+      Value: $AND_CLI_UNIQUE_REACTION$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.save_and_close_button$
+  # Window closes, the new allergy entered is now displayed on the page, and toast notification appears at the top of the page.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_or_edit_allergy_modal_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.allergy_created_notification$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.allergy_created_notification$
+  # Click "Edit" button for an existing allergy.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.edit_button_based_on_allergy_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.edit_button_based_on_allergy_name$
+  # "Edit Allergy" window appears in center of screen, showing currently entered information.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_or_edit_allergy_modal_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_or_edit_allergy_modal_title$
+      Property: textContent
+      Value:  Edit Allergy
+  # Update some of the information and click the "Cancel" button.
+    - Type: generate_unique_name
+      Name: Updated
+      ResultVar: SECOND_REACTION
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_allergy_reaction_input$
+      Value: $AND_CLI_SECOND_REACTION$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.cancel_button$
+  # Returned to the page; without any changes being saved to the allergy.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.reason_label_based_on_allergy_name$
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.reason_label_based_on_allergy_name$
+      Greps:
+        - var: SECOND_REACTION_VALUE
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: UNIQUE_REACTION
+          Value: $AND_CLI_SECOND_REACTION_VALUE$
+  # Click "Edit" button for an existing allergy.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.edit_button_based_on_allergy_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.edit_button_based_on_allergy_name$
+  # "Edit Allergy" window appears in center of screen, showing currently entered information.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_or_edit_allergy_modal_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_or_edit_allergy_modal_title$
+      Property: textContent
+      Value:  Edit Allergy
+  # Make any changes desired before clicking "Save and Close" button.
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_allergy_reaction_input$
+      Value: $AND_CLI_SECOND_REACTION$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.save_and_close_button$
+  # Window closes, the updated allergy information is now displayed on the page, and toast notification appears at the top of the page.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.add_or_edit_allergy_modal_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.allergy_saved_notification$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.allergy_saved_notification$
+  # Click "Delete" button for an existing allergy.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.delete_button_based_on_allergy_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.delete_button_based_on_allergy_name$
+  # "Delete Allergy" window will appear confirming you would like to delete the entry.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.delete_allergy_dialog_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.delete_allergy_dialog_title$
+      Property: textContent
+      Value:  Delete Allergy
+  # Click "Cancel" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.cancel_button$
+  # Returned to page without entry being deleted.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.delete_button_based_on_allergy_name$
+  # Click "Delete" button for an existing allergy.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.delete_button_based_on_allergy_name$
+  # "Delete Allergy" window will appear confirming you would like to delete the entry.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.delete_allergy_dialog_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.delete_allergy_dialog_title$
+      Property: textContent
+      Value:  Delete Allergy
+  # Click "Yes, Delete" to confirm delete request.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.yes_delete_button$
+  # Window closes, the deleted allergy is no longer present on the page, and toast notification appears at the top of the page.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_allergies.delete_allergy_dialog_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.allergy_deleted_notification$
