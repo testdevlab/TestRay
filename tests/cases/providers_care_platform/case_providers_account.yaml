@@ -65,6 +65,47 @@ TestProviderUpdateAccountInfo:
     - Type: case
       Value: CarePlatformUpdateInfo
 
+#CXTB-120 Access Credentials Page & Update Call Answering Abilities
+TestProviderUpdateCredentialsAndCallAnsweringAbilities:
+  Environment: Settings
+  Vars:
+    STATE: IN
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  # Log in with the second user.
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+  # Going to My Account
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.dropdown_username$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_user_dropdown_menu.myaccount_menu_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.modal_title$
+  # Select credentials
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.credentials_navigation_tab$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.credentials_content$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: uncheck
+      Id: $PAGE.providers_account_modal.indiana_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.providers_account_modal.indiana_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.providers_account_modal.close_modal_button$
+
 #CXTB-208 Providers - My Account - Credentials
 TestProviderUpdateCredentials:
   Environment: Settings
