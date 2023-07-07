@@ -1,7 +1,7 @@
 employee_health_login_page:
   sign_up_button: //div[@class='login-screen-form']//button[text()='Sign Up']
   log_in_button: //div[@class='login-screen']//form/button[text()='Log In']
-  email_input: //*[@id='username']
+  email_input: //*[@id='email']
   password_input: //input[@id='password']
   forgot_password_button: //button[text()='Forgot Password']
   dialog_email_input: //div[contains(@class,'dialog')]//input
@@ -61,7 +61,6 @@ employee_health_home_page:
   calendar_day_without_event2: //*[@class='calendar ml']//button[@class ='calendar-day'][2]
   calendar_day_without_event3: //*[@class='calendar ml']//button[@class ='calendar-day'][3]
 
-
 employee_health_my_account_modal:
   modal_title: //*[@id='modals']//h4[text()='My Account']
   close_modal_button: //*[@id='modals']//button[text()='Close']
@@ -104,6 +103,7 @@ employee_health_telehealth_on_demand_modal:
 
 employee_health_on_demand_call_page:
   page_title: //h2[contains(text(),'On-demand call')]
+  connecting_label: //div[@class='video-queue-status' and contains(text(), 'Connecting')]
   video_feed: //div[@class='video']/div[@class='video-feed']
   video_enable_button: //div[@class='video-controls-overlay']//span[contains(text(), 'Video')]/parent::button
   video_settings_button: //div[@class='video-controls-overlay']//span[contains(text(), 'Settings')]/parent::button

@@ -407,3 +407,75 @@ EmployeeHealthPortalAppointmentsRequest:
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_telehealth_request_form.create_event_button$
+
+#Employee Health Portal - User starts call from the EHP portal (this workflow won't end the call).
+EmployeeHealthPortalCallNow:
+  Vars:
+    STATE: IN
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  #Home Page
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.call_now_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.call_now_button$
+  #Telehealth on demand modal
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_title$
+  #Fill all fields
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_state_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_state_select_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select_option$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_reasons_input$
+      Value: 'Test reason: automation'
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_call_provider_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_call_provider_button$
+    # Workaround starts here to see the on going call page.
+    - Type: sleep
+      Time: 2
+    - Type: refresh
+      Role: desktopChrome
+    # Workaround ends here.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_on_demand_call_page.connecting_label$
+
+# Custom action to log out of EHP if it is needed.
+EmployeeHealthPortalLogOutAction:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Log out of EHP if needed.
+    - Type: ehp_logout
+
+# Custom action to clean EHP hanged calls.
+EmployeeHealthPortalCleanHangedCalls:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Clean hanged calls.
+    - Type: ehp_clean_hanged_call

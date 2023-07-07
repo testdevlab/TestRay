@@ -133,7 +133,7 @@ TestCarePartnerStatusDropdown_NotInCall:
         - var: STATUS_VAR
           attr: class
           condition: nempty
-          match: "(.*)has-status(.*)"
+          match: "(.*)user-dropdown-avatar (.*)"
     - Type: assert
       Asserts:
         - Type: n_contain
@@ -170,7 +170,7 @@ TestCarePartnerStatusDropdown_NotInCall:
         - var: STATUS_VAR
           attr: class
           condition: nempty
-          match: "(.*)has-status(.*)"
+          match: "(.*)user-dropdown-avatar (.*)"
     - Type: assert
       Asserts:
         - Type: contain

@@ -33,8 +33,11 @@ providers_user_dropdown_menu:
   user_shift_toggle_label: //nav[@class='user-dropdown-menu']//div[contains(@class,'radio-toggle-label')]
   user_shift_toggle_checkbox: //nav[@class='user-dropdown-menu']//label[contains(@class,'radio-toggle-button')]
   user_list_item_provider1: //div[contains(text(),'On Shift')]//following-sibling::div[not(contains(@class,'is-offline'))]//div[@class='users-dropdown-name'][contains(text(),'$AND_CLI_provider_user1_name$')][contains(.,'$AND_CLI_provider_user1_lastname$')][contains(.,'Provider')]
+  myaccount_menu_button: //header//nav//button[contains(.,'My Account')]
 
 providers_account_modal:
+  modal_title: //*[@id='modals']//h4[contains(text(),'My Account')]
+  close_modal_button: //button[text()='Close']
   credentials_navigation_tab: //*[@id='modals']//nav/button[text()='Credentials']
   credentials_content: //*[@id='modals']//div[@class='tabs-content' and @tab-title='Credentials']
   pennsylvania_option: //*[@id='PA']/ancestor::label
@@ -170,5 +173,4 @@ providers_participant_modal:
 providers_notifications:
   call_completed_notification:  //div[text()='Call completed']
   follow_up_ticket_closed_notification:  //div[text()='Follow-up ticket closed']
-
- 
+  call_already_answered_notification:  //div[text()='Call already answered']
