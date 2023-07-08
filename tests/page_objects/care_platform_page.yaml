@@ -22,6 +22,7 @@ care_platform:
   navigation_participant: //nav//a[contains(text(),'Participants')]
   navigation_followup: //nav//a[contains(text(),'Follow-up')]
   navigation_home: //nav//a[contains(text(),'Home')]
+  toastify_first_element_text: //div[@class='Toastify']//div[contains(@class, 'flex-col')]
 
 care_platform_home:
   first_call_of_queue: //div[@id='containerElement']/div[starts-with(@class, 'ListRow_listRow')][1]
@@ -50,7 +51,7 @@ care_platform_header:
 
 care_platform_myaccount_info:
   modal_title: //*[@id='modals']//h4[contains(text(),'My Account')]
-  close_modal_button: //*[@id="modals"]//button[contains(text(),'Close')]
+  close_modal_button: //*[@id='modals']//button[contains(text(),'Close')]
   firstname_input: //input[@id='firstName']
   email_input: //input[@id='email']
   phone_input: //*[@id='phone']
@@ -162,6 +163,7 @@ care_platform_participant_records:
   message_historical_arrow_button: //div[@data-testid='box']//span[@class='button button-circle-lg -mr-5']
   last_message_historical: (//div[@class='message message-to'])[last()]
   edit_info_button: //div[@class='participant-profile-contact']//button/span[contains(@class, 'icon-edit')]
+  demographics_vendor_subtab: //nav[@class='tabs-nav']/button[text()='Vendors']
 
 care_platform_edit_participant_records:
   edit_title: //span[contains(text(),'Edit')]
@@ -498,4 +500,16 @@ care_platform_facility_Record:
   info_title: //h4[text()='Facility Information']
   devices_button: //button[text()='Devices']
   device_status: //div[@class='account-status account-status-active']
+
+care_platform_edit_participants_vendor:
+  add_vendor_button: //button[text()='Add Vendor']
+  cancel_vendor_modal_button: //div[@id='modals']//button[text()='Cancel']
+  category_modal_input: //select[@id='category']/option[@value ='$AND_CLI_CATEGORY$']
+  save_close_modal_button: //button[text()='Save and Close']
+  edit_created_vendor_button: //div[@class='flex-col flex-col-9']//div[contains(@class, 'vendor')]//div[text()='$AND_CLI_NAME$']//following-sibling::div[contains(@class,'flex-col')]/button[text()='Edit']
+  name_vendor_record: //div[@class='flex-col flex-col-9']//div[contains(@class, 'vendor')]//div[text()='$AND_CLI_NEW_NAME$']
+  delete_created_vendor_button: //div[@class='flex-col flex-col-9']//div[contains(@class, 'vendor')]//div[text()='$AND_CLI_NEW_NAME$']//following-sibling::div[contains(@class,'flex-col')]/button[text()='Delete']
+  delete_confirmation_modal: //button[text()='Yes, Delete']
+
+  
   
