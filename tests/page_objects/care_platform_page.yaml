@@ -524,6 +524,3 @@ care_platform_edit_participants_vendor:
   name_vendor_record: //div[@class='flex-col flex-col-9']//div[contains(@class, 'vendor')]//div[text()='$AND_CLI_NEW_NAME$']
   delete_created_vendor_button: //div[@class='flex-col flex-col-9']//div[contains(@class, 'vendor')]//div[text()='$AND_CLI_NEW_NAME$']//following-sibling::div[contains(@class,'flex-col')]/button[text()='Delete']
   delete_confirmation_modal: //button[text()='Yes, Delete']
-
-  
-  
