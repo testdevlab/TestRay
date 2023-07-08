@@ -3755,12 +3755,13 @@ TestReviewEditAddVendorInfo:
       Id: //nav[@class="tabs-nav"]/button[text()='Vendors']
   # variables to use for Add Vendor
       Vars:
-        NAME: Airport Rides 'R' Us
         ADDRESS: 1000 Street Name, Somewhere, GA 30024
         WEBSITE: www.airportridesrus.com
         CATEGORY: careCoordination
         PHONE: 4365565897
-  # Steps to review vendor Info
+    - Type: generate_unique_name
+      Name: "Airport Rides 'R' Us"
+      ResultVar: NAME
   # Steps to add a vendor
     # clicking on "Add Vendor" button
     - Type: click
@@ -3785,59 +3786,92 @@ TestReviewEditAddVendorInfo:
     # selecting a Category
     - Type:  wait_for
       Strategy: xpath
-      Id: //select[@id='category']/option[@value ='careCoordination']
+      Id: //select[@id='category']/option[@value ='$AND_CLI_CATEGORY$']
     - Type: click
       Strategy: xpath
-      Id: //select[@id='category']/option[@value ='careCoordination']
+      Id: //select[@id='category']/option[@value ='$AND_CLI_CATEGORY$']
     # filling input form
     - Type: send_keys
       Strategy: id
       Id: name
-      Value: Airport Rides 'R' Us
+      Value: $AND_CLI_NAME$
     - Type: send_keys
       Strategy: id
       Id: address
-      Value: 1000 Street Name, Somewhere, GA 30024
+      Value: $AND_CLI_ADDRESS$
     - Type: send_keys
       Strategy: id
       Id: phone
-      Value: 4365565897
+      Value: $AND_CLI_PHONE$
     - Type: send_keys
       Strategy: id
       Id: website
-      Value: www.airportridesrus.com
+      Value: $AND_CLI_WEBSITE$
   # clicking on "save and close" button
     - Type: click
       Strategy: xpath
       Id: //button[text()='Save and Close']
+  # Validate tostify message and wait until toastify is not visible
+      Vars:
+        TOASTIFY_MESSAGE_SHOWN: Vendor created
+    - Type: case
+      Value: CarePartnerTostifyValidation
   # Stesp to edit a vendor
     - Type: click
       Strategy: xpath
-      Id: //div[@class="flex-col flex-col-9"]//div[contains(@class, "vendor")]//div[text()="Airport Rides 'R' Us"]//following-sibling::div[contains(@class,"flex-col")]/button[text()="Edit"]
+      Id: //div[@class="flex-col flex-col-9"]//div[contains(@class, "vendor")]//div[text()="$AND_CLI_NAME$"]//following-sibling::div[contains(@class,"flex-col")]/button[text()="Edit"]
   # change for a new vendor name
+    - Type: clear_field_by_backspace
+      Strategy: id 
+      Id: name
+    # create a new vendor name
+    - Type: generate_unique_name
+      Name: "New airport 'L' Us"
+      ResultVar: NEW_NAME
+     # fill input name vendor
     - Type: send_keys
       Strategy: id
       Id: name
-      value: new name
+      Value: $AND_CLI_NEW_NAME$
   # click "Save and close" button
     - Type: click
       Strategy: xpath
       Id: //button[text()="Save and Close"]
+  # Validate tostify message
+      Vars:
+        TOASTIFY_MESSAGE_SHOWN: Vendor saved
+    - Type: case
+      Value: CarePartnerTostifyValidation
   # validate if the new change is applied
     - Type: get_text
       Strategy: xpath
-      Id : //div[@class="flex-col flex-col-9"]//div[contains(@class, "vendor")]//div[text()="Airport Rides 'R' Us"]
+      Id : //div[@class="flex-col flex-col-9"]//div[contains(@class, "vendor")]//div[text()="$AND_CLI_NEW_NAME$"]
       Greps:
-        - var: EDITED_CATEGORY
+        - var: EDITED_CATEGORY_NAME
           match: "(.*)"
     - Type: assert
       Role: desktopChrome
       Asserts:
         - Type: eq
-          Var: EDITED_CATEGORY
-          Value: "new name"
+          Var: EDITED_CATEGORY_NAME
+          Value: $AND_CLI_NEW_NAME$
   # Delete category 
-    - Type: 
+    - Type: click
+      Strategy: xpath
+      Id: //div[@class="flex-col flex-col-9"]//div[contains(@class, "vendor")]//div[text()="$AND_CLI_NEW_NAME$"]//following-sibling::div[contains(@class,"flex-col")]/button[text()="Delete"]
+  # Confirm delete vendor
+    - Type: wait_for
+      Strategy: id
+      Id: dialogs
+    - Type: click
+      Strategy: xpath
+      Id: //button[text()="Yes, Delete"]
+    # Validate tostify message
+      Vars:
+        TOASTIFY_MESSAGE_SHOWN: Vendor deleted
+    - Type: case
+      Value: CarePartnerTostifyValidation
+  
       
   
 
