@@ -3728,31 +3728,21 @@ TestReviewEditAddVendorInfo:
   # looking for a senior profile and click on it
     - Type: click
       Strategy: xpath
-      Id: //a[text()='Participants']
-    - Type: click
-      Strategy: id 
-      Id: searchButton
-    - Type: send_keys
-      Strategy: id
-      Id: searchText
-      Value: $AND_CLI_senior_user1_name$
+      Id: $PAGE.care_platform.navigation_participant$
     - Type: click 
       Strategy: xpath
-      Id: //div[@id='containerElement']//div[contains(text(), "$AND_CLI_senior_user1_name$")]
+      Id: $PAGE.care_platform_home.first_call_of_queue$
   # Click on "records" button 
-    - Type: wait_for
-      Strategy: xpath
-      Id: //div[contains(@class, 'box has-scrollable-content')]
     - Type: click
       Strategy: xpath 
-      Id: //a/button[text()="Records"]
-  # wait for Demographic tabs and click on "VENDORS" tab 
-    - Type: wait_for
-      Strategy: xpath
-      Id: //div[contains(@class, 'box has-scrollable-content')]
+      Id: $PAGE.care_platform_participant_details.records_button$
+  # click on "Demographic" and "VENDORS" tabs
     - Type: click
       Strategy: xpath
-      Id: //nav[@class="tabs-nav"]/button[text()='Vendors']
+      Id: $PAGE.care_platform_participant_records.demographics_tab$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.demographics_vendor_subtab$
   # variables to use for Add Vendor
       Vars:
         ADDRESS: 1000 Street Name, Somewhere, GA 30024
@@ -3760,13 +3750,13 @@ TestReviewEditAddVendorInfo:
         CATEGORY: careCoordination
         PHONE: 4365565897
     - Type: generate_unique_name
-      Name: "Airport Rides 'R' Us"
+      Name: 'Airport Rides "R" Us'
       ResultVar: NAME
   # Steps to add a vendor
     # clicking on "Add Vendor" button
     - Type: click
       Strategy: xpath
-      Id: //button[text()='Add Vendor']
+      Id: $PAGE.care_platform_edit_participants_vendor.add_vendor_button$
     # waiting for modal
     - Type: wait_for
       Strategy: id
@@ -3774,11 +3764,11 @@ TestReviewEditAddVendorInfo:
     # closing "Add Vendor" modal
     - Type: click
       Strategy: xpath
-      Id: //div[@id="modals"]//button[text()="Cancel"]
+      Id: $PAGE.care_platform_edit_participants_vendor.cancel_vendor_modal_button$
     # open Add "Vendor" modal
     - Type: click
       Strategy: xpath
-      Id: //button[text()='Add Vendor']
+      Id: $PAGE.care_platform_edit_participants_vendor.add_vendor_button$
   # filling Vendor form 
     - Type: click
       Strategy: id
@@ -3786,10 +3776,10 @@ TestReviewEditAddVendorInfo:
     # selecting a Category
     - Type:  wait_for
       Strategy: xpath
-      Id: //select[@id='category']/option[@value ='$AND_CLI_CATEGORY$']
+      Id: $PAGE.care_platform_edit_participants_vendor.category_modal_input$
     - Type: click
       Strategy: xpath
-      Id: //select[@id='category']/option[@value ='$AND_CLI_CATEGORY$']
+      Id: $PAGE.care_platform_edit_participants_vendor.category_modal_input$
     # filling input form
     - Type: send_keys
       Strategy: id
@@ -3807,10 +3797,10 @@ TestReviewEditAddVendorInfo:
       Strategy: id
       Id: website
       Value: $AND_CLI_WEBSITE$
-  # clicking on "save and close" button
+  # click on "save and close" button
     - Type: click
       Strategy: xpath
-      Id: //button[text()='Save and Close']
+      Id: $PAGE.care_platform_edit_participants_vendor.save_close_modal_button$
   # Validate tostify message and wait until toastify is not visible
       Vars:
         TOASTIFY_MESSAGE_SHOWN: Vendor created
@@ -3819,14 +3809,14 @@ TestReviewEditAddVendorInfo:
   # Stesp to edit a vendor
     - Type: click
       Strategy: xpath
-      Id: //div[@class="flex-col flex-col-9"]//div[contains(@class, "vendor")]//div[text()="$AND_CLI_NAME$"]//following-sibling::div[contains(@class,"flex-col")]/button[text()="Edit"]
+      Id: $PAGE.care_platform_edit_participants_vendor.edit_created_vendor_button$
   # change for a new vendor name
     - Type: clear_field_by_backspace
       Strategy: id 
       Id: name
     # create a new vendor name
     - Type: generate_unique_name
-      Name: "New airport 'L' Us"
+      Name: 'New airport "L" Us'
       ResultVar: NEW_NAME
      # fill input name vendor
     - Type: send_keys
@@ -3836,7 +3826,7 @@ TestReviewEditAddVendorInfo:
   # click "Save and close" button
     - Type: click
       Strategy: xpath
-      Id: //button[text()="Save and Close"]
+      Id: $PAGE.care_platform_edit_participants_vendor.save_close_modal_button$
   # Validate tostify message
       Vars:
         TOASTIFY_MESSAGE_SHOWN: Vendor saved
@@ -3845,27 +3835,27 @@ TestReviewEditAddVendorInfo:
   # validate if the new change is applied
     - Type: get_text
       Strategy: xpath
-      Id : //div[@class="flex-col flex-col-9"]//div[contains(@class, "vendor")]//div[text()="$AND_CLI_NEW_NAME$"]
+      Id : $PAGE.care_platform_edit_participants_vendor.name_vendor_record$
       Greps:
-        - var: EDITED_CATEGORY_NAME
+        - var: EDITED_CATEGORY_VENDOR_NAME
           match: "(.*)"
     - Type: assert
       Role: desktopChrome
       Asserts:
         - Type: eq
-          Var: EDITED_CATEGORY_NAME
+          Var: EDITED_CATEGORY_VENDOR_NAME
           Value: $AND_CLI_NEW_NAME$
   # Delete category 
     - Type: click
       Strategy: xpath
-      Id: //div[@class="flex-col flex-col-9"]//div[contains(@class, "vendor")]//div[text()="$AND_CLI_NEW_NAME$"]//following-sibling::div[contains(@class,"flex-col")]/button[text()="Delete"]
+      Id: $PAGE.care_platform_edit_participants_vendor.delete_created_vendor_button$
   # Confirm delete vendor
     - Type: wait_for
       Strategy: id
       Id: dialogs
     - Type: click
       Strategy: xpath
-      Id: //button[text()="Yes, Delete"]
+      Id: $PAGE.care_platform_edit_participants_vendor.delete_confirmation_modal$
     # Validate tostify message
       Vars:
         TOASTIFY_MESSAGE_SHOWN: Vendor deleted
