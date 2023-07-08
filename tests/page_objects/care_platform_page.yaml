@@ -262,6 +262,17 @@ care_platform_edit_participant_hospitalization:
   emergency_room_tab: //nav/button[contains(text(),'Emergency room admissions')]
   emergency_room_subtitle: //h4[contains(text(),'Emergency Room Admissions')]
   emergency_room_add_admission_button: //div[@tab-title='Emergency room admissions']//button[contains(text(),'Add Emergency Room Admission')]
+  edit_button_based_on_emergency_room_admissions_facility: //p[contains(text(), '$AND_CLI_UNIQUE_FACILITY$')]/../following-sibling::div/button[text()='Edit']
+  delete_button_based_on_emergency_room_admissions_facility: //p[contains(text(), '$AND_CLI_UNIQUE_FACILITY$')]/../following-sibling::div/button[text()='Delete']
+  diagnosis_label_based_on_emergency_room_admissions_facility: //p[contains(text(), '$AND_CLI_UNIQUE_FACILITY$')]
+  add_or_edit_emergency_room_admission_modal_title: //div[@id='modals']//h4
+  add_or_edit_emergency_room_admission_date_input: //input[@id='date']
+  add_or_edit_emergency_room_admission_facility_input: //input[@id='facility']
+  add_or_edit_emergency_room_admission_diagnosis_input: //input[@id='diagnosis']
+  save_and_close_button: //button[@type='submit']
+  cancel_button: //button[text()='Cancel']
+  delete_emergency_room_admission_dialog_title: //div[@id='dialogs']//h4
+  yes_delete_button: //button[text()='Yes, Delete']
 
 care_platform_edit_participant_social_history:
   social_history_subtitle: //h4[contains(text(),'Social History')]
@@ -478,6 +489,9 @@ care_platform_notifications:
   allergy_created_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Allergy created']
   allergy_saved_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Allergy saved']
   allergy_deleted_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Allergy deleted']
+  emergency_room_admission_created_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Emergency room admission created']
+  emergency_room_admission_saved_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Emergency room admission saved']
+  emergency_room_admission_deleted_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Emergency room admission deleted']
   dismiss_notification_button: //div[@class='Toastify']//button[text()='Dismiss']
 
 care_platform_facility:
