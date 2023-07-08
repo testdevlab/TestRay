@@ -1715,3 +1715,25 @@ CarePartnerEditParticipantNavigation:
       Id: $PAGE.care_platform_participant_records.edit_info_button$
     - Type: sleep
       Time: 1
+
+CarePartnerTostifyValidation:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    - Type: get_text
+      Strategy: xpath
+      Id : //div[@class="Toastify"]//div[contains(@class, "flex-col")]
+      Greps:
+        - var: TOASTIFY_MESSAGE
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: eq
+          Var: TOASTIFY_MESSAGE
+          Value: $AND_CLI_TOASTIFY_MESSAGE_SHOWN$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: //div[@class="Toastify"]//div[contains(@class, "flex-col")]
