@@ -3772,7 +3772,7 @@ TestReviewEditAddVendorInfo:
       Id: modals
     # closing "Add Vendor" modal
     - Type: click
-      Strategy: id
+      Strategy: xpath
       Id: //div[@id="modals"]//button[text()="Cancel"]
     # open Add "Vendor" modal
     - Type: click
@@ -3822,7 +3822,7 @@ TestReviewEditAddVendorInfo:
   # click "Save and close" button
     - Type: click
       Strategy: xpath
-      Id: //button[text()="Save and close"]
+      Id: //button[text()="Save and Close"]
   # validate if the new change is applied
     - Type: get_text
       Strategy: xpath
