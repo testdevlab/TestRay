@@ -1716,7 +1716,7 @@ CarePartnerEditParticipantNavigation:
     - Type: sleep
       Time: 1
 
-CarePartnerTostifyValidation:
+CarePartnerToastifyValidation:
   Environment: Settings
   Roles:
     - Role: desktopChrome

@@ -4040,7 +4040,7 @@ TestReviewEditAddVendorInfo:
       Vars:
         TOASTIFY_MESSAGE_SHOWN: Vendor created
     - Type: case
-      Value: CarePartnerTostifyValidation
+      Value: CarePartnerToastifyValidation
   # Stesp to edit a vendor
     - Type: click
       Strategy: xpath
@@ -4066,7 +4066,7 @@ TestReviewEditAddVendorInfo:
       Vars:
         TOASTIFY_MESSAGE_SHOWN: Vendor saved
     - Type: case
-      Value: CarePartnerTostifyValidation
+      Value: CarePartnerToastifyValidation
   # validate if the new change is applied
     - Type: get_text
       Strategy: xpath
@@ -4095,4 +4095,4 @@ TestReviewEditAddVendorInfo:
       Vars:
         TOASTIFY_MESSAGE_SHOWN: Vendor deleted
     - Type: case
-      Value: CarePartnerTostifyValidation
+      Value: CarePartnerToastifyValidation
