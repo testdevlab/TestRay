@@ -3739,8 +3739,6 @@ TestReviewEditAddVendorInfo:
     - Type: click 
       Strategy: xpath
       Id: //div[@id='containerElement']//div[contains(text(), "$AND_CLI_senior_user1_name$")]
-      #//div[contains(text(), $AND_CLI_senior_user1_name$)] 
-      
   # Click on "records" button 
     - Type: wait_for
       Strategy: xpath
@@ -3756,15 +3754,15 @@ TestReviewEditAddVendorInfo:
       Strategy: xpath
       Id: //nav[@class="tabs-nav"]/button[text()='Vendors']
   # variables to use for Add Vendor
-      # Vars:
-      #   NAME: Airport Rides 'R' Us
-      #   ADDRESS: 1000 Street Name, Somewhere, GA 30024
-      #   WEBSITE: www.airportridesrus.com
-      #   CATEGORY: careCoordination
-      #   PHONE: 4365565897
+      Vars:
+        NAME: Airport Rides 'R' Us
+        ADDRESS: 1000 Street Name, Somewhere, GA 30024
+        WEBSITE: www.airportridesrus.com
+        CATEGORY: careCoordination
+        PHONE: 4365565897
   # Steps to review vendor Info
   # Steps to add a vendor
-    # clicking on Add "Vendor" button
+    # clicking on "Add Vendor" button
     - Type: click
       Strategy: xpath
       Id: //button[text()='Add Vendor']
@@ -3772,8 +3770,14 @@ TestReviewEditAddVendorInfo:
     - Type: wait_for
       Strategy: id
       Id: modals
-    - Type: sleep
-      Time: 1
+    # closing "Add Vendor" modal
+    - Type: click
+      Strategy: id
+      Id: //div[@id="modals"]//button[text()="Cancel"]
+    # open Add "Vendor" modal
+    - Type: click
+      Strategy: xpath
+      Id: //button[text()='Add Vendor']
   # filling Vendor form 
     - Type: click
       Strategy: id
@@ -3806,12 +3810,41 @@ TestReviewEditAddVendorInfo:
     - Type: click
       Strategy: xpath
       Id: //button[text()='Save and Close']
+  # Stesp to edit a vendor
+    - Type: click
+      Strategy: xpath
+      Id: //div[@class="flex-col flex-col-9"]//div[contains(@class, "vendor")]//div[text()="Airport Rides 'R' Us"]//following-sibling::div[contains(@class,"flex-col")]/button[text()="Edit"]
+  # change for a new vendor name
+    - Type: send_keys
+      Strategy: id
+      Id: name
+      value: new name
+  # click "Save and close" button
+    - Type: click
+      Strategy: xpath
+      Id: //button[text()="Save and close"]
+  # validate if the new change is applied
+    - Type: get_text
+      Strategy: xpath
+      Id : //div[@class="flex-col flex-col-9"]//div[contains(@class, "vendor")]//div[text()="Airport Rides 'R' Us"]
+      Greps:
+        - var: EDITED_CATEGORY
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: eq
+          Var: EDITED_CATEGORY
+          Value: "new name"
+  # Delete category 
+    - Type: 
+      
+  
 
     
 
 
 
-  # Stesp to remove a vendor
 
 
    
