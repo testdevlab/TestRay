@@ -3995,7 +3995,7 @@ TestReviewEditAddVendorInfo:
     # waiting for modal
     - Type: wait_for
       Strategy: id
-      Id: modals
+      Id: $PAGE.care_platform_edit_participants_vendor.vendor_modal$
     # closing "Add Vendor" modal
     - Type: click
       Strategy: xpath
@@ -4007,7 +4007,7 @@ TestReviewEditAddVendorInfo:
   # filling Vendor form 
     - Type: click
       Strategy: id
-      Id: category
+      Id: $PAGE.care_platform_edit_participants_vendor.select_category_modal_input$
     # selecting a Category
     - Type:  wait_for
       Strategy: xpath
@@ -4018,19 +4018,19 @@ TestReviewEditAddVendorInfo:
     # filling input form
     - Type: send_keys
       Strategy: id
-      Id: name
+      Id: $PAGE.care_platform_edit_participants_vendor.field_name_modal_input$
       Value: $AND_CLI_NAME$
     - Type: send_keys
       Strategy: id
-      Id: address
+      Id: $PAGE.care_platform_edit_participants_vendor.field_address_modal_input$
       Value: $AND_CLI_ADDRESS$
     - Type: send_keys
       Strategy: id
-      Id: phone
+      Id: $PAGE.care_platform_edit_participants_vendor.field_phone_modal_input$
       Value: $AND_CLI_PHONE$
     - Type: send_keys
       Strategy: id
-      Id: website
+      Id: $PAGE.care_platform_edit_participants_vendor.field_website_modal_input$
       Value: $AND_CLI_WEBSITE$
   # click on "save and close" button
     - Type: click
@@ -4048,7 +4048,7 @@ TestReviewEditAddVendorInfo:
   # change for a new vendor name
     - Type: clear_field_by_backspace
       Strategy: id 
-      Id: name
+      Id: $PAGE.care_platform_edit_participants_vendor.field_name_modal_input$
     # create a new vendor name
     - Type: generate_unique_name
       Name: 'New airport "L" Us'
@@ -4056,7 +4056,7 @@ TestReviewEditAddVendorInfo:
      # fill input name vendor
     - Type: send_keys
       Strategy: id
-      Id: name
+      Id: $PAGE.care_platform_edit_participants_vendor.field_name_modal_input$
       Value: $AND_CLI_NEW_NAME$
   # click "Save and close" button
     - Type: click

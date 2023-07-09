@@ -524,3 +524,9 @@ care_platform_edit_participants_vendor:
   name_vendor_record: //div[@class='flex-col flex-col-9']//div[contains(@class, 'vendor')]//div[text()='$AND_CLI_NEW_NAME$']
   delete_created_vendor_button: //div[@class='flex-col flex-col-9']//div[contains(@class, 'vendor')]//div[text()='$AND_CLI_NEW_NAME$']//following-sibling::div[contains(@class,'flex-col')]/button[text()='Delete']
   delete_confirmation_modal: //button[text()='Yes, Delete']
+  vendor_modal: modals
+  select_category_modal_input: category
+  field_name_modal_input: name 
+  field_address_modal_input: address
+  field_phone_modal_input: phone
+  field_website_modal_input: website
