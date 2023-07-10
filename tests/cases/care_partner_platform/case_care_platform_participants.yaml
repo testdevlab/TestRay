@@ -3951,7 +3951,7 @@ TestCarePartnerParticipantInfoEditOrAddEmergencyRoomAdmissionsInfo:
       Id: $PAGE.care_platform_notifications.emergency_room_admission_deleted_notification$
 
 #CXTB-111 Participant Profile - Review, Edit or Add Vendor Info
-TestReviewEditAddVendorInfo:
+TestCarePartnerParticipantReviewEditOrAddVendorInfo:
   Environment: Settings
   Roles:
     - Role: desktopChrome
@@ -4004,6 +4004,19 @@ TestReviewEditAddVendorInfo:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.add_vendor_button$
+  # validate if "Add vendor" is opened
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.care_platform_edit_participants_vendor.modal_title_label$
+      Greps:
+        - var: MODAL_TITLE
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: eq
+          Var: MODAL_TITLE
+          Value: Add Vendor
   # filling Vendor form 
     - Type: click
       Strategy: id
@@ -4036,11 +4049,11 @@ TestReviewEditAddVendorInfo:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.save_close_modal_button$
-  # Validate tostify message and wait until toastify is not visible
+  # Validate tostify message and wait until toast is not visible
       Vars:
-        TOASTIFY_MESSAGE_SHOWN: Vendor created
+        TOAST_MESSAGE_SHOWN: Vendor created
     - Type: case
-      Value: CarePartnerToastifyValidation
+      Value: CarePartnerToastValidation
   # Stesp to edit a vendor
     - Type: click
       Strategy: xpath
@@ -4064,9 +4077,9 @@ TestReviewEditAddVendorInfo:
       Id: $PAGE.care_platform_edit_participants_vendor.save_close_modal_button$
   # Validate tostify message
       Vars:
-        TOASTIFY_MESSAGE_SHOWN: Vendor saved
+        TOAST_MESSAGE_SHOWN: Vendor saved
     - Type: case
-      Value: CarePartnerToastifyValidation
+      Value: CarePartnerToastValidation
   # validate if the new change is applied
     - Type: get_text
       Strategy: xpath
@@ -4093,6 +4106,10 @@ TestReviewEditAddVendorInfo:
       Id: $PAGE.care_platform_edit_participants_vendor.delete_confirmation_modal$
     # Validate tostify message
       Vars:
-        TOASTIFY_MESSAGE_SHOWN: Vendor deleted
+        TOAST_MESSAGE_SHOWN: Vendor deleted
     - Type: case
-      Value: CarePartnerToastifyValidation
+      Value: CarePartnerToastValidation
+  # wait to close modal
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.modal$
