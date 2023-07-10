@@ -44,7 +44,7 @@ providers_account_modal:
   maryland_option: //*[@id='MD']/ancestor::label
   indiana_option: //*[@id='IN']/ancestor::label
   west_virginia_option: //*[@id='WV']/ancestor::label
-  special_need_option: //*[@id='specialNeedsPlanCertified']
+  special_need_option: //*[@id='specialNeedsPlanCertified']/ancestor::label
   save_changes_button: //*[@id='modals']//button[contains(.,'Save Changes')]
   cancel_button: //*[@id='modals']//button[contains(.,'Cancel')]
 
