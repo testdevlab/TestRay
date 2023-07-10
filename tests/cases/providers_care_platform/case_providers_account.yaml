@@ -67,6 +67,7 @@ TestProviderUpdateAccountInfo:
 
 #CXTB-120 Access Credentials Page & Update Call Answering Abilities
 #CXTB-392 Access CCA Status Credentials Page & Update Call Answering Abilities
+#CXTB-454 Access ACO Status Credentials Page & Update Call Answering Abilities
 TestProviderUpdateCredentialsAndCallAnsweringAbilities:
   Environment: Settings
   Vars:
@@ -112,6 +113,15 @@ TestProviderUpdateCredentialsAndCallAnsweringAbilities:
       Strategy: xpath
       Option: uncheck
       Id: $PAGE.providers_account_modal.special_need_option$
+   # Select ACO Certified credentials
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.providers_account_modal.aco_certified_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: uncheck
+      Id: $PAGE.providers_account_modal.aco_certified_option$
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_account_modal.close_modal_button$

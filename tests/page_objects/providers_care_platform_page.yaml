@@ -45,6 +45,7 @@ providers_account_modal:
   indiana_option: //*[@id='IN']/ancestor::label
   west_virginia_option: //*[@id='WV']/ancestor::label
   special_need_option: //*[@id='specialNeedsPlanCertified']/ancestor::label
+  aco_certified_option: //*[@id='acoCertified']/ancestor::label
   save_changes_button: //*[@id='modals']//button[contains(.,'Save Changes')]
   cancel_button: //*[@id='modals']//button[contains(.,'Cancel')]
 
