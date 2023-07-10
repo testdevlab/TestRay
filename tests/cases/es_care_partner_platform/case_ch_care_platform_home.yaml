@@ -1,15 +1,15 @@
 #CXTB-427 Status Drop-down Options - Not on Active Call
-TestESCarePartnerStatusDropdownNotInCall:
+TestCHCarePartnerStatusDropdownNotInCall:
   Environment: Settings 
   Precases:
-    - ESCarePartnerCleanCallQueueAndHangedCalls
+    - CHCarePartnerCleanCallQueueAndHangedCalls
   Roles:
     - Role: desktopChrome
       App: "desktop"
   Actions:
   #Calling Login case
     - Type: case
-      Value: ESCarePartnerLogin
+      Value: CHCarePartnerLogin
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform.page_title$
@@ -99,17 +99,17 @@ TestESCarePartnerStatusDropdownNotInCall:
           Value: "has-status"
 
 #CXTB-447: Verify Access and Review Team Member's Availability
-TestESCarePartnerAccessAndReviewTeamMembersAvailability:
+TestCHCarePartnerAccessAndReviewTeamMembersAvailability:
   Environment: Settings
   Vars:
-    CARE_PARTNER_USER_FULLNAME: $AND_CLI_es_carepartner_user_name$ $AND_CLI_es_carepartner_user_lastname$
+    CARE_PARTNER_USER_FULLNAME: $AND_CLI_ch_carepartner_user_name$ $AND_CLI_ch_carepartner_user_lastname$
   Roles:
     - Role: desktopChrome
       App: "desktop"
   Actions:
   # Calling Login case.
     - Type: case
-      Value: ESCarePartnerLogin
+      Value: CHCarePartnerLogin
   # Click on the users dropdown.
     - Type: click
       Strategy: xpath

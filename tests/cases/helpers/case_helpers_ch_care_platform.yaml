@@ -1,0 +1,353 @@
+CHCarePartnerLogin:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    - Type: navigate
+      Role: desktopChrome
+      Value: $AND_CLI_easterseals_care_platform_url$
+    - Type: maximize
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_login.email_input$
+      Value: $AND_CLI_ch_carepartner_user$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_login.password_input$
+      Value: $AND_CLI_ch_carepartner_user_pwd$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_login.login_button$
+    - Type: sleep
+      Time: 2
+
+AnswerCallAsCHCarePartner:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Login to the Care Platform app with Care Partners account.
+    - Type: case
+      Value: CHCarePartnerLogin
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_home.call_based_on_ch_idd_participant_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_home.call_based_on_ch_idd_participant_name$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_home.answer_call$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_home.answer_call$
+
+CHCarePartnerCleanCallQueueAndHangedCalls:
+  Vars:
+    LOGOUT_OPTION: "Go Off Shift"
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Log in.
+    - Type: case
+      Value: CHCarePartnerLogin
+    # Clean Care Partner Call Queue and Hanged Calls.
+    - Type: care_partner_clean_call_queue_and_hanged_calls
+    # Log out.
+    - Type: case
+      Value: CarePlatformLogout
+
+CHCarePartnerCallSenior:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Log in.
+    - Type: case
+      Value: CHCarePartnerLogin
+    # Navigate to Participants.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+    # Click on the desired participant.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.chidd_senior_complete_name$
+    # Click on the Call Portal button.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+    # Click "Call Participant" button.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_participant_btn$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_participant_btn$
+    # Verify that the call has started.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_camera_button$
+
+CHCarePartnerSendMessageToSenior:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Log in.
+    - Type: case
+      Value: CHCarePartnerLogin
+    # Navigate to Participants.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+    # Click on the desired participant.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.chidd_senior_complete_name$
+    # Click on "Records".
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.records_button$
+    # Page refreshes to show the Participant record:
+    # Name and DOB at top of left panel.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_name$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_dob$
+    # Verify that there is a message field.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.message_input$
+    # Send a Message to the Participant (Senior).
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.message_input$
+      Value: $AND_CLI_MESSAGE_TO_PARTICIPANT$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.message_submit_button$
+      Property: disabled
+      Value: "false"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.message_submit_button$
+    # Log out.
+    - Type: case
+      Value: CarePlatformLogout
+
+CHCarePartnerSetScheduledCallForSeniors:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    # Login to the Care Platform app with Care Partners account
+    - Type: case
+      Value: CHCarePartnerLogin   
+    # Navigate to Participants
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_participant$
+    # Open the Call Portal
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.chidd_senior_complete_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.create_event_btn$    
+    # Create the event
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.create_event_btn$    
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.category_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.teleheath_appointment_option$
+    - Type: generate_unique_name
+      Name: "Automation Event"
+      ResultVar: UNIQUE_EVENT_NAME
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.subject_input$
+      Value: $AND_CLI_UNIQUE_EVENT_NAME$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.date_container$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.today_date_date_picker$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.start_time_picker$
+      Value: 1000p
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.end_time_picker$
+      Value: 1100p
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.next_btn$
+    # Filling the Situation fields
+    # Urgent patient matter
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.urgent_patient_matter_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.urgent_patient_matter_yes_option$
+    # Reason for request
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.reason_for_request_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.first_reason_for_request_available_option$
+    # When did symptoms start      
+    - Type: click
+      Strategy: class
+      Id: $PAGE.care_platform_call_portal.symptoms_start_input_container$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.today_date_date_picker$
+    # Click in the submit button
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.submit_create_event_btn$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.event_created_notification$
+    # Get timestamp where event was sent to Senior.
+    - Type: get_local_timestamp
+      Format: "%c"
+      Var: EVENT_SENT_TIMESTAMP
+    # Navigate back to home 
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_home$
+
+# Creates an schedule to start in X amount of minutes.
+CHSetScheduledCallForSeniorsToStartInXMinutes:
+  Environment: Settings
+  Vars:
+    LOGOUT_OPTION: "Go Off Shift"
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:   
+    # Login to the Care Platform app with Care Partners account
+    - Type: case
+      Value: CHCarePartnerLogin
+      # Navigate to Participants
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_participant$
+      # Open the Call Portal
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.chidd_senior_complete_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.create_event_btn$    
+      # Create the event
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.create_event_btn$    
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.category_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.teleheath_appointment_option$
+    #Generate unique name for the event.
+    - Type: generate_unique_name
+      Name: "Automation Sched Event"
+      ResultVar: UNIQUE_EVENT_NAME
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.subject_input$
+      Value: $AND_CLI_UNIQUE_EVENT_NAME$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.date_container$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.today_date_date_picker$
+    #Set a time in the future for the event to start in 7 minutes.
+    - Type: get_timestamp_plus_minutes
+      Minutes: $AND_CLI_SCHED_TIME_START$
+      Format: "%I%M%p"
+      Var: FUTURE_START_XMINUTES
+    - Type: get_timestamp_plus_minutes
+      Minutes: 7
+      Format: "%-I:%M%P"
+      Var: FUTURE_START_XMINUTES_FOR_COMPARISON
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.start_time_picker$
+      Value: $AND_CLI_FUTURE_START_XMINUTES$
+    # Set end time to end event in 30 mins.
+    - Type: get_timestamp_plus_minutes
+      Minutes: 30
+      Format: "%I%M%p"
+      Var: FUTURE_START_30MINUTES
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.end_time_picker$
+      Value: $AND_CLI_FUTURE_START_30MINUTES$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.next_btn$
+      # Filling the Situation fields
+      # Urgent patient matter
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.urgent_patient_matter_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.urgent_patient_matter_yes_option$
+      # Reason for request
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_call_portal.reason_for_request_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.first_reason_for_request_available_option$
+      # When did symptoms start      
+    - Type: click
+      Strategy: class
+      Id: $PAGE.care_platform_call_portal.symptoms_start_input_container$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.today_date_date_picker$
+      # Click in the submit button
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.submit_create_event_btn$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.event_created_notification$
+      # Navigate back to home 
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_home$
+    - Type: case
+      Value: CarePlatformLogout

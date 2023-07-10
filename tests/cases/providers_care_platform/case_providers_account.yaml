@@ -8,7 +8,7 @@ TestProvidersUpdatePassword:
     - Role: desktopChrome
       App: "desktop"
   Actions:
-    # Log in to Care Platform as a Provider.
+  # Log in to Care Platform as a Provider.
     - Type: case
       Value: ProvidersCarePlatformLogin
     - Type: set_env_var
@@ -30,23 +30,23 @@ TestProviderLogOutStayOnShift:
     - Role: desktopChrome
       App: "desktop"
   Actions:
-    # Calling Login case.
+  # Calling Login case.
     - Type: case
       Value: ProvidersCarePlatformLogin
-    # Calling Logout case.
+  # Calling Logout case.
     - Type: case
       Value: CarePlatformLogout
-    # NOTE: Step 4 was skipped because it involved verifying text messages,
-    # This step needed to call from SNF and then validate that care partner did receive text notification.
-    # Continued on Step 5.
-    # Log in with the second user.
+  # NOTE: Step 4 was skipped because it involved verifying text messages,
+  # This step needed to call from SNF and then validate that care partner did receive text notification.
+  # Continued on Step 5.
+  # Log in with the second user.
     - Type: case
       Value: ProviderLoginSecondaryUser
-    # Click on the users dropdown.
+  # Click on the users dropdown.
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_header.headset_dropdown_button$
-    # Verify that the first user has stayed on shift.
+  # Verify that the first user has stayed on shift.
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_header.onshift_carepartner1_element$
@@ -58,14 +58,16 @@ TestProviderUpdateAccountInfo:
     - Role: desktopChrome
       App: "desktop"
   Actions:
-    # Log in with the second user.
+  # Log in with the second user.
     - Type: case
       Value: ProviderLoginSecondaryUser
-    # Call case to update info
+  # Call case to update info
     - Type: case
       Value: CarePlatformUpdateInfo
 
 #CXTB-120 Access Credentials Page & Update Call Answering Abilities
+#CXTB-392 Access CCA Status Credentials Page & Update Call Answering Abilities
+#CXTB-454 Access ACO Status Credentials Page & Update Call Answering Abilities
 TestProviderUpdateCredentialsAndCallAnsweringAbilities:
   Environment: Settings
   Vars:
@@ -87,7 +89,7 @@ TestProviderUpdateCredentialsAndCallAnsweringAbilities:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_account_modal.modal_title$
-  # Select credentials
+  # Select state credentials 
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_account_modal.credentials_navigation_tab$
@@ -102,12 +104,30 @@ TestProviderUpdateCredentialsAndCallAnsweringAbilities:
       Strategy: xpath
       Option: check
       Id: $PAGE.providers_account_modal.indiana_option$
+  # Select special needs credentials 
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.providers_account_modal.special_need_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: uncheck
+      Id: $PAGE.providers_account_modal.special_need_option$
+   # Select ACO Certified credentials
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: check
+      Id: $PAGE.providers_account_modal.aco_certified_option$
+    - Type: set_checkbox_status
+      Strategy: xpath
+      Option: uncheck
+      Id: $PAGE.providers_account_modal.aco_certified_option$
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_account_modal.close_modal_button$
 
-#CXTB-208 Providers - My Account - Credentials
-TestProviderUpdateCredentials:
+#CXTB-208 Access Credentials Page & Update Call Answering Abilities for Employee Request.
+TestProviderUpdateCredentialsAndCallAnsweringAbilitiesEHPRequest:
   Environment: Settings
   Vars:
     STATE: IN
@@ -115,10 +135,10 @@ TestProviderUpdateCredentials:
     - Role: desktopChrome
       App: "desktop"
   Actions:
-    # Log in with the second user.
+  # Log in with the second user.
     - Type: case
       Value: ProvidersCarePlatformLogin
-    #Going to My Account
+  # Going to My Account
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_header.user_dropdown_button$
@@ -128,7 +148,7 @@ TestProviderUpdateCredentials:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.modal_title$
-    #Select credentials
+  # Select credentials
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_account_modal.credentials_navigation_tab$
@@ -145,21 +165,21 @@ TestProviderUpdateCredentials:
     - Type: wait_not_visible
       Strategy: xpath
       Id: $PAGE.providers_account_modal.credentials_content$
-    #Opening new tab for the Employee's part of the process
+  # Opening new tab for the Employee's part of the process
     - Type: new_tab
     - Type: switch_window
       Value: 1
-    #Calling Employee Login case
+  # Calling Employee Login case
     - Type: case
       Value: EmployeeHealthPortalLogIn
-    #Employee Home Page
+  # Employee Home Page
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.employee_health_home_page.call_now_button$
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_home_page.call_now_button$
-    #Telehealth on demand modal
+  # Telehealth on demand modal
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_title$
@@ -176,7 +196,7 @@ TestProviderUpdateCredentials:
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_call_provider_button$
-    # Go back to providers
+  # Go back to providers
     - Type: switch_window
       Value: 0
     - Type: sleep
@@ -184,7 +204,7 @@ TestProviderUpdateCredentials:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_home_page.on_demand_calls$
-    #Check that the on demand call is from the state selected and the answer call button is disable to take by the provider
+  # Check that the on demand call is from the state selected and the answer call button is disable to take by the provider
     - Type: get_text
       Strategy: xpath
       Id: $PAGE.providers_home_page.on_demand_call_state$
@@ -209,7 +229,7 @@ TestProviderUpdateCredentials:
       Id: $PAGE.providers_call_handling_page.assign_to_me_button$
       Property: disabled
       Value: "true"
-    #Going to My Account
+  # Going to My Account
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_header.user_dropdown_button$
@@ -219,7 +239,7 @@ TestProviderUpdateCredentials:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_myaccount_info.modal_title$
-    #Select credentials to answer call
+  # Select credentials to answer call
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_account_modal.credentials_navigation_tab$
@@ -236,18 +256,18 @@ TestProviderUpdateCredentials:
     - Type: wait_not_visible
       Strategy: xpath
       Id: $PAGE.providers_account_modal.credentials_content$
-    #buttons should be changed to enabled
+  # buttons should be changed to enabled
     - Type: wait_not_visible
       Strategy: xpath
       Id: $PAGE.providers_home_page.toast_credentials_updated$
-    #shuffle between tabs for updating
+  # shuffle between tabs for updating
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_home_page.call_history_navigation$
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.providers_home_page.call_history_title_tab$
-    #Navigate again to home
+  # Navigate again to home
     - Type: click
       Strategy: xpath
       Role: desktopChrome
@@ -256,7 +276,7 @@ TestProviderUpdateCredentials:
       Strategy: xpath
       Role: desktopChrome
       Id: $PAGE.providers_home_page.home_title$
-    #Check button status again
+  # Check button status again
     - Type: click
       Strategy: xpath
       Id: $PAGE.providers_home_page.on_demand_by_state$
@@ -283,10 +303,10 @@ TestProviderLogOutPortalGoOffShift:
     - Role: desktopChrome
       App: "desktop"
   Actions:
-    # Calling Login case.
+  # Calling Login case.
     - Type: case
       Value: ProvidersCarePlatformLogin
-    # Calling Logout case.
+  # Calling Logout case.
     - Type: case
       Value: CarePlatformLogout
     - Type: set_env_var
@@ -295,16 +315,16 @@ TestProviderLogOutPortalGoOffShift:
     - Type: set_env_var
       Value: $AND_CLI_provider_user1_pwd$
       Var: provider_user1_pwd
-    # Step 7 skipped, needed to call from SNF and then validate that provider did receive text notification.
-    # Continued on Step 8.
-    # Log in with the second user.
+  # Step 7 skipped, needed to call from SNF and then validate that provider did receive text notification.
+  # Continued on Step 8.
+  # Log in with the second user.
     - Type: case
       Value: ProviderLoginSecondaryUser
-    # Click on the users dropdown.
+  # Click on the users dropdown.
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_header.headset_dropdown_button$
-    # Verify that the first user has gone off shift.
+  # Verify that the first user has gone off shift.
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_header.offline_carepartner1_element$
@@ -324,6 +344,6 @@ TestProviderLogOutPortalGoOffShift:
         - Type: n_contain
           Var: CARE_PARTNER_ELEMENT
           Value: "Idle"
-    # Log out of the second user too.
+  # Log out of the second user too.
     - Type: case
       Value: CarePlatformLogout
