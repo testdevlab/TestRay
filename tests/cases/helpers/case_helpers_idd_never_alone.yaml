@@ -28,6 +28,36 @@ LoginESIDDNeverAloneHelper:
       Strategy: class_chain
       Id: $PAGE.idd_never_alone_app_home.call_now_button$
 
+LoginCHIDDNeverAloneHelper:
+  Environment: Settings
+  Roles:
+    - Role: localiOS
+      App: NeverAlone      
+  Actions:
+    # Open the IDD Never Alone app and click on Provision Device button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_login.provision_device_btn$
+    # Fill in the email and password fields with credentials.
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_login.email_input$
+      Value: $AND_CLI_idd_ch_never_alone_user2$
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_login.password_input$
+      Value: $AND_CLI_idd_ch_never_alone_user2_pwd$
+    - Type: hide_keyboard
+      Role: localiOS
+    # Click on the Log In button.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.seniors_app_login.login_btn$
+    # Verify that the user has successfully logged in.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.idd_never_alone_app_home.call_now_button$
+
 # IDD ES Participant Helper to clean prompts on Never Alone.
 IDDESParticipantCleanPrompts:
   Environment: Settings
