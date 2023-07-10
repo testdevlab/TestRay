@@ -1716,24 +1716,24 @@ CarePartnerEditParticipantNavigation:
     - Type: sleep
       Time: 1
 
-CarePartnerToastifyValidation:
+CarePartnerToastValidation:
   Environment: Settings
   Roles:
     - Role: desktopChrome
       App: desktop
   Actions:
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.add_vendor_notifications$
     - Type: get_text
       Strategy: xpath
-      Id : $PAGE.care_platform.toastify_first_element_text$
+      Id : $PAGE.care_platform_notifications.add_vendor_notifications$
       Greps:
-        - var: TOASTIFY_MESSAGE
+        - var: TOAST_MESSAGE
           match: "(.*)"
     - Type: assert
       Role: desktopChrome
       Asserts:
         - Type: eq
-          Var: TOASTIFY_MESSAGE
-          Value: $AND_CLI_TOASTIFY_MESSAGE_SHOWN$
-    - Type: wait_not_visible
-      Strategy: xpath
-      Id: $PAGE.care_platform.toastify_first_element_text$
+          Var: TOAST_MESSAGE
+          Value: $AND_CLI_TOAST_MESSAGE_SHOWN$
