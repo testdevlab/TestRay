@@ -28,6 +28,7 @@ care_platform_home:
   answer_call: //button[text()='Answer Call']
   call_based_on_participant_name: //div[contains(@class, 'ListRow_listRow')]//strong[text() = '$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']
   call_based_on_es_idd_participant_name: //div[contains(@class, 'ListRow_listRow')]//strong[text() = '$AND_CLI_idd_es_never_alone_user1_name$ $AND_CLI_idd_es_never_alone_user1_lastname$']
+  call_based_on_ch_idd_participant_name: //div[contains(@class, 'ListRow_listRow')]//strong[text() = '$AND_CLI_idd_ch_never_alone_user2_name$ $AND_CLI_idd_ch_never_alone_user2_lastname$']
   active_call_section: //div[contains(@class,'app-video app-video-fixed')] # doesn't matter if its expanded/collapsed
   call_queue_calls: //div[@id='containerElement']/div[starts-with(@class, 'ListRow_listRow')]
 
@@ -82,6 +83,7 @@ care_platform_participant:
   selected_darkened_letter_button: //button[contains(@class,'is-selected')]
   senior_complete_name: //div[starts-with(@class, 'ListRow_listRow')]//div[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
   esidd_senior_complete_name: //div[starts-with(@class, 'ListRow_listRow')]//div[contains(text(),'$AND_CLI_idd_es_never_alone_user1_name$')][strong[contains(text(),'$AND_CLI_idd_es_never_alone_user1_lastname$')]]
+  chidd_senior_complete_name: //div[starts-with(@class, 'ListRow_listRow')]//div[contains(text(),'$AND_CLI_idd_ch_never_alone_user2_name$')][strong[contains(text(),'$AND_CLI_idd_ch_never_alone_user2_lastname$')]]
   senior_1_row: //*[@id='containerElement']/div[@role='button'][1]
   first_senior_lastname: //*[@id='containerElement']/div[@role='button'][1]//strong
   call_portal_btn: //button[text()='Call Portal']
