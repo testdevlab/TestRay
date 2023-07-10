@@ -22,7 +22,7 @@ care_platform:
   navigation_participant: //nav//a[contains(text(),'Participants')]
   navigation_followup: //nav//a[contains(text(),'Follow-up')]
   navigation_home: //nav//a[contains(text(),'Home')]
-  toastify_first_element_text: //div[@class='Toastify']//div[contains(@class, 'flex-col')]
+
 
 care_platform_home:
   first_call_of_queue: //div[@id='containerElement']/div[starts-with(@class, 'ListRow_listRow')][1]
@@ -493,6 +493,7 @@ care_platform_notifications:
   emergency_room_admission_saved_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Emergency room admission saved']
   emergency_room_admission_deleted_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Emergency room admission deleted']
   dismiss_notification_button: //div[@class='Toastify']//button[text()='Dismiss']
+  add_vendor_notifications: //div[@class='Toastify']//div[contains(text(), '$AND_CLI_TOAST_MESSAGE_SHOWN$')]
 
 care_platform_facility:
   search_button: searchButton
@@ -530,3 +531,5 @@ care_platform_edit_participants_vendor:
   field_address_modal_input: address
   field_phone_modal_input: phone
   field_website_modal_input: website
+  modal_title_label: //div[@id='modals']//h4[text()='Add Vendor']
+  modal: //div[@id='modals']//div[contains(@class,'modal')]
