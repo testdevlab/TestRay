@@ -1737,3 +1737,6 @@ CarePartnerToastValidation:
         - Type: eq
           Var: TOAST_MESSAGE
           Value: $AND_CLI_TOAST_MESSAGE_SHOWN$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.add_vendor_notifications$
