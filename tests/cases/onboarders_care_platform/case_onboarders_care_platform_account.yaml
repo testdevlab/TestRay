@@ -508,3 +508,104 @@ TestOnboarderClickAndViewFacilitiesDevice:
       - Type: contain
         Var: STATUS_CLASS 
         Value: 'active'
+
+# CXTB-457: Negative Toast With No Message If Save Changes for Participant with Duplicated Email
+TestOnboarderNoNegativeToastIfParticipantIsSavedWithDuplicatedEmail:
+    Environment: Settings 
+    Roles:
+    - Role: desktopChrome
+      App: "desktop"
+    Actions:
+  # Log in Care Platform as an Onboarder.
+    - Type: case
+      Value: OnboarderCarePartnerLogin
+  # Navigate to the Participants Page.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+  # Click on the desired participant.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+  # Click on "Edit Info".
+    - Type: sleep
+      Time: 2
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_participant_details_pane.edit_info$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.onboarders_participant_details_pane.edit_info$
+  # User is redirected to the "Edit Info" page.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.email_address_input$
+  # Copy the email and navigate back to the Participants page.
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.email_address_input$
+      Attribute: value
+      ResultVar: COPIED_EMAIL_ADDRESS
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+  # Select another participant and click on the "Edit Info" button.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior2_complete_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior2_complete_name$
+    - Type: sleep
+      Time: 2
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_participant_details_pane.edit_info$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.onboarders_participant_details_pane.edit_info$
+  # User is redirected to the "Edit Info" page.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.email_address_input$
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.email_address_input$
+      Attribute: value
+      ResultVar: ORIGINAL_EMAIL_ADDRESS
+  # Enter the copied email address on the Demographics page of the Participant and then click on Save Changes.
+    - Type: clear_field_by_backspace
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.email_address_input$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.email_address_input$
+      Value: $AND_CLI_COPIED_EMAIL_ADDRESS$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.save_changes_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.save_changes_button$
+  # User must validate that gets a toast notification saying that changes were saved.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_notifications.participant_changes_saved_notification$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.onboarders_notifications.participant_changes_saved_notification$
+  # Changed the email back to the way it was.
+    - Type: clear_field_by_backspace
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.email_address_input$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.email_address_input$
+      Value: $AND_CLI_ORIGINAL_EMAIL_ADDRESS$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.save_changes_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.onboarders_edit_participant_records.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_notifications.participant_changes_saved_notification$

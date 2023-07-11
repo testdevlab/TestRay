@@ -82,6 +82,7 @@ care_platform_participant:
   first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
   selected_darkened_letter_button: //button[contains(@class,'is-selected')]
   senior_complete_name: //div[starts-with(@class, 'ListRow_listRow')]//div[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
+  senior2_complete_name: //div[starts-with(@class, 'ListRow_listRow')]//div[contains(text(),'$AND_CLI_senior_user2_name$')][strong[contains(text(),'$AND_CLI_senior_user2_lastname$')]]
   esidd_senior_complete_name: //div[starts-with(@class, 'ListRow_listRow')]//div[contains(text(),'$AND_CLI_idd_es_never_alone_user1_name$')][strong[contains(text(),'$AND_CLI_idd_es_never_alone_user1_lastname$')]]
   chidd_senior_complete_name: //div[starts-with(@class, 'ListRow_listRow')]//div[contains(text(),'$AND_CLI_idd_ch_never_alone_user2_name$')][strong[contains(text(),'$AND_CLI_idd_ch_never_alone_user2_lastname$')]]
   senior_1_row: //*[@id='containerElement']/div[@role='button'][1]
