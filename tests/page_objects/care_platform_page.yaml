@@ -22,7 +22,7 @@ care_platform:
   navigation_participant: //nav//a[contains(text(),'Participants')]
   navigation_followup: //nav//a[contains(text(),'Follow-up')]
   navigation_home: //nav//a[contains(text(),'Home')]
-  carepartner_toast_notificaiton: //div[@class='Toastify']//div[contains(text(), '$AND_CLI_TOAST_MESSAGE_SHOWN$')]
+  carepartner_toast_notification: //div[@class='Toastify']//div[contains(text(), '$AND_CLI_TOAST_MESSAGE_SHOWN$')]
 
 
 care_platform_home:
