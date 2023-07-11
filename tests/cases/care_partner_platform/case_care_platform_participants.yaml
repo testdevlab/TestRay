@@ -3988,23 +3988,23 @@ TestCarePartnerParticipantReviewEditOrAddVendorInfo:
       Name: 'Airport Rides "R" Us'
       ResultVar: NAME
   # Steps to add a vendor
-    # Clicking on "Add Vendor" button
+  # Clicking on "Add Vendor" button
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.add_vendor_button$
-    # Waiting for modal
+  # Waiting for modal
     - Type: wait_for
       Strategy: id
       Id: $PAGE.care_platform_edit_participants_vendor.vendor_modal$
-    # Closing "Add Vendor" modal
+  # Closing "Add Vendor" modal
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.cancel_vendor_modal_button$
-   # Wait to close modal
+  # Wait to close modal
     - Type: wait_not_visible
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.modal$
-    # Open Add "Vendor" modal
+  # Open Add "Vendor" modal
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.add_vendor_button$
@@ -4025,14 +4025,14 @@ TestCarePartnerParticipantReviewEditOrAddVendorInfo:
     - Type: click
       Strategy: id
       Id: $PAGE.care_platform_edit_participants_vendor.select_category_modal_input$
-    # Selecting a Category
+  # Selecting a Category
     - Type:  wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.category_modal_input$
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.category_modal_input$
-    # Filling input form
+  # Filling input form
     - Type: send_keys
       Strategy: id
       Id: $PAGE.care_platform_edit_participants_vendor.field_name_modal_input$
@@ -4053,12 +4053,12 @@ TestCarePartnerParticipantReviewEditOrAddVendorInfo:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.save_close_modal_button$
-  # Validate tostify message and wait until toast is not visible
+  # Validate toast message and wait until toast is not visible
       Vars:
         TOAST_MESSAGE_SHOWN: Vendor created
     - Type: case
       Value: CarePartnerToastValidation
-  # Stesp to edit a vendor
+  # Steps to edit a vendor
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.edit_created_vendor_button$
@@ -4066,11 +4066,11 @@ TestCarePartnerParticipantReviewEditOrAddVendorInfo:
     - Type: clear_field_by_backspace
       Strategy: id 
       Id: $PAGE.care_platform_edit_participants_vendor.field_name_modal_input$
-    # Create a new vendor name
+  # Create a new vendor name
     - Type: generate_unique_name
       Name: 'New airport "L" Us'
       ResultVar: NEW_NAME
-     # Fill input name vendor
+  # Fill input name vendor
     - Type: send_keys
       Strategy: id
       Id: $PAGE.care_platform_edit_participants_vendor.field_name_modal_input$
@@ -4079,7 +4079,7 @@ TestCarePartnerParticipantReviewEditOrAddVendorInfo:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.save_close_modal_button$
-  # Validate tostify message
+  # Validate toast message
       Vars:
         TOAST_MESSAGE_SHOWN: Vendor saved
     - Type: case
@@ -4108,7 +4108,7 @@ TestCarePartnerParticipantReviewEditOrAddVendorInfo:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.delete_confirmation_modal$
-    # Validate tostify message
+  # Validate toast message
       Vars:
         TOAST_MESSAGE_SHOWN: Vendor deleted
     - Type: case
