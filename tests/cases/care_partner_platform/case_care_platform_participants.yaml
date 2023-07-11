@@ -4000,6 +4000,10 @@ TestCarePartnerParticipantReviewEditOrAddVendorInfo:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.cancel_vendor_modal_button$
+   # Wait to close modal
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.modal$
     # Open Add "Vendor" modal
     - Type: click
       Strategy: xpath
