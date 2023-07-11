@@ -1724,10 +1724,10 @@ CarePartnerToastValidation:
   Actions:
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.care_platform_notifications.add_vendor_notifications$
+      Id: $PAGE.care_platform.carepartner_toast_notificaiton$
     - Type: get_text
       Strategy: xpath
-      Id : $PAGE.care_platform_notifications.add_vendor_notifications$
+      Id : $PAGE.care_platform.carepartner_toast_notificaiton$
       Greps:
         - var: TOAST_MESSAGE
           match: "(.*)"
@@ -1739,4 +1739,4 @@ CarePartnerToastValidation:
           Value: $AND_CLI_TOAST_MESSAGE_SHOWN$
     - Type: wait_not_visible
       Strategy: xpath
-      Id: $PAGE.care_platform_notifications.add_vendor_notifications$
+      Id: $PAGE.care_platform.carepartner_toast_notificaiton$

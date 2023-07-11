@@ -22,6 +22,7 @@ care_platform:
   navigation_participant: //nav//a[contains(text(),'Participants')]
   navigation_followup: //nav//a[contains(text(),'Follow-up')]
   navigation_home: //nav//a[contains(text(),'Home')]
+  carepartner_toast_notificaiton: //div[@class='Toastify']//div[contains(text(), '$AND_CLI_TOAST_MESSAGE_SHOWN$')]
 
 
 care_platform_home:
@@ -495,7 +496,6 @@ care_platform_notifications:
   emergency_room_admission_saved_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Emergency room admission saved']
   emergency_room_admission_deleted_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Emergency room admission deleted']
   dismiss_notification_button: //div[@class='Toastify']//button[text()='Dismiss']
-  add_vendor_notifications: //div[@class='Toastify']//div[contains(text(), '$AND_CLI_TOAST_MESSAGE_SHOWN$')]
 
 care_platform_facility:
   search_button: searchButton
