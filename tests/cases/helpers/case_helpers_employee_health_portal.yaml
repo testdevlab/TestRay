@@ -375,6 +375,9 @@ EmployeeHealthPortalAppointmentsRequest:
       Strategy: xpath
       Id: $PAGE.employee_health_telehealth_request_form.request_appointment_button$
   # filling form
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.select_location_drop_down$
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_telehealth_request_form.select_location_drop_down$
@@ -404,9 +407,18 @@ EmployeeHealthPortalAppointmentsRequest:
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_telehealth_request_form.calendar_hour_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.create_event_button$
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_telehealth_request_form.create_event_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.create_event_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.appointment_scheduled_notification$
 
 #Employee Health Portal - User starts call from the EHP portal (this workflow won't end the call).
 EmployeeHealthPortalCallNow:

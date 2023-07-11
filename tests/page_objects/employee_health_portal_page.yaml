@@ -60,6 +60,7 @@ employee_health_home_page:
   calendar_day_without_event1: //*[@class='calendar ml']//button[@class ='calendar-day'][1]
   calendar_day_without_event2: //*[@class='calendar ml']//button[@class ='calendar-day'][2]
   calendar_day_without_event3: //*[@class='calendar ml']//button[@class ='calendar-day'][3]
+  appointment_scheduled_notification: //div[@class='Toastify']//div[contains(text(),'Appointment scheduled')]
 
 employee_health_my_account_modal:
   modal_title: //*[@id='modals']//h4[text()='My Account']
@@ -136,4 +137,4 @@ employee_health_telehealth_request_form:
   appointment_list_description: //div/div[contains(text(), '$AND_CLI_PAIN_DESCRIPTION$')]
   calendar_month_view: //div[@id='modals']//div[@class = 'calendar-days fade-quick-enter-done']
   tab_section: //div[contains(@class, 'box has-scrollable-content')]
-  comments : comments
+  comments: comments
