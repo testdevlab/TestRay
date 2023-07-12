@@ -304,6 +304,9 @@ EmployeeHealthPortalUserCall:
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select_option$
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select_option$

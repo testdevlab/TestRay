@@ -1084,7 +1084,7 @@ CarePlatformUpdatePassword:
   #Verify the login with the new password was successful
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.care_platform_header.headset_icon$
+      Id: $PAGE.care_platform_header.user_dropdown_button$
   #Restore the password
   #Going to My Account
     - Type: click
