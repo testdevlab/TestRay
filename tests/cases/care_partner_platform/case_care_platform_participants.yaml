@@ -4234,7 +4234,7 @@ TestCarePartnerParticipantReviewEditOrAddVendorInfo:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.delete_confirmation_modal$
- # Wait to close dialog
+  # Wait to close dialog
     - Type: wait_not_visible
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.vendor_dialog$
