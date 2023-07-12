@@ -3949,3 +3949,297 @@ TestCarePartnerParticipantInfoEditOrAddEmergencyRoomAdmissionsInfo:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.emergency_room_admission_deleted_notification$
+
+#CXTB-111 Participant Profile - Review, Edit or Add Vendor Info
+TestCarePartnerParticipantReviewEditOrAddVendorInfo:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # looking for a senior profile and click on it
+    - Type: click
+      Strategy: xpath 
+      Id: $PAGE.care_platform_participant.search_button$
+    - Type: send_keys
+      Strategy: xpath 
+      Id: $PAGE.care_platform_participant.search_input$
+      Value: $AND_CLI_senior_user1_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_participant$
+    - Type: click 
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.first_participant_row$
+  # Click on "records" button 
+    - Type: click
+      Strategy: xpath 
+      Id: $PAGE.care_platform_participant_details.records_button$
+  # Click on "Demographic" and "VENDORS" tab
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.demographics_tab$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.demographics_vendor_subtab$
+  # Variables to use for Add Vendor
+      Vars:
+        ADDRESS: 1000 Street Name, Somewhere, GA 30024
+        WEBSITE: www.airportridesrus.com
+        CATEGORY: careCoordination
+        PHONE: 4365565897
+        MODAL_NAME: Add Vendor
+    - Type: generate_unique_name
+      Name: 'Airport Rides "R" Us'
+      ResultVar: NAME
+  # Steps to add a vendor
+  # Clicking on "Add Vendor" button
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.add_vendor_button$
+  # Waiting for modal
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participants_vendor.vendor_modal$
+  # Validate if "Add vendor" is opened
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.modal_title_label$
+      Greps:
+        - var: MODAL_TITLE
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: eq
+          Var: MODAL_TITLE
+          Value: $AND_CLI_MODAL_NAME$
+  # Filling Vendor form 
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participants_vendor.select_category_modal_input$
+  # Selecting a Category
+    - Type:  wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.category_modal_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.category_modal_input$
+  # Filling input form
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participants_vendor.field_name_modal_input$
+      Value: $AND_CLI_NAME$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participants_vendor.field_address_modal_input$
+      Value: $AND_CLI_ADDRESS$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participants_vendor.field_phone_modal_input$
+      Value: $AND_CLI_PHONE$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participants_vendor.field_website_modal_input$
+      Value: $AND_CLI_WEBSITE$
+  # Closing "Add Vendor" modal
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.cancel_vendor_modal_button$
+  # Wait to close modal
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.modal$
+  # Validate if a Vendor have not been added
+      Vars:
+        NEW_NAME: $AND_CLI_NAME$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.name_vendor_record$
+  # Open Add "Vendor" modal
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.add_vendor_button$
+  # Filling Vendor form 
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participants_vendor.select_category_modal_input$
+  # Selecting a Category
+    - Type:  wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.category_modal_input$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.category_modal_input$
+  # Filling input form
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participants_vendor.field_name_modal_input$
+      Value: $AND_CLI_NAME$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participants_vendor.field_address_modal_input$
+      Value: $AND_CLI_ADDRESS$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participants_vendor.field_phone_modal_input$
+      Value: $AND_CLI_PHONE$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participants_vendor.field_website_modal_input$
+      Value: $AND_CLI_WEBSITE$
+  # Click on "save and close" button
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.save_close_modal_button$
+  # Validate toast message and wait until toast is not visible
+      Vars:
+        TOAST_MESSAGE_SHOWN: Vendor created
+    - Type: case
+      Value: CarePartnerToastValidation
+  # Steps to edit a vendor
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.edit_created_vendor_button$
+  # Validate if "Edit vendor" is opened
+      Vars:
+        MODAL_NAME: Edit Vendor
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.care_platform_edit_participants_vendor.modal_title_label$
+      Greps:
+        - var: MODAL_TITLE
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: eq
+          Var: MODAL_TITLE
+          Value: $AND_CLI_MODAL_NAME$
+  # Remove current vendor name
+    - Type: clear_field_by_backspace
+      Strategy: id 
+      Id: $PAGE.care_platform_edit_participants_vendor.field_name_modal_input$
+  # Create a new vendor name
+    - Type: generate_unique_name
+      Name: 'New airport "L" Us'
+      ResultVar: NEW_NAME
+  # Fill input name vendor
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participants_vendor.field_name_modal_input$
+      Value: $AND_CLI_NEW_NAME$
+  # Closing "Edit Vendor" modal
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.cancel_vendor_modal_button$
+  # Validate if Vendor is edited
+      Vars:
+        NEW_NAME: $AND_CLI_NAME$
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.name_vendor_record$
+      Greps:
+        - var: CATEGORY_VENDOR_NAME
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: eq
+          Var: CATEGORY_VENDOR_NAME
+          Value: $AND_CLI_NAME$
+  # Opend "Edit Vendor" modal
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.edit_created_vendor_button$
+  # Delete current vendor name
+    - Type: clear_field_by_backspace
+      Strategy: id 
+      Id: $PAGE.care_platform_edit_participants_vendor.field_name_modal_input$
+  # Create a new vendor name
+    - Type: generate_unique_name
+      Name: 'New airport "L" Us'
+      ResultVar: NEW_NAME
+  # Fill input name vendor
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participants_vendor.field_name_modal_input$
+      Value: $AND_CLI_NEW_NAME$
+  # Click "Save and close" button
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.save_close_modal_button$
+  # Validate toast message
+      Vars:
+        TOAST_MESSAGE_SHOWN: Vendor saved
+    - Type: case
+      Value: CarePartnerToastValidation
+  # Validate if the new change is applied
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.care_platform_edit_participants_vendor.name_vendor_record$
+      Greps:
+        - var: CATEGORY_VENDOR_NAME
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: eq
+          Var: CATEGORY_VENDOR_NAME
+          Value: $AND_CLI_NEW_NAME$
+  # Delete category 
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.delete_created_vendor_button$
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participants_vendor.vendor_dialog$
+  # Validate if "Delete Vendor" is opened
+      Vars:
+        MODAL_NAME: Delete Vendor
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.dialog_title_label$
+      Greps:
+        - var: MODAL_TITLE
+          match: "(.*)"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: eq
+          Var: MODAL_TITLE
+          Value: $AND_CLI_MODAL_NAME$
+  # Closing "Delete Vendor" dialog
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.cancel_vendor_dialogs_button$
+  # Checking if vendor is not deleted
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.name_vendor_record$
+  # Open "Delete Vendor" dialog
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.delete_created_vendor_button$
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participants_vendor.vendor_dialog$
+  # Confirm delete vendor
+    - Type: wait_for
+      Strategy: id
+      Id: dialogs
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.delete_confirmation_modal$
+  # Wait to close dialog
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participants_vendor.vendor_dialog$
+  # Validate toast message
+      Vars:
+        TOAST_MESSAGE_SHOWN: Vendor deleted
+    - Type: case
+      Value: CarePartnerToastValidation
