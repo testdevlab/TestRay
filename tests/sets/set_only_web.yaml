@@ -1,0 +1,65 @@
+SetOnlyWebTests:
+  Cases:
+  # Care Partner Platform
+  - Case: TestCarePartnerHomePage
+  - Case: TestCarePartnerStatusDropdown_NotInCall
+  - Case: TestCarePartnerUpdateInfoAccount
+  - Case: TestCarePartnerAccountHelp
+  - Case: TestCarePartnerUpdatePassword
+  - Case: TestCarePartnerLogoutGoOffShift
+  - Case: TestCarePartnerLogoutStayOnShift
+  - Case: TestCarePartnerAccessAndReviewTeamMembersAvailability
+  - Case: TestCarePartnerForgotPassword
+  - Case: TestCarePartnerCreateFollowUpTicket
+  - Case: TestCarePartnerParticipantDirectoryFilter
+  - Case: TestCarePartnerParticipantCallHistory
+  - Case: TestCarePartnerParticipantRecordListing
+  - Case: TestCarePartnerTrackTimeAndEditFollowUpTicketsParticipantComponent
+  - Case: TestCarePartnerEditEMSSettingAndAddressParticipant
+  - Case: TestCarePartnerParticipantInfoEditOrAddContactsInfo
+  - Case: TestCarePartnerEditInfoForExistingParticipant
+  - Case: TestCarePartnerParticipantInfoEditOrAddMedicationInfo
+  - Case: TestCarePartnerParticipantInfoEditOrAddAllergiesInfo
+  - Case: TestCarePartnerParticipantInfoEditOrAddEmergencyRoomAdmissionsInfo
+  # Employee Health Portal
+  - Case: TestEmployeeSettingNotification
+  - Case: TestEmployeeInformationUpdateNumber
+  - Case: TestEmployeeUpdateAccountPassword
+  - Case: TestEmployeeHealthPortalAccountHelp
+  - Case: TestEmployeeHealthPortalUserCall
+  - Case: TestEmployeeHealthPortalDependentUserCall
+  - Case: TestEmployeeHealthPortalMinorUserCall
+  - Case: TestEmployeeHealthPortalCallAlreadyAnsweredNotificationWhenEmployeeLogsOut
+  - Case: TestSignUpNewDependent
+  - Case: TestForgotPasswordOnLoginPage
+  - Case: TestEmployeeHealthPortalRequestAnAppointmentForUser
+  - Case: TestEmployeeHealthPortalReviewUpcomingAppointment
+  # ES Care Partner
+  - Case: TestCHCarePartnerStatusDropdownNotInCall
+  - Case: TestCHCarePartnerAccessAndReviewTeamMembersAvailability
+  - Case: TestESCarePartnerStatusDropdownNotInCall
+  - Case: TestESCarePartnerAccessAndReviewTeamMembersAvailability
+  # On Boarders
+  - Case: TestOnboarderCarePartnerUpdatePassword
+  - Case: TestOnboarderManuallyLogOutOfThePortal
+  - Case: TestOnboardersAccessFacilitiesDirectoryFilter
+  - Case: TestOnboardersForgotPasswordLoginLink
+  - Case: TestOnboardersAccessMyAcountWindowAndReviewMyInfo
+  - Case: TestOnboarderAccessParticipantDirectoryandFilter
+  - Case: TestOnboarderClickandViewParticipantRecordfromListing
+  - Case: TestOnboarderClickAndViewFacilitiesDevice
+  - Case: TestOnboarderNoNegativeToastIfParticipantIsSavedWithDuplicatedEmail
+  # Providers Care Platform
+  - Case: TestProvidersUpdatePassword
+  - Case: TestProviderLogOutStayOnShift
+  - Case: TestProviderUpdateAccountInfo
+  - Case: TestProviderUpdateCredentialsAndCallAnsweringAbilities
+  - Case: TestProviderUpdateCredentialsAndCallAnsweringAbilitiesEHPRequest
+  - Case: TestProviderLogOutPortalGoOffShift
+  - Case: TestProviderAccessEmployeesDirectoryAndFilter
+  - Case: TestProviderAnswerCompleteSessionFromEHP
+  - Case: TestProviderCanClickAndViewFacilitiesDevice
+  - Case: TestProviderStatusNotOnActiveCall
+  - Case: TestProviderHelpMenuOption
+  - Case: TestProviderUseForgotPasswordLink
+  - Case: TestProviderAccessParticipantDirectoryandViewDeviceRecordfromListing

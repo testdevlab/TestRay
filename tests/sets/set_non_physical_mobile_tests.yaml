@@ -1,0 +1,59 @@
+SetNonPhysicalMobileTest:
+  Cases:
+  # Care Partner
+    - Case: TestCarePartnerCreateEventForParticipant
+    - Case: TestCarePartnerEditEventForParticipant
+    - Case: TestCarePartnerDeleteEventForParticipant
+    - Case: TestCarePartnerParticipantReview
+    - Case: TestCarePartnerAnswerAndComplete
+    - Case: TestCarePartnerAnswerCallFromQueueAndCompleteMedicalTransfer
+    - Case: TestCarePartnerBrowsingWhileOnCall
+    - Case: TestCarePartnerCallParticipantsDeviceCallComplete
+    - Case: TestCarePartnerCallParticipantsDeviceCallIgnored
+    - Case: TestCarePartnerCallParticipantsDeviceCallMissed
+  # Care Partner ES
+    - Case: TestCHCarePartnerBrowsingWhileOnCall
+    - Case: TestESCarePartnerBrowsingWhileOnCall
+  # Never Alone IDD Senior App
+    - Case: TestIDDESAnswerCallForCarePartnerCallingDeviceIgnoreCall
+    - Case: TestIDDESActiveAppointmentTimeWindowWhenNotJoinedPrior
+  # Provider Care Platform
+    - Case: TestProviderHomePageListingView
+  # Never Alone Senior App
+    - Case: TestSeniorAppSuspendedAccountStatus
+    - Case: TestSeniorAppActiveAccountStatusAndBehavior
+    - Case: TestSeniorAutoReturnToHomePageAfterInactivityPeriod
+    - Case: TestSeniorAppointmentsAppearAsExpectedHomePage
+    - Case: TestSeniorStartingSoonNotification
+    - Case: TestSeniorAlertAndStartingSoonVisuals
+    - Case: TestSeniorActiveAppointmentTimeWindowWhenNotJoinedPrior
+    - Case: TestSeniorEmergencyServicesButtonVisibilityEMSEnabledFlag
+    - Case: TestSeniorLoginNeverAlone
+    - Case: TestSeniorNotificationsPageNavigation
+    - Case: TestSeniorNotificationsPageOnSeniorApp
+    - Case: TestSeniorAppointmentAddedNotifications
+    - Case: TestSeniorCanceledAndMissedAppointments
+    - Case: TestSeniorAppIgnoreCarePartnerCall
+    - Case: TestSeniorAppIgnoreProviderCall
+    - Case: TestSeniorStartingSoonNotificationWaitUntilCallSurveyIsCompleted
+    - Case: TestSeniorVerifyMissedCallPromptAndCallBackButton
+    - Case: TestSeniorVerifyCallWillNotRedirectToHomePageAfter10MinutesWithoutAction
+    - Case: TestSeniorVerifyFullScheduleDisplay
+    - Case: TestSeniorSchedulesPageNavigation
+    - Case: TestSeniorAutomaticReturnAfterInactivty
+    - Case: TestSeniorNoPromptsForCancelledAppointments
+    - Case: TestSeniorFutureNonTelehealthEventWindowAccess
+    - Case: TestSeniorFutureAppointmentCancelOrRescheduleButton
+    - Case: TestSeniorNonMissedPastAppointmentWindow
+    - Case: TestSeniorTelehealthAppointmentMissedWindowAccess
+    - Case: TestSeniorVerifyMyDetailsSettingsPageElements
+    - Case: TestSeniorSettingsPageNavigation
+    - Case: TestSeniorWifiSettingsPage
+  # Never Alone SNF tests
+    - Case: TestSNFVerifyNotificationsPage
+    - Case: TestSNFMessagePromptFromProvider
+    - Case: TestSNFIgnoreCallFromProvider
+    - Case: TestSNFMissedCallFromProvider
+    - Case: TestSNFNewRequestFormBehavior
+    - Case: TestSNFRequestSuccessfulCallConnect
+    - Case: TestSNFCheckQueueandReviewDetails
