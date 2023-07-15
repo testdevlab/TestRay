@@ -3950,7 +3950,7 @@ TestCarePartnerParticipantInfoEditOrAddEmergencyRoomAdmissionsInfo:
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.emergency_room_admission_deleted_notification$
 
-#CXTB-111 Participant Profile - Review, Edit or Add Vendor Info
+# CXTB-111 Participant Profile - Review, Edit or Add Vendor Info
 TestCarePartnerParticipantReviewEditOrAddVendorInfo:
   Environment: Settings
   Roles:
@@ -3985,16 +3985,64 @@ TestCarePartnerParticipantReviewEditOrAddVendorInfo:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_participant_records.demographics_vendor_subtab$
-  # Variables to use for Add Vendor
+    - Type: case
+      Value: TestAddEditOrDeletVendorInfo
+
+# CXTB-450 Participant Profile - Review, Edit or Add Vendor Info
+TestCarePartnerParticipantReviewEditOrAddVendorInfothroughtEditInfo:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # looking for a senior profile and click on it
+    - Type: click
+      Strategy: xpath 
+      Id: $PAGE.care_platform_participant.search_button$
+    - Type: send_keys
+      Strategy: xpath 
+      Id: $PAGE.care_platform_participant.search_input$
+      Value: $AND_CLI_senior_user1_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_participant$
+    - Type: click 
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.first_participant_row$
+  # Click on "Edit Info" button 
+    - Type: click
+      Strategy: xpath 
+      Id: //button[text()='Edit Info']
+  # go to "Vendor" seccion and click on it.
+    - Type: scroll_to
+      Strategy: xpath
+      Id: //ul[@class='form-navigation']//li/button[text()='Vendors']
+    - Type: click
+      Strategy: xpath
+      Id: //ul[@class='form-navigation']//li/button[text()='Vendors']
+  # Add Edit Or Delete vendor Info
+    - Type: case
+      Value: TestAddEditOrDeletVendorInfo
+
+TestAddEditOrDeletVendorInfo:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Variables to use for Add Vendor
+    - Type: generate_unique_name
+      Name: 'Airport Rides "R" Us'
+      ResultVar: NAME
       Vars:
         ADDRESS: 1000 Street Name, Somewhere, GA 30024
         WEBSITE: www.airportridesrus.com
         CATEGORY: careCoordination
         PHONE: 4365565897
         MODAL_NAME: Add Vendor
-    - Type: generate_unique_name
-      Name: 'Airport Rides "R" Us'
-      ResultVar: NAME
   # Steps to add a vendor
   # Clicking on "Add Vendor" button
     - Type: click
@@ -4241,5 +4289,6 @@ TestCarePartnerParticipantReviewEditOrAddVendorInfo:
   # Validate toast message
       Vars:
         TOAST_MESSAGE_SHOWN: Vendor deleted
+  # Add Edit Or Delete vendor Info
     - Type: case
       Value: CarePartnerToastValidation
