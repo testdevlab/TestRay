@@ -2019,7 +2019,7 @@ end
 
 # returns the location of the element in a variable
 def return_element_location(action, main_case, main_case_id)
-  el = wait_for(action)
+  el = wait_for(action, main_case, main_case_id)
   return unless el
 
   el_location = el.location.to_s

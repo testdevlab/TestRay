@@ -217,6 +217,10 @@ TestSeniorPreDeliveryAccountStatusVisualsAndBehavior:
       Value: OnboarderCarePartnerLogin
     - Type: case
       Value: OnboarderSetsAccountStatus
+    - Type: case
+      Value: CarePlatformLogout
+    - Type: sleep
+      Time: 2
 
 # CXTB-436 Senior app - Verify “Suspended” Account Status Visuals
 TestSeniorAppSuspendedAccountStatus:

@@ -932,7 +932,9 @@ TestCarePartnerAnswerAndComplete:
 TestCarePartnerAnswerCallFromQueueAndCompleteMedicalTransfer:
   Environment: Settings
   Precases:
+    - LoginNeverAloneHelper
     - CarePartnerCleanCallQueueAndHangedCalls
+    - SeniorCleanPrompts
   Aftercases:
     - TerminateApp
   Roles:
@@ -943,9 +945,6 @@ TestCarePartnerAnswerCallFromQueueAndCompleteMedicalTransfer:
     - Role: desktopChrome1
       App: desktop
   Actions:
-  # Login as a senior.
-    - Type: case
-      Value: LoginNeverAloneHelper
   # Generate a medical call as a senior.
     - Type: case
       Value: CallCarePartner

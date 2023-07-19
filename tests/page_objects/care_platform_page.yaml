@@ -24,7 +24,6 @@ care_platform:
   navigation_home: //nav//a[contains(text(),'Home')]
   carepartner_toast_notification: //div[@class='Toastify']//div[contains(text(), '$AND_CLI_TOAST_MESSAGE_SHOWN$')]
 
-
 care_platform_home:
   first_call_of_queue: //div[@id='containerElement']/div[starts-with(@class, 'ListRow_listRow')][1]
   answer_call: //button[text()='Answer Call']

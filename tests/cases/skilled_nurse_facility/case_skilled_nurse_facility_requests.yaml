@@ -765,6 +765,63 @@ TestSNFVerifyInAppOfflineBehavior:
       - Value: 5
         Operation: visible
         Result: true
+    # Fill new required fields
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.notes_input$
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.notes_input$
+      Value: "Automation notes"
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.notes_label$
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.symptom_shortness_breath_chkbx$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.symptom_shortness_breath_chkbx$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.baseline_mental_dropdown$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.baseline_mental_option$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.contributing_dx_dropdown$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.contributing_dx_option$
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.blood_pressure_input$
+      Value: "120"
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.blood_pressure_hg_input$
+      Value: "80"
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.heart_rate_input$
+      Value: "83"
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.respiratory_input$
+      Value: "95"
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.temperature_input$
+      Value: "37"
+    - Type: send_keys
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.oxygen_input$
+      Value: "99"
+    - Type: click
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.oxygen_label$
     - Type: wait_for_attribute
       Strategy: class_chain
       Id: $PAGE.snf_new_request_form.submit_button$
@@ -804,9 +861,9 @@ TestSNFVerifyInAppOfflineBehavior:
     - Type: click
       Strategy: class_chain
       Id: $PAGE.snf_new_request_form.submit_button$
-    # - Type: command
-    #   Value:  networksetup -setairportpower airport off
-    #   Role: command1
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.snf_submit_options.yes_call_provider_button$
     - Type: toggle_wifi
       Role: localiOS
   # Verify that the "Yes, call Provider" button becomes disabled.

@@ -30,8 +30,8 @@ SetOnlyWebTests:
   - Case: TestEmployeeHealthPortalDependentUserCall
   - Case: TestEmployeeHealthPortalMinorUserCall
   - Case: TestEmployeeHealthPortalCallAlreadyAnsweredNotificationWhenEmployeeLogsOut
-  - Case: TestSignUpNewDependent
-  - Case: TestForgotPasswordOnLoginPage
+  - Case: TestEmployeeHealthPortalSignUpNewDependent
+  - Case: TestEmployeeHealthPortalForgotPasswordOnLoginPage
   - Case: TestEmployeeHealthPortalRequestAnAppointmentForUser
   - Case: TestEmployeeHealthPortalReviewUpcomingAppointment
   # ES Care Partner

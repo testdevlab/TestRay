@@ -1,4 +1,4 @@
-#CXTB-214: Validating Home elements
+#CXTB-187: Validating Home elements
 TestCarePartnerHomePage:
   Environment: Settings 
   Roles:

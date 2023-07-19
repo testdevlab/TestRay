@@ -600,7 +600,7 @@ TestSeniorStartingSoonNotification:
           Var: APPOINTMENT_HEADER_TEXT
           Value: Appointment Starting Soon
 
-# CXTB-83: Verify starting soon notification while in the notification window.
+# CXTB-49: Verify Alert & Starting Soon Visuals (5 Minutes Before Appointment Start Time).
 TestSeniorAlertAndStartingSoonVisuals:
   Environment: Settings
   Precases:

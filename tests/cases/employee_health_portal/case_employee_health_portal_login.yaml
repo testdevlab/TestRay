@@ -1,6 +1,6 @@
 #CXTB-216: Verify Sign Up Process for New Elegible DependentUsers
 #CXTB-215: Verify Sign Up Process for New Employee Users
-TestSignUpNewDependent:
+TestEmployeeHealthPortalSignUpNewDependent:
   Environment: Settings 
   Roles:
     - Role: desktopChrome
@@ -95,7 +95,7 @@ TestSignUpNewDependent:
 
 #CXTB-284 Forgot Password on Login Page
 #Test ended at step 6; step 7 and 8 are to check for a confirmation sent to the employee user 1
-TestForgotPasswordOnLoginPage:
+TestEmployeeHealthPortalForgotPasswordOnLoginPage:
   Environment: Settings 
   Roles:
     - Role: desktopChrome

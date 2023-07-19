@@ -65,6 +65,10 @@ SNFNewRequestHelper:
       Strategy: class_chain
       Role: localiOS
       Id: $PAGE.snf_new_request_form.patient_information_title$
+    - Type: wait_for
+      Strategy: class_chain
+      Role: localiOS
+      Id: $PAGE.snf_new_request_form.patient_name_select$
     - Type: click
       Strategy: class_chain
       Role: localiOS

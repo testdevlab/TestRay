@@ -36,7 +36,6 @@ SetNonPhysicalMobileTest:
     - Case: TestSeniorAppIgnoreCarePartnerCall
     - Case: TestSeniorAppIgnoreProviderCall
     - Case: TestSeniorStartingSoonNotificationWaitUntilCallSurveyIsCompleted
-    - Case: TestSeniorVerifyMissedCallPromptAndCallBackButton
     - Case: TestSeniorVerifyCallWillNotRedirectToHomePageAfter10MinutesWithoutAction
     - Case: TestSeniorVerifyFullScheduleDisplay
     - Case: TestSeniorSchedulesPageNavigation

@@ -381,6 +381,7 @@ TestSeniorNonMissedPastAppointmentWindow:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
+    - CarePartnerCleanCallQueueAndHangedCalls
   Aftercases:
     - TerminateApp
   Roles:

@@ -10,11 +10,11 @@ providers_home_page:
   missed_call: //*[@role='button'][contains(.,'Missed Call')][last()]
   time_dropdown: //div[div[contains(text(),'Time')]]//button
   time_all_option: //div[div[contains(text(),'Time')]]//button[contains(text(),'All')]
-  last_medical_transfer_row: (//div[contains(text(),'Medical Transfer')])[last()]
+  last_medical_transfer_row: (//div[text()='Medical Transfer'])[last()]
   participants_navigation: //header//nav//a[contains(text(),'Participants')]
   facilities_navigation: //header//nav//a[contains(text(),'Facilities')]
   employees_navigation: //header//nav//a[contains(text(),'Employees')]
-  call_based_on_participant_name: (//*[@id='containerElement']/div[contains(@class,'ListRow_listRow')]/div[4]/strong[text()='$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$'])[last()]
+  call_based_on_participant_name: //div[contains(@class, 'ListRow_listRow')]//strong[text() = '$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']/ancestor::div[@role='button' and not(contains(@class,'disabled'))]
   on_demand_based_on_participant_name: (//*[@id='containerElement']/div[contains(@class,'ListRow_listRow') and contains(.,'On Demand Call')]/div[4]/strong[text()='$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$'])[last()]
   follow_up_ticket_based_on_participant_name: //div[contains(@class,'ListRow_listRow')][contains(.,'Follow-up')]//strong[text()='$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$'][last()]
   close_ticket_button: //button[text()='Close Ticket']
@@ -147,7 +147,7 @@ providers_participants_page:
   clear_search_button: //button[contains(@class,'button-circle')]
   first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
   selected_darkened_letter_button: //button[contains(@class,'is-selected')]
-  senior_complete_name: //div[starts-with(@class, 'SearchableListTemplate_record')]//div[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
+  senior_complete_name: //*[@id='containerElement']//div[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
   senior_1_row: //*[@id='containerElement']/div[@role='button'][1]
   first_senior_lastname: //*[@id='containerElement']/div[@role='button'][1]//strong
   call_portal_btn: //button[text()='Call Portal']

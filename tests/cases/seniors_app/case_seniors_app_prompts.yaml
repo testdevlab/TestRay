@@ -358,6 +358,7 @@ TestSeniorAppIgnoreCarePartnerCall:
   Environment: Settings
   Precases:
     - LoginNeverAloneHelper
+    - CarePartnerCleanCallQueueAndHangedCalls
   Aftercases:
     - TerminateApp
   Roles:
@@ -726,6 +727,7 @@ TestSeniorStartingSoonNotificationWaitUntilCallSurveyIsCompleted:
     - Type: case
       Value: SeniorGreatPostSurveyCallHelper
 
+# Physical Device Only
 # CXTB-381: Verify Care Partner - "Missed Call" Prompt & Call Back Button.
 TestSeniorVerifyMissedCallPromptAndCallBackButton:
   Vars:
