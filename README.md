@@ -413,6 +413,7 @@ This is not a type but can be used in different Types as a Validation for the ac
 5. [get_day](#get_day)
 6. [get_next_month](#get_next_month)
 7. [generate_random_day](#generate_random_day)
+8. [search_by_text](#search_by_text)
 ## Appium/Selenium
 
 #### <a id="click"></a>click 
@@ -1224,3 +1225,10 @@ Recieve a timestamp and return the related day
 Return the following month of the current date
      - Type: get_next_month
       ResultVar: NEXT_MONTH
+
+### <a id="search_by_text"></a>search_by_text
+
+Custom action for searching in NeverAlone listings
+    - Type: search_by_text
+      Text: SEARCH_INPUT
+      

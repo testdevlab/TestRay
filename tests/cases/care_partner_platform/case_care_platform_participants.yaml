@@ -4242,3 +4242,149 @@ TestCarePartnerParticipantReviewEditOrAddVendorInfo:
         TOAST_MESSAGE_SHOWN: Vendor deleted
     - Type: case
       Value: CarePartnerToastValidation
+
+#CXTB-461 Edit Participant Info - Edit DNR Flag Field & Review Visuals
+TestCarePartnerParticipantInfoEditDNRFlag:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Go to Edit Participant
+    - Type: case
+      Value: CarePartnerEditParticipantNavigation
+  # It should be in Demographics
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_demographics.first_name_input$
+  # Set “Does the member have a DNR?” to “Yes”, and click “Save Changes” at bottom of page
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_demographics.dnr_yes_radio_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_demographics.dnr_yes_radio_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.participant_changes_saved_notification$
+  # Click “Records” button at top of participant pane on right side of screen
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.view_records_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.view_records_button$
+  # Page refreshes to show the Participant profile
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_name$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_dob$
+  # Now a red “DNR” badge is affixed to the participant’s initials in the top left corner
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.dnr_badge$
+  # Return to Participants directory by clicking "Participants" in header
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_participant$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform.navigation_participant$
+  # Decrease by filtering
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
+  # Select the participant changed
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+    - Type: refresh
+      Role: desktopChrome
+  # Check new details
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.dnr_badge$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.participant_local_time$
+  # Set DNR to NO
+    # Go to Records
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.records_link$
+    # Click on the "Edit Info" button.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.edit_info_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.edit_info_button$
+    - Type: sleep
+      Time: 1
+    # Check we are at demographics
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_demographics.first_name_input$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_demographics.dnr_no_radio_button$
+    # Change DNR to NO
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_demographics.dnr_no_radio_button$
+    # Save DNR to NO
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.participant_changes_saved_notification$
+  # Click “Records” button at top of participant pane on right side of screen
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.view_records_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.view_records_button$
+  # Page refreshes to show the Participant profile
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_name$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_dob$
+  # The red “DNR” badge should be there anymore
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.dnr_badge$
+  # Return to Participants directory by clicking "Participants" in header
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform.navigation_participant$
+  # Decrease by filtering
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
+  # Select the participant changed
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+  # Check new details (no DNR badge)
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.dnr_badge$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.participant_local_time$
