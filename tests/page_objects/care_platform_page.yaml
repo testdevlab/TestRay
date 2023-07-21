@@ -178,6 +178,7 @@ care_platform_edit_participant_records:
   view_records_button: //button[text()='View Records']
   address_emergency_phone_navigation: //ul[contains(@class,'form-navigation')]//button[contains(text(),'Address') and contains(text(),'Emergency Phone')]
   medication_navigation: //button[contains(@class,'form-navigation-link') and contains(text(),'Medications')]
+  health_overview_navigation: //ul[contains(@class,'form-navigation')]//button[contains(text(),'Health Overview')]
   contacts_navigation: //ul[contains(@class,'form-navigation')]//button[contains(text(),'Contacts')]
   medical_history_navigation: //button[contains(@class,'form-navigation-link') and contains(text(),'Medical History')]
   special_treatment_navigation: //button[contains(@class,'form-navigation-link') and contains(text(),'Special Treatments')]
@@ -244,6 +245,22 @@ care_platform_edit_participant_medication:
   delete_modal_medication_name: //*[@id='dialogs']//p[text()='$AND_CLI_MEDICATION$']
   delete_modal_confirm_button: //*[@id='dialogs']//button[text()='Yes, Delete']
   delete_modal_cancel_button: //*[@id='dialogs']//button[text()='Cancel']
+
+care_platform_edit_participant_health_overview:
+  health_overview_subtitle: //h4[contains(text(),'Health Overview')]
+  add_issue_button: //button[contains(text(),'Add Issue')]
+  edit_button_based_on_issue: //div[contains(text(), '$AND_CLI_UNIQUE_ISSUE$')]/following-sibling::div/button[text()='Edit']
+  delete_button_based_on_issue: //div[contains(text(), '$AND_CLI_UNIQUE_ISSUE$')]/following-sibling::div/button[text()='Delete']
+  issue_label: //div[contains(text(), '$AND_CLI_UNIQUE_ISSUE$')]
+  add_or_edit_issue_modal_title: //div[@id='modals']//h4
+  delete_issue_dialog_title: //div[@id='dialogs']//h4
+  category_select: //select[@id='category']
+  common_issues_option: //option[@value='commonIssues']
+  communication_option: //option[@value='communication']
+  issue_input: //input[@id='issue']
+  save_and_close_button: //button[@type='submit']
+  cancel_button: //button[text()='Cancel']
+  yes_delete_button: //button[text()='Yes, Delete']
 
 care_platform_edit_participant_medical_history:
   medical_history_subtitle: //h4[contains(text(),'Medical History')]
