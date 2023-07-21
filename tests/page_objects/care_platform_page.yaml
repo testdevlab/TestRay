@@ -172,6 +172,13 @@ care_platform_participant_records:
   edit_info_button: //div[@class='participant-profile-contact']//button/span[contains(@class, 'icon-edit')]
   demographics_vendor_subtab: //nav[@class='tabs-nav']/button[text()='Vendors']
 
+care_platform_participant_records_emergency_calls:
+  date_header_label: //div[@class='accordion-header']//div[text()='Date']
+  time_header_label: //div[@class='accordion-header']//div[text()='Time']
+  duration_header_label: //div[@class='accordion-header']//div[text()='Duration'] 
+  type_header_label: //div[@class='accordion-header']//div[text()='Type']
+  subject_header_label: //div[@class='accordion-header']//div[text()='Subject']
+
 care_platform_edit_participant_records:
   edit_title: //span[contains(text(),'Edit')]
   edit_participant_form_label: //form//h4

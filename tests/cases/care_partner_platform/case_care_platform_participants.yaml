@@ -4371,7 +4371,7 @@ TestCarePartnerParticipantInfoEditDNRFlag:
     - Type: click
       Strategy: xpath
       Id : $PAGE.care_platform.navigation_participant$
-  # Decrease by filtering
+  # Search Participant by name
     - Type: search_by_text
       Text: $AND_CLI_senior_user1_name$
   # Select the participant changed
@@ -4654,3 +4654,41 @@ TestCarePartnerParticipantInfoEditOrAddHealthOverviewInfo:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.participant_changes_saved_notification$
+
+#CXTB-107 Can Click and View Participant’s Emergency Calls
+TestCarePartnerClickAndViewParticipantsEmergencyCalls:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case as Care Partner.
+    - Type: case
+      Value: CarePartnerLogin
+  # Navigate to Records.
+    - Type: case
+      Value: CarePartnerParticipantRecordsNavigation
+  # Click the "Emergency calls" profile tab.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.emergency_calls_tab$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.emergency_calls_tab$
+  # Page refreshes to show a full page view of all the Emergency calls participant has made from their device.
+  # Validation will be limited to check the header labels since automation is not supposed to make emergency calls.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_emergency_calls.date_header_label$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_emergency_calls.time_header_label$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_emergency_calls.duration_header_label$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_emergency_calls.type_header_label$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_emergency_calls.subject_header_label$
