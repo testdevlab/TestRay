@@ -19,6 +19,9 @@ TestCarePartnerCreateEventForParticipant:
   # Navigate to Participants.
     - Type: case
       Value: CarePartnerNavigateToParticipants
+  # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
   # Click on the corresponding participant.
     - Type: click
       Strategy: xpath
@@ -332,6 +335,9 @@ TestCarePartnerEditEventForParticipant:
   # Navigate to Participants.
     - Type: case
       Value: CarePartnerNavigateToParticipants
+  # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
   # Click on the corresponding participant.
     - Type: click
       Strategy: xpath
@@ -455,6 +461,9 @@ TestCarePartnerDeleteEventForParticipant:
   # Navigate to Participants.
     - Type: case
       Value: CarePartnerNavigateToParticipants
+  # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
   # Click on the corresponding participant.
     - Type: click
       Strategy: xpath

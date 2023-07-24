@@ -180,6 +180,9 @@ TestSeniorAppPersonalCarePartnerMessagePromptAndCallBackButton:
     - Type: case
       Role: desktopChrome
       Value: CarePartnerNavigateToParticipants
+  # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
   # Select the corresponding user.
     - Type: click
       Role: desktopChrome

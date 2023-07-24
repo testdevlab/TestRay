@@ -74,6 +74,9 @@ ESCarePartnerCallSenior:
     # Navigate to Participants.
     - Type: case
       Value: CarePartnerNavigateToParticipants
+    # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_idd_es_never_alone_user1_name$
     # Click on the desired participant.
     - Type: click
       Strategy: xpath
@@ -109,6 +112,9 @@ ESCarePartnerSendMessageToSenior:
     # Navigate to Participants.
     - Type: case
       Value: CarePartnerNavigateToParticipants
+    # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_idd_es_never_alone_user1_name$
     # Click on the desired participant.
     - Type: click
       Strategy: xpath
@@ -159,6 +165,9 @@ ESCarePartnerSetScheduledCallForSeniors:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform.navigation_participant$
+    # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_idd_es_never_alone_user1_name$
     # Open the Call Portal
     - Type: click
       Strategy: xpath
@@ -257,6 +266,9 @@ ESSetScheduledCallForSeniorsToStartInXMinutes:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform.navigation_participant$
+      # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_idd_es_never_alone_user1_name$
       # Open the Call Portal
     - Type: click
       Strategy: xpath

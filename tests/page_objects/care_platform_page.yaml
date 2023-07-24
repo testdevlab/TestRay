@@ -171,6 +171,7 @@ care_platform_participant_records:
   last_message_historical: (//div[@class='message message-to'])[last()]
   edit_info_button: //div[@class='participant-profile-contact']//button/span[contains(@class, 'icon-edit')]
   demographics_vendor_subtab: //nav[@class='tabs-nav']/button[text()='Vendors']
+  demographics_contacts_subtab: //nav[@class='tabs-nav']/button[text()='Contacts']
 
 care_platform_participant_records_emergency_calls:
   date_header_label: //div[@class='accordion-header']//div[text()='Date']
@@ -407,7 +408,7 @@ care_platform_edit_participant_contacts:
   add_contact_first_name_input: //input[@id='firstName']
   add_contact_last_name_input:  //input[@id='lastName']
   add_contact_phone_number_input: //input[@id='phone']
-  save_and_close_button: //button[@type='submit']
+  save_and_close_button: //button[@type='submit'][text()='Save and Close']
   cancel_button: //button[text()='Cancel']
   delete_contact_dialog_title: //div[@id='dialogs']//h4
   yes_delete_button: //button[text()='Yes, Delete']

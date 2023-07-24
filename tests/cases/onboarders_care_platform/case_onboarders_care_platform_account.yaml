@@ -104,6 +104,9 @@ TestOnboarderNoNegativeToastIfParticipantIsSavedWithDuplicatedEmail:
   # Navigate to the Participants Page.
     - Type: case
       Value: CarePartnerNavigateToParticipants
+  # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
   # Click on the desired participant.
     - Type: click
       Strategy: xpath
@@ -129,6 +132,9 @@ TestOnboarderNoNegativeToastIfParticipantIsSavedWithDuplicatedEmail:
       ResultVar: COPIED_EMAIL_ADDRESS
     - Type: case
       Value: CarePartnerNavigateToParticipants
+  # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user2_name$
   # Select another participant and click on the "Edit Info" button.
     - Type: wait_for
       Strategy: xpath

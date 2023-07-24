@@ -1345,6 +1345,9 @@ TestCarePartnerCallParticipantsDeviceCallComplete:
   # Navigate to Participants.
     - Type: case
       Value: CarePartnerNavigateToParticipants
+  # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
   # Click on the corresponding participant.
     - Type: click
       Strategy: xpath
@@ -1500,6 +1503,9 @@ TestCarePartnerCallParticipantsDeviceCallIgnored:
   # Navigate to Participants.
     - Type: case
       Value: CarePartnerNavigateToParticipants
+  # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
   # Click on the corresponding participant.
     - Type: click
       Strategy: xpath
@@ -1590,6 +1596,9 @@ TestCarePartnerCallParticipantsDeviceCallMissed:
   # Navigate to Participants.
     - Type: case
       Value: CarePartnerNavigateToParticipants
+  # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
   # Click on the corresponding participant.
     - Type: click
       Strategy: xpath
@@ -1801,6 +1810,9 @@ TestCarePartnerTrackTimeAndEditFollowUpTicketsParticipantComponent:
   # Navigate to Participants.
     - Type: case
       Value: CarePartnerNavigateToParticipants
+  # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
   # Click on the corresponding participant.
     - Type: click
       Strategy: xpath
@@ -2264,6 +2276,9 @@ TestCarePartnerParticipantInfoEditOrAddContactsInfo:
   # Navigate to Participants.
     - Type: case
       Value: CarePartnerNavigateToParticipants
+  # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
   # Select a participant in listing.
     - Type: wait_for
       Strategy: xpath
@@ -4692,3 +4707,244 @@ TestCarePartnerClickAndViewParticipantsEmergencyCalls:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_participant_records_emergency_calls.subject_header_label$
+
+#CXTB-520 Edit or Add Contacts Info - Participant Profile
+TestCarePartnerParticipantProfileEditOrAddContactsInfo:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Navigate to Records.
+    - Type: case
+      Value: CarePartnerParticipantRecordsNavigation
+  # Page refreshes to show the Participant profile:
+  # Name and DOB at top of left panel
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_name$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_dob$
+  # Click the "Demographics" profile tab, then the "Contacts" subtab
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.demographics_tab$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.demographics_contacts_subtab$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.demographics_contacts_subtab$
+  # Click "Add Contact" button in upper right corner.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_contact_button$
+  # Click on "Add Contact"
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_or_edit_contact_modal_title$ 
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_or_edit_contact_modal_title$
+      Property: textContent
+      Value:  Add Contact
+  # Enter some information, then click the "Cancel" button.
+    - Type: generate_unique_name
+      Name: Auto
+      ResultVar: UNIQUE_FIRST_NAME
+    - Type: generate_unique_name
+      Name: Mation
+      ResultVar: UNIQUE_LAST_NAME
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_contact_first_name_input$
+      Value: $AND_CLI_UNIQUE_FIRST_NAME$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_contact_last_name_input$
+      Value: $AND_CLI_UNIQUE_LAST_NAME$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_contact_phone_number_input$
+      Value: "7879910101"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.cancel_button$
+  # Window closes and no contact is added for participant.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.edit_button_based_on_contact_name$
+  # Click "Add Contact" button in upper right corner.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_contact_button$
+  # "Add Contact" window appears in center of screen.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_or_edit_contact_modal_title$
+  # "Add Contact" window appears in center of screen.  
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_or_edit_contact_modal_title$
+      Property: textContent
+      Value:  Add Contact
+  # Populate contact details before clicking "Save and Close" button.
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_contact_first_name_input$
+      Value: $AND_CLI_UNIQUE_FIRST_NAME$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_contact_last_name_input$
+      Value: $AND_CLI_UNIQUE_LAST_NAME$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_contact_phone_number_input$
+      Value: "7879910101"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.save_and_close_button$
+  # Window closes, the new contact entered is now displayed on the page, and toast notification appears at top of page.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_or_edit_contact_modal_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.contact_created_notification$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.contact_created_notification$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.phone_number_label_based_on_contact_name$
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.phone_number_label_based_on_contact_name$
+      Greps:
+        - var: FIRST_PHONE_VALUE
+          match: "(.*)"
+  # Click "Edit" button for an existing contact.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.edit_button_based_on_contact_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.edit_button_based_on_contact_name$
+  # "Edit Contact" window appears in center of screen, showing currently entered information.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_or_edit_contact_modal_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_or_edit_contact_modal_title$
+      Property: textContent
+      Value:  Edit Contact
+  # Update some of the information and click the "Cancel" button.
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_contact_phone_number_input$
+      Value: "7879921101"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.cancel_button$
+  # Returned to the page; without any changes being saved to the contact.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.phone_number_label_based_on_contact_name$
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.phone_number_label_based_on_contact_name$
+      Greps:
+        - var: SECOND_PHONE_VALUE
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: FIRST_PHONE_VALUE
+          Value: $AND_CLI_SECOND_PHONE_VALUE$
+  # Click "Edit" button for an existing contact.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.edit_button_based_on_contact_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.edit_button_based_on_contact_name$
+  # "Edit Contact" window appears in center of screen, showing currently entered information.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_or_edit_contact_modal_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_or_edit_contact_modal_title$
+      Property: textContent
+      Value:  Edit Contact
+  # Make any changes desired before clicking "Save and Close" button.
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_contact_phone_number_input$
+      Value: "7879921101"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.save_and_close_button$
+  # Window closes, the updated contact information is now displayed on the page, and toast notification appears at top of page.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.add_or_edit_contact_modal_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.contact_saved_notification$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.contact_saved_notification$
+  # Click "Delete" button for an existing contact.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.delete_button_based_on_contact_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.delete_button_based_on_contact_name$
+  # "Delete Contact" window will appear confirming you would like to delete the entry.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.delete_contact_dialog_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.delete_contact_dialog_title$
+      Property: textContent
+      Value:  Delete Contact
+  # Click "Cancel" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.cancel_button$
+  # Returned to page without entry being deleted.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.delete_button_based_on_contact_name$
+  # Click "Delete" button for an existing contact.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.delete_button_based_on_contact_name$
+  # "Delete Contact" window will appear confirming you would like to delete the entry.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.delete_contact_dialog_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.delete_contact_dialog_title$
+      Property: textContent
+      Value:  Delete Contact
+  # Click "Yes, Delete" to confirm delete request.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.yes_delete_button$
+  # Window closes, the deleted contact is no longer present on the page, and toast notification appears at top of page.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_contacts.delete_contact_dialog_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.contact_deleted_notification$

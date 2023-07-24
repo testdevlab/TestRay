@@ -1414,6 +1414,9 @@ CarePartnerSendMessageToSenior:
     # Navigate to Participants.
     - Type: case
       Value: CarePartnerNavigateToParticipants
+    # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
     # Click on the desired participant.
     - Type: click
       Strategy: xpath
@@ -1458,6 +1461,9 @@ CarePartnerCallSenior:
     # Navigate to Participants.
     - Type: case
       Value: CarePartnerNavigateToParticipants
+    # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
     # Click on the desired participant.
     - Type: click
       Strategy: xpath
@@ -1637,6 +1643,9 @@ CarePartnerSetsEMSEnabledToXOption:
     # Navigate to Participants.
     - Type: case
       Value: CarePartnerNavigateToParticipants
+    # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
     # Click on the desired participant.
     - Type: click
       Strategy: xpath
