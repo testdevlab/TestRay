@@ -341,3 +341,109 @@ TestEmployeeHealthPortalReviewUpcomingAppointment:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.employee_health_home_page.container_tab$
+
+#CXTB-110 Employee Health Portal - Request an Appointment for Dependent Minor.
+TestEmployeeHealthPortalRequestAnAppointmentForDependentMinor:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  # Login case as an Employee user with a dependent minor.
+    - Type: set_env_var
+      Value: $AND_CLI_employee_minor_dependent_pwd$
+      Var: employee_user1_pwd
+    - Type: set_env_var
+      Value: $AND_CLI_employee_minor_dependent_user$
+      Var: employee_user1
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  # Click "Request appointment" button above calendar on right side.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.tab_section$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.request_appointment_button$
+  # Validate that the telehealth request form modal opens on page.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.form_modal$
+  # Submit the form without filling up any fields.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.create_event_button$
+  # Validate that the screen will indicate missing information after trying to submit empty form.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.alert_location$
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.alert_location$
+      Greps:
+        - var: ERROR_MESSAGE
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ERROR_MESSAGE
+          Value: Please select a state.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.alert_describe_reason$
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.alert_describe_reason$
+      Greps:
+        - var: ERROR_MESSAGE
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ERROR_MESSAGE
+          Value: Please enter a reason for this request.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.alert_calendar$
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.alert_calendar$
+      Greps:
+        - var: ERROR_MESSAGE
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ERROR_MESSAGE
+          Value: 'Please select a date. '
+  # Click "Cancel" button in modal.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.cancel_button$
+  # Validate that modal disappears and user is returned to home view.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.request_appointment_button$
+  # Request an appointment for a dependent minor.
+    - Type: case
+      Value: EmployeeHealthPortalAppointmentsRequestForDependentMinor
+  # Verify if the appointment is showing on the list
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.appointment_list$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.appointment_list_description$
+      Greps:
+        - var: SHOWED_DESCRIPTION
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: SHOWED_DESCRIPTION
+          Value: $AND_CLI_PAIN_DESCRIPTION$

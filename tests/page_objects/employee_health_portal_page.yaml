@@ -99,6 +99,7 @@ employee_health_telehealth_on_demand_modal:
   modal_state_select_option: //*[@id='state']/option[@value='$AND_CLI_STATE$']
   modal_patient_select: //*[@id='dependentIdentifier']
   modal_patient_select_option: //select[@id='dependentIdentifier']//option[@value='$AND_CLI_employee_user1_card_member_id$']
+  modal_dependent_minor_select_option: //select[@id='dependentIdentifier']//option[@value='$AND_CLI_employee_minor_dependent_card_member_id$']
   modal_reasons_input: //*[@id='comments']
   modal_reasons_error: //*[@id='comments']/following-sibling::div[@aria-hidden='false']//div[contains(@class,'red')] [contains(text(),'Please enter a reason for this request')]
 

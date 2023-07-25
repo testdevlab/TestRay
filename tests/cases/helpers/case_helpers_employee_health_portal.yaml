@@ -494,3 +494,67 @@ EmployeeHealthPortalCleanHangedCalls:
   Actions:
     # Clean hanged calls.
     - Type: ehp_clean_hanged_call
+
+EmployeeHealthPortalAppointmentsRequestForDependentMinor: 
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions: 
+    # waiting for appointment view
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.request_appointment_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.request_appointment_button$
+  # filling form
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.select_location_drop_down$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.select_location_drop_down$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.select_location_option$
+    - Type: generate_unique_name
+      Name: "I have something to say about my health."
+      ResultVar: PAIN_DESCRIPTION
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.employee_health_telehealth_request_form.comments$
+      Value: $AND_CLI_PAIN_DESCRIPTION$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_dependent_minor_select_option$
+    # choosing Date and time
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_right_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_month_view$
+    - Type: generate_random_day
+      InsertedDay: $AND_CLI_DAY$
+      ResultVar: DAY
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_day_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_hour_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.create_event_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.create_event_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.create_event_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.appointment_scheduled_notification$
