@@ -210,6 +210,8 @@ care_platform_edit_participant_records:
   changes_saved_notification: //div[@class='Toastify']//div[contains(text(),'Participant changes saved')]
   medication_saved_notification: //div[@class='Toastify']//div[contains(text(),'Medication created')]
   medication_deleted_notification: //div[@class='Toastify']//div[contains(text(),'Medication deleted')]
+  vendor_navigation: //ul[@class='form-navigation']//li/button[text()='Vendors']
+
   
 care_platform_edit_participant_demographics:
   first_name_input: firstName
@@ -571,3 +573,4 @@ care_platform_edit_participants_vendor:
   modal_title_label: //div[@id='modals']//h4[text()='$AND_CLI_MODAL_NAME$']
   dialog_title_label: //div[@id='dialogs']//h4[text()='$AND_CLI_MODAL_NAME$']
   modal: //div[@id='modals']//div[contains(@class,'modal')]
+  button_edit_participant_info: //button[text()='Edit Info']
