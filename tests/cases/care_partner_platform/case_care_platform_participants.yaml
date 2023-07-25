@@ -4705,3 +4705,144 @@ TestCarePartnerParticipantProfileEditOrAddContactsInfo:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.contact_deleted_notification$
+
+# CXTB-108 Click and View Participant’s Follow-up Tickets Information
+TestCarePartnerClickAndViewParticipantsFollowUpTickets:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case as Care Partner.
+    - Type: case
+      Value: CarePartnerLogin
+  # Generate unique name for the follow up ticket.
+    - Type: generate_unique_name
+      Name: "FollowUp Ticket"
+      ResultVar: FOLLOW_UP_TICKET
+  # Creating Follow up ticket.
+    - Type: case
+      Value: CarePartnerCreateFollowUpTicket
+  # Navigate to Records.
+    - Type: case
+      Value: CarePartnerParticipantRecordsNavigation
+  # Click the "Follow-up tickets" profile tab.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.follow_up_tickets_tab$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.follow_up_tickets_tab$
+    # Page refreshes to show a full page view of all the participant’s follow-up tickets:
+    # Left "Ticket history"
+    # Right "Active tickets"
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.ticket_history_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.active_tickets_title$
+    # Review the "Active tickets" section listing.
+    # Shows active follow-up tickets for the participant.
+    # Click to expand a ticket.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.active_follow_up_ticket_based_on_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.active_follow_up_ticket_based_on_name$
+    # Expands and shows creation information and additional details about the task.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.expanded_ticket_content$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.completed_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.edit_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.track_time_input$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.follow_up_ticket_created_label$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.follow_up_ticket_created_label$
+      Greps:
+        - var: CREATED_LABEL_VALUE
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: get_timestamp
+      Format: "%m/%d/%Y"
+      Var: TODAYS_DATE
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: CREATED_LABEL_VALUE
+          Value: Created $AND_CLI_TODAYS_DATE$
+    # Close the ticket so it moves to "Ticket History".
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.completed_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.track_time_input_dialog$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.track_time_input_dialog$
+      Value: "1"
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.save_and_archive_button$
+      Property: disabled
+      Value: "false"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.save_and_archive_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.follow_up_ticket_completed_notification$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.follow_up_ticket_completed_notification$
+    # Review the "Ticket history" section listing.
+    # Click to expand a row.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.archived_follow_up_ticket_based_on_name$
+    # Expands and shows creation information, and additional details about the task that was completed.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.expanded_ticket_content$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.expanded_ticket_content$
+      Greps:
+        - var: COMPLETED_LABEL_VALUE
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: COMPLETED_LABEL_VALUE
+          Value: Completed $AND_CLI_TODAYS_DATE$
+    # Verify that listing includes all completed Care Partner follow-up tickets. The main table displays the key summary information.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.ticket_history_completed_header_label$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.ticket_history_loe_header_label$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.ticket_history_type_header_label$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.ticket_history_partner_header_label$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records_follow_up_tickets.ticket_history_subject_header_label$

@@ -180,6 +180,24 @@ care_platform_participant_records_emergency_calls:
   type_header_label: //div[@class='accordion-header']//div[text()='Type']
   subject_header_label: //div[@class='accordion-header']//div[text()='Subject']
 
+care_platform_participant_records_follow_up_tickets:
+  ticket_history_title: //h4[text()='Ticket History']
+  ticket_history_completed_header_label: //h4[text()='Ticket History']/..//div[@class='accordion-header']//div[text()='Completed']
+  ticket_history_loe_header_label: //h4[text()='Ticket History']/..//div[@class='accordion-header']//div[text()='LOE']
+  ticket_history_type_header_label: //h4[text()='Ticket History']/..//div[@class='accordion-header']//div[text()='Type']
+  ticket_history_partner_header_label: //h4[text()='Ticket History']/..//div[@class='accordion-header']//div[text()='Partner']
+  ticket_history_subject_header_label: //h4[text()='Ticket History']/..//div[@class='accordion-header']//div[text()='Subject']
+  active_tickets_title: //h4[text()='Active Tickets']
+  archived_follow_up_ticket_based_on_name: //div[text()='$AND_CLI_FOLLOW_UP_TICKET$']/ancestor::div[@class='accordion-item-toggle']
+  active_follow_up_ticket_based_on_name: //div[contains(text(), '$AND_CLI_FOLLOW_UP_TICKET$')]/preceding-sibling::div[@class='accordion-item-toggle']
+  expanded_ticket_content: //div[@aria-hidden='false']//div[contains(@class, 'accordion-item-content')]
+  completed_button: //div[@aria-hidden='false']//button[text()='Completed']
+  edit_button: //div[@aria-hidden='false']//button[text()='Edit']
+  track_time_input: //div[@aria-hidden='false']//input[@name='timeToComplete']
+  follow_up_ticket_created_label: //div[@aria-hidden='false']//p
+  track_time_input_dialog: //div[@id='dialogs']//input[@name='timeToComplete']
+  save_and_archive_button: //div[@id='dialogs']//button[text()='Save and Archive']
+
 care_platform_edit_participant_records:
   edit_title: //span[contains(text(),'Edit')]
   edit_participant_form_label: //form//h4
