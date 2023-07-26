@@ -1862,8 +1862,9 @@ AddEditOrDeleteParticipantVendorInfo:
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.modal$
   # Validate if a Vendor have not been added
-      Vars:
-        NEW_NAME: $AND_CLI_NAME$
+    - Type: set_env_var
+      Value: $AND_CLI_NAME$
+      Var: NEW_NAME
     - Type: wait_not_visible
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.name_vendor_record$
@@ -1904,8 +1905,9 @@ AddEditOrDeleteParticipantVendorInfo:
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.save_close_modal_button$
   # Validate toast message and wait until toast is not visible
-      Vars:
-        TOAST_MESSAGE_SHOWN: Vendor created
+    - Type: set_env_var
+      Value: Vendor created
+      Var: TOAST_MESSAGE_SHOWN
     - Type: case
       Value: CarePartnerToastValidation
   # Steps to edit a vendor
@@ -1915,9 +1917,9 @@ AddEditOrDeleteParticipantVendorInfo:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.edit_created_vendor_button$
-  # Validate if "Edit vendor" is opened
-      Vars:
-        MODAL_NAME: Edit Vendor
+    - Type: set_env_var
+      Value: Edit Vendor
+      Var: MODAL_NAME
     - Type: get_text
       Strategy: xpath
       Id : $PAGE.care_platform_edit_participants_vendor.modal_title_label$
@@ -1948,8 +1950,9 @@ AddEditOrDeleteParticipantVendorInfo:
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.cancel_vendor_modal_button$
   # Validate if Vendor is edited
-      Vars:
-        NEW_NAME: $AND_CLI_NAME$
+    - Type: set_env_var
+      Value: $AND_CLI_NAME$
+      Var: NEW_NAME
     - Type: get_text
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.name_vendor_record$
@@ -1984,8 +1987,9 @@ AddEditOrDeleteParticipantVendorInfo:
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.save_close_modal_button$
   # Validate toast message
-      Vars:
-        TOAST_MESSAGE_SHOWN: Vendor saved
+    - Type: set_env_var
+      Value: Vendor saved
+      Var: TOAST_MESSAGE_SHOWN
     - Type: case
       Value: CarePartnerToastValidation
   # Validate if the new change is applied
@@ -2009,8 +2013,9 @@ AddEditOrDeleteParticipantVendorInfo:
       Strategy: id
       Id: $PAGE.care_platform_edit_participants_vendor.vendor_dialog$
   # Validate if "Delete Vendor" is opened
-      Vars:
-        MODAL_NAME: Delete Vendor
+    - Type: set_env_var
+      Value: Delete Vendor
+      Var: MODAL_NAME
     - Type: get_text
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.dialog_title_label$
@@ -2041,7 +2046,7 @@ AddEditOrDeleteParticipantVendorInfo:
   # Confirm delete vendor
     - Type: wait_for
       Strategy: id
-      Id: dialogs
+      Id: $PAGE.care_platform_edit_participants_vendor.vendor_dialog$
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.delete_confirmation_modal$
@@ -2050,8 +2055,9 @@ AddEditOrDeleteParticipantVendorInfo:
       Strategy: xpath
       Id: $PAGE.care_platform_edit_participants_vendor.vendor_dialog$
   # Validate toast message
-      Vars:
-        TOAST_MESSAGE_SHOWN: Vendor deleted
+    - Type: set_env_var
+      Value: Vendor deleted
+      Var: TOAST_MESSAGE_SHOWN
   # Add Edit Or Delete vendor Info
     - Type: case
       Value: CarePartnerToastValidation
