@@ -1734,6 +1734,31 @@ CarePartnerEditParticipantNavigation:
     - Type: sleep
       Time: 1
 
+CarePartnerParticipantPaneNavigation:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Navigate to Participants.
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform.navigation_participant$
+  # Limit listing by searching name.
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
+  # Select corresponding participant by name in the list.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+  # Verify that the Participant Pane is opened.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.records_button$
+
 CarePartnerToastValidation:
   Environment: Settings
   Roles:
@@ -2173,6 +2198,7 @@ AddEditOrDeleteBehavioralInfo:
       Id: $PAGE.care_platform_edit_participant_health_overview.add_or_edit_issue_modal_title$
       Property: textContent
       Value: Edit Issue
+      CaseInsensitive: true
   # Update some of the information and click the "Cancel" button.
     - Type: wait_for
       Strategy: xpath
@@ -2213,6 +2239,7 @@ AddEditOrDeleteBehavioralInfo:
       Id: $PAGE.care_platform_edit_participant_health_overview.add_or_edit_issue_modal_title$
       Property: textContent
       Value: Edit Issue
+      CaseInsensitive: true
   # Make any changes to update both Category and Issue description and then click the "Save and Close" button.
     - Type: wait_for
       Strategy: xpath

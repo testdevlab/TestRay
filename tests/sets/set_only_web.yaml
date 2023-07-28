@@ -29,6 +29,7 @@ SetOnlyWebTests:
   - Case: TestCarePartnerParticipantProfileEditOrAddContactsInfo
   - Case: TestCarePartnerClickAndViewParticipantsFollowUpTickets
   - Case: TestCarePartnerParticipantProfileReviewEditOrAddBehavioralInfo
+  - Case: TestCarePartnerParticipantPaneReviewEditOrAddBehavioralInfo
   # Employee Health Portal
   - Case: TestEmployeeSettingNotification
   - Case: TestEmployeeInformationUpdateNumber

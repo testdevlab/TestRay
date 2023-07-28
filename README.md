@@ -775,6 +775,7 @@ Waits for the element to have a specific JS property value.
     Property: Js Property e.g. className
     Value:  Desired value
     Time: Time (int) e.g. 10
+    CaseInsensitive: true | false (false by default)
 
 ### <a id="clear_field_js"></a>clear_field_js
 

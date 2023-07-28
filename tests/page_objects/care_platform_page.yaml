@@ -277,9 +277,9 @@ care_platform_edit_participant_medication:
 care_platform_edit_participant_health_overview:
   health_overview_subtitle: //h4[contains(text(),'Health Overview')]
   add_issue_button: //button[contains(text(),'Add Issue')]
-  edit_button_based_on_issue: //div[contains(text(), '$AND_CLI_UNIQUE_ISSUE$')]/following-sibling::div/button[text()='Edit']
-  delete_button_based_on_issue: //div[contains(text(), '$AND_CLI_UNIQUE_ISSUE$')]/following-sibling::div/button[text()='Delete']
-  issue_label: //div[contains(text(), '$AND_CLI_UNIQUE_ISSUE$')]
+  edit_button_based_on_issue: //div[contains(text(), '$AND_CLI_UNIQUE_ISSUE$')]/following-sibling::div/button[text()='Edit'] | //li[contains(text(), '$AND_CLI_UNIQUE_ISSUE$')]//button[text()='Edit']
+  delete_button_based_on_issue: //div[contains(text(), '$AND_CLI_UNIQUE_ISSUE$')]/following-sibling::div/button[text()='Delete'] | //li[contains(text(), '$AND_CLI_UNIQUE_ISSUE$')]//button[text()='Delete']
+  issue_label: //div[contains(text(), '$AND_CLI_UNIQUE_ISSUE$')] | //li[contains(text(), '$AND_CLI_UNIQUE_ISSUE$')]
   add_or_edit_issue_modal_title: //div[@id='modals']//h4
   delete_issue_dialog_title: //div[@id='dialogs']//h4
   category_select: //select[@id='category']

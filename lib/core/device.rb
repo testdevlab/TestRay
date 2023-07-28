@@ -1366,6 +1366,13 @@ class Device
           log_info("Property: #{prop} matched Value: #{value.to_s}")
           return el
         end
+
+        if action["CaseInsensitive"]
+          if elprop.to_s.downcase == value.to_s.downcase
+            log_info("Property: #{prop} matched Value: #{value.to_s}")
+            return el
+          end
+        end
       rescue => e
         exception = e
         sleep(0.1)

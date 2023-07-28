@@ -4636,3 +4636,24 @@ TestCarePartnerParticipantProfileReviewEditOrAddBehavioralInfo:
   # Review, Edit or Add Behavioral Info.
     - Type: case
       Value: AddEditOrDeleteBehavioralInfo
+
+# CXTB-116 Participant Pane- Review, Edit or Add Behavioral Info.
+TestCarePartnerParticipantPaneReviewEditOrAddBehavioralInfo:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case as Care Partner.
+    - Type: case
+      Value: CarePartnerLogin
+  # Navigate to the participants list and select a participant.
+    - Type: case
+      Value: CarePartnerParticipantPaneNavigation 
+  # Right side of screen updates to show the selected participant’s summary component
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.records_button$
+  # Review, Edit or Add Behavioral Info.
+    - Type: case
+      Value: AddEditOrDeleteBehavioralInfo
