@@ -286,7 +286,7 @@ care_platform_edit_participant_health_overview:
   common_issues_option: //option[@value='commonIssues']
   communication_option: //option[@value='communication']
   issue_input: //input[@id='issue']
-  save_and_close_button: //button[@type='submit']
+  save_and_close_button: //button[text() = 'Save and Close' and @type='submit']
   cancel_button: //button[text()='Cancel']
   yes_delete_button: //button[text()='Yes, Delete']
 
