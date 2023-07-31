@@ -4661,11 +4661,6 @@ TestCarePartnerParticipantPaneReviewEditOrAddBehavioralInfo:
 #CXTB-121 Participant Pane - Edit Insurance or Provider Information
 TestCarePartnerParticipantPaneEditInsuranceOrProviderInformation:
   Environment: Settings
-  Vars:
-    LOGOUT_OPTION: 'Go Off Shift'
-    PROVIDER_NAME: 'Primary Care Physician Automation'
-    PROVIDER_DUMMY_PHONE: 8099999999
-    PROVIDER_TYPE: 'Primary Care Physician'
   Precases:
     - CarePartnerCleanCallQueueAndHangedCalls
   Aftercases:
@@ -4687,51 +4682,34 @@ TestCarePartnerParticipantPaneEditInsuranceOrProviderInformation:
     - Type: click
       Strategy: xpath
       Id: $PAGE.care_platform_participant_details.minimize_button$
-  # Primary Care Physician
-    # Call helper to test add, edit and delete
+  # Call Edit Insurance or Provider Information
     - Type: case
-      Value: ManageParticipantProviderInformation
-  # Health Insurance
-    # Set values to provider “Health Insurance”
-    - Type: set_env_var
-      Value: Health Insurance Automation
-      Var: PROVIDER_NAME
-    - Type: set_env_var
-      Value: Health Insurance
-      Var: PROVIDER_TYPE
-    # Call helper to test add, edit and delete
+      Value: EditInsuranceOrProviderInformationHelper
+
+#CXTB-474 Edit Participant Info - Edit Insurance or Provider Information
+TestCarePartnerParticipantInfoEditInsuranceOrProviderInformation:
+  Environment: Settings
+  Precases:
+    - CarePartnerCleanCallQueueAndHangedCalls
+  Aftercases:
+    - CarePlatformLogout
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case.
     - Type: case
-      Value: ManageParticipantProviderInformation
-  # Pharmacy
-    # Set values to provider “Pharmacy”
-    - Type: set_env_var
-      Value: Pharmacy Automation
-      Var: PROVIDER_NAME
-    - Type: set_env_var
-      Value: Pharmacy
-      Var: PROVIDER_TYPE
-    # Call helper to test add, edit and delete
+      Value: CarePartnerLogin
+  # Navigate to Edit Participant's Info
     - Type: case
-      Value: ManageParticipantProviderInformation
-  # Preferred Lab
-    # Set values to provider "Preferred Lab”
-    - Type: set_env_var
-      Value: Preferred Lab Automation
-      Var: PROVIDER_NAME
-    - Type: set_env_var
-      Value: Preferred Lab
-      Var: PROVIDER_TYPE
-    # Call helper to test add, edit and delete
+      Value: CarePartnerEditParticipantNavigation
+  # Go to Provider's tab
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.providers_navigation$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_providers.providers_insurance_subtitle$
+  # Call Edit Insurance or Provider Information
     - Type: case
-      Value: ManageParticipantProviderInformation
-  # Specialists
-    # Set values to provider “Specialists”
-    - Type: set_env_var
-      Value: Specialists Automation
-      Var: PROVIDER_NAME
-    - Type: set_env_var
-      Value: Specialists
-      Var: PROVIDER_TYPE
-    # Call helper to test add, edit and delete
-    - Type: case
-      Value: ManageParticipantProviderInformation
+      Value: EditInsuranceOrProviderInformationHelper

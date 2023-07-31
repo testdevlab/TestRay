@@ -2530,3 +2530,62 @@ ManageParticipantProviderInformation:
     - Type: wait_not_visible
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.dismiss_notification_button$
+
+EditInsuranceOrProviderInformationHelper:
+  Vars:
+    LOGOUT_OPTION: 'Go Off Shift'
+    PROVIDER_NAME: 'Primary Care Physician Automation'
+    PROVIDER_DUMMY_PHONE: 8099999999
+    PROVIDER_TYPE: 'Primary Care Physician'
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Primary Care Physician
+    # Call helper to test add, edit and delete
+    - Type: case
+      Value: ManageParticipantProviderInformation
+  # Health Insurance
+    # Set values to provider “Health Insurance”
+    - Type: set_env_var
+      Value: Health Insurance Automation
+      Var: PROVIDER_NAME
+    - Type: set_env_var
+      Value: Health Insurance
+      Var: PROVIDER_TYPE
+    # Call helper to test add, edit and delete
+    - Type: case
+      Value: ManageParticipantProviderInformation
+  # Pharmacy
+    # Set values to provider “Pharmacy”
+    - Type: set_env_var
+      Value: Pharmacy Automation
+      Var: PROVIDER_NAME
+    - Type: set_env_var
+      Value: Pharmacy
+      Var: PROVIDER_TYPE
+    # Call helper to test add, edit and delete
+    - Type: case
+      Value: ManageParticipantProviderInformation
+  # Preferred Lab
+    # Set values to provider "Preferred Lab”
+    - Type: set_env_var
+      Value: Preferred Lab Automation
+      Var: PROVIDER_NAME
+    - Type: set_env_var
+      Value: Preferred Lab
+      Var: PROVIDER_TYPE
+    # Call helper to test add, edit and delete
+    - Type: case
+      Value: ManageParticipantProviderInformation
+  # Specialists
+    # Set values to provider “Specialists”
+    - Type: set_env_var
+      Value: Specialists Automation
+      Var: PROVIDER_NAME
+    - Type: set_env_var
+      Value: Specialist
+      Var: PROVIDER_TYPE
+    # Call helper to test add, edit and delete
+    - Type: case
+      Value: ManageParticipantProviderInformation

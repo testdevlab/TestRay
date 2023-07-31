@@ -195,6 +195,7 @@ care_platform_edit_participant_records:
   edit_participant_form_label: //form//h4
   view_records_button: //button[text()='View Records']
   address_emergency_phone_navigation: //ul[contains(@class,'form-navigation')]//button[contains(text(),'Address') and contains(text(),'Emergency Phone')]
+  providers_navigation: //button[contains(@class,'form-navigation-link') and contains(text(),'Providers')]
   medication_navigation: //button[contains(@class,'form-navigation-link') and contains(text(),'Medications')]
   health_overview_navigation: //ul[contains(@class,'form-navigation')]//button[contains(text(),'Health Overview')]
   contacts_navigation: //ul[contains(@class,'form-navigation')]//button[contains(text(),'Contacts')]
@@ -402,7 +403,7 @@ care_platform_edit_participant_providers:
   secondary_health_insurance_button: //button[text()='Secondary Health Insurance']
   tertiary_health_insurance_button: //button[text()='Tertiary Health Insurance']
   primary_care_physician: //strong[text()='Primary Care Physician']
-  add_provider_by_type: //*[@id='providers']//button[contains(text(),'Add')][contains(.,'$AND_CLI_PROVIDER_TYPE$')]
+  add_provider_by_type: //button[contains(text(),'Add')][contains(.,'$AND_CLI_PROVIDER_TYPE$')]
   pharmacy_button: //button[text()='Pharmacy']
   edit_provider_by_name_button: //div[div[text()='$AND_CLI_PROVIDER_NAME$']]//following-sibling::div/button[text()='Edit']
   delete_provider_by_name_button: //div[div[text()='$AND_CLI_PROVIDER_NAME$']]//following-sibling::div/button[text()='Delete']
@@ -421,6 +422,7 @@ care_platform_edit_participant_providers:
   delete_provider_modal_title: //*[@id='dialogs']//h4[text()='Delete Provider']
   provider_confirmation_name: //*[@id='dialogs']//*[text()='$AND_CLI_PROVIDER_NAME$']
   yes_delete_button: //*[@id='dialogs']//button[text()='Yes, Delete']
+  providers_insurance_subtitle: //h4[text()='Insurance Providers']
 
 care_platform_edit_participant_allergies:
   add_allergy_button: //button[text()='Add Allergy']
