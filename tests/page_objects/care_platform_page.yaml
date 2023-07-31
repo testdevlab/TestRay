@@ -79,7 +79,7 @@ care_platform_logout_modal:
 
 care_platform_participant:
   participants_title: //div[@class='text-lg font-bold']//h3[@class='text-lg font-bold']
-  first_participant_row: (//div[@id='containerElement']/div[starts-with(@class, 'ListRow_listRow')]//div[text()='$AND_CLI_senior_user1_name$']//strong[text()='$AND_CLI_senior_user1_lastname$'])[1]
+  first_participant_row: (//div[@id='containerElement']/div[starts-with(@class, 'ListRow_listRow')]//div/strong[text() = '$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$'])[1]
   first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
   selected_darkened_letter_button: //button[contains(@class,'is-selected')]
   senior_complete_name: //div[starts-with(@class, 'ListRow_listRow')]//div[contains(text(),'$AND_CLI_senior_user1_name$')][strong[contains(text(),'$AND_CLI_senior_user1_lastname$')]]
@@ -104,16 +104,8 @@ care_platform_participant_details:
   health_overview_title: //h4[contains(.,'At-A-Glance')]
   medication_tab_nav: //nav/button[contains(.,'Medication')]
   providers_tab_nav: //nav/button[contains(.,'Providers')]
+  minimize_button: //button[contains(.,'Minimize')]
   tab_nav_content: //div[@data-testid='box'][1]//div[@data-testid='box'][1]//div[contains(@class,'tabs-all')]/div[@class='tabs-content']
-  health_insurance_label: //strong[text()='Health Insurance']
-  health_insurance_button: //button[text()='Health Insurance']
-  secondary_health_insurance_button: //button[text()='Secondary Health Insurance']
-  tertiary_health_insurance_button: //button[text()='Tertiary Health Insurance']
-  primary_care_physician: //strong[text()='Primary Care Physician']
-  pharmacy_button: //button[text()='Pharmacy']
-  preferred_lab_button: //button[text()='Preferred Lab']
-  specialists_block: //*[@id='providers']//*[contains(text(),'Specialists')][@class='is-block']
-  specialist_button: //button[text()='Specialist']
   call_history_tab_button: //nav/button[contains(text(),'Call History')]
   first_call_history_row: //div[@tab-title='Call History']//div[contains(@class,'accordion-item')][1]
   first_call_history_content: //div[@tab-title='Call History']//div[contains(@class,'accordion-item')][1]//table[@class='call-details']
@@ -230,7 +222,6 @@ care_platform_edit_participant_records:
   medication_deleted_notification: //div[@class='Toastify']//div[contains(text(),'Medication deleted')]
   vendor_navigation: //ul[@class='form-navigation']//li/button[text()='Vendors']
 
-  
 care_platform_edit_participant_demographics:
   first_name_input: firstName
   empty_first_name_error: //div[contains(@class,'red') and contains(text(),'Please enter a first name')]/ancestor::div[attribute::*[contains(local-name(), 'aria-hidden')]]
@@ -406,6 +397,31 @@ care_platform_edit_participant_notes:
   notes_subtitle: //h4[contains(text(),'Notes')]
   notes_text_area: notes
 
+care_platform_edit_participant_providers:
+  health_insurance_button: //button[text()='Health Insurance']
+  secondary_health_insurance_button: //button[text()='Secondary Health Insurance']
+  tertiary_health_insurance_button: //button[text()='Tertiary Health Insurance']
+  primary_care_physician: //strong[text()='Primary Care Physician']
+  add_provider_by_type: //*[@id='providers']//button[contains(text(),'Add')][contains(.,'$AND_CLI_PROVIDER_TYPE$')]
+  pharmacy_button: //button[text()='Pharmacy']
+  edit_provider_by_name_button: //div[div[text()='$AND_CLI_PROVIDER_NAME$']]//following-sibling::div/button[text()='Edit']
+  delete_provider_by_name_button: //div[div[text()='$AND_CLI_PROVIDER_NAME$']]//following-sibling::div/button[text()='Delete']
+  provider_by_name_block: //div[div[text()='$AND_CLI_PROVIDER_NAME$']]
+  preferred_lab_button: //button[text()='Preferred Lab']
+  specialists_block: //*[@id='providers']//*[contains(text(),'Specialists')][@class='is-block']
+  name_input: name
+  address_input: address
+  phone_input: phone
+  member_id_input: memberIdentification
+  group_id_input: groupIdentification
+  speciality_input: specialty
+  save_and_close_button: //button[contains(text(),'Save and Close')]
+  cancel_button: //button[text()='Cancel']
+  modal_title: //*[@id='modals']//h4
+  delete_provider_modal_title: //*[@id='dialogs']//h4[text()='Delete Provider']
+  provider_confirmation_name: //*[@id='dialogs']//*[text()='$AND_CLI_PROVIDER_NAME$']
+  yes_delete_button: //*[@id='dialogs']//button[text()='Yes, Delete']
+
 care_platform_edit_participant_allergies:
   add_allergy_button: //button[text()='Add Allergy']
   edit_button_based_on_allergy_name: //strong[contains(text(),'$AND_CLI_UNIQUE_NAME$')]/../following-sibling::div//button[text()='Edit']
@@ -548,6 +564,9 @@ care_platform_notifications:
   emergency_room_admission_saved_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Emergency room admission saved']
   emergency_room_admission_deleted_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Emergency room admission deleted']
   participant_changes_saved_notification: //div[@class='Toastify']//div[@role='alert']//div[text()='Participant changes saved']
+  provider_created_notification: //div[@class='Toastify']//div[@role='alert']//div[contains(text(),'Provider created')]
+  provider_saved_notification: //div[@class='Toastify']//div[@role='alert']//div[contains(text(),'Provider saved')]
+  provider_deleted_notification: //div[@class='Toastify']//div[@role='alert']//div[contains(text(),'Provider deleted')]
   dismiss_notification_button: //div[@class='Toastify']//button[text()='Dismiss']
 
 care_platform_facility:

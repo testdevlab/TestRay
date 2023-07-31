@@ -739,6 +739,53 @@ class Device
     end
   end
 
+  # Custom variation of type send_keys
+  # sets the provided value for element.
+  # Accepts:
+  #   Strategy
+  #   Id
+  #   Value
+  def send_keys_if_exist(action, main_case, main_case_id)
+    action = convert_value_pageobjects(action);
+    locator_strategy, id = action["Strategy"], action["Id"]
+    value = action["Value"]
+    el = nil
+    value = value.gsub("$AND_ROLE$", @role) if value && value.is_a?(String) && value.include?("$AND_ROLE$")
+    
+    begin
+      exist = @driver.find_element(locator_strategy, id).displayed?
+
+      if exist == true
+        el = @driver.find_element(locator_strategy, id)
+        start = Time.now
+
+        error = nil
+
+        while (Time.now - start) < @timeout
+          begin
+            if !action["Actions"] && el
+              el.send_keys(convert_value(value))
+            else
+              if el
+                @driver.action.send_keys(convert_value(value), el).perform
+              else
+                @driver.action.send_keys(convert_value(value)).perform
+              end
+            end
+            return
+          rescue => e
+            error = e
+          end
+        end
+      else
+        return
+      end
+    rescue => e
+      log_info("Element not present: #{id}")
+      return
+    end
+  end
+
   #Clears by using backspace
   # Accepts:
   #   Strategy

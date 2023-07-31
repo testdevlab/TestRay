@@ -414,6 +414,8 @@ This is not a type but can be used in different Types as a Validation for the ac
 6. [get_next_month](#get_next_month)
 7. [generate_random_day](#generate_random_day)
 8. [search_by_text](#search_by_text)
+9. [send_keys_if_exist](#send_keys_if_exist)
+
 ## Appium/Selenium
 
 #### <a id="click"></a>click 
@@ -1232,4 +1234,14 @@ Return the following month of the current date
 Custom action for searching in NeverAlone listings
     - Type: search_by_text
       Text: SEARCH_INPUT
-      
+
+### <a id="send_keys_if_exist"></a>send_keys_if_exist
+
+It works just like send_keys but ignoring possible exceptions.
+Note: is best to use accompanied by a previous waiter or sleep,
+to avoid that the element haven't had time enough to render
+
+    - Type: send_keys_if_exist
+      Strategy: xpath | id | etc.
+      Id: //some//path
+      Value: SOME_VALUE
