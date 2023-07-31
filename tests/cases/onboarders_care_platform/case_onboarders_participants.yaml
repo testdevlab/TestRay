@@ -191,3 +191,26 @@ TestOnboarderClickandViewParticipantRecordfromListing:
         - Type: contain
           Var: SUBTAB_CLASS
           Value: 'active'
+
+# CXTB-146 Participant Profile - Review, Edit or Add Vendor Info
+TestOnboarderCarePartnerParticipantProfileReviewEditOrAddVendorInfo:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: OnboarderCarePartnerLogin
+   # Go to participants list and select a participant record.
+    - Type: case
+      Value: CarePartnerParticipantRecordsNavigation 
+  # Click on "Demographic" and "VENDORS" tab
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.demographics_tab$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.demographics_vendor_subtab$
+    - Type: case
+      Value: AddEditOrDeleteParticipantVendorInfo
