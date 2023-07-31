@@ -44,6 +44,7 @@ SetOnlyWebTests:
   - Case: TestEmployeeHealthPortalForgotPasswordOnLoginPage
   - Case: TestEmployeeHealthPortalRequestAnAppointmentForUser
   - Case: TestEmployeeHealthPortalReviewUpcomingAppointment
+  - Case: TestEmployeeHealthPortalManuallyLogoutOfPortal
   # ES Care Partner
   - Case: TestCHCarePartnerStatusDropdownNotInCall
   - Case: TestCHCarePartnerAccessAndReviewTeamMembersAvailability

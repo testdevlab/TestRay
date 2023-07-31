@@ -317,3 +317,17 @@ TestEmployeeHealthPortalAccountHelp:
         - Type: contain
           Var: HELP_PAGE_URL
           Value: .pdf
+
+# CXTB-531 Employee Health Portal - Manually Log Out of Portal
+TestEmployeeHealthPortalManuallyLogoutOfPortal:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  # Log out of the Employee Health Portal and verify that the user was successfully logged out.
+    - Type: case
+      Value: EmployeeHealthPortalLogOut

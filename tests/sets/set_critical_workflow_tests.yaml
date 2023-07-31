@@ -20,6 +20,7 @@ SetCriticalWorkflows:
     - Case: TestSeniorAppCallPersonalCarePartnerOnHomePage  # Physical
   # Employee Health Portal tests
     - Case: TestEmployeeHealthPortalUserCall
+    - Case: TestEmployeeHealthPortalManuallyLogoutOfPortal
   # ES IDD Never Alone tests
     - Case: TestIDDESCallNowButtonOnHomePage #Physical
     - Case: TestIDDESAnswerCallForCarePartnerCallingDeviceCallCompleted #Physical
