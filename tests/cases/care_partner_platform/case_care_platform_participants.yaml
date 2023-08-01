@@ -4713,3 +4713,34 @@ TestCarePartnerParticipantInfoEditInsuranceOrProviderInformation:
   # Call Edit Insurance or Provider Information
     - Type: case
       Value: EditInsuranceOrProviderInformationHelper
+
+#CXTB-119 Participant Profile - Edit Insurance or Provider Information
+TestCarePartnerParticipantProfileEditInsuranceOrProviderInformation:
+  Environment: Settings
+  Precases:
+    - CarePartnerCleanCallQueueAndHangedCalls
+  Aftercases:
+    - CarePlatformLogout
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Navigate to Records.
+    - Type: case
+      Value: CarePartnerParticipantRecordsNavigation
+  # Click on "Medical" and then Medical Needs subtab.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.medical_tab$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.medical_medical_needs_subtab$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.medical_medical_needs_subtab$
+  # Call Edit Insurance or Provider Information
+    - Type: case
+      Value: EditInsuranceOrProviderInformationHelper
