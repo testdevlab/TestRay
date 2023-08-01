@@ -214,3 +214,31 @@ TestOnboarderCarePartnerParticipantProfileReviewEditOrAddVendorInfo:
       Id: $PAGE.care_platform_participant_records.demographics_vendor_subtab$
     - Type: case
       Value: AddEditOrDeleteParticipantVendorInfo
+
+# CXTB-151 Participant Profile - Review, Edit or Add Behavioral Info
+TestOnboarderParticipantProfileReviewEditOrAddBehavioralInfo:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case as Onboarder.
+    - Type: case
+      Value: OnboarderCarePartnerLogin
+  # Navigate to the participants list and select a participant record.
+    - Type: case
+      Value: CarePartnerParticipantRecordsNavigation 
+  # Click on "Medical" and then select the "Behavioral" sub tab.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.medical_tab$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.medical_behavioral_subtab$
+  # Page updates to show a full page view of the At-a-glance issues logged for the participant.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_health_overview.add_issue_button$
+  # Review, Edit or Add Behavioral Info.
+    - Type: case
+      Value: AddEditOrDeleteBehavioralInfo
