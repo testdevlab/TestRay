@@ -142,3 +142,129 @@ OnboarderPrecaseforActiveState:
     Value: CarePlatformLogout
   - Type: sleep
     Time: 2
+
+#This helper is used to create a staff member
+OnboarderCreateStaffMember:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Click on Add button
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_staff_listing.add_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.onboarders_staff_listing.add_button$
+  # Fill form to create staff
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_create_edit_staff_member.create_title$
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.onboarders_create_edit_staff_member.first_name_input$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.onboarders_create_edit_staff_member.first_name_input$
+      Value: $AND_CLI_STAFF_MEMBER_FIRST_NAME$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.onboarders_create_edit_staff_member.last_name_input$
+      Value: $AND_CLI_STAFF_MEMBER_LAST_NAME$
+    - Type: click
+      Strategy: id
+      Id: $PAGE.onboarders_create_edit_staff_member.role_dropdown$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_create_edit_staff_member.role_facility_leadership_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.onboarders_create_edit_staff_member.role_facility_leadership_option$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.onboarders_create_edit_staff_member.hire_at_input$
+      Value: $AND_CLI_HIRE_DATE$
+    # Generate unique email for staff member
+    - Type: generate_unique_email
+      ResultVar: UNIQUE_EMAIL
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.onboarders_create_edit_staff_member.email_input$
+      Value: $AND_CLI_UNIQUE_EMAIL$
+    # Click Create Staff Member
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.onboarders_create_edit_staff_member.create_staff_member_button$
+  # Wait for Notification
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_notifications.staff_created_notification$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.onboarders_notifications.dismiss_notification_button$
+  # You should be redirected to Overview of the newly created staff
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.staff_records.overview_tab$
+  # Check that the information match the data entered
+    # Role
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.staff_records.staff_role$
+      Greps:
+      - var: OVERVIEW_ROLE
+        attr: innerText
+        condition: nempty
+        match: "(.*)"
+    - Type: assert
+      Asserts: 
+      - Type: contain
+        Var: OVERVIEW_ROLE
+        Value: $AND_CLI_ROLE$
+    # Email
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.staff_records.staff_email$
+      Greps:
+      - var: OVERVIEW_EMAIL
+        attr: innerText
+        condition: nempty
+        match: "(.*)"
+    - Type: assert
+      Asserts: 
+      - Type: contain
+        Var: OVERVIEW_EMAIL
+        Value: $AND_CLI_UNIQUE_EMAIL$
+    # Name
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.staff_records.staff_name$
+      Greps:
+      - var: OVERVIEW_NAME
+        attr: innerText
+        condition: nempty
+        match: "(.*)"
+    - Type: assert
+      Asserts: 
+      - Type: contain
+        Var: OVERVIEW_NAME
+        Value: $AND_CLI_STAFF_MEMBER_FIRST_NAME$
+    - Type: assert
+      Asserts: 
+      - Type: contain
+        Var: OVERVIEW_NAME
+        Value: $AND_CLI_STAFF_MEMBER_LAST_NAME$
+  # Status should be "Pending Password"
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.staff_records.staff_status$
+      Greps:
+      - var: OVERVIEW_STATUS
+        attr: innerText
+        condition: nempty
+        match: "(.*)"
+    - Type: assert
+      Asserts: 
+      - Type: contain
+        Var: OVERVIEW_STATUS
+        Value: "Pending Password"

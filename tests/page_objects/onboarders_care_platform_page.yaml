@@ -11,3 +11,32 @@ onboarders_edit_participant_records:
 
 onboarders_notifications:
   participant_changes_saved_notification: //div[@class='Toastify']//div[text()='Participant changes saved']
+  staff_created_notification: //div[@class='Toastify']//div[text()='Staff member created']
+  staff_edited_notification: //div[@class='Toastify']//div[text()='Staff member changes saved']
+  dismiss_notification_button: //div[@class='Toastify']//button[text()='Dismiss']
+
+onboarders_header_navigation:
+  staff_tab: //nav//a[text()='Staff']
+
+onboarders_staff_listing:
+  add_button: //button[contains(.,'Add')]
+
+onboarders_create_edit_staff_member:
+  create_title: //div[text()='Create Staff Member']
+  role_dropdown: role
+  first_name_input: firstName
+  last_name_input: lastName
+  hire_at_input: hiredAt
+  phone_number_input: phone
+  email_input: email
+  role_facility_leadership_option: //*[@id='role']/option[text()='Facility Leadership']
+  create_staff_member_button: //button[text()='Create Staff Member']
+
+staff_records:
+  overview_tab: //button[contains(text(),'Overview')]
+  edit_info_button: //button[contains(text(),'Edit info')]
+  admin_button: //span[@class='button-dropdown']/button[text()='Admin']
+  staff_role: //div[@class='participant-profile-contact']//div[strong[contains(.,'Role')]]
+  staff_name: //div[strong[text()='Staff Member Name:']]//following-sibling::div
+  staff_status: //div[strong[text()='Status:']]//following-sibling::div
+  staff_email: //div[strong[text()='Email:']]//following-sibling::div

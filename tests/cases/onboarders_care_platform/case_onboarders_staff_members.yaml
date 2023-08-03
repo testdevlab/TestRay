@@ -1,0 +1,23 @@
+# CXTB-504: Create New Staff Member Account for Care Platform
+# CXTB-538: Create New Staff Member Account with Facility Leadership Admin Role
+TestOnboarderCreateNewStaffMemberWithFacilityLeadershipRole:
+    Environment: Settings
+    Vars:
+      STAFF_MEMBER_FIRST_NAME: Newstaffname
+      STAFF_MEMBER_LAST_NAME: Newstafflastname
+      ROLE: Facility Leadership
+      HIRE_DATE: '2023-07-20'
+    Roles:
+    - Role: desktopChrome
+      App: "desktop"
+    Actions:
+  # Log in Care Platform as an Onboarder
+    - Type: case
+      Value: OnboarderCarePartnerLogin
+  # Go to Staff
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.onboarders_header_navigation.staff_tab$
+  # Call helper to create the staff member
+    - Type: case
+      Value: OnboarderCreateStaffMember

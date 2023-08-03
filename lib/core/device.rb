@@ -2132,6 +2132,13 @@ def generate_unique_name(action, main_case, main_case_id)
   ENV[convert_value(action["ResultVar"])] = unique_name
 end
 
+# Returns a random email
+def generate_unique_email(action, main_case, main_case_id)
+  timestamp = Time.now.utc.strftime("%d%m%y%H%M%S")
+  unique_email = "random+" + timestamp + "@domain.com"
+  ENV[convert_value(action["ResultVar"])] = unique_email
+end
+
 # Custom method to calculate the minutes/seconds from when an event was created
 # i.e. returns "Added x minutes ago" or "Added x seconds ago"
 def calculate_minutes_passed_by_from_event_creation(action, main_case, main_case_id)
