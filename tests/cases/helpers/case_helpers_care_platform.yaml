@@ -1294,11 +1294,14 @@ PostCallSurveyCarePartner:
   Actions:
     # End the call on care partner side - Teardown.
     # Fill the notes
+    - Type: generate_unique_name
+      Name: "Automation subject"
+      ResultVar: UNIQUE_SUBJECT
     - Type: send_keys
       Role: desktopChrome
       Strategy: xpath
       Id: $PAGE.providers_call_handling_page.subject_input$
-      Value: Missed Call Subject Automation
+      Value: $AND_CLI_UNIQUE_SUBJECT$
     - Type: send_keys
       Role: desktopChrome
       Strategy: xpath
@@ -1764,6 +1767,43 @@ CarePartnerParticipantPaneNavigation:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_participant_details.participant_details_title$
+
+CarePartnerParticipantCallPortalNavigation:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Navigate to Participants.
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.care_platform.navigation_participant$
+  # Limit listing by searching name.
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
+  # Select corresponding participant by name in the list.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior_complete_name$
+  # Verify that the Participant Pane is opened.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.records_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.participant_local_time$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.participant_details_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
 
 CarePartnerToastValidation:
   Environment: Settings

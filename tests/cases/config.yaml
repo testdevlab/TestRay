@@ -99,6 +99,7 @@ Environments:
       senior_user2_pwd: add_your_info
       senior_user2_name: add_your_info
       senior_user2_lastname: add_your_info
+      soft_call_phone_number: add_your_number #phone number is a combination of 10 digits, without parenthesis or dashes
 #IDD Never Alone users    
       idd_es_never_alone_user1: add_your_info
       idd_es_never_alone_user1_pwd: add_your_info
