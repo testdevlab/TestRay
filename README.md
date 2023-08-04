@@ -356,6 +356,7 @@ Actions:
 12. [clear_field_js](#clear_field_js)
 13. [clear_field_by_backspace](#clear_field_by_backspace)
 14. [refresh](#refresh)
+15. [list_handler](#list_handler)
 
 ## Only Mobile
 
@@ -804,6 +805,29 @@ Refreshes the browsers tab.
 
   - Type: refresh
     Role: role1
+
+### <a id="list_handler"></a>list_handler
+
+Custom type to handle list actions
+Provided a list locator allows to select the list element by index or a sublocator to perform multiple operations
+click, clear, send_keys and get_text
+Index: List elements can be searched by index number or string first and last.
+Locator: It's an xpath locator that can be indicated to find the element within the list element that contains
+a specific attribute value.
+Value: It's the value to be sent by the send_keys operation
+Attribute and AttributeValue: The attribute and values to be match by the element withing the List Element corresponding to the Locator.
+ResultVar: Returned value of get_text operation
+
+  - Type: list_handler
+      Strategy: xpath
+      Id: xpath/page_object
+      Index: int, first and last
+      Locator: xpath/page_object
+      Attribute: innerHTML, textContext, class, etc
+      AttributeValue: string
+      Operation: click, clear, send_keys and get_text
+      Value: string, int
+      ResultVar: string.
 
 ## Only Mobile
 

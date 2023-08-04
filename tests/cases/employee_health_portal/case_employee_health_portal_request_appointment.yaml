@@ -106,7 +106,7 @@ TestEmployeeHealthPortalReviewUpcomingAppointment:
     - Type: loop
       Times: 3
       Case: EmployeeHealthPortalAppointmentsRequest
-  # get the  upcoming appointment month
+  #get the  upcoming appointment month
     - Type: get_next_month
       ResultVar: NEXT_MONTH
   #View information in "My schedule" tab on portal home page
@@ -151,7 +151,7 @@ TestEmployeeHealthPortalReviewUpcomingAppointment:
       Id: $PAGE.employee_health_home_page.calendar_right_button$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.employee_health_home_page.calendar_month_view$
+      Id: $PAGE.employee_health_home_page.calendar_month_days$
     # checking first date introduced
     - Type: click
       Strategy: xpath
@@ -160,23 +160,11 @@ TestEmployeeHealthPortalReviewUpcomingAppointment:
       Strategy: xpath
       Id: $PAGE.employee_health_home_page.container_tab$
     # validate if there is a scheduled date
-    - Type: wait_for
+    - Type: sleep
+      Time: 1
+    - Type: wait_not_visible
       Strategy: xpath
-      Id: $PAGE.employee_health_home_page.schedule_table$
-    - Type: get_attribute
-      Strategy: xpath
-      Id: $PAGE.employee_health_home_page.date_field$
-      Greps:
-        - var: DATE
-          attr: textContent
-          condition: nempty
-          match: "(.*)"
-    - Type: assert
-      Asserts:
-        - Type: contain
-          Var: DATE
-          Value: Date
-    # # look for another day without even scheduled a date.
+      Id: $PAGE.employee_health_home_page.no_appointment_label$
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_home_page.calendar_day_without_event1$
@@ -228,24 +216,11 @@ TestEmployeeHealthPortalReviewUpcomingAppointment:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.employee_health_home_page.container_tab$
-    # validate if there is a scheduled date
-    - Type: wait_for
+    - Type: sleep
+      Time: 1
+    - Type: wait_not_visible
       Strategy: xpath
-      Id: $PAGE.employee_health_home_page.schedule_table$
-    - Type: get_attribute
-      Strategy: xpath
-      Id: $PAGE.employee_health_home_page.date_field$
-      Greps:
-        - var: DATE
-          attr: textContent
-          condition: nempty
-          match: "(.*)"
-    - Type: assert
-      Asserts:
-        - Type: contain
-          Var: DATE
-          Value: Date
-    # # look for another day without even scheduled a date.
+      Id: $PAGE.employee_health_home_page.no_appointment_label$
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_home_page.calendar_day_without_event2$
@@ -294,24 +269,12 @@ TestEmployeeHealthPortalReviewUpcomingAppointment:
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_home_page.calendar_day_button$
+    - Type: sleep
+      Time: 1
     # validate if there is a scheduled date
-    - Type: wait_for
+    - Type: wait_not_visible
       Strategy: xpath
-      Id: $PAGE.employee_health_home_page.schedule_table$
-    - Type: get_attribute
-      Strategy: xpath
-      Id: $PAGE.employee_health_home_page.date_field$
-      Greps:
-        - var: DATE
-          attr: textContent
-          condition: nempty
-          match: "(.*)"
-    - Type: assert
-      Asserts:
-        - Type: contain
-          Var: DATE
-          Value: Date
-    # # look for another day without even scheduled a date.
+      Id: $PAGE.employee_health_home_page.no_appointment_label$
     - Type: click
       Strategy: xpath
       Id: $PAGE.employee_health_home_page.calendar_day_without_event3$

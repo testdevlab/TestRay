@@ -136,7 +136,7 @@ EmployeeHealthPortalUpdateAccountPassword:
       Value: $AND_CLI_alternative_correct_password$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.employee_health_my_account_modal.update_password_change_button$
+      Id: $PAGE.employee_health_my_account_modal.update_password_change_my_password_button$
   #Wait for failure alert
     - Type: wait_for
       Strategy: xpath
@@ -197,7 +197,7 @@ EmployeeHealthPortalUpdateAccountPassword:
       Value: $AND_CLI_alternative_correct_password$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.employee_health_my_account_modal.update_password_change_button$
+      Id: $PAGE.employee_health_my_account_modal.update_password_change_my_password_button$
   #Wait for success alert
     - Type: wait_for
       Strategy: xpath
@@ -245,7 +245,7 @@ EmployeeHealthPortalUpdateAccountPassword:
       Value: $AND_CLI_employee_user1_pwd$
     - Type: click
       Strategy: xpath
-      Id: $PAGE.employee_health_my_account_modal.update_password_change_button$
+      Id: $PAGE.employee_health_my_account_modal.update_password_change_my_password_button$
       #Wait for success alert
     - Type: wait_for
       Strategy: xpath
@@ -400,7 +400,7 @@ EmployeeHealthPortalAppointmentsRequest:
       Id: $PAGE.employee_health_telehealth_request_form.calendar_right_button$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.employee_health_telehealth_request_form.calendar_month_view$
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_month_days$
     - Type: generate_random_day
       InsertedDay: $AND_CLI_DAY$
       ResultVar: DAY
@@ -558,3 +558,501 @@ EmployeeHealthPortalAppointmentsRequestForDependentMinor:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.employee_health_home_page.appointment_scheduled_notification$
+
+EHPMoblieNavigateToMyInfo:
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_home_page.header_menu_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_home_page.header_menu_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_menu_modal.my_info_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_menu_modal.my_info_button$
+
+EHPMoblieNavigateToNotifications:
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_home_page.header_menu_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_home_page.header_menu_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_menu_modal.my_info_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_menu_modal.notifications_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_notifications_page.save_changes_button$
+
+EHPMoblieNavigateToPassword:
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_home_page.header_menu_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_home_page.header_menu_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_menu_modal.password_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_menu_modal.password_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_current$
+
+EHPMoblieNavigateToHelp:
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_home_page.header_menu_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_home_page.header_menu_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_menu_modal.help_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_menu_modal.help_button$
+
+EHPMobileUpdateAccountPassword:
+  Vars:
+    ENV_PASS_STORE: $AND_CLI_employee_user1_pwd$ 
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  #Navigate into My Account
+    - Type: case
+      Value: EHPMoblieNavigateToPassword
+  #Go to Update Password tab and check components visibility
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_current$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_new$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_confirm$
+  #Try incorrect current password
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_current$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_current$
+      Value: "wrongPass!23"
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_new$
+      Value: $AND_CLI_alternative_correct_password$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_confirm$
+      Value: $AND_CLI_alternative_correct_password$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_change_my_password_button$
+  #Wait for failure alert
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.alert_failed_update_password$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_password_page.close_button$  
+  #Verify the dialog is closed
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_new$
+      Time: 5
+  #Navigate to Password
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_menu_modal.password_button$
+    - Type: wait_for_page_to_load
+      Time: 5
+  #Check requirements
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_password_page.password_requirements_text_section$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_password_page.password_requirements_text_section$
+      Greps:
+        - var: PASSWORD_REQUIREMENTS
+          attr: textContent
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: PASSWORD_REQUIREMENTS
+          Value: 'at least 8 characters'
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: PASSWORD_REQUIREMENTS
+          Value: 'one special character'
+  #Fill the fields correctly
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_current$
+      Value: $AND_CLI_employee_user1_pwd$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_new$
+      Value: $AND_CLI_alternative_correct_password$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_confirm$
+      Value: $AND_CLI_alternative_correct_password$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_change_my_password_button$
+  #Wait for success alert
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.alert_success_update_password$
+  #Log Out
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_menu_modal.logout_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_logout_dialog.logout_button$
+      #Verify logout
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.log_in_button$
+  #Setting the password var to the new value
+    - Type: set_env_var
+      Value: $AND_CLI_alternative_correct_password$
+      Var: employee_user1_pwd
+  #Log In with new credentials
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  #Verify the login with the new password was successful
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.call_now_button$
+  #Restore original password
+    - Type: case
+      Value: EHPMoblieNavigateToPassword
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_current$
+      Value: $AND_CLI_employee_user1_pwd$
+      #Restore variables
+    - Type: set_env_var
+      Value: $AND_CLI_ENV_PASS_STORE$
+      Var: employee_user1_pwd
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_new$
+      Value: $AND_CLI_employee_user1_pwd$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_confirm$
+      Value: $AND_CLI_employee_user1_pwd$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.update_password_change_my_password_button$
+      #Wait for success alert
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.alert_success_update_password$  
+      #Log Out
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_menu_modal.logout_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_logout_dialog.logout_button$
+      #Verify logout
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.log_in_button$
+
+EHPMobileAppointmentsRequest: 
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions: 
+    # waiting for appointment view
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_home_page.request_appointment_button$
+  # filling form
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.select_location_drop_down$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.select_location_drop_down$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.select_location_option$
+    - Type: generate_unique_name
+      Name: "I have something to say about my health."
+      ResultVar: PAIN_DESCRIPTION
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.employee_health_telehealth_request_form.comments$
+      Value: $AND_CLI_PAIN_DESCRIPTION$
+    # choosing Date and time
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_request_appointment_page.select_date_input$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_request_appointment_page.calendar_right_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_request_appointment_page.calendar_right_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_month_days$
+    - Type: generate_random_day
+      InsertedDay: $AND_CLI_DAY$
+      ResultVar: DAY
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_day_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_request_appointment_page.save_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_request_appointment_page.select_time_input$
+    - Type: sleep
+      Time: 0.5 
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_hour_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.calendar_hour_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_request_appointment_page.save_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.create_event_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.create_event_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_request_form.create_event_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.appointment_scheduled_notification$
+
+#Employee Health Portal - User Call Now helper
+EHPMobileUserCall:
+  Vars:
+    STATE: IN
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+    - Role: desktopChrome1
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  #Home Page
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.call_now_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.call_now_button$
+  #Close should take you back to the Home Page
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_call_now_page.title$
+    - Type: sleep
+      Time: 1
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_call_now_page.close_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_call_now_page.title$
+  #Going back to call now page
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.call_now_button$  
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_state_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_state_select_option$
+  #Try to call without all fields filled
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_call_now_page.call_now_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_reasons_error$
+  #Fill all fields
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select_option$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_reasons_input$
+      Value: 'Test reason: automation'
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_call_now_page.call_now_button$
+  #Call page
+  #Enable webcam
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_on_demand_call_page.video_enable_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_on_demand_call_page.video_enable_button$
+  #Checking Settings modal
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_on_demand_call_page.video_settings_button$
+    - Type: sleep
+      Time: 2
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_on_demand_call_page.video_settings_modal_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_on_demand_call_page.video_settings_modal_mic_select$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_on_demand_call_page.video_settings_modal_speakers_select$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_on_demand_call_page.video_settings_modal_camera_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_on_demand_call_page.video_settings_modal_close_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.employee_health_on_demand_call_page.video_settings_modal_close_button$
+  #Opening new window for the provider's part of the process
+    - Type: case
+      Role: desktopChrome1
+      Value: ProvidersCarePlatformLogin
+    - Type: case
+      Role: desktopChrome1
+      Value: ProvidersCarePlatformEndCall
+  #Switch back to the Employee Health Portal tab
+    - Type: switch_window
+      Value: 0
+  #Verify redirect back to home and call ended notification to disappear 
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.call_now_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.alert_call_ended$
+
+#Employee Health Portal - User starts call from the EHP portal (this workflow won't end the call).
+EHPMobileCallNow:
+  Vars:
+    STATE: IN
+  Roles:
+    - Role: desktopChrome
+      App: "desktop"
+    - Role: desktopChrome1
+      App: "desktop"
+  Actions:
+  #Home Page
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.call_now_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.call_now_button$
+  #Fill all fields
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_state_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_state_select_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_patient_select_option$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_telehealth_on_demand_modal.modal_reasons_input$
+      Value: 'Test reason: automation'
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_call_now_page.call_now_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_on_demand_call_page.connecting_label$
+
+EHPMobileLogOut: 
+    Roles:
+    - Role: desktopChrome
+      App: desktop       
+    Actions: 
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_home_page.header_menu_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_home_page.header_menu_button$
+      #Log Out
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_menu_modal.logout_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_logout_dialog.logout_button$
+      #Verify logout
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.log_in_button$

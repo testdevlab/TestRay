@@ -2549,4 +2549,105 @@ def senior_clean_unwanted_prompts(action, main_case, main_case_id)
     count += 1
   end
 end
+
+# Custom type to handle list actions
+# Provided a list locator allows to select the list element by index or a sublocator to perform multiple operations
+# click, clear, send_keys and get_text
+# Index: List elements can be searched by index number or string first and last.
+# Locator: It's an xpath locator that can be indicated to find the element within the list element that contains
+# a specific attribute value.
+# Value: It's the value to be sent by the send_keys operation
+# Attribute and AttributeValue: The attribute and values to be match by the element withing the List Element corresponding to the Locator.
+# ResultVar: Returned value of get_text operation
+# Accepts:
+#   Strategy
+#   Id
+#   Index
+#   Locator
+#   Attribute
+#   AttributeValue
+#   Value
+#   ResultVar
+def list_handler(action, main_case, main_case_id)
+  action = convert_value_pageobjects(action);
+  locator_strategy, id = action["Strategy"], action["Id"]
+  index = convert_value(action["Index"])
+  locator = convert_value_pageobjects(action["Locator"])
+  attribute = convert_value(action["Attribute"])
+  value = convert_value(action["Value"])
+  attributeValue = convert_value(action["AttributeValue"])
+  operation = convert_value(action["Operation"])
+  resultVar = convert_value(action["ResultVar"])
+  
+  exception = ""
+  el = nil
+  els = @driver.find_elements(locator_strategy, id)
+  begin
+    #Selecting element by string Index
+    if !index.empty?
+      if index == "last"
+        log_info("#{@role}: Index element: #{els.length - 1}")
+        el = els[-1]    
+      elsif index == "first"
+        log_info("#{@role}: Index element: #{0}")
+        el = els[0]
+      #Selecting element by Index.
+      elsif els.length > index.to_i && locator.empty?
+          el = els[index.to_i]       
+      #Selecting element by locator from a list element by Index.
+      elsif els.length > index.to_i 
+          el = els[index.to_i].find_element(:xpath => ".#{locator}")      
+      else 
+          log_info("#{@role}: Index out of bound: #{index}, number of elements #{els.length}")     
+          raise IndexError
+      end
+    end
+    #Selecting a specific element by the Locator that matches the given attribute value within the list element.  
+    if !locator.empty? && !attribute.empty? && !attributeValue.empty?
+      els.each do |elm|
+        if elm.find_element(:xpath => ".#{locator}").attribute(attribute)["#{attributeValue},"]
+          log_info("#{@role}: element: with attribute #{attribute} and value #{attributeValue}")
+          el = elm.find_element(:xpath => ".#{locator}")
+          break
+        end
+      end 
+    end
+    #Selecting a specific element by the Locator within the list element.
+    if !locator.empty? && index.empty? && attribute.empty? && attributeValue.empty?
+      els.each do |elm|
+        if !elm.find_element(:xpath => ".#{locator}").nil?
+          log_info("#{@role}: element: found by locator #{locator}")
+          el = elm.find_element(:xpath => ".#{locator}")
+          break
+        end
+      end 
+    end
+
+    case operation
+    when "click"
+      log_info("Action:#{action}")
+      return el.click
+    when "get_text"
+      log_info("Action:#{action}")
+      return ENV[resultVar] = el.text   
+    when "clear"
+      log_info("Action:#{action}")
+      return el.clear
+    when "send_keys"
+      log_info("Action:#{action}")
+      return el.send_keys(value)
+    else 
+      log_info("An operation is required or this operation is not supported yet")
+      return "An operation is required or this operation is not supported yet"
+    end
+
+  rescue => e
+    exception = e    
+  end
+
+  if !action["NoRaise"]
+    path = take_error_screenshot(main_case, main_case_id)
+    raise "#{@role}: Exception: #{exception}, Action:#{action}\nError Screenshot: #{path}"
+  end
+end
 # END OF DEVICE CLASS

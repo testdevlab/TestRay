@@ -1,0 +1,333 @@
+#CXTB-242: Set “Notifications” in “My account” Modal
+TestEHPMobileSettingNotification:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - mobileEmulation
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  #Navigate to Notifications page
+    - Type: case
+      Value: EHPMoblieNavigateToNotifications
+  #Verifying text in the notification tab
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_notifications_page.notifications_text$
+      Greps:
+        - var: TITLE_TEXT
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: TITLE_TEXT
+          Value: Receive notifications 10 minutes before an appointment via
+  #Checking that the checkboxes work: changes state with the click
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.notifications_email_checkbox_input$
+      Greps:
+      - var: ORIGINAL_EMAIL_VALUE
+        attr: value
+        match: "(.*)"
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.notifications_sms_checkbox_input$
+      Greps:
+      - var: ORIGINAL_SMS_VALUE
+        attr: value
+        match: "(.*)"
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.notifications_email_checkbox$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.notifications_sms_checkbox$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.notifications_email_checkbox_input$
+      Greps:
+      - var: NEW_EMAIL_VALUE
+        attr: value
+        match: "(.*)"
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.notifications_sms_checkbox_input$
+      Greps:
+      - var: NEW_SMS_VALUE
+        attr: value
+        match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: ne
+          Var: ORIGINAL_EMAIL_VALUE
+          Value: $AND_CLI_NEW_EMAIL_VALUE$
+    - Type: assert
+      Asserts:
+        - Type: ne
+          Var: ORIGINAL_SMS_VALUE
+          Value: $AND_CLI_NEW_SMS_VALUE$
+  #Canceling changes. Modal should disappear.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_notifications_page.close_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_notifications_page.save_changes_button$
+  #Navigate to Notifications page
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_menu_modal.notifications_button$
+  #Checking state got undone when we canceled
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.notifications_email_checkbox_input$
+      Greps:
+      - var: ORIGINAL_EMAIL_VALUE_2
+        attr: value
+        match: "(.*)"
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.notifications_sms_checkbox_input$
+      Greps:
+      - var: ORIGINAL_SMS_VALUE_2
+        attr: value
+        match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ORIGINAL_EMAIL_VALUE
+          Value: $AND_CLI_ORIGINAL_EMAIL_VALUE_2$
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ORIGINAL_SMS_VALUE
+          Value: $AND_CLI_ORIGINAL_SMS_VALUE_2$
+  #Checking checkboxes
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.notifications_email_checkbox$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.notifications_sms_checkbox$
+  #Saving
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.save_changes_button$
+  #Waiting for notification of success
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.alert_updated_notification$
+
+#CXTB-252 Information & Update Contact Number
+TestEHPMobileInformationUpdateNumber:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - mobileEmulation
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  #Navigate into My Account
+    - Type: case
+      Value: EHPMoblieNavigateToMyInfo
+  #Check that phone is the only one enable to edit, all the others are read only
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_input$ 
+      Property: disabled
+      Value: "false"
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_firstname_input$ 
+      Property: disabled
+      Value: "true"
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_lastname_input$ 
+      Property: disabled
+      Value: "true"
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_email_input$ 
+      Property: disabled
+      Value: "true"
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_date_of_birth_input$ 
+      Property: disabled
+      Value: "true"
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_member_id_input$ 
+      Property: disabled
+      Value: "true"
+    #Save the current value for phone
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_input$
+      Greps:
+      - var: CURRENT_PHONE
+        attr: value
+        remove: '+1 '
+        match: "(.*)"
+    #The way to leave the phone input empty is by backspacing 10 times
+    - Type: loop
+      Times: 10
+      Case: CaseDeletePhoneNumber
+    - Type: wait_for_attribute
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_input$
+      Attribute: value
+      Value: ''
+    #Trying to save with empty phone number input
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_alert_message$
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_alert_message$
+      Greps:
+        - var: PHONE_ALERT
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: PHONE_ALERT
+          Value: Please enter a phone number
+    #Checking alert when using wrong format
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_input$
+      Value: 333666
+    - Type: get_text
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_alert_message$
+      Greps:
+        - var: PHONE_ALERT
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: PHONE_ALERT
+          Value: Please enter a valid phone number
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_input$
+      Value: 4444
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.save_changes_button$
+  #Waiting for notification of success
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.alert_updated_info$
+    #Navigate to My Info
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_mobile_menu_modal.my_info_button$
+    #Erase again the phone number
+    - Type: loop
+      Times: 10
+      Case: CaseDeletePhoneNumber
+    #Setting back the right value for phone number
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.my_info_phone_input$
+      Value: $AND_CLI_employee_user1_phone_number$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_my_account_modal.save_changes_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_home_page.alert_updated_info$
+
+#CXTB-241 “Update password” Workflow in My account Modal
+TestEHPMobileUpdateAccountPassword:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - mobileEmulation
+      App: "desktop"
+  Actions:
+    - Type: case
+      Value: EHPMobileUpdateAccountPassword
+    - Type: set_env_var
+      Value: $AND_CLI_employee_dependent_user1_pwd$
+      Var: employee_user1_pwd
+    - Type: set_env_var
+      Value: $AND_CLI_employee_dependent_user1$
+      Var: employee_user1
+    - Type: case
+      Value: EHPMobileUpdateAccountPassword  
+
+#CXTB-285 Employee Health Portal - Account - Help
+TestEHPMobileAccountHelp:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - mobileEmulation
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  #Going to Help
+  #Navigate into My Account
+    - Type: case
+      Value: EHPMoblieNavigateToHelp
+  #Verify the Help page is visible
+    - Type: switch_window
+      Value: 1
+      CheckTime: 10
+    - Type: get_url
+      Greps:
+        - var: HELP_PAGE_URL
+          match: "Employee_Health_User_Manual(.*).pdf"
+    - Type: assert
+      Role: desktopChrome
+      Asserts:
+        - Type: contain
+          Var: HELP_PAGE_URL
+          Value: Employee_Health_User_Manual
+        - Type: contain
+          Var: HELP_PAGE_URL
+          Value: .pdf
+
+# CXTB-531 Employee Health Portal - Manually Log Out of Portal
+TestEHPMobileManuallyLogoutOfPortal:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - mobileEmulation
+      App: "desktop"
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  # Log out of the Employee Health Portal and verify that the user was successfully logged out.
+    - Type: case
+      Value: EHPMobileLogOut

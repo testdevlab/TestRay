@@ -83,4 +83,20 @@ SetOnlyWebTests:
   - Case: TestProviderUseForgotPasswordLink
   - Case: TestProviderAccessParticipantDirectoryandViewDeviceRecordfromListing
   # Facility Leadership Care Platform
-  - Case: TestFacilityLeadershipDirectoryAndFilter
+  - Case: TestFacilityLeadershipDirectoryAndFilter 
+  # Employee Health Portal Mobile
+  - Case: TestEHPMobileUserCall
+  - Case: TestEHPMobileDependentUserCall
+  - Case: TestEHPMobileMinorUserCall
+  - Case: TestEHPMobileCallAlreadyAnsweredNotificationWhenEmployeeLogsOut
+  - Case: TestEHPMobileSignUpNewDependent
+  - Case: TestEHPMobileForgotPasswordOnLoginPage
+  - Case: TestEHPMobileSettingNotification
+  - Case: TestEHPMobileInformationUpdateNumber
+  - Case: TestEHPMobileUpdateAccountPassword
+  - Case: TestEHPMobileAccountHelp
+  - Case: TestEHPMobileManuallyLogoutOfPortal
+  - Case: TestEHPMobileRequestAnAppointmentForUser
+  - Case: TestEHPMobileReviewUpcomingAppointment
+  - Case: TestEHPMobileRequestAnAppointmentForDependentMinor
+

@@ -1,0 +1,159 @@
+#CXTB-216: Verify Sign Up Process for New Elegible DependentUsers
+#CXTB-215: Verify Sign Up Process for New Employee Users
+TestEHPMobileSignUpNewDependent:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - mobileEmulation
+      App: "desktop"
+  Actions:
+  #Go to Employee Health Portal, then to Sign Up
+    - Type: case
+      Value: EmployeeHealthPortalGoSignUp
+  #Go back to Login
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.back_login_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.log_in_button$
+  #Return to Sign Up
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.sign_up_button$
+  #Click on Submit without the data required
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.submit_button$
+  #Check alert messages on required fields
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.employee_health_signup_page.first_name_alert$
+      Greps:
+        - var: ALERT_MESSAGE
+          match: "(.*)first name(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ALERT_MESSAGE
+          Value: "Please enter your first name."
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.employee_health_signup_page.last_name_alert$
+      Greps:
+        - var: ALERT_MESSAGE
+          match: "(.*)last name(.*)"
+    - Type: assert
+      Asserts:
+        - Type: eq
+          Var: ALERT_MESSAGE
+          Value: "Please enter your last name."
+  #Filling the form
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.first_name_input$
+      Value: $AND_CLI_employee_user1_name$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.last_name_input$
+      Value: $AND_CLI_employee_user1_lastname$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.email_input$
+      Value: $AND_CLI_employee_user1$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.email_confirmation_input$
+      Value: $AND_CLI_employee_user1$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.phone_input$
+      Value: $AND_CLI_employee_user1$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.phone_input$
+      Value: $AND_CLI_employee_user1_phone_number$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.dateofbirth_input$
+      Value: $AND_CLI_employee_user1_dob$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.member_id_input$
+      Value: $AND_CLI_employee_user1_card_member_id$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.agree_checkbox$
+    - Type: scroll_to
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.submit_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_page.submit_button$
+  #Check there's a Thank You modal
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_confirmation_modal.thanks_title$  
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.employee_health_signup_confirmation_modal.close_modal_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.log_in_button$
+
+# #CXTB-284 Forgot Password on Login Page
+# #Test ended at step 6; step 7 and 8 are to check for a confirmation sent to the employee user 1
+TestEHPMobileForgotPasswordOnLoginPage:
+  Environment: Settings 
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - mobileEmulation
+      App: "desktop"
+  Actions:      
+    - Type: maximize
+    - Type: navigate
+      Role: desktopChrome
+      Value: $AND_CLI_employee_health_url$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.log_in_button$
+  #Opening the forgot password dialog
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.employee_health_login_page.forgot_password_button$
+  #Closing the dialog
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.employee_health_login_page.dialog_cancel_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.dialog_submit_button$
+  #Opening the forgot password dialog again
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.employee_health_login_page.forgot_password_button$
+  #Submitting the email
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.dialog_email_input$
+      Value: $AND_CLI_employee_user1$
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.employee_health_login_page.dialog_submit_button$
+  #Verify the Thank You text showed up
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.employee_health_login_page.dialog_thank_you_title$
+  #Closing the Thank You dialog   
+    - Type: click
+      Strategy: xpath
+      Id : $PAGE.employee_health_login_page.dialog_close_icon_button$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id : $PAGE.employee_health_login_page.dialog_submit_button$

@@ -184,9 +184,15 @@ class SeleniumDriver
       localChromeOptions = Selenium::WebDriver::Chrome::Options.new(
         options: chrome_ops,
       )
+
+      if chrome_ops['args'].any?('mobileEmulation')      
+          localChromeOptions.add_emulation(device_name: 'Nexus 5')     
+      end 
+
       driver = Selenium::WebDriver.for(
         :chrome, options: localChromeOptions
       )
+
     else
       # remote selenium grid
       log_debug("Selenium Server URL: #{@url}")
@@ -211,6 +217,11 @@ class SeleniumDriver
       localFirefoxOptions = Selenium::WebDriver::Firefox::Options.new(
         options: firefox_ops,
       )
+
+      if firefox_ops['args'].any?('mobileEmulation')      
+          localFirefoxOptions.add_emulation(device_name: 'Nexus 5')     
+      end 
+
       driver = Selenium::WebDriver.for(
         :firefox, options: localFirefoxOptions
       )
@@ -286,6 +297,11 @@ class SeleniumDriver
       localEdgeOptions = Selenium::WebDriver::Edge::Options.new(
         options: edge_ops,
       )
+
+      if edge_ops['args'].any?('mobileEmulation')      
+        localEdgeOptions.add_emulation(device_name: 'Nexus 5')     
+      end 
+
       driver = Selenium::WebDriver.for(
         :edge, options: localEdgeOptions
       )

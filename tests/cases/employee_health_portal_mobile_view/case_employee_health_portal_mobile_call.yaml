@@ -1,0 +1,148 @@
+#CXTB-86 Employee Health Portal - Home - Employee User Call Now
+TestEHPMobileUserCall:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - mobileEmulation
+      App: "desktop"
+    - Role: desktopChrome1
+      App: "desktop"
+  Actions:
+  #Calling Login case
+    - Type: case
+      Value: EHPMobileUserCall
+
+# #CXTB-88 “Call Now” as Dependent User
+TestEHPMobileDependentUserCall:
+  Environment: Settings
+  Vars:
+    ENV_USER_STORE: $AND_CLI_employee_user1$
+    ENV_PASS_STORE: $AND_CLI_employee_user1_pwd$
+    ENV_MEMBER_ID_STORE: $AND_CLI_employee_user1_card_member_id$
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - mobileEmulation
+      App: "desktop"
+    - Role: desktopChrome1
+      App: "desktop"
+  Actions:
+    - Type: set_env_var
+      Value: $AND_CLI_employee_dependent_user1_pwd$
+      Var: employee_user1_pwd
+    - Type: set_env_var
+      Value: $AND_CLI_employee_dependent_user1$
+      Var: employee_user1
+    - Type: set_env_var
+      Value: $AND_CLI_employee_dependent_user1_card_member_id$
+      Var: employee_user1_card_member_id
+    - Type: case
+      Value: EHPMobileUserCall
+  #Restore values
+    - Type: set_env_var
+      Value: $AND_CLI_ENV_PASS_STORE$
+      Var: employee_user1_pwd
+    - Type: set_env_var
+      Value: $AND_CLI_ENV_USER_STORE$
+      Var: employee_user1
+    - Type: set_env_var
+      Value: $AND_CLI_ENV_MEMBER_ID_STORE$
+      Var: employee_user1_card_member_id
+
+# #CXTB-89 “Call Now” for Dependent Minor User
+TestEHPMobileMinorUserCall:
+  Environment: Settings
+  Vars:
+    ENV_USER_STORE: $AND_CLI_employee_user1$
+    ENV_PASS_STORE: $AND_CLI_employee_user1_pwd$
+    ENV_MEMBER_ID_STORE: $AND_CLI_employee_user1_card_member_id$
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - mobileEmulation
+      App: desktop
+    - Role: desktopChrome1
+      App: desktop
+  Actions:
+    - Type: set_env_var
+      Value: $AND_CLI_employee_minor_dependent_pwd$
+      Var: employee_user1_pwd
+    - Type: set_env_var
+      Value: $AND_CLI_employee_minor_dependent_user$
+      Var: employee_user1
+    - Type: set_env_var
+      Value: $AND_CLI_employee_minor_dependent_card_member_id$
+      Var: employee_user1_card_member_id
+    - Type: case
+      Value: EHPMobileUserCall
+  #Restore values
+    - Type: set_env_var
+      Value: $AND_CLI_ENV_PASS_STORE$
+      Var: employee_user1_pwd
+    - Type: set_env_var
+      Value: $AND_CLI_ENV_USER_STORE$
+      Var: employee_user1
+    - Type: set_env_var
+      Value: $AND_CLI_ENV_MEMBER_ID_STORE$
+      Var: employee_user1_card_member_id
+
+# #CXTB-441: No "Call already answered" Notification if EHP Call Ended By Employee Log Out
+TestEHPMobileCallAlreadyAnsweredNotificationWhenEmployeeLogsOut:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      Capabilities:
+        chromeOptions:
+          args:
+            - mobileEmulation
+      App: desktop
+    - Role: desktopChrome1
+      App: desktop
+  Actions:
+  # Calling EHP Login case.
+    - Type: case
+      Value: EmployeeHealthPortalLogIn
+  # Clean EHP hanged calls.
+    # - Type: case
+    #   Value: EmployeeHealthPortalCleanHangedCalls
+  # Generate a call from EHP.
+    - Type: case
+      Value: EHPMobileCallNow    
+  # Calling Login case on Provider Care Platform side.
+    - Type: case
+      Value: ProvidersCarePlatformLogin
+      Role: desktopChrome1
+  # Select the call on Providers Care Platform.
+    - Type: click
+      Role: desktopChrome1
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.on_demand_calls$
+  # Verify that the call information appears on the right side.
+    - Type: wait_for
+      Role: desktopChrome1
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
+  # Log out of EHP.
+    - Type: case
+      Value: EHPMobileLogOut
+  # Verify that the "Call already answered".
+    - Type: wait_for
+      Role: desktopChrome1
+      Strategy: xpath
+      Id: $PAGE.providers_notifications.call_already_answered_notification$
+  # Verify that the user is returned to the Provider Home view.
+    - Type: wait_not_visible
+      Role: desktopChrome1
+      Strategy: xpath
+      Id: $PAGE.providers_call_handling_page.answer_call_button$
+    - Type: wait_for
+      Role: desktopChrome1
+      Strategy: xpath
+      Id: $PAGE.providers_home_page.home_title$
