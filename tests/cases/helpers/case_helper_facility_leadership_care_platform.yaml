@@ -1,0 +1,42 @@
+FacilityLeadershipCarePlatformLogout:
+  Roles:
+    - Role: desktopChrome
+      App: desktop       
+  Actions:     
+      # Log out to the Care Platform app with Care Partners account
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.user_dropdown_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.logout_menu_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_logout_modal.log_out_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_login.login_button$
+
+FacilityLeadershipCarePartnerLogin:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    - Type: navigate
+      Role: desktopChrome
+      Value: $AND_CLI_care_platform_url$
+    - Type: maximize
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_login.email_input$
+      Value: $AND_CLI_facility_leadership_user1$
+    - Type: send_keys
+      Strategy: id
+      Id: $PAGE.care_platform_login.password_input$
+      Value: $AND_CLI_facility_leadership_user1_pwd$
+    - Type: click
+      Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_login.login_button$
+    - Type: sleep
+      Time: 2
