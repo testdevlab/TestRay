@@ -67,6 +67,7 @@ SetOnlyWebTests:
   - Case: TestOnboarderParticipantProfileEditInsuranceOrProviderInformation
   - Case: TestOnboarderParticipantPaneReviewEditOrAddBehavioralInfo
   - Case: TestOnboarderCreateNewStaffMemberWithFacilityLeadershipRole
+  - Case: TestOnboarderParticipantInfoEditOrAddContactsInfo
   # Providers Care Platform
   - Case: TestProvidersUpdatePassword
   - Case: TestProviderLogOutStayOnShift

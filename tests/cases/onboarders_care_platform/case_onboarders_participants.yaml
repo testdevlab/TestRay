@@ -292,3 +292,31 @@ TestOnboarderParticipantPaneReviewEditOrAddBehavioralInfo:
   # Review, Edit or Add Behavioral Info.
     - Type: case
       Value: AddEditOrDeleteBehavioralInfo
+
+# CXTB-545 Edit or Add Contacts Info - Edit Participant Info.
+TestOnboarderParticipantInfoEditOrAddContactsInfo:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case as Onboarder.
+    - Type: case
+      Value: OnboarderCarePartnerLogin
+  # Navigate to the participants list and select a participant.
+    - Type: case
+      Value: CarePartnerParticipantPaneNavigation
+  # Click on "Edit Info" button 
+    - Type: click
+      Strategy: xpath 
+      Id: $PAGE.onboarders_participant_details_pane.edit_info$
+  # Navigate to "Contacts" section and click on it.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.contacts_navigation$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.contacts_navigation$
+  # Add, Edit and Delete Contacts.
+    - Type: case
+      Value: AddEditOrDeleteContacts
