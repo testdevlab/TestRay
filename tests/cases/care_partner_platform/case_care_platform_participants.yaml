@@ -427,7 +427,7 @@ TestCarePartnerParticipantReview:
     - Type: wait_for
       Strategy: xpath
       Role: desktopChrome
-      Id: $PAGE.care_platform_participant_details.participant_details_title$
+      Id: $PAGE.care_platform_participant_details.participant_details_title_by_name$
     - Type: wait_for
       Strategy: xpath
       Role: desktopChrome
@@ -4438,3 +4438,150 @@ TestCarePartnerCallExternal10DigitNumberWithoutParticipant:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_participant_details.call_partner_label$
+
+#CXTB-537 Click and View Test Participant Visuals - Listing, Profile, Call Portal
+TestCarePartnerClickAndViewTestParticipantVisuals:
+  Environment: Settings
+  Precases:
+    - CarePartnerCleanCallQueueAndHangedCalls
+  Aftercases:
+    - CarePlatformLogout
+    - OnboarderChangeUserToNotTest
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Making a participant a test participant
+    - Type: case
+      Value: OnboarderChangeUserToTest
+  # Calling Login case.
+    - Type: case
+      Value: CarePartnerLogin
+  # Navigate to Participants.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+  # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user2_name$
+  # Check badge on the desired participant. In this case using senior 2
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior2_complete_name$
+      Greps:
+        - var: INNER_HTML
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: INNER_HTML
+          Value: 'test'
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: INNER_HTML
+          Value: 'badge-yellow'
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior2_complete_name$
+  # Check badge in Participants Details
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.participant_details_title$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.participant_details_title$
+      Greps:
+        - var: TITLE_INNER_HTML
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: TITLE_INNER_HTML
+          Value: 'test'
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: TITLE_INNER_HTML
+          Value: 'badge-yellow'
+  # Click on records
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_details.records_button$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_name$
+  # Check badge on Records
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_name$
+      Greps:
+        - var: RECORDS_TITLE_INNER_HTML
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: RECORDS_TITLE_INNER_HTML
+          Value: 'test'
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: RECORDS_TITLE_INNER_HTML
+          Value: 'badge-yellow'
+  # Click Call Portal Button
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.call_portal_btn$
+  # Check for the badge in the Call Portal
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_portal_title$
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_portal_title$
+      Greps:
+        - var: CALL_PORTAL_TITLE_INNER_HTML
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: CALL_PORTAL_TITLE_INNER_HTML
+          Value: 'test'
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: CALL_PORTAL_TITLE_INNER_HTML
+          Value: 'badge-yellow'
+  #Go back to Records with hyperlink on Call Portal
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_call_portal.call_participant_records$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_name$
+  # Check badge on Records
+    - Type: get_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant_records.participant_name$
+      Greps:
+        - var: RECORDS_TITLE_INNER_HTML
+          attr: innerHTML
+          condition: nempty
+          match: "(.*)"
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: RECORDS_TITLE_INNER_HTML
+          Value: 'test'
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: RECORDS_TITLE_INNER_HTML
+          Value: 'badge-yellow'

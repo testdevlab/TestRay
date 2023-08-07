@@ -1372,7 +1372,6 @@ CarePartnerClearSubjectInputField:
       Value: backspace
 
 CarePartnerNavigateToParticipants:
-  Environment: Settings
   Roles:
     - Role: desktopChrome
       App: desktop       
@@ -1766,7 +1765,7 @@ CarePartnerParticipantPaneNavigation:
       Id: $PAGE.care_platform_participant_details.participant_local_time$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.care_platform_participant_details.participant_details_title$
+      Id: $PAGE.care_platform_participant_details.participant_details_title_by_name$
 
 CarePartnerParticipantCallPortalNavigation:
   Environment: Settings
@@ -1797,7 +1796,7 @@ CarePartnerParticipantCallPortalNavigation:
       Id: $PAGE.care_platform_participant_details.participant_local_time$
     - Type: wait_for
       Strategy: xpath
-      Id: $PAGE.care_platform_participant_details.participant_details_title$
+      Id: $PAGE.care_platform_participant_details.participant_details_title_by_name$
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_participant.call_portal_btn$

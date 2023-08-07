@@ -268,3 +268,89 @@ OnboarderCreateStaffMember:
       - Type: contain
         Var: OVERVIEW_STATUS
         Value: "Pending Password"
+
+# Making an user to be "Test"
+OnboarderChangeUserToTest:
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    - Type: case
+      Value: OnboarderCarePartnerLogin
+    # Navigate to Participants.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+    # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user2_name$
+    # Click on the desired participant. In this case using senior 2
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior2_complete_name$
+    # Click on "Edit Info".
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_participant_details_pane.edit_info$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.onboarders_participant_details_pane.edit_info$
+    # Select test = yes
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_demographics.test_select$
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_demographics.test_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_demographics.test_yes_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.medical_history_navigation$
+    - Type: sleep
+      Time: 0.5
+    - Type: case
+      Value: CarePlatformLogout
+
+# Making an user to be not "Test"
+OnboarderChangeUserToNotTest:
+  Aftercase:
+    - CarePlatformLogout
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    - Type: case
+      Value: OnboarderCarePartnerLogin
+    # Navigate to Participants.
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+    # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user2_name$
+    # Click on the desired participant. In this case using senior 2
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_participant.senior2_complete_name$
+    # Click on "Edit Info".
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.onboarders_participant_details_pane.edit_info$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.onboarders_participant_details_pane.edit_info$
+    # Select test = no
+    - Type: wait_for
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_demographics.test_select$
+    - Type: click
+      Strategy: id
+      Id: $PAGE.care_platform_edit_participant_demographics.test_select$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_demographics.test_no_option$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.medical_history_navigation$
+    - Type: sleep
+      Time: 0.5

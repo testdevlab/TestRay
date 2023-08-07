@@ -34,6 +34,7 @@ SetOnlyWebTests:
   - Case: TestCarePartnerParticipantInfoEditInsuranceOrProviderInformation
   - Case: TestCarePartnerParticipantProfileEditInsuranceOrProviderInformation
   - Case: TestCarePartnerCallExternal10DigitNumberWithoutParticipant
+  - Case: TestCarePartnerClickAndViewTestParticipantVisuals
   # Employee Health Portal
   - Case: TestEmployeeSettingNotification
   - Case: TestEmployeeInformationUpdateNumber

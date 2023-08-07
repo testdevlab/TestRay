@@ -78,7 +78,7 @@ care_platform_logout_modal:
   log_out_button: //button[contains(text(),'$AND_CLI_LOGOUT_OPTION$')]
 
 care_platform_participant:
-  participants_title: //div[@class='text-lg font-bold']//h3[@class='text-lg font-bold']
+  participants_title: //h3[text()='Participants']
   first_participant_row: (//div[@id='containerElement']/div[starts-with(@class, 'ListRow_listRow')]//div/strong[text() = '$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$'])[1]
   first_darkened_letter_button: //button[@class='alphabet-letter'][not(@disabled)][1]
   selected_darkened_letter_button: //button[contains(@class,'is-selected')]
@@ -96,7 +96,8 @@ care_platform_participant:
   status_dropdown_options: //div[contains(@class, 'queue-filter-dropdown')]  
 
 care_platform_participant_details:
-  participant_details_title: //h3[contains(.,'$AND_CLI_senior_user1_name$') and contains(.,'$AND_CLI_senior_user1_lastname$')]
+  participant_details_title: //div[@id='participant-component']//h3
+  participant_details_title_by_name: //h3[contains(.,'$AND_CLI_senior_user1_name$') and contains(.,'$AND_CLI_senior_user1_lastname$')]
   participant_dob: //strong[contains(text(),'DOB')]/following-sibling::time
   dnr_badge: //div[@id='participant-component']//div[contains(@class,'participant-photo-dnr')]
   participant_local_time: //div[@class='user-local-time']/span[contains(.,'Times shown are local to') and contains(.,'$AND_CLI_senior_user1_name$')]
@@ -233,6 +234,9 @@ care_platform_edit_participant_demographics:
   empty_last_name_error: //div[contains(@class,'red') and contains(text(),'Please enter a last name')]/ancestor::div[attribute::*[contains(local-name(), 'aria-hidden')]]
   dnr_yes_radio_button: //label[input[@name='dnr'][@value='true']]
   dnr_no_radio_button: //label[input[@name='dnr'][@value='false']]
+  test_select: isTest
+  test_yes_option: //*[@id='isTest']/option[@value='true']
+  test_no_option: //*[@id='isTest']/option[@value='false']
 
 care_platform_edit_participant_address_emergency_phone:
   adress_input: address
@@ -455,6 +459,7 @@ care_platform_edit_participant_contacts:
   yes_delete_button: //button[text()='Yes, Delete']
 
 care_platform_call_portal:
+  call_portal_title: //*[@id='participant-component']//h3
   call_volume_button: //span[contains(@class,'icon-volume')]/ancestor::button
   call_mic_button: //span[contains(@class,'icon-mic')]/ancestor::button
   call_camera_button: //span[contains(@class,'icon-video')]/ancestor::button
