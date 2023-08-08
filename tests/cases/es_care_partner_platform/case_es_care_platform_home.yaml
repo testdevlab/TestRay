@@ -158,3 +158,40 @@ TestESCarePartnerAccessAndReviewTeamMembersAvailability:
         - Type: n_contain
           Var: IS_LIST_OPEN
           Value: users-dropdown-open
+
+# CXTB-525 ESCarePartnerPlatform - Manually Log Out of Portal & Go Off Shift
+TestESCarePartnerManuallyLogoutGoOffShift:
+  Environment: Settings 
+  Vars:
+    LOGOUT_OPTION: "Go Off Shift"
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: ESCarePartnerLogin
+  # Click your initials/avatar in upper right corner
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.user_dropdown_button$
+  # Click on the logout button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.logout_menu_button$
+  # Click on the cancel button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_logout_modal.cancel_logout_button$
+  # Calling Logout case.
+    - Type: case
+      Value: CarePlatformLogout
+  # Log in as an Admin On Call to verify if the user is offline.
+    - Type: case
+      Value: ESAdminOnCallLogin
+  # Open the headset icon at the top and, you’ll see the shift changed to Off when you logged out
+    - Type: case
+      Value: VerifyESUserIsOffline
+  # Log out of the second user too.
+    - Type: case
+      Value: CarePlatformLogout

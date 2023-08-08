@@ -48,6 +48,8 @@ care_platform_header:
   myaccount_menu_button: //header//nav//button[contains(.,'My Account')]
   logout_menu_button: //header//nav//button[contains(.,'Log Out')]
   offline_carepartner1_element: //div[@class='users-dropdown-list-item is-offline']//div[@class='users-dropdown-name' and contains(., '$AND_CLI_CARE_PARTNER_USER1_FULLNAME$')]
+  offline_ch_carepartner_element: //div[@class='users-dropdown-list-item is-offline']//div[@class='users-dropdown-name' and contains(., '$AND_CLI_es_admincall_user_name$ $AND_CLI_es_admincall_user_lastname$')]//small[text()='Care Partner (CH)']
+  offline_es_carepartner_element: //div[@class='users-dropdown-list-item is-offline']//div[@class='users-dropdown-name' and contains(., '$AND_CLI_es_admincall_user_name$ $AND_CLI_es_admincall_user_lastname$')]//small[text()='Care Partner (ES)']
   onshift_carepartner1_element: //div[contains(text(),'On Shift')]//following-sibling::div[not(contains(@class,'is-offline'))]/div[@class='users-dropdown-name' and contains(., '$AND_CLI_CARE_PARTNER_USER1_FULLNAME$')]
 
 care_platform_myaccount_info:

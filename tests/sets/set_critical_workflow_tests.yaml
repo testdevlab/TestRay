@@ -27,3 +27,6 @@ SetCriticalWorkflows:
     - Case: TestIDDESCompleteCallBackButtonCallAfterReceivingMessage #Physical
     - Case: TestIDDESVerifyOfflineMode #Physical
     - Case: TestIDDESPersonalCarePartnerMessagePromptAndCallBackButton #Physical
+  # EasterSeals Care Partner Platform
+    - Case: TestCHCarePartnerManuallyLogoutGoOffShift
+    - Case: TestESCarePartnerManuallyLogoutGoOffShift

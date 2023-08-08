@@ -90,6 +90,11 @@ Environments:
       admincall_user1_pwd: add_your_info
       admincall_user2: add_your_info
       admincall_user2_pwd: add_your_info
+#EasterSeals Admin on call users      
+      es_admincall_user: add_your_info
+      es_admincall_user_pwd: add_your_info
+      es_admincall_user_name: add_your_info
+      es_admincall_user_lastname: add_your_info
 #Senior users    
       senior_user1: add_your_info
       senior_user1_pwd: add_your_info

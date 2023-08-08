@@ -363,3 +363,34 @@ ESSetScheduledCallForSeniorsToStartInXMinutes:
       Id: $PAGE.care_platform.navigation_home$
     - Type: case
       Value: CarePlatformLogout
+
+VerifyESUserIsOffline:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+    # Click on the users dropdown.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.headset_dropdown_button$
+  # Verify that the first user has gone off shift.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_header.offline_es_carepartner_element$
+    - Type: get_text
+      Strategy: xpath
+      Id : $PAGE.care_platform_header.offline_es_carepartner_element$
+      Greps:
+        - var: CARE_PARTNER_ELEMENT
+          match: "(.*)"
+    - Type: assert
+      Asserts: 
+      - Type: n_contain
+        Var: CARE_PARTNER_ELEMENT
+        Value: "Available"
+    - Type: assert
+      Asserts: 
+      - Type: n_contain
+        Var: CARE_PARTNER_ELEMENT
+        Value: "Idle"

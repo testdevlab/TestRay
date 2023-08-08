@@ -52,8 +52,10 @@ SetOnlyWebTests:
   # ES Care Partner
   - Case: TestCHCarePartnerStatusDropdownNotInCall
   - Case: TestCHCarePartnerAccessAndReviewTeamMembersAvailability
+  - Case: TestCHCarePartnerManuallyLogoutGoOffShift
   - Case: TestESCarePartnerStatusDropdownNotInCall
   - Case: TestESCarePartnerAccessAndReviewTeamMembersAvailability
+  - Case: TestESCarePartnerManuallyLogoutGoOffShift
   # On Boarders
   - Case: TestOnboarderCarePartnerUpdatePassword
   - Case: TestOnboarderManuallyLogOutOfThePortal
