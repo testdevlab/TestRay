@@ -320,3 +320,39 @@ TestOnboarderParticipantInfoEditOrAddContactsInfo:
   # Add, Edit and Delete Contacts.
     - Type: case
       Value: AddEditOrDeleteContacts
+
+# CXTB-548 Edit Participant Info - Edit or Add Emergency Room Admissions Info
+TestOnboarderParticipantInfoEditOrAddEmergencyRoomAdmissionsInfo:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Calling Login case.
+    - Type: case
+      Value: OnboarderCarePartnerLogin
+  # Go to Edit Participant
+    - Type: case
+      Value: CarePartnerEditParticipantNavigation
+  # Click Hospitalizations page in Navigation panel.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.hospitalization_navigation$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_records.hospitalization_navigation$
+  # Page refreshes to show the edit mode for hospitalization on the participant’s profile.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.emergency_room_tab$
+  # Click Emergency Room Admissions sub-header.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.emergency_room_tab$
+  # Page refreshes to show the edit mode for emergency room admissions for this participant.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.emergency_room_add_admission_button$
+  # Edit, Delete or Add Emergency Room Admissions Info.
+    - Type: case
+      Value: EditOrAddEmergencyRoomAdmissions

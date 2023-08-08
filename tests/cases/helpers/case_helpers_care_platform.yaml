@@ -2849,3 +2849,214 @@ AddEditOrDeleteContacts:
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_notifications.contact_deleted_notification$
+
+EditOrAddEmergencyRoomAdmissions:
+  Environment: Settings
+  Roles:
+    - Role: desktopChrome
+      App: desktop
+  Actions:
+  # Click "Add Emergency Room Admission" button in upper right corner.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.emergency_room_add_admission_button$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.emergency_room_add_admission_button$
+  # "Add Emergency Room Admission" window appears in center of screen.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_modal_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_modal_title$
+      Property: textContent
+      Value:  Add Emergency Room Admission
+  # Enter some information, then click the "Cancel" button.
+    - Type: get_timestamp
+      Format: "%Y-%m-%d" #YYYY-MM-DD
+      Var: TODAY_DATE
+    - Type: generate_unique_name
+      Name: AutoFacility
+      ResultVar: UNIQUE_FACILITY
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_date_input$
+      Value: $AND_CLI_TODAY_DATE$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_facility_input$
+      Value: $AND_CLI_UNIQUE_FACILITY$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_diagnosis_input$
+      Value: Automation Diagnosis
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.cancel_button$
+  # Window closes and no admission entry is added for participant.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_modal_title$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.edit_button_based_on_emergency_room_admissions_facility$
+  # Click "Add Emergency Room Admission" button in upper right corner.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.emergency_room_add_admission_button$
+  # "Add Emergency Room Admission" window appears in center of screen.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_modal_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_modal_title$
+      Property: textContent
+      Value:  Add Emergency Room Admission
+  # Populate admission details before clicking "Save and Close" button.
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_date_input$
+      Value: $AND_CLI_TODAY_DATE$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_facility_input$
+      Value: $AND_CLI_UNIQUE_FACILITY$
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_diagnosis_input$
+      Value: Automation Diagnosis
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.save_and_close_button$
+  # Window closes, the new admission entry entered is now displayed on the page, and toast notification appears at the top of the page.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_modal_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.emergency_room_admission_created_notification$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.emergency_room_admission_created_notification$
+  # Click "Edit" button for an existing admission.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.edit_button_based_on_emergency_room_admissions_facility$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.edit_button_based_on_emergency_room_admissions_facility$
+  # "Edit Emergency Room Admission" window appears in center of screen, showing currently entered information.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_modal_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_modal_title$
+      Property: textContent
+      Value:  Edit Emergency Room Admission
+  # Update some of the information and click the "Cancel" button.
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_diagnosis_input$
+      Value: Updated
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.cancel_button$
+  # Returned to the page; without any changes being saved to the entry.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.diagnosis_label_based_on_emergency_room_admissions_facility$
+    - Type: return_element_attribute
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.diagnosis_label_based_on_emergency_room_admissions_facility$
+      Attribute: textContent
+      ResultVar: SECOND_DIAGNOSIS_VALUE
+    - Type: assert
+      Asserts:
+        - Type: contain
+          Var: SECOND_DIAGNOSIS_VALUE
+          Value: Automation Diagnosis
+  # Click "Edit" button for an existing admission.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.edit_button_based_on_emergency_room_admissions_facility$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.edit_button_based_on_emergency_room_admissions_facility$
+  # "Edit Emergency Room Admission" window appears in center of screen, showing currently entered information.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_modal_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_modal_title$
+      Property: textContent
+      Value:  Edit Emergency Room Admission
+  # Make any changes desired before clicking "Save and Close" button.
+    - Type: send_keys
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_diagnosis_input$
+      Value: Updated
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.save_and_close_button$
+  # Window closes, the updated admission information is now displayed on the page, and toast notification appears at the top of the page
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.add_or_edit_emergency_room_admission_modal_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.emergency_room_admission_saved_notification$
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.emergency_room_admission_saved_notification$
+  # Click "Delete" button for an existing admission.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.delete_button_based_on_emergency_room_admissions_facility$
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.delete_button_based_on_emergency_room_admissions_facility$
+  # "Delete Emergency Room Admission" window will appear confirming you would like to delete the entry.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.delete_emergency_room_admission_dialog_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.delete_emergency_room_admission_dialog_title$
+      Property: textContent
+      Value:  Delete Emergency Room Admission
+  # Click "Cancel" button.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.cancel_button$
+  # Returned to page without entry being deleted.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.delete_button_based_on_emergency_room_admissions_facility$
+  # Click "Delete" button for an existing admission.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.delete_button_based_on_emergency_room_admissions_facility$
+  # "Delete Emergency Room Admission" window will appear confirming you would like to delete the entry.
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.delete_emergency_room_admission_dialog_title$
+    - Type: wait_for_property
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.delete_emergency_room_admission_dialog_title$
+      Property: textContent
+      Value:  Delete Emergency Room Admission
+  # Click "Yes, Delete" to confirm delete request.
+    - Type: click
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.yes_delete_button$
+  # Window closes, the deleted admission is no longer present on the page, and toast notification appears at the top of the page.
+    - Type: wait_not_visible
+      Strategy: xpath
+      Id: $PAGE.care_platform_edit_participant_hospitalization.delete_emergency_room_admission_dialog_title$
+    - Type: wait_for
+      Strategy: xpath
+      Id: $PAGE.care_platform_notifications.emergency_room_admission_deleted_notification$
