@@ -14,6 +14,7 @@ TestSeniorPreDeliveryAccountStatusVisualsAndBehavior:
     - LoginNeverAloneHelper
     - CarePartnerCleanCallQueueAndHangedCalls
   Aftercases:
+    - CarePlatformLogout
     - OnboarderCarePartnerSetParticipantStateToActive
     - TerminateApp
   Roles:
@@ -217,10 +218,6 @@ TestSeniorPreDeliveryAccountStatusVisualsAndBehavior:
       Value: OnboarderCarePartnerLogin
     - Type: case
       Value: OnboarderSetsAccountStatus
-    - Type: case
-      Value: CarePlatformLogout
-    - Type: sleep
-      Time: 2
 
 # CXTB-436 Senior app - Verify “Suspended” Account Status Visuals
 TestSeniorAppSuspendedAccountStatus:
@@ -229,6 +226,7 @@ TestSeniorAppSuspendedAccountStatus:
     LOGOUT_OPTION: "Go Off Shift"
   Aftercases:
     - TerminateApp
+    - CarePlatformLogout
     - OnboarderCarePartnerSetParticipantStateToActive
   Roles:
     - Role: localiOS
@@ -243,10 +241,11 @@ TestSeniorAppSuspendedAccountStatus:
     - Type: case
       Value: LoginNeverAloneHelper
   # Go to Participants
-    - Type: click
-      Strategy: xpath
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+    - Type: search_by_text
       Role: desktopChrome
-      Id: $PAGE.care_platform.navigation_participant$
+      Text: $AND_CLI_senior_user1_name$
   # Select first participant by name in the list
     - Type: wait_for
       Strategy: xpath
@@ -370,6 +369,7 @@ TestSeniorAppActiveAccountStatusAndBehavior:
     - OnboarderPrecaseforActiveState
   Aftercases:
     - TerminateApp
+    - CarePlatformLogout
     - OnboarderCarePartnerSetParticipantStateToActive
   Roles:
     - Role: localiOS

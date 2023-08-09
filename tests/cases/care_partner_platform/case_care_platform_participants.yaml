@@ -1102,6 +1102,7 @@ TestCarePartnerBrowsingWhileOnCall:
   Precases:
     - LoginNeverAloneHelper
     - CarePartnerCleanCallQueueAndHangedCalls
+    - SeniorCleanPrompts
   Aftercases:
     - TerminateApp
   Roles:

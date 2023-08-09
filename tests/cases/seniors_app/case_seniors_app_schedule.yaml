@@ -88,6 +88,8 @@ TestSeniorVerifyFullScheduleDisplay:
           Var: TODAY_DATE_SCHEDULE
           Value: $AND_CLI_TODAY_DATE$
     # Verify that any event that is over has moved to the bottom of the list.
+    - Type: sleep
+      Time: 1
     - Type: verify_event_went_to_bottom
       Strategy: class_chain
       Id: $PAGE.seniors_app_schedule.events_elements$

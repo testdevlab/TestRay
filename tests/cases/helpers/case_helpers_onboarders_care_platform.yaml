@@ -82,10 +82,11 @@ OnboarderCarePartnerSetParticipantStateToActive:
     - Type: case
       Value: OnboarderCarePartnerLogin
       # Go to Participants
-    - Type: click
-      Strategy: xpath
-      Role: desktopChrome
-      Id: $PAGE.care_platform.navigation_participant$
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+    # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
   # Select first participant by name in the list
     - Type: wait_for
       Strategy: xpath

@@ -226,10 +226,17 @@ TestSNFNewRequestFormBehavior:
       Strategy: class_chain
       Id: $PAGE.snf_new_request_form.oxygen_input$
       Value: "99"
+    - Type: hide_keyboard
+      Role: localiOS
     #Erase a required field: Requester First Name. Submit button should be disable after that.
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.snf_new_request_form.patient_information_title$
     - Type: clear_field
       Strategy: class_chain
       Id: $PAGE.snf_new_request_form.requester_first_name$
+    - Type: hide_keyboard
+      Role: localiOS
     - Type: click
       Strategy: class_chain
       Id: $PAGE.snf_new_request_form.patient_information_title$
@@ -242,6 +249,8 @@ TestSNFNewRequestFormBehavior:
       Strategy: class_chain
       Id: $PAGE.snf_new_request_form.requester_first_name$
       Value: $AND_CLI_facility_devices_requester_name$
+    - Type: hide_keyboard
+      Role: localiOS
     - Type: click
       Strategy: class_chain
       Id: $PAGE.snf_new_request_form.patient_information_title$
@@ -266,6 +275,8 @@ TestSNFNewRequestFormBehavior:
       Strategy: class_chain
       Id: $PAGE.snf_new_request_form.requester_first_name$
       Value: " A."
+    - Type: hide_keyboard
+      Role: localiOS
     - Type: click
       Strategy: class_chain
       Id: $PAGE.snf_new_request_form.patient_information_title$

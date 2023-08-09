@@ -4,6 +4,7 @@ TestESCarePartnerBrowsingWhileOnCall:
   Precases:
     - LoginESIDDNeverAloneHelper
     - ESCarePartnerCleanCallQueueAndHangedCalls
+    - SeniorCleanPrompts
   Aftercases:
     - TerminateApp
   Roles:
@@ -19,32 +20,38 @@ TestESCarePartnerBrowsingWhileOnCall:
     - Type: wait_for
       Strategy: class_chain
       Role: localiOS
-      Id: $PAGE.seniors_app_home.call_care_partner$
+      Id: $PAGE.idd_never_alone_app_home.call_now_button$
     - Type: click
       Strategy: class_chain
-      Id: $PAGE.seniors_app_home.call_care_partner$
-  # Click "Non-Medical" button.
-    - Type: click
-      Strategy: class_chain
-      Id: $PAGE.seniors_app_call.non_medical_call_button$
-  # Verify that screen redirects to the call waiting room.
+      Id: $PAGE.idd_never_alone_app_home.call_now_button$
+  # Click "Yes, Place call" button.
     - Type: wait_for
       Strategy: class_chain
-      Id: $PAGE.seniors_app_call.waiting_room_label$
+      Id: $PAGE.idd_never_alone_app_call.yes_place_call_button$
+    - Type: click
+      Strategy: class_chain
+      Id: $PAGE.idd_never_alone_app_call.yes_place_call_button$
+  # Device screen updates showing you the waiting room.
+    - Type: wait_for
+      Strategy: class_chain
+      Id: $PAGE.idd_never_alone_app_call.waiting_room_label$
   # Back in CarePartners we should have a call in the queue
     - Type: wait_for
-      Role: desktopChrome
       Strategy: xpath
-      Id: $PAGE.care_platform.call_queue_title$
-    - Type: click
       Role: desktopChrome
-      Strategy: xpath
-      Id: $PAGE.care_platform_participant.first_participant_row$
-  # Answer Call
+      Id: $PAGE.care_platform_home.call_based_on_es_idd_participant_name$
     - Type: click
       Strategy: xpath
+      Role: desktopChrome
+      Id: $PAGE.care_platform_home.call_based_on_es_idd_participant_name$
+    - Type: wait_for
+      Strategy: xpath
+      Role: desktopChrome
       Id: $PAGE.care_platform_home.answer_call$
+    - Type: click
+      Strategy: xpath
       Role: desktopChrome
+      Id: $PAGE.care_platform_home.answer_call$
     - Type: wait_for
       Strategy: xpath
       Id: $PAGE.care_platform_call_portal.video_btn$

@@ -14,7 +14,7 @@ providers_home_page:
   participants_navigation: //header//nav//a[contains(text(),'Participants')]
   facilities_navigation: //header//nav//a[contains(text(),'Facilities')]
   employees_navigation: //header//nav//a[contains(text(),'Employees')]
-  call_based_on_participant_name: //div[contains(@class, 'ListRow_listRow')]//strong[text() = '$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']/ancestor::div[@role='button' and not(contains(@class,'disabled'))]
+  call_based_on_participant_name: (//div[contains(@class, 'ListRow_listRow')]//strong[text() = '$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$']/ancestor::div[@role='button' and not(contains(@class,'disabled'))])[last()]
   on_demand_based_on_participant_name: (//*[@id='containerElement']/div[contains(@class,'ListRow_listRow') and contains(.,'On Demand Call')]/div[4]/strong[text()='$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$'])[last()]
   follow_up_ticket_based_on_participant_name: //div[contains(@class,'ListRow_listRow')][contains(.,'Follow-up')]//strong[text()='$AND_CLI_senior_user1_name$ $AND_CLI_senior_user1_lastname$'][last()]
   close_ticket_button: //button[text()='Close Ticket']

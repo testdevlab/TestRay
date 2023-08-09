@@ -187,12 +187,11 @@ SetPastEventForSeniors:
     - Type: case
       Value: CarePartnerLogin
       # Navigate to Participants
-    - Type: wait_for
-      Strategy: xpath
-      Id: $PAGE.care_platform.navigation_participant$
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform.navigation_participant$
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+    # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
       # Open the Call Portal
     - Type: click
       Strategy: xpath
@@ -294,10 +293,12 @@ SetScheduledCallForSeniorsToStartIn7Minutes:
     # Login to the Care Platform app with Care Partners account
     - Type: case
       Value: CarePartnerLogin
-      # Navigate to Participants
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform.navigation_participant$
+    # Navigate to Participants
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+    # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
       # Open the Call Portal
     - Type: click
       Strategy: xpath
@@ -406,9 +407,11 @@ SetScheduledCallForSeniorsToStartIn11Minutes:
     - Type: case
       Value: CarePartnerLogin
       # Navigate to Participants
-    - Type: click
-      Strategy: xpath
-      Id: $PAGE.care_platform.navigation_participant$
+    - Type: case
+      Value: CarePartnerNavigateToParticipants
+    # Decrease listing by searching participant's name
+    - Type: search_by_text
+      Text: $AND_CLI_senior_user1_name$
       # Open the Call Portal
     - Type: click
       Strategy: xpath
