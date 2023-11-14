@@ -194,7 +194,7 @@ class SeleniumDriver
         "goog:chromeOptions": chrome_ops,
       )
       driver = Selenium::WebDriver.for(
-        :remote, url: @url, desired_capabilities: remoteChromeOptions,
+        :remote, url: @url, options: remoteChromeOptions,
       )
     end
     return driver
