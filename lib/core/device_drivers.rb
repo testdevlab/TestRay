@@ -180,21 +180,13 @@ class SeleniumDriver
   # build the Chrome driver, given a set of options
   def build_chrome_driver(chrome_ops)
     # local selenium instance
-    args = chrome_ops['args']
-    prefs = chrome_ops['prefs']
-    ops = Selenium::WebDriver::Chrome::Options.new(
-      args: args, prefs: prefs
-    )
+    ops = Selenium::WebDriver::Chrome::Options.new(**chrome_ops)
     if @url.nil?
       driver = Selenium::WebDriver.for(
         :chrome, options: ops
       )
     else
-      # remote selenium grid
-      log_debug("Selenium Server URL: #{@url}")
-      driver = Selenium::WebDriver.for(
-        :remote, url: @url, options: ops,
-      )
+      driver = build_remote_driver(ops)
     end
     return driver
   end
@@ -206,22 +198,15 @@ class SeleniumDriver
 
   # build the Firefox driver, given a set of options
   def build_firefox_driver(firefox_ops)
-    args = firefox_ops['args']
-    prefs = firefox_ops['prefs']
-    profile = firefox_ops['profile']
     firefoxOptions = Selenium::WebDriver::Firefox::Options.new(
-      args: args, prefs: prefs, profile: profile
+      **firefox_ops
     )
     if @url.nil?
       driver = Selenium::WebDriver.for(
         :firefox, options: firefoxOptions
       )
     else
-      # remote selenium grid
-      log_debug("Selenium Server URL: #{@url}")
-      driver = Selenium::WebDriver.for(
-        :remote, url: @url, options: firefoxOptions,
-      )
+      driver = build_remote_driver(firefoxOptions)
     end
     return driver
   end
@@ -242,11 +227,7 @@ class SeleniumDriver
         :safari, options: safariOptions
       )
     else
-      # remote selenium grid
-      log_debug("Selenium Server URL: #{@url}")
-      driver = Selenium::WebDriver.for(
-        :remote, url: @url, options: safariOptions,
-      )
+      driver = build_remote_driver(safariOptions)
     end
     return driver
   end
@@ -256,20 +237,13 @@ class SeleniumDriver
   end
 
   def build_ie_driver(ie_ops)
-    args = ie_ops['args']
-    iEOptions = Selenium::WebDriver::IE::Options.new(
-      args: args
-    )
+    iEOptions = Selenium::WebDriver::IE::Options.new(**ie_ops)
     if @url.nil?
       driver = Selenium::WebDriver.for(
         :ie, options: iEOptions
       )
     else
-      # remote selenium grid
-      log_debug("Selenium Server URL: #{@url}")
-      driver = Selenium::WebDriver.for(
-        :remote, url: @url, options: iEOptions,
-      )
+      driver = build_remote_driver(iEOptions)
     end
     return driver
   end
@@ -279,22 +253,24 @@ class SeleniumDriver
   end
 
   def build_edge_driver(edge_ops)
-    args = edge_ops['args']
-    prefs = edge_ops['prefs']
     edgeOptions = Selenium::WebDriver::Edge::Options.new(
-      args: args, prefs: prefs
+      **edge_ops
     )
     if @url.nil?
       driver = Selenium::WebDriver.for(
         :edge, options: edgeOptions
       )
     else
-      # remote selenium grid
-      log_debug("Selenium Server URL: #{@url}")
-      driver = Selenium::WebDriver.for(
-        :remote, url: @url, options: remoteEdgeOptions,
-      )
+      driver = build_remote_driver(edgeOptions)
     end
     return driver
+  end
+
+  def build_remote_driver(options)
+    # remote selenium grid
+    log_debug("Selenium Server URL: #{@url}")
+    return Selenium::WebDriver.for(
+      :remote, url: @url, options: options,
+    )
   end
 end
