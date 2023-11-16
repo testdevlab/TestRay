@@ -268,7 +268,7 @@ class SeleniumDriver
       # remote selenium grid
       log_debug("Selenium Server URL: #{@url}")
       driver = Selenium::WebDriver.for(
-        :remote, url: @url, desired_capabilities: iEOptions,
+        :remote, url: @url, options: iEOptions,
       )
     end
     return driver
@@ -292,7 +292,7 @@ class SeleniumDriver
       # remote selenium grid
       log_debug("Selenium Server URL: #{@url}")
       driver = Selenium::WebDriver.for(
-        :remote, url: @url, desired_capabilities: remoteEdgeOptions,
+        :remote, url: @url, options: remoteEdgeOptions,
       )
     end
     return driver
