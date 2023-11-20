@@ -218,10 +218,9 @@ class SeleniumDriver
   def build_safari_driver(safari_ops)
     # TODO: Check how to add safari options, this code does not work
     # But it does not break the creation of safari webdriver
-    safariOptions = Selenium::WebDriver::Safari::Options.new()
-    safari_ops.each do |name, value|
-      safariOptions.add_option(name + ":" + value.to_s)
-    end
+    safariOptions = Selenium::WebDriver::Safari::Options.new(
+      **safari_ops
+    )
     if @url.nil?
       driver = Selenium::WebDriver.for(
         :safari, options: safariOptions
