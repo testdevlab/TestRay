@@ -179,23 +179,14 @@ class SeleniumDriver
 
   # build the Chrome driver, given a set of options
   def build_chrome_driver(chrome_ops)
+    # local selenium instance
+    ops = Selenium::WebDriver::Chrome::Options.new(**chrome_ops)
     if @url.nil?
-      # local selenium instance
-      localChromeOptions = Selenium::WebDriver::Chrome::Options.new(
-        options: chrome_ops,
-      )
       driver = Selenium::WebDriver.for(
-        :chrome, options: localChromeOptions
+        :chrome, options: ops
       )
     else
-      # remote selenium grid
-      log_debug("Selenium Server URL: #{@url}")
-      remoteChromeOptions = Selenium::WebDriver::Remote::Capabilities.chrome(
-        "goog:chromeOptions": chrome_ops,
-      )
-      driver = Selenium::WebDriver.for(
-        :remote, url: @url, desired_capabilities: remoteChromeOptions,
-      )
+      driver = build_remote_driver(ops)
     end
     return driver
   end
@@ -207,22 +198,15 @@ class SeleniumDriver
 
   # build the Firefox driver, given a set of options
   def build_firefox_driver(firefox_ops)
+    firefoxOptions = Selenium::WebDriver::Firefox::Options.new(
+      **firefox_ops
+    )
     if @url.nil?
-      localFirefoxOptions = Selenium::WebDriver::Firefox::Options.new(
-        options: firefox_ops,
-      )
       driver = Selenium::WebDriver.for(
-        :firefox, options: localFirefoxOptions
+        :firefox, options: firefoxOptions
       )
     else
-      # remote selenium grid
-      log_debug("Selenium Server URL: #{@url}")
-      remoteFirefoxOptions = Selenium::WebDriver::Remote::Capabilities.firefox(
-        "moz:firefoxOptions" => firefox_ops,
-      )
-      driver = Selenium::WebDriver.for(
-        :remote, url: @url, desired_capabilities: remoteFirefoxOptions,
-      )
+      driver = build_remote_driver(firefoxOptions)
     end
     return driver
   end
@@ -232,22 +216,17 @@ class SeleniumDriver
   end
 
   def build_safari_driver(safari_ops)
+    # TODO: Check how to add safari options, this code does not work
+    # But it does not break the creation of safari webdriver
+    safariOptions = Selenium::WebDriver::Safari::Options.new(
+      **safari_ops
+    )
     if @url.nil?
-      localSafariOptions = Selenium::WebDriver::Safari::Options.new(
-        options: safari_ops,
-      )
       driver = Selenium::WebDriver.for(
-        :safari, options: localSafariOptions
+        :safari, options: safariOptions
       )
     else
-      # remote selenium grid
-      log_debug("Selenium Server URL: #{@url}")
-      remoteSafariOptions = Selenium::WebDriver::Remote::Capabilities.safari(
-        safari_ops,
-      )
-      driver = Selenium::WebDriver.for(
-        :remote, url: @url, desired_capabilities: remoteSafariOptions,
-      )
+      driver = build_remote_driver(safariOptions)
     end
     return driver
   end
@@ -257,22 +236,13 @@ class SeleniumDriver
   end
 
   def build_ie_driver(ie_ops)
+    iEOptions = Selenium::WebDriver::IE::Options.new(**ie_ops)
     if @url.nil?
-      localIEOptions = Selenium::WebDriver::IE::Options.new(
-        options: ie_ops,
-      )
       driver = Selenium::WebDriver.for(
-        :ie, options: localIEOptions
+        :ie, options: iEOptions
       )
     else
-      # remote selenium grid
-      log_debug("Selenium Server URL: #{@url}")
-      remoteIEOptions = Selenium::WebDriver::Remote::Capabilities.ie(
-        "se:ieOptions" => ie_ops,
-      )
-      driver = Selenium::WebDriver.for(
-        :remote, url: @url, desired_capabilities: remoteIEOptions,
-      )
+      driver = build_remote_driver(iEOptions)
     end
     return driver
   end
@@ -282,23 +252,24 @@ class SeleniumDriver
   end
 
   def build_edge_driver(edge_ops)
+    edgeOptions = Selenium::WebDriver::Edge::Options.new(
+      **edge_ops
+    )
     if @url.nil?
-      localEdgeOptions = Selenium::WebDriver::Edge::Options.new(
-        options: edge_ops,
-      )
       driver = Selenium::WebDriver.for(
-        :edge, options: localEdgeOptions
+        :edge, options: edgeOptions
       )
     else
-      # remote selenium grid
-      log_debug("Selenium Server URL: #{@url}")
-      remoteEdgeOptions = Selenium::WebDriver::Remote::Capabilities.edge(
-        "ms:edgeOptions" => edge_ops,
-      )
-      driver = Selenium::WebDriver.for(
-        :remote, url: @url, desired_capabilities: remoteEdgeOptions,
-      )
+      driver = build_remote_driver(edgeOptions)
     end
     return driver
+  end
+
+  def build_remote_driver(options)
+    # remote selenium grid
+    log_debug("Selenium Server URL: #{@url}")
+    return Selenium::WebDriver.for(
+      :remote, url: @url, options: options,
+    )
   end
 end

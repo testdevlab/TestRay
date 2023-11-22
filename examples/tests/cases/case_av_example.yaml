@@ -46,11 +46,11 @@ TestBrowserChromeAV:
 TestBrowserSafariAV:
   Roles:
     - Role: desktopSafari
-      Capabilities:
-        safariOptions:
-          prefs:
-            media.navigator.streams.fake: true
-            media.navigator.permission.disabled: true
+      # TODO: Safari options are not yet implemented in selenium
+      # Capabilities:
+      #   safariOptions:
+      #       media.navigator.streams.fake: true
+      #       media.navigator.permission.disabled: true
       App: desktop
   Actions:
     - Type: navigate
