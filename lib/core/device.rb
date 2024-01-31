@@ -252,15 +252,12 @@ class Device
   # Accepts:
   #   Value (optional)
   def launch_app(action)
+    raise "Application identifier is required!" unless action.key?("Value")
     app_id = action["Value"]
-    if app_id
-      if @platform == "iOS"
-        @driver.execute_script('mobile: launchApp', {'bundleId': app_id})
-      elsif @platform == "Android"
-        @driver.activate_app(app_id)
-      end
-    else
-      @driver.launch_app
+    if @platform == "iOS"
+      @driver.execute_script('mobile: launchApp', {'bundleId': app_id})
+    elsif @platform == "Android"
+      @driver.execute_script('mobile: activateApp', {'appId': app_id})
     end
   end
 
@@ -269,15 +266,12 @@ class Device
   # Accepts:
   #   Value (optional)
   def terminate_app(action)
+    raise "Application identifier is required!" unless action.key?("Value")
     app_id = action["Value"]
-    if app_id
-      if @platform == "iOS"
-        @driver.execute_script('mobile: terminateApp', {'bundleId': app_id})
-      elsif @platform == "Android"
-        @driver.terminate_app(app_id)
-      end
-    else
-      @driver.close_app
+    if @platform == "iOS"
+      @driver.execute_script('mobile: terminateApp', {'bundleId': app_id})
+    elsif @platform == "Android"
+      @driver.execute_script('mobile: terminateApp', {'appId': app_id})
     end
   end
 
