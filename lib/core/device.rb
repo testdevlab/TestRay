@@ -250,7 +250,7 @@ class Device
   # launches the app specified by the Android app package / iOS bundle ID
   # defaults to the app under test if Value is not provided
   # Accepts:
-  #   Value (optional)
+  #   Value
   def launch_app(action)
     raise "Application identifier is required!" unless action.key?("Value")
     app_id = action["Value"]
@@ -264,7 +264,7 @@ class Device
   # closes the app specified by the Android app package / iOS bundle ID
   # defaults to the app under test if Value is not provided
   # Accepts:
-  #   Value (optional)
+  #   Value
   def terminate_app(action)
     raise "Application identifier is required!" unless action.key?("Value")
     app_id = action["Value"]
