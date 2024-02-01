@@ -695,13 +695,13 @@ Closes the app and leaves it running in the background.
 
     - Type: launch_app
       Role: role1
-      Value: com.android.vending (Optional - Android app package / iOS bundle ID)
+      Value: com.android.vending (Android app package / iOS bundle ID)
 
 ### <a id="terminate_app"></a>terminate_app
 
     - Type: terminate_app
       Role: role1
-      Value: com.apple.Preferences (Optional - Android app package / iOS bundle ID)
+      Value: com.apple.Preferences (Android app package / iOS bundle ID)
 
 ### <a id="start_record/end_record"></a>start_record/end_record (Mobile)
 
