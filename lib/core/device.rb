@@ -252,7 +252,7 @@ class Device
   # Accepts:
   #   Value
   def launch_app(action)
-    raise "Application identifier is required!" unless action.key?("Value")
+    raise "Please specify the application identifier in the Value field!" unless action.key?("Value")
     app_id = action["Value"]
     if @platform == "iOS"
       @driver.execute_script('mobile: launchApp', {'bundleId': app_id})
@@ -266,7 +266,7 @@ class Device
   # Accepts:
   #   Value
   def terminate_app(action)
-    raise "Application identifier is required!" unless action.key?("Value")
+    raise "Please specify the application identifier in the Value field!" unless action.key?("Value")
     app_id = action["Value"]
     if @platform == "iOS"
       @driver.execute_script('mobile: terminateApp', {'bundleId': app_id})
