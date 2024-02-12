@@ -478,10 +478,10 @@ class Device
     el = wait_for(action)
     el_location = el.location
     log_info("#{@role}: element coordinates: x -> #{el_location.x}, y -> #{el_location.y}")
-    action = Appium::TouchAction.new(@driver).press(x: el_location.x, y: el_location.y).wait(600).release.perform
+    @driver.action.move_to_location(el_location.x, el_location.y).pointer_down(:left).release.perform
   end
 
-  # presses on the provided element. Uses Appium's TouchAction.
+  # presses on the provided element. Uses Appium's action chains.
   # Accepts:
   #   Strategy
   #   Id
@@ -506,15 +506,7 @@ class Device
 
     while (Time.now - start) < wait_time
       begin
-        @platform == "iOS" ?
-          @driver.action.move_to(el) :
-          @driver.action.move_to(el).perform
-      rescue => e
-        error = e
-      end
-
-      begin
-        Appium::TouchAction.new(@driver).press(el).wait(600).release.perform
+        @driver.action.move_to(el).pointer_down(:left).release.perform
         log_info("Time for click: #{Time.now - start}s") if action["CheckTime"]
         return
       rescue => e
@@ -649,13 +641,13 @@ class Device
   def swipe_up(action)
     el = wait_for(action)
     el_location = el.location
-    opts = {
-      start_x: el_location.x,
-      start_y: el_location.y,
-      end_x: el_location.x,
-      end_y: 0,
-    }
-    action = Appium::TouchAction.new(@driver).swipe(opts).perform
+
+    @driver.action
+      .move_to_location(el_location.x, el_location.y)
+      .pointer_down(:left)
+      .move_to_location(el_location.x, 0, duration: 200)
+      .release
+      .perform
   end
 
   # Accepts:
@@ -665,14 +657,12 @@ class Device
     el = wait_for(action)
     el_location = el.location
 
-    opts = {
-      start_x: el_location.x,
-      start_y: el_location.y,
-      end_x: el_location.x,
-      end_y: 1500,
-    }
-
-    action = Appium::TouchAction.new(@driver).swipe(opts).perform
+    @driver.action
+      .move_to_location(el_location.x, el_location.y)
+      .pointer_down(:left)
+      .move_to_location(el_location.x, 1500, duration: 200)
+      .release
+      .perform
   end
 
   def swipe_elements(action)
@@ -683,15 +673,13 @@ class Device
     el1_y = el1.location.y + (el1.size.height / 2)
     el2_x = el2.location.x + (el2.size.width / 2)
     el2_y = el2.location.y + (el2.size.height / 2)
-    opts = {
-      start_x: el1_x,
-      start_y: el1_y,
-      end_x: el2_x,
-      end_y: el2_y,
-      duration: 2000,
-    }
 
-    action = Appium::TouchAction.new(@driver).swipe(opts).perform
+    @driver.action
+      .move_to_location(el1_x, el1_y)
+      .pointer_down(:left)
+      .move_to_location(el2_x, el2_y, duration: 2000)
+      .release
+      .perform
   end
 
   # TODO
@@ -701,21 +689,6 @@ class Device
     # @driver.send(action["Method"], action["Var"]) # Check how to send multiple vars
   end
 
-  # TODO
-  def touch_actions(action)
-    log_info("TODO")
-    # HERE USER WILL PUT SEVERAL ACTIONS IN A LIST:
-    # - Action: press
-    #   Coordinates:
-    #     X:
-    #     ...
-    #   Element:
-    #     Strategy:
-    #     Id:
-    # - Action: release
-    #  ...
-  end
-
   # swipes to provided X and Y values.
   # Accepts:
   #   StartX
@@ -723,14 +696,17 @@ class Device
   #   OffsetX
   #   OffsetY
   def swipe_coord(action)
-    opts = {
-      start_x: action["StartX"],
-      start_y: action["StartY"],
-      end_x: action["EndX"] ? action["EndX"] : 0,
-      end_y: action["EndY"] ? action["EndY"] : 0,
-    }
+    start_x = action["StartX"]
+    start_y = action["StartY"]
+    end_x = action["EndX"] ? action["EndX"] : 0
+    end_y = action["EndY"] ? action["EndY"] : 0
 
-    action = Appium::TouchAction.new(@driver).swipe(opts).perform
+    @driver.action
+      .move_to_location(start_x, start_y)
+      .pointer_down(:left)
+      .move_to_location(end_x, end_y, duration: 200)
+      .release
+      .perform
   end
 
   # clicks on the provided coordinates, if not provided then middle of the screen
@@ -739,13 +715,13 @@ class Device
   # Y
   def click_coord(action = nil)
     if action["X"] && action["Y"]
-      action = Appium::TouchAction.new(@driver).press(x: action["X"], y: action["Y"]).release.perform
+      @driver.action.move_to_location(action["X"], action["Y"]).pointer_down(:left).release.perform
     else
       window_size = @driver.window_size
       x_middle = window_size.width * 0.5
       y_middle = window_size.height * 0.5
 
-      action = Appium::TouchAction.new(@driver).press(x: x_middle, y: y_middle).release.perform
+      @driver.action.move_to_location(x_middle, y_middle).pointer_down(:left).release.perform
     end
   end
 
