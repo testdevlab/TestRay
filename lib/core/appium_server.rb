@@ -42,7 +42,7 @@ class AppiumServer
       `for /f "tokens=5" %a in ('netstat -aon ^| find ":#{@port}" ^| find "LISTENING"') do taskkill /f /pid %a`
     else
       while true
-        ps = `ps -A | grep "appium -p #{@port}"`
+        ps = `ps -A | grep "appium --base-path=/wd/hub -p #{@port}"`
         break unless ps.include?("node")
         ps.split("\n") do |process|
           next if process.include?("grep")
