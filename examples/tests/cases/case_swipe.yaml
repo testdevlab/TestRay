@@ -14,9 +14,9 @@ SwipeElementsTest:
     Role: $AND_CLI_USER$
     Element1:
       Strategy: xpath
-      Id: '//android.support.v7.widget.RecyclerView/android.view.ViewGroup[5]'
+      Id: '//android.view.View[5]'
     Element2:
       Strategy: xpath
-      Id: '//android.support.v7.widget.RecyclerView/android.view.ViewGroup[1]'
+      Id: '//android.view.View[1]'
   - Type: sleep
     Time: 5
