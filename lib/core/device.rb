@@ -423,16 +423,11 @@ class Device
   #   NoRaise
   def click(action)
     start = Time.now
-    return unless wait_for(action)
-
-    action["Condition"] = nil
-    start_error = Time.now
-
     el = wait_for(action)
+    return unless el
 
     now = Time.now
-    log_info("Time to find element: #{now - start - (now - start_error) / 2}s " +
-           "error #{(now - start_error)}") if action["CheckTime"]
+    log_info("Time to find element: #{now - start}s") if action["CheckTime"]
     error = nil
 
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
@@ -490,16 +485,11 @@ class Device
   #   NoRaise
   def press(action)
     start = Time.now
-    return unless wait_for(action)
-
-    action["Condition"] = nil
-    start_error = Time.now
-
     el = wait_for(action)
+    return unless el
 
     now = Time.now
-    log_info("Time to find element: #{now - start - (now - start_error) / 2}s " +
-           "error #{(now - start_error)}") if action["CheckTime"]
+    log_info("Time to find element: #{now - start}s") if action["CheckTime"]
     error = nil
 
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
@@ -528,16 +518,11 @@ class Device
   #   NoRaise
   def click_and_hold(action)
     start = Time.now
-    return unless wait_for(action)
-
-    action["Condition"] = nil
-    start_error = Time.now
-
     el = wait_for(action)
+    return unless el
 
     now = Time.now
-    log_info("Time to find element: #{now - start - (now - start_error) / 2}s " +
-           "error #{(now - start_error)}") if action["CheckTime"]
+    log_info("Time to find element: #{now - start}s") if action["CheckTime"]
     error = nil
 
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
@@ -939,16 +924,15 @@ class Device
     wait_time = (action["CheckTime"] ? action["CheckTime"] : wait_time)
     index = action["Index"]
 
+    el = nil
     exception = ""
     start = Time.now
-    try = 0
-    while (Time.now - start) < wait_time
-      if id.is_a?(String)
+
+    if id.is_a?(String)
+      id = convert_value(id)
+      locator_strategy = convert_value(locator_strategy)
+      while (Time.now - start) < wait_time
         begin
-          id = convert_value(id)
-          locator_strategy = convert_value(locator_strategy)
-          try += 1
-          el = nil
           if index
             els = @driver.find_elements(locator_strategy, id)
             if index.is_a?(String) && index == "last"
@@ -965,7 +949,9 @@ class Device
           exception = e
           sleep(0.2)
         end
-      else
+      end
+    else
+      while (Time.now - start) < wait_time
         i = 0
         id.each do |locator|
           locator = convert_value(locator)
