@@ -575,7 +575,10 @@ class Device
     value = value.gsub("$AND_ROLE$", @role) if value && value.is_a?(String) && value.include?("$AND_ROLE$")
     log_info("#{@role}: Sending keys: #{value}")
 
-    el = wait_for(action) if (!action["Actions"] && action["Strategy"])
+    if !action["Actions"] && action["Strategy"]
+      el = wait_for(action)
+      return unless el
+    end
 
     start = Time.now
     error = nil
@@ -617,7 +620,10 @@ class Device
   #   Id
   def clear_field(action) 
     el = nil
-    el = wait_for(action) if (!action["Actions"] && action["Strategy"])
+    if !action["Actions"] && action["Strategy"]
+      el = wait_for(action)
+      return unless el
+    end
     start = Time.now
     error = nil
     while (Time.now - start) < @timeout
