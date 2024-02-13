@@ -645,7 +645,7 @@ class Device
     @driver.action
       .move_to_location(el_location.x, el_location.y)
       .pointer_down(:left)
-      .move_to_location(el_location.x, 0, duration: 200)
+      .move_to_location(el_location.x, 0, duration: 0.2)
       .release
       .perform
   end
@@ -660,7 +660,7 @@ class Device
     @driver.action
       .move_to_location(el_location.x, el_location.y)
       .pointer_down(:left)
-      .move_to_location(el_location.x, 1500, duration: 200)
+      .move_to_location(el_location.x, 1500, duration: 0.2)
       .release
       .perform
   end
@@ -677,7 +677,7 @@ class Device
     @driver.action
       .move_to_location(el1_x, el1_y)
       .pointer_down(:left)
-      .move_to_location(el2_x, el2_y, duration: 2000)
+      .move_to_location(el2_x, el2_y, duration: 2)
       .release
       .perform
   end
@@ -704,7 +704,7 @@ class Device
     @driver.action
       .move_to_location(start_x, start_y)
       .pointer_down(:left)
-      .move_to_location(end_x, end_y, duration: 200)
+      .move_to_location(end_x, end_y, duration: 0.2)
       .release
       .perform
   end
