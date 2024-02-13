@@ -423,16 +423,11 @@ class Device
   #   NoRaise
   def click(action)
     start = Time.now
-    return unless wait_for(action)
-
-    action["Condition"] = nil
-    start_error = Time.now
-
     el = wait_for(action)
+    return unless el
 
     now = Time.now
-    log_info("Time to find element: #{now - start - (now - start_error) / 2}s " +
-           "error #{(now - start_error)}") if action["CheckTime"]
+    log_info("Time to find element: #{now - start}s") if action["CheckTime"]
     error = nil
 
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
@@ -490,16 +485,11 @@ class Device
   #   NoRaise
   def press(action)
     start = Time.now
-    return unless wait_for(action)
-
-    action["Condition"] = nil
-    start_error = Time.now
-
     el = wait_for(action)
+    return unless el
 
     now = Time.now
-    log_info("Time to find element: #{now - start - (now - start_error) / 2}s " +
-           "error #{(now - start_error)}") if action["CheckTime"]
+    log_info("Time to find element: #{now - start}s") if action["CheckTime"]
     error = nil
 
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
@@ -528,16 +518,11 @@ class Device
   #   NoRaise
   def click_and_hold(action)
     start = Time.now
-    return unless wait_for(action)
-
-    action["Condition"] = nil
-    start_error = Time.now
-
     el = wait_for(action)
+    return unless el
 
     now = Time.now
-    log_info("Time to find element: #{now - start - (now - start_error) / 2}s " +
-           "error #{(now - start_error)}") if action["CheckTime"]
+    log_info("Time to find element: #{now - start}s") if action["CheckTime"]
     error = nil
 
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
