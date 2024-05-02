@@ -29,7 +29,7 @@ class AppiumDriver
         caps.merge!({ "chromedriverExecutable" => chromeDriverExPath, })
       end
       caps.merge!({ "browserName" => "chrome" })
-    else
+    elsif @app_details.key?("Package")
       caps.merge!({
         "appActivity" => @app_details["Activity"],
         "appPackage" => @app_details["Package"]
@@ -51,7 +51,7 @@ class AppiumDriver
     }
     if @app.downcase == "browser"
       caps.merge!({ "browserName" => "Safari" })
-    else
+    elsif @app_details.key?("iOSBundle")
       caps.merge!({ "bundleId" => @app_details["iOSBundle"] })
     end
     return caps
