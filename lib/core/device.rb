@@ -461,6 +461,27 @@ class Device
     end
   end
 
+  # looks for a native iOS alert (within the springboard application). If found,
+  # clicks the specified alert button. Does nothing if the alert is not found.
+  # Accepts:
+  #   Strategy
+  #   Id
+  #   Condition
+  #   CheckTime
+  #   AlertTime
+  #   NoRaise
+  def handle_ios_alert(action)
+    alert_time = action.key?("AlertTime") ? action["AlertTime"] : 1
+    @driver.update_settings({ defaultActiveApplication: "com.apple.springboard" })
+    alert_action = {"Strategy" => "class_name", "Id" => "XCUIElementTypeAlert", "NoRaise" => true, "CheckTime" => alert_time}
+    alert_el = wait_for(alert_action)
+    begin
+      click(action) if alert_el
+    ensure
+      @driver.update_settings({ defaultActiveApplication: "auto" })
+    end
+  end
+
   # tap_by_coord on the provided element but over its coordinates. Multiple location 
   # strategies are accepted - css, xPath, id.
   # Accepts:
