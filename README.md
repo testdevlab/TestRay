@@ -798,7 +798,7 @@ Please note that [XCUITest Driver >=6.0.0 requires changing the active applicati
 
   	- Type: handle_ios_alert
       Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
-	    Strategy: id/xpath/class_chain/...
+      Strategy: id/xpath/class_chain/...
       Id: //path/to/button/in/alert
       AlertTime: 5 (Optional. How long to search for the alert itself - default is 1 second)
 
