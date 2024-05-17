@@ -370,7 +370,7 @@ This is not a type but can be used in different Types as a Validation for the ac
 	  Id: //some/path
 	  NoRaise: false/true (Default - false -> will rise error on fail)
 
-Strategy and Id can also be provided as lists, in which case the framework will click the whichever element it finds first.
+Strategy and Id can also be provided as lists, in which case the framework will click whichever element it finds first.
 Both of these lists (Strategy/Id) must have the same size (number of elements):
 
 	- Type: click
