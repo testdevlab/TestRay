@@ -389,16 +389,16 @@ By default, the click action will be executed on the element midpoint (width * 0
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
 	  Strategy: id/css/xpath/uiautomator/class_chain/...
 	  Id: //some/path
-    OffsetX: 50 (Translates to (0.5 * width) + 50)
-    OffsetY: -25 (Translates to (0.5 * height) - 25)
+	  OffsetX: 50 (Translates to (0.5 * width) + 50)
+	  OffsetY: -25 (Translates to (0.5 * height) - 25)
 	  NoRaise: false/true (Default - false -> will rise error on fail)
 
 	- Type: click
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
 	  Strategy: id/css/xpath/uiautomator/class_chain/...
 	  Id: //some/path
-    OffsetFractionX: 0.4 (Translates to 0.5 + 0.4 = 0.9 * width)
-    OffsetFractionY: -0.2 (Translates to 0.5 - 0.2 = 0.3 * height)
+	  OffsetFractionX: 0.4 (Translates to 0.5 + 0.4 = 0.9 * width)
+	  OffsetFractionY: -0.2 (Translates to 0.5 - 0.2 = 0.3 * height)
 	  NoRaise: false/true (Default - false -> will rise error on fail)
 
 If an offset is needed only on one axis, the parameter for the other axis can be omitted. Additionally, mixing absolute and relative offsets within the same action is allowed, but if both offset types are provided for the same axis, the absolute offset takes precedence.
