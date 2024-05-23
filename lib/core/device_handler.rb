@@ -121,7 +121,7 @@ class DeviceHandler
     if virtual_devices.length > phones.length
       log_abort("Not enough locally connected devices!\n" +
                 "Requested roles: #{virtual_devices.keys}\n" +
-                "Available devices: #{devices}")
+                "Available devices: #{phones}")
     end
     virtual_devices_dup = virtual_devices.dup
     # first identify and remove devices with already specified udid
