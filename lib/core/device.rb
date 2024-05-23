@@ -420,6 +420,8 @@ class Device
   #   CheckTime
   #   OffsetX
   #   OffsetY
+  #   OffsetFractionX
+  #   OffsetFractionY
   #   NoRaise
   def click(action)
     start = Time.now
@@ -441,8 +443,13 @@ class Device
         error = e
       end
       begin
-        if !(action["OffsetX"].nil? && action["OffsetY"].nil?)
-          @driver.action.move_to(el, action["OffsetX"], action["OffsetY"])
+        if (action.keys & ["OffsetX", "OffsetY", "OffsetFractionX", "OffsetFractionY"]).any?
+          x_offset = y_offset = 0
+          x_offset = el.size.width * action["OffsetFractionX"] if action.key?("OffsetFractionX")
+          y_offset = el.size.height * action["OffsetFractionY"] if action.key?("OffsetFractionY")
+          x_offset = action["OffsetX"] if action.key?("OffsetX")
+          y_offset = action["OffsetY"] if action.key?("OffsetY")
+          @driver.action.move_to(el, x_offset, y_offset)
             .click
             .perform
         else

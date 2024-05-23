@@ -370,8 +370,8 @@ This is not a type but can be used in different Types as a Validation for the ac
 	  Id: //some/path
 	  NoRaise: false/true (Default - false -> will rise error on fail)
 
-Strategy and Id can by put as a list, in which case it will define a list of elements, and the first one to be clickable will be clicked.
-Both lists for Startegy and Id must have the same size (Number of elements):
+Strategy and Id can also be provided as lists, in which case the framework will click whichever element it finds first.
+Both of these lists (Strategy/Id) must have the same size (number of elements):
 
 	- Type: click
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
@@ -383,7 +383,27 @@ Both lists for Startegy and Id must have the same size (Number of elements):
 		- //some/path2
 	  NoRaise: false/true (Default - false -> will rise error on fail)
 
-It is possible to add conditions, in which case it will do the click depending on the condition to be fullfiled:
+By default, the click action will be executed on the element midpoint (width * 0.5, height * 0.5), but it is possible to add offsets. These can be either absolute (in pixels) or relative (in fractions of the element width/height):
+
+	- Type: click
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+	  OffsetX: 50 (Translates to (0.5 * width) + 50)
+	  OffsetY: -25 (Translates to (0.5 * height) - 25)
+	  NoRaise: false/true (Default - false -> will rise error on fail)
+
+	- Type: click
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+	  OffsetFractionX: 0.4 (Translates to 0.5 + 0.4 = 0.9 * width)
+	  OffsetFractionY: -0.2 (Translates to 0.5 - 0.2 = 0.3 * height)
+	  NoRaise: false/true (Default - false -> will rise error on fail)
+
+If an offset is needed only on one axis, the parameter for the other axis can be omitted. Additionally, mixing absolute and relative offsets within the same action is allowed, but if both offset types are provided for the same axis, the absolute offset takes precedence.
+
+You can also add conditions, in which case the click action will be executed depending on the condition to be fulfilled:
 
 	- Type: click
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
