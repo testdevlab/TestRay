@@ -468,6 +468,27 @@ class Device
     end
   end
 
+  # looks for a native iOS alert (within the springboard application). If found,
+  # clicks the specified alert button. Does nothing if the alert is not found.
+  # Accepts:
+  #   Strategy
+  #   Id
+  #   Condition
+  #   CheckTime
+  #   AlertTime
+  #   NoRaise
+  def handle_ios_alert(action)
+    alert_time = action.key?("AlertTime") ? action["AlertTime"] : 1
+    @driver.update_settings({ defaultActiveApplication: "com.apple.springboard" })
+    alert_action = {"Strategy" => "class_name", "Id" => "XCUIElementTypeAlert", "NoRaise" => true, "CheckTime" => alert_time}
+    alert_el = wait_for(alert_action)
+    begin
+      click(action) if alert_el
+    ensure
+      @driver.update_settings({ defaultActiveApplication: "auto" })
+    end
+  end
+
   # tap_by_coord on the provided element but over its coordinates. Multiple location 
   # strategies are accepted - css, xPath, id.
   # Accepts:
@@ -663,6 +684,61 @@ class Device
       .perform
   end
 
+  def scroll_down_into_full_view(action)
+    action["NoRaise"] = true
+    action["Time"] = 1
+    y_top_offset = action["Offset"] ? convert_value(action["Offset"]).to_f : 50.0 # pixels
+    x_frac = 0.02
+    y_start_frac = 0.7
+    y_end_frac = 0.3
+    scroll_mul = @platform == "iOS" ? 3 : 1.5
+    scroll_pause = @platform == "iOS" ? 0.2 : 0.1
+    if action["Background"]
+      bg_el = wait_for(action["Background"])
+      y_top = bg_el.location.y + y_top_offset
+      y_bottom = bg_el.location.y + bg_el.size.height
+      x_point = bg_el.location.x + (bg_el.size.width * x_frac)
+      y_start = y_top + (bg_el.size.height * y_start_frac)
+      y_end = y_top + (bg_el.size.height * y_end_frac)
+    else
+      screen_size = @driver.window_size
+      y_top = y_top_offset
+      y_bottom = screen_size.height
+      x_point = screen_size.width * x_frac
+      y_start = screen_size.height * y_start_frac
+      y_end = screen_size.height * y_end_frac
+    end
+
+    scrolls = 0
+    start = Time.now
+    while (Time.now - start) < 60
+      el = wait_for(action)
+      return if el&.displayed? && el.location.y <= y_top + (y_top_offset / 2)
+      if el&.displayed? && el.location.y > y_top && el.location.y < y_bottom
+        y_end = y_top
+        y_start = el.location.y
+      end
+      duration = (y_start - y_end) * scroll_mul / 1000.0
+      @driver.action
+        .move_to_location(x_point, y_start)
+        .pointer_down(:left)
+        .move_to_location(x_point, y_end, duration: duration)
+        .pause(device: @driver.action.key_inputs[0], duration: scroll_pause)
+        .release
+        .perform
+      scrolls += 1
+      # Chrome hides the URL bar after 2 downwards scrolls
+      if scrolls == 2 && action["Background"]
+        bg_el = wait_for(action["Background"])
+        y_top = bg_el.location.y + y_top_offset
+        y_bottom = bg_el.location.y + bg_el.size.height
+        x_point = bg_el.location.x + (bg_el.size.width * x_frac)
+        y_start = y_top + (bg_el.size.height * y_start_frac)
+        y_end = y_top + (bg_el.size.height * y_end_frac)
+      end
+    end
+  end
+
   def swipe_elements(action)
     # swipe from element1 to element2
     el1 = wait_for(action["Element1"])
@@ -676,6 +752,48 @@ class Device
       .move_to_location(el1_x, el1_y)
       .pointer_down(:left)
       .move_to_location(el2_x, el2_y, duration: 2)
+      .release
+      .perform
+  end
+
+  # Swipe in an arbitrary direction over an element
+  # Accepts:
+  #   Strategy
+  #   Id
+  #   OffsetStartFractionX
+  #   OffsetStartFractionY
+  #   OffsetEndFractionX
+  #   OffsetEndFractionY
+  #   OffsetStartX
+  #   OffsetStartY
+  #   OffsetEndX
+  #   OffsetEndY
+  #   SwipeTime
+  def swipe_on_element(action)
+    el = wait_for(action)
+    swipe_time = action.key?("SwipeTime") ? action["SwipeTime"] : 1
+    elx_midpoint = el.location.x + el.size.width * 0.5
+    ely_midpoint = el.location.y + el.size.height * 0.5
+    elx_start_offset = ely_start_offset = elx_end_offset = ely_end_offset = 0
+
+    elx_start_offset = el.size.width * action["OffsetStartFractionX"] if action.key?("OffsetStartFractionX")
+    ely_start_offset = el.size.height * action["OffsetStartFractionY"] if action.key?("OffsetStartFractionY")
+    elx_end_offset = el.size.width * action["OffsetEndFractionX"] if action.key?("OffsetEndFractionX")
+    ely_end_offset = el.size.height * action["OffsetEndFractionY"] if action.key?("OffsetEndFractionY")
+    elx_start_offset = action["OffsetStartX"] if action.key?("OffsetStartX")
+    ely_start_offset = action["OffsetStartY"] if action.key?("OffsetStartY")
+    elx_end_offset = action["OffsetEndX"] if action.key?("OffsetEndX")
+    ely_end_offset = action["OffsetEndY"] if action.key?("OffsetEndY")
+
+    elx_start = elx_midpoint + elx_start_offset
+    ely_start = ely_midpoint + ely_start_offset
+    elx_end = elx_midpoint + elx_end_offset
+    ely_end = ely_midpoint + ely_end_offset
+
+    @driver.action
+      .move_to_location(elx_start, ely_start)
+      .pointer_down(:left)
+      .move_to_location(elx_end, ely_end, duration: swipe_time)
       .release
       .perform
   end
