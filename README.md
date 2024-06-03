@@ -307,6 +307,7 @@ Roles are ALWAYS defined at the begining of the cases. You have to write always 
 18. [wait_for_page_to_load](#wait_for_page_to_load)
 19. [collection_visible_for](#collection_visible_for)
 20. [wait_not_visible](#wait_not_visible)
+21. [execute_script](#execute_script)
 
 ## Only Browser
 
@@ -598,6 +599,23 @@ Waits until the element specified is not visible.
       Strategy: id/css/xpath/uiautomator/class_chain/predicate
       Id: //div[contains(text(), "http")]
       Time: 10
+
+### <a id="execute_script"></a>execute_script
+
+Executes a specific script. For Selenium, the script value can be raw JavaScript, while for Appium, this can be the name of a defined driver script. Parameters can also be provided as an optional value.
+
+Example for Selenium (set a console property):
+
+    - Type: execute_script
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Value: window.localStorage.logLevel = '0'
+
+Example for Appium (launch Chrome on Android)
+
+    - Type: execute_script
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Value: "mobile: launchApp"
+      Params: { appId: com.android.chrome }
 
 ## Only Browser
 
