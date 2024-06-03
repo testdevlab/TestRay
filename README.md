@@ -327,18 +327,19 @@ Roles are ALWAYS defined at the begining of the cases. You have to write always 
 1. [set_orientation](#set_orientation)
 2. [close_app](#close_app)
 3. [launch_app](#launch_app)
-4. [start_record/end_record](#start_record/end_record)
-5. [tap_by_coord](#tap_by_coord)
-6. [press](#press)
-7. [click_and_hold](#click_and_hold)
-8. [swipe_up/swipe_down](#swipe_up/swipe_down)
-9. [swipe_elements](#swipe_elements)
-10. [swipe_coord](#swipe_coord)
-11. [click_coord](#click_coord)
-12. [clipboard](#clipboard)
-13. [terminate_app](#terminate_app)
-14. [notifications](#notifications)
-15. [back](#back)
+4. [terminate_app](#terminate_app)
+5. [start_record/end_record](#start_record/end_record)
+6. [tap_by_coord](#tap_by_coord)
+7. [press](#press)
+8. [click_and_hold](#click_and_hold)
+9. [swipe_up/swipe_down](#swipe_up/swipe_down)
+10. [swipe_elements](#swipe_elements)
+11. [swipe_coord](#swipe_coord)
+12. [click_coord](#click_coord)
+13. [clipboard](#clipboard)
+14. [handle_ios_alert](#handle_ios_alert)
+15. [notifications](#notifications)
+16. [back](#back)
 
 ## API
 
@@ -808,6 +809,18 @@ Gets the clipboard value from the device and assigns it to some Var using Greps.
           condition: nempty (Optional)
           remove: google.com/ (Optional)
           match: "google.com(.*)"
+
+### <a id="handle_ios_alert"></a>handle_ios_alert
+
+iOS only. Checks for the presence of a native iOS alert. Does nothing if an alert is not found, otherwise clicks the alert button specified by Strategy/Id.
+
+Please note that [XCUITest Driver >=6.0.0 requires changing the active application in order to see such alerts in the app hierarchy](https://appium.github.io/appium-xcuitest-driver/latest/guides/troubleshooting/#interact-with-dialogs-managed-by-comapplespringboard). The `handle_ios_alert` function already does this implicitly.
+
+  	- Type: handle_ios_alert
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Strategy: id/xpath/class_chain/...
+      Id: //path/to/button/in/alert
+      AlertTime: 5 (Optional. How long to search for the alert itself - default is 1 second)
 
 ### <a id="notifications"></a>notifications
 
