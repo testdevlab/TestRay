@@ -340,6 +340,7 @@ Roles are ALWAYS defined at the begining of the cases. You have to write always 
 14. [handle_ios_alert](#handle_ios_alert)
 15. [notifications](#notifications)
 16. [back](#back)
+17. [update_settings](#update_settings)
 
 ## API
 
@@ -835,6 +836,14 @@ Works as pressing the button `back` on the phone to go to the previous screen.
 
   	- Type: back
       Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+
+### <a id="update_settings"></a>update_settings
+
+Updates Appium driver settings. The value must be provided as a JSON object. JSON keys can be optionally placed in quotes.
+
+    - Type: update_settings
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Value: { waitForIdleTimeout: 10, 'allowInvisibleElements': true, "elementResponseAttributes": "name" }
 
 ## API
 
