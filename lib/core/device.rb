@@ -275,6 +275,13 @@ class Device
     end
   end
 
+  # updates Appium driver settings
+  # Accepts:
+  #   Value
+  def update_settings(action)
+    @driver.update_settings(convert_yaml(action["Value"]))
+  end
+
   # starts recording test execution. Whole desktop is recorded if 'udid' is not
   # set.
   # Accepts:

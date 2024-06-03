@@ -327,18 +327,19 @@ Roles are ALWAYS defined at the begining of the cases. You have to write always 
 1. [set_orientation](#set_orientation)
 2. [close_app](#close_app)
 3. [launch_app](#launch_app)
-4. [start_record/end_record](#start_record/end_record)
-5. [tap_by_coord](#tap_by_coord)
-6. [press](#press)
-7. [click_and_hold](#click_and_hold)
-8. [swipe_up/swipe_down](#swipe_up/swipe_down)
-9. [swipe_elements](#swipe_elements)
-10. [swipe_coord](#swipe_coord)
-11. [click_coord](#click_coord)
-12. [clipboard](#clipboard)
-13. [terminate_app](#terminate_app)
+4. [terminate_app](#terminate_app)
+5. [start_record/end_record](#start_record/end_record)
+6. [tap_by_coord](#tap_by_coord)
+7. [press](#press)
+8. [click_and_hold](#click_and_hold)
+9. [swipe_up/swipe_down](#swipe_up/swipe_down)
+10. [swipe_elements](#swipe_elements)
+11. [swipe_coord](#swipe_coord)
+12. [click_coord](#click_coord)
+13. [clipboard](#clipboard)
 14. [notifications](#notifications)
 15. [back](#back)
+16. [update_settings](#update_settings)
 
 ## API
 
@@ -822,6 +823,14 @@ Works as pressing the button `back` on the phone to go to the previous screen.
 
   	- Type: back
       Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+
+### <a id="update_settings"></a>update_settings
+
+Updates Appium driver settings. The value must be provided as a JSON object. JSON keys can be optionally placed in quotes.
+
+    - Type: update_settings
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Value: { waitForIdleTimeout: 10, 'allowInvisibleElements': true, "elementResponseAttributes": "name" }
 
 ## API
 
