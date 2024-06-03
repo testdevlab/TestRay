@@ -333,14 +333,15 @@ Roles are ALWAYS defined at the begining of the cases. You have to write always 
 7. [press](#press)
 8. [click_and_hold](#click_and_hold)
 9. [swipe_up/swipe_down](#swipe_up/swipe_down)
-10. [swipe_elements](#swipe_elements)
-11. [swipe_coord](#swipe_coord)
-12. [click_coord](#click_coord)
-13. [clipboard](#clipboard)
-14. [handle_ios_alert](#handle_ios_alert)
-15. [notifications](#notifications)
-16. [back](#back)
-17. [update_settings](#update_settings)
+10. [swipe_on_element](#swipe_on_element)
+11. [swipe_elements](#swipe_elements)
+12. [swipe_coord](#swipe_coord)
+13. [click_coord](#click_coord)
+14. [clipboard](#clipboard)
+15. [handle_ios_alert](#handle_ios_alert)
+16. [notifications](#notifications)
+17. [back](#back)
+18. [update_settings](#update_settings)
 
 ## API
 
@@ -762,7 +763,7 @@ It works simillar as click, but it will use Appium Actions of the element intern
 
 It works simillar as click, but it holds the pressing. The labels and options that you can use are exactly the same. Refer to `click` for more information.
 
-### <a id="swipe_up/swipe_down"></a>swipe_up/swipe_down (Mobile)
+### <a id="swipe_up/swipe_down"></a>swipe_up/swipe_down
 
 	- Type: swipe_up/swipe_down
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
@@ -770,7 +771,7 @@ It works simillar as click, but it holds the pressing. The labels and options th
 	  Id: //some/path (Element from where to start the swipe)
 	  NoRaise: false/true (Default - false -> will rise error on fail)
 
-### <a id="swipe_elements"></a>swipe_elements (Mobile)
+### <a id="swipe_elements"></a>swipe_elements
 
 	- Type: swipe_elements
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
@@ -781,7 +782,34 @@ It works simillar as click, but it holds the pressing. The labels and options th
 		Strategy: id/css/xpath/uiautomator/class_chain/... (Element from where to start the swipe)
 		Id: //some/path (Element from where to start the swipe)
 
-### <a id="swipe_coord"></a>swipe_coord (Mobile)
+### <a id="swipe_on_element"></a>swipe_on_element
+
+Swipe in an arbitrary direction over a single element. By default, the swipe start and endpoints are at the element midpoint (width * 0.5, height * 0.5), which can be changed using offsets. These can be either absolute (in pixels) or relative (in fractions of the element width/height). The swipe duration can also be configured (default is 1 second).
+
+	- Type: swipe_on_element
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+	  OffsetStartX: 50 (Translates to (0.5 * width) + 50)
+	  OffsetStartY: -25 (Translates to (0.5 * height) - 25)
+    OffsetEndX: -150
+	  OffsetEndY: -50
+    SwipeTime: 5 (In seconds - default is 1)
+	  NoRaise: false/true (Default - false -> will raise error on fail)
+
+	- Type: swipe_on_element
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+	  OffsetStartFractionX: 0.4 (Translates to 0.5 + 0.4 = 0.9 * width)
+	  OffsetStartFractionY: -0.2 (Translates to 0.5 - 0.2 = 0.3 * height)
+    OffsetEndFractionX: -0.4
+	  OffsetEndFractionY: -0.3
+	  NoRaise: false/true (Default - false -> will raise error on fail)
+
+If only 1-3 offsets need to be changed, the other offsets can be omitted. Additionally, mixing absolute and relative offsets within the same action is allowed, but if both offset types are provided for the same element and axis, the absolute offset takes precedence.
+
+### <a id="swipe_coord"></a>swipe_coord
 
 	- Type: swipe_coord
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
@@ -790,7 +818,7 @@ It works simillar as click, but it holds the pressing. The labels and options th
 	  EndX: 300
 	  EndY: 400
 
-### <a id="click_coord"></a>click_coord (Mobile)
+### <a id="click_coord"></a>click_coord
 
 	- Type: click_coord
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)

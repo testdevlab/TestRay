@@ -708,6 +708,48 @@ class Device
       .perform
   end
 
+  # Swipe in an arbitrary direction over an element
+  # Accepts:
+  #   Strategy
+  #   Id
+  #   OffsetStartFractionX
+  #   OffsetStartFractionY
+  #   OffsetEndFractionX
+  #   OffsetEndFractionY
+  #   OffsetStartX
+  #   OffsetStartY
+  #   OffsetEndX
+  #   OffsetEndY
+  #   SwipeTime
+  def swipe_on_element(action)
+    el = wait_for(action)
+    swipe_time = action.key?("SwipeTime") ? action["SwipeTime"] : 1
+    elx_midpoint = el.location.x + el.size.width * 0.5
+    ely_midpoint = el.location.y + el.size.height * 0.5
+    elx_start_offset = ely_start_offset = elx_end_offset = ely_end_offset = 0
+
+    elx_start_offset = el.size.width * action["OffsetStartFractionX"] if action.key?("OffsetStartFractionX")
+    ely_start_offset = el.size.height * action["OffsetStartFractionY"] if action.key?("OffsetStartFractionY")
+    elx_end_offset = el.size.width * action["OffsetEndFractionX"] if action.key?("OffsetEndFractionX")
+    ely_end_offset = el.size.height * action["OffsetEndFractionY"] if action.key?("OffsetEndFractionY")
+    elx_start_offset = action["OffsetStartX"] if action.key?("OffsetStartX")
+    ely_start_offset = action["OffsetStartY"] if action.key?("OffsetStartY")
+    elx_end_offset = action["OffsetEndX"] if action.key?("OffsetEndX")
+    ely_end_offset = action["OffsetEndY"] if action.key?("OffsetEndY")
+
+    elx_start = elx_midpoint + elx_start_offset
+    ely_start = ely_midpoint + ely_start_offset
+    elx_end = elx_midpoint + elx_end_offset
+    ely_end = ely_midpoint + ely_end_offset
+
+    @driver.action
+      .move_to_location(elx_start, ely_start)
+      .pointer_down(:left)
+      .move_to_location(elx_end, ely_end, duration: swipe_time)
+      .release
+      .perform
+  end
+
   # TODO
   def driver_method(action)
     log_info("TODO")
