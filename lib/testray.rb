@@ -19,6 +19,11 @@ module TestRay
       true
     end
 
+    desc "version", "Return the TestRay version"
+    def version()
+      log_info "TestRay v#{VERSION}"
+    end
+
     desc "execute_help", "help for creating an testray project"
     option :types,
            :desc => "Show Action Types",
