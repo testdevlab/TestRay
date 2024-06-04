@@ -792,9 +792,9 @@ Swipe in an arbitrary direction over a single element. By default, the swipe sta
 	  Id: //some/path
 	  OffsetStartX: 50 (Translates to (0.5 * width) + 50)
 	  OffsetStartY: -25 (Translates to (0.5 * height) - 25)
-    OffsetEndX: -150
+	  OffsetEndX: -150
 	  OffsetEndY: -50
-    SwipeTime: 5 (In seconds - default is 1)
+	  SwipeTime: 5 (In seconds - default is 1)
 	  NoRaise: false/true (Default - false -> will raise error on fail)
 
 	- Type: swipe_on_element
@@ -803,7 +803,7 @@ Swipe in an arbitrary direction over a single element. By default, the swipe sta
 	  Id: //some/path
 	  OffsetStartFractionX: 0.4 (Translates to 0.5 + 0.4 = 0.9 * width)
 	  OffsetStartFractionY: -0.2 (Translates to 0.5 - 0.2 = 0.3 * height)
-    OffsetEndFractionX: -0.4
+	  OffsetEndFractionX: -0.4
 	  OffsetEndFractionY: -0.3
 	  NoRaise: false/true (Default - false -> will raise error on fail)
 
