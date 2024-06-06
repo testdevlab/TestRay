@@ -282,6 +282,22 @@ class Device
     @driver.update_settings(convert_yaml(action["Value"]))
   end
 
+  # executes a custom script, which can be either raw JavaScript code (for browsers)
+  # or the name of a defined driver script. Parameters can also be provided
+  # Accepts:
+  #   Value
+  #   Params
+  def execute_script(action)
+    script_command = convert_value(action["Value"])
+    if action.key?("Params")
+      raw_params = action["Params"]
+      params = raw_params.is_a?(Hash) ? convert_yaml(raw_params) : convert_value(raw_params)
+      @driver.execute_script(script_command, params)
+    else
+      @driver.execute_script(script_command)
+    end
+  end
+
   # starts recording test execution. Whole desktop is recorded if 'udid' is not
   # set.
   # Accepts:
