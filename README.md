@@ -307,6 +307,7 @@ Roles are ALWAYS defined at the begining of the cases. You have to write always 
 18. [wait_for_page_to_load](#wait_for_page_to_load)
 19. [collection_visible_for](#collection_visible_for)
 20. [wait_not_visible](#wait_not_visible)
+21. [execute_script](#execute_script)
 
 ## Only Browser
 
@@ -327,18 +328,21 @@ Roles are ALWAYS defined at the begining of the cases. You have to write always 
 1. [set_orientation](#set_orientation)
 2. [close_app](#close_app)
 3. [launch_app](#launch_app)
-4. [start_record/end_record](#start_record/end_record)
-5. [tap_by_coord](#tap_by_coord)
-6. [press](#press)
-7. [click_and_hold](#click_and_hold)
-8. [swipe_up/swipe_down](#swipe_up/swipe_down)
-9. [swipe_elements](#swipe_elements)
-10. [swipe_coord](#swipe_coord)
-11. [click_coord](#click_coord)
-12. [clipboard](#clipboard)
-13. [terminate_app](#terminate_app)
-14. [notifications](#notifications)
-15. [back](#back)
+4. [terminate_app](#terminate_app)
+5. [start_record/end_record](#start_record/end_record)
+6. [tap_by_coord](#tap_by_coord)
+7. [press](#press)
+8. [click_and_hold](#click_and_hold)
+9. [swipe_up/swipe_down](#swipe_up/swipe_down)
+10. [swipe_on_element](#swipe_on_element)
+11. [swipe_elements](#swipe_elements)
+12. [swipe_coord](#swipe_coord)
+13. [click_coord](#click_coord)
+14. [clipboard](#clipboard)
+15. [handle_ios_alert](#handle_ios_alert)
+16. [notifications](#notifications)
+17. [back](#back)
+18. [update_settings](#update_settings)
 
 ## API
 
@@ -597,6 +601,23 @@ Waits until the element specified is not visible.
       Id: //div[contains(text(), "http")]
       Time: 10
 
+### <a id="execute_script"></a>execute_script
+
+Executes a specific script. For Selenium, the script value can be raw JavaScript, while for Appium, this can be the name of a defined driver script. Parameters can also be provided as an optional value.
+
+Example for Selenium (set a console property):
+
+    - Type: execute_script
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Value: window.localStorage.logLevel = '0'
+
+Example for Appium (launch Chrome on Android)
+
+    - Type: execute_script
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Value: "mobile: launchApp"
+      Params: { appId: com.android.chrome }
+
 ## Only Browser
 
 ### <a id="clear_field"></a>clear_field
@@ -760,7 +781,7 @@ It works simillar as click, but it will use Appium Actions of the element intern
 
 It works simillar as click, but it holds the pressing. The labels and options that you can use are exactly the same. Refer to `click` for more information.
 
-### <a id="swipe_up/swipe_down"></a>swipe_up/swipe_down (Mobile)
+### <a id="swipe_up/swipe_down"></a>swipe_up/swipe_down
 
 	- Type: swipe_up/swipe_down
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
@@ -768,7 +789,7 @@ It works simillar as click, but it holds the pressing. The labels and options th
 	  Id: //some/path (Element from where to start the swipe)
 	  NoRaise: false/true (Default - false -> will rise error on fail)
 
-### <a id="swipe_elements"></a>swipe_elements (Mobile)
+### <a id="swipe_elements"></a>swipe_elements
 
 	- Type: swipe_elements
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
@@ -779,7 +800,34 @@ It works simillar as click, but it holds the pressing. The labels and options th
 		Strategy: id/css/xpath/uiautomator/class_chain/... (Element from where to start the swipe)
 		Id: //some/path (Element from where to start the swipe)
 
-### <a id="swipe_coord"></a>swipe_coord (Mobile)
+### <a id="swipe_on_element"></a>swipe_on_element
+
+Swipe in an arbitrary direction over a single element. By default, the swipe start and endpoints are at the element midpoint (width * 0.5, height * 0.5), which can be changed using offsets. These can be either absolute (in pixels) or relative (in fractions of the element width/height). The swipe duration can also be configured (default is 1 second).
+
+	- Type: swipe_on_element
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+	  OffsetStartX: 50 (Translates to (0.5 * width) + 50)
+	  OffsetStartY: -25 (Translates to (0.5 * height) - 25)
+	  OffsetEndX: -150
+	  OffsetEndY: -50
+	  SwipeTime: 5 (In seconds - default is 1)
+	  NoRaise: false/true (Default - false -> will raise error on fail)
+
+	- Type: swipe_on_element
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+	  OffsetStartFractionX: 0.4 (Translates to 0.5 + 0.4 = 0.9 * width)
+	  OffsetStartFractionY: -0.2 (Translates to 0.5 - 0.2 = 0.3 * height)
+	  OffsetEndFractionX: -0.4
+	  OffsetEndFractionY: -0.3
+	  NoRaise: false/true (Default - false -> will raise error on fail)
+
+If only 1-3 offsets need to be changed, the other offsets can be omitted. Additionally, mixing absolute and relative offsets within the same action is allowed, but if both offset types are provided for the same element and axis, the absolute offset takes precedence.
+
+### <a id="swipe_coord"></a>swipe_coord
 
 	- Type: swipe_coord
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
@@ -788,7 +836,7 @@ It works simillar as click, but it holds the pressing. The labels and options th
 	  EndX: 300
 	  EndY: 400
 
-### <a id="click_coord"></a>click_coord (Mobile)
+### <a id="click_coord"></a>click_coord
 
 	- Type: click_coord
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
@@ -809,6 +857,18 @@ Gets the clipboard value from the device and assigns it to some Var using Greps.
           remove: google.com/ (Optional)
           match: "google.com(.*)"
 
+### <a id="handle_ios_alert"></a>handle_ios_alert
+
+iOS only. Checks for the presence of a native iOS alert. Does nothing if an alert is not found, otherwise clicks the alert button specified by Strategy/Id.
+
+Please note that [XCUITest Driver >=6.0.0 requires changing the active application in order to see such alerts in the app hierarchy](https://appium.github.io/appium-xcuitest-driver/latest/guides/troubleshooting/#interact-with-dialogs-managed-by-comapplespringboard). The `handle_ios_alert` function already does this implicitly.
+
+  	- Type: handle_ios_alert
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Strategy: id/xpath/class_chain/...
+      Id: //path/to/button/in/alert
+      AlertTime: 5 (Optional. How long to search for the alert itself - default is 1 second)
+
 ### <a id="notifications"></a>notifications
 
 Opens notifications var (Only Android)
@@ -822,6 +882,14 @@ Works as pressing the button `back` on the phone to go to the previous screen.
 
   	- Type: back
       Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+
+### <a id="update_settings"></a>update_settings
+
+Updates Appium driver settings. The value must be provided as a JSON object. JSON keys can be optionally placed in quotes.
+
+    - Type: update_settings
+      Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+      Value: { waitForIdleTimeout: 10, 'allowInvisibleElements': true, "elementResponseAttributes": "name" }
 
 ## API
 

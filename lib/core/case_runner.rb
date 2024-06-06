@@ -249,6 +249,10 @@ def log_step(role, action)
     log_info("Role: '#{role}', Action: '#{action["Type"]}', " +
     "Coords: Start -> X:'#{action["StartX"]}', Y: '#{action["StartY"]}' - " +
     "End -> X:'#{action["EndX"]}', Y: '#{action["EndY"]}'")
+  elsif action["Type"] == "execute_script" && action.key?("Params")
+    log_info("Role: '#{role}', Action: '#{action["Type"]}', " +
+    "Value: '#{convert_value(action["Value"])}', " +
+    "Params: '#{convert_value(action["Params"])}'")
   else
     if action["Strategy"] && action["Value"]
       log_info("Role: '#{role}', Action: '#{action["Type"]}', " +
