@@ -711,20 +711,20 @@ class Device
   # Accepts:
   #   Strategy
   #   Id
+  #   ScrollTarget
+  #     Strategy
+  #     Id
+  #     RecheckAfterScrolls
   #   SwipeAction
   #     OffsetFractionX
   #     StartFractionY
   #     EndFractionY
   #     SwipeSpeedMultiplier
   #     SwipePauseDuration
-  #   ScrollTarget
-  #     Strategy
-  #     Id
-  #     RecheckAfterScrolls
   #   ScrollTimeout
   #   FullView
   #   FullViewOffsetY
-  def scroll_vertically_until_visible(action)
+  def scroll_until_element_visible(action)
     # the element will be checked in a loop, so its search should be fast and never fail
     original_noraise = action["NoRaise"]
     action["NoRaise"] = true
@@ -736,17 +736,21 @@ class Device
     scroll_mul = @platform == "iOS" ? 3 : 1.5
     scroll_pause = @platform == "iOS" ? 0.2 : 0.1
     if action.key?("SwipeAction")
-      x_frac = convert_value(action["OffsetFractionX"]) if action.key?("OffsetFractionX")
-      y_start_frac = convert_value(action["StartFractionY"]) if action.key?("StartFractionY")
-      y_end_frac = convert_value(action["EndFractionY"]) if action.key?("EndFractionY")
-      scroll_mul *= convert_value(action["SwipeSpeedMultiplier"]) if action.key?("SwipeSpeedMultiplier")
-      scroll_pause = convert_value(action["SwipePauseDuration"]) if action.key?("SwipePauseDuration")
+      sw_action = action["SwipeAction"]
+      x_frac = convert_value(sw_action["OffsetFractionX"]).to_f if sw_action.key?("OffsetFractionX")
+      y_start_frac = convert_value(sw_action["StartFractionY"]).to_f if sw_action.key?("StartFractionY")
+      y_end_frac = convert_value(sw_action["EndFractionY"]).to_f if sw_action.key?("EndFractionY")
+      scroll_mul /= convert_value(sw_action["SwipeSpeedMultiplier"]).to_f if sw_action.key?("SwipeSpeedMultiplier")
+      scroll_pause = convert_value(sw_action["SwipePauseDuration"]).to_f if sw_action.key?("SwipePauseDuration")
     end
-    scroll_timeout = action.key?("ScrollTimeout") ? convert_value(action["ScrollTimeout"]) : 60
+    scroll_timeout = action.key?("ScrollTimeout") ? convert_value(action["ScrollTimeout"]).to_f : 60
     # calculate the exact coordinates for swiping,
     # depending on whether a specific element to swipe on is provided
     if action.key?("ScrollTarget")
-      recheck_after_scrolls = action.key?("RecheckAfterScrolls") ? convert_value(action["RecheckAfterScrolls"]) : nil
+      recheck_after_scrolls = nil
+      if action["ScrollTarget"].key?("RecheckAfterScrolls")
+        recheck_after_scrolls = convert_value(action["ScrollTarget"]["RecheckAfterScrolls"]).to_i
+      end
       bg_el = wait_for(action["ScrollTarget"])
       y_top = bg_el.location.y
       y_bottom = bg_el.location.y + bg_el.size.height
@@ -764,7 +768,7 @@ class Device
     # configure FullView parameters
     # if FullViewOffsetY is provided, assume that FullView is requested
     action["FullView"] = true if action.key?("FullViewOffsetY")
-    y_fullview_offset = action.key?("FullViewOffsetY") ? convert_value(action["FullViewOffsetY"]).to_f : 0
+    y_fullview_offset = action.key?("FullViewOffsetY") ? convert_value(action["FullViewOffsetY"]).to_i : 0
 
     # start the scrolling/checking loop
     scrolls = 0
@@ -772,23 +776,21 @@ class Device
     while (Time.now - start) < scroll_timeout
       el = wait_for(action)
       if el&.displayed?
-        return unless action.key?("FullView") && convert_value(action["FullView"])
+        return unless action.key?("FullView") && convert_value(action["FullView"]) == "true"
         el_y_loc = el.location.y # save position so it is not retrieved every time
-        # the condition for full view depends on the scrolling direction (up or down)
-        el_in_full_view = if y_start_frac > y_end_frac
-                            el_y_loc <= y_top + y_fullview_offset
-                          else
-                            el_y_loc >= y_bottom + y_fullview_offset
-                          end
-        return if el_in_full_view
+        # save the target point depending on scroll direction
+        full_view_target = y_start_frac > y_end_frac ? y_top + y_fullview_offset : y_bottom + y_fullview_offset
+        # if the following condition is true, the full view swipe has already been executed, so we can return
+        return if y_end == full_view_target
         # if element is visible but not in full view, change the scroll endpoints
         if el_y_loc > y_top && el_y_loc < y_bottom
-          y_end = y_start_frac > y_end_frac ? y_top : y_bottom
+          y_end = full_view_target
           y_start = el_y_loc
         end
       end
       # element not displayed or not in full view - execute swipe action
-      duration = (y_start - y_end) * scroll_mul / 1000.0
+      duration = (y_start - y_end).abs * scroll_mul / 1000.0
+      log_info("#{@role}: Scrolling from [#{x_point}, #{y_start}] to [#{x_point}, #{y_end}] for #{duration}s")
       @driver.action
         .move_to_location(x_point, y_start)
         .pointer_down(:left)
@@ -810,7 +812,7 @@ class Device
     # raise error if timeout exceeded
     if !original_noraise
       path = take_error_screenshot
-      raise "\n#{@role}: Element '#{action["Id"]}' is not visible after scrolling for #{scroll_timeout} " +
+      raise "\nRole #{@role}: Element '#{action["Id"]}' is not visible after scrolling for #{scroll_timeout} " +
             "seconds\nError Screenshot: #{path}"
     end
   end

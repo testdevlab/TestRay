@@ -334,7 +334,7 @@ Roles are ALWAYS defined at the begining of the cases. You have to write always 
 7. [press](#press)
 8. [click_and_hold](#click_and_hold)
 9. [swipe_up/swipe_down](#swipe_up/swipe_down)
-10. [scroll_vertically_until_visible](#scroll_vertically_until_visible)
+10. [scroll_until_element_visible](#scroll_until_element_visible)
 11. [swipe_on_element](#swipe_on_element)
 12. [swipe_elements](#swipe_elements)
 13. [swipe_coord](#swipe_coord)
@@ -790,18 +790,18 @@ It works simillar as click, but it holds the pressing. The labels and options th
 	  Id: //some/path (Element from where to start the swipe)
 	  NoRaise: false/true (Default - false -> will rise error on fail)
 
-### <a id="scroll_vertically_until_visible"></a>scroll_vertically_until_visible
+### <a id="scroll_until_element_visible"></a>scroll_until_element_visible
 
 Scroll vertically (up or down) until the specified element is visible on the screen. This function accepts many optional parameters, but the simplest form is as follows:
 
-	- Type: scroll_vertically_until_visible
+	- Type: scroll_until_element_visible
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
 	  Strategy: id/css/xpath/uiautomator/class_chain/...
 	  Id: //some/path
 
 Set a specific background element to scroll on (the scroll target). If not specified, the scroll target is set to the entire visible window.
 
-	- Type: scroll_vertically_until_visible
+	- Type: scroll_until_element_visible
 	  Role: role1
 	  Strategy: id/css/xpath/uiautomator/class_chain/...
 	  Id: //some/path
@@ -812,7 +812,7 @@ Set a specific background element to scroll on (the scroll target). If not speci
 
 Customize the swipe action:
 
-	- Type: scroll_vertically_until_visible
+	- Type: scroll_until_element_visible
 	  Role: role1
 	  Strategy: id/css/xpath/uiautomator/class_chain/...
 	  Id: //some/path
@@ -821,11 +821,11 @@ Customize the swipe action:
 	    StartFractionY: 0.2 (Fraction of the scroll target height where the swipe action will start. Default 0.7)
 	    EndFractionY: 0.8 (Fraction of the scroll target height where the swipe action will end. Default 0.3)
 	    SwipeSpeedMultiplier: 1.2 (Speed multiplier to apply to the default scroll speed)
-	    SwipePauseDuration: 0.5 (Time in seconds to wait in between swipes. Default 0.2 for iOS, otherwise 0.1)
+	    SwipePauseDuration: 0.5 (Time in seconds to wait after every swipe action. Default 0.2 for iOS, otherwise 0.1)
 
 Set the scrolling timeout:
 
-	- Type: scroll_vertically_until_visible
+	- Type: scroll_until_element_visible
 	  Role: role1
 	  Strategy: id/css/xpath/uiautomator/class_chain/...
 	  Id: //some/path
@@ -833,7 +833,7 @@ Set the scrolling timeout:
 
 Instruct the target element to be scrolled into full view. This means that once the element is visible, one additional swipe will be executed from the element location, to either the top or the bottom of the scroll target (depending on the scroll direction configured in the swipe action).
 
-	- Type: scroll_vertically_until_visible
+	- Type: scroll_until_element_visible
 	  Role: role1
 	  Strategy: id/css/xpath/uiautomator/class_chain/...
 	  Id: //some/path
