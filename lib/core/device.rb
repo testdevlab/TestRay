@@ -800,21 +800,19 @@ class Device
         .perform
       scrolls += 1
       # recalculate the scroll target properties if the recheck variable is set
-      if action.key?("ScrollTarget") && scrolls == recheck_after_scrolls
-        bg_el = wait_for(action["ScrollTarget"])
-        y_top = bg_el.location.y
-        y_bottom = bg_el.location.y + bg_el.size.height
-        x_point = bg_el.location.x + (bg_el.size.width * x_frac)
-        y_start = y_top + (bg_el.size.height * y_start_frac)
-        y_end = y_top + (bg_el.size.height * y_end_frac)
-      end
+      next unless action.key?("ScrollTarget") && scrolls == recheck_after_scrolls
+      bg_el = wait_for(action["ScrollTarget"])
+      y_top = bg_el.location.y
+      y_bottom = bg_el.location.y + bg_el.size.height
+      x_point = bg_el.location.x + (bg_el.size.width * x_frac)
+      y_start = y_top + (bg_el.size.height * y_start_frac)
+      y_end = y_top + (bg_el.size.height * y_end_frac)
     end
     # raise error if timeout exceeded
-    if !original_noraise
-      path = take_error_screenshot
-      raise "\nRole #{@role}: Element '#{action["Id"]}' is not visible after scrolling for #{scroll_timeout} " +
-            "seconds\nError Screenshot: #{path}"
-    end
+    return if original_noraise
+    path = take_error_screenshot
+    raise "\nRole #{@role}: Element '#{action["Id"]}' is not visible after scrolling for #{scroll_timeout} " +
+          "seconds\nError Screenshot: #{path}"
   end
 
   def swipe_elements(action)
