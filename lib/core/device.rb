@@ -730,16 +730,16 @@ class Device
     action["NoRaise"] = true
     action["Time"] = 0.5
     # configure swipe action properties
-    x_frac = 0.5
-    y_start_frac = 0.7
-    y_end_frac = 0.3
+    x_frac = 0
+    y_start_frac = 0.2
+    y_end_frac = -0.2
     scroll_mul = @platform == "iOS" ? 3 : 1.5
     scroll_pause = @platform == "iOS" ? 0.2 : 0.1
     if action.key?("SwipeAction")
       sw_action = action["SwipeAction"]
       x_frac = convert_value(sw_action["OffsetFractionX"]).to_f if sw_action.key?("OffsetFractionX")
-      y_start_frac = convert_value(sw_action["StartFractionY"]).to_f if sw_action.key?("StartFractionY")
-      y_end_frac = convert_value(sw_action["EndFractionY"]).to_f if sw_action.key?("EndFractionY")
+      y_start_frac = convert_value(sw_action["OffsetStartFractionY"]).to_f if sw_action.key?("OffsetStartFractionY")
+      y_end_frac = convert_value(sw_action["OffsetEndFractionY"]).to_f if sw_action.key?("OffsetEndFractionY")
       scroll_mul /= convert_value(sw_action["SwipeSpeedMultiplier"]).to_f if sw_action.key?("SwipeSpeedMultiplier")
       scroll_pause = convert_value(sw_action["SwipePauseDuration"]).to_f if sw_action.key?("SwipePauseDuration")
     end
@@ -754,16 +754,16 @@ class Device
       bg_el = wait_for(action["ScrollTarget"])
       y_top = bg_el.location.y
       y_bottom = bg_el.location.y + bg_el.size.height
-      x_point = bg_el.location.x + (bg_el.size.width * x_frac)
-      y_start = y_top + (bg_el.size.height * y_start_frac)
-      y_end = y_top + (bg_el.size.height * y_end_frac)
+      x_point = bg_el.location.x + (bg_el.size.width * (0.5 + x_frac))
+      y_start = y_top + (bg_el.size.height * (0.5 + y_start_frac))
+      y_end = y_top + (bg_el.size.height * (0.5 + y_end_frac))
     else
       screen_size = @driver.window_size
       y_top = 0
       y_bottom = screen_size.height
-      x_point = screen_size.width * x_frac
-      y_start = screen_size.height * y_start_frac
-      y_end = screen_size.height * y_end_frac
+      x_point = screen_size.width * (0.5 + x_frac)
+      y_start = screen_size.height * (0.5 + y_start_frac)
+      y_end = screen_size.height * (0.5 + y_end_frac)
     end
     # configure FullView parameters
     # if FullViewOffsetY is provided, assume that FullView is requested

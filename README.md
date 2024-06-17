@@ -811,17 +811,22 @@ Set a specific background element to scroll on (the scroll target). If not speci
 	    RecheckAfterScrolls: 2 (Sometimes the scroll target dimensions may change, e.g. in mobile browsers, the URL bar may auto-hide. Setting this value recalculates the scroll target dimensions after the specified number of swipes)
 
 Customize the swipe action:
+- Adjust the position of the swipe action. By default, the action swipes downwards on the scroll target, at its width * 0.5, from its height * 0.7, to its height * 0.3 (meaning, the swipe distance is the scroll target height * 0.4). This can be changed using offsets relative to the scroll target midpoint (in fractions of its width/height)
+- Change the swipe speed by passing a value which will be multiplied by the default speed value
+- Change the pause duration (time in seconds to wait after every swipe). Default 0.2s for iOS, otherwise 0.1s
+
+Example of changing all 5 parameters:
 
 	- Type: scroll_until_element_visible
 	  Role: role1
 	  Strategy: id/css/xpath/uiautomator/class_chain/...
 	  Id: //some/path
 	  SwipeAction:
-	    OffsetFractionX: 0.3 (Fraction of the scroll target width where the swipe action will execute. Default 0.5, i.e. the midpoint of the scroll target width)
-	    StartFractionY: 0.2 (Fraction of the scroll target height where the swipe action will start. Default 0.7)
-	    EndFractionY: 0.8 (Fraction of the scroll target height where the swipe action will end. Default 0.3)
-	    SwipeSpeedMultiplier: 1.2 (Speed multiplier to apply to the default scroll speed)
-	    SwipePauseDuration: 0.5 (Time in seconds to wait after every swipe action. Default 0.2 for iOS, otherwise 0.1)
+	    OffsetFractionX: 0.3 (Translates to 0.5 + 0.3 = 0.8 * width)
+	    OffsetStartFractionY: -0.3 (Translates to 0.5 - 0.3 = 0.2 * height)
+	    OffsetEndFractionY: 0.3 (Translates to 0.5 + 0.2 = 0.8 * height)
+	    SwipeSpeedMultiplier: 1.2
+	    SwipePauseDuration: 0.5
 
 Set the scrolling timeout:
 
