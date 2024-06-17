@@ -20,3 +20,18 @@ SwipeElementsTest:
       Id: '//android.view.View[1]'
   - Type: sleep
     Time: 5
+
+ScrollUntilElementVisibleTest:
+  Vars:
+    USER: localAndroid
+  Roles: 
+    - Role: $AND_CLI_USER$
+      App: PlayStore
+  Actions:
+  - Type: click
+    Role: $AND_CLI_USER$
+    Strategy: uiautomator
+    Id: text("Top charts")
+  - Type: scroll_until_element_visible
+    Strategy: uiautomator
+    Id: text("25")

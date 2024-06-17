@@ -334,15 +334,16 @@ Roles are ALWAYS defined at the begining of the cases. You have to write always 
 7. [press](#press)
 8. [click_and_hold](#click_and_hold)
 9. [swipe_up/swipe_down](#swipe_up/swipe_down)
-10. [swipe_on_element](#swipe_on_element)
-11. [swipe_elements](#swipe_elements)
-12. [swipe_coord](#swipe_coord)
-13. [click_coord](#click_coord)
-14. [clipboard](#clipboard)
-15. [handle_ios_alert](#handle_ios_alert)
-16. [notifications](#notifications)
-17. [back](#back)
-18. [update_settings](#update_settings)
+10. [scroll_until_element_visible](#scroll_until_element_visible)
+11. [swipe_on_element](#swipe_on_element)
+12. [swipe_elements](#swipe_elements)
+13. [swipe_coord](#swipe_coord)
+14. [click_coord](#click_coord)
+15. [clipboard](#clipboard)
+16. [handle_ios_alert](#handle_ios_alert)
+17. [notifications](#notifications)
+18. [back](#back)
+19. [update_settings](#update_settings)
 
 ## API
 
@@ -788,6 +789,56 @@ It works simillar as click, but it holds the pressing. The labels and options th
 	  Strategy: id/css/xpath/uiautomator/class_chain/... (Element from where to start the swipe)
 	  Id: //some/path (Element from where to start the swipe)
 	  NoRaise: false/true (Default - false -> will rise error on fail)
+
+### <a id="scroll_until_element_visible"></a>scroll_until_element_visible
+
+Scroll vertically (up or down) until the specified element is visible on the screen. This function accepts many optional parameters, but the simplest form is as follows:
+
+	- Type: scroll_until_element_visible
+	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+
+Set a specific background element to scroll on (the scroll target). If not specified, the scroll target is set to the entire visible window.
+
+	- Type: scroll_until_element_visible
+	  Role: role1
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+	  ScrollTarget:
+	    Strategy: id/css/xpath/uiautomator/class_chain/...
+	    Id: //some/path
+	    RecheckAfterScrolls: 2 (Sometimes the scroll target dimensions may change, e.g. in mobile browsers, the URL bar may auto-hide. Setting this value recalculates the scroll target dimensions after the specified number of swipes)
+
+Customize the swipe action:
+
+	- Type: scroll_until_element_visible
+	  Role: role1
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+	  SwipeAction:
+	    OffsetFractionX: 0.3 (Fraction of the scroll target width where the swipe action will execute. Default 0.5, i.e. the midpoint of the scroll target width)
+	    StartFractionY: 0.2 (Fraction of the scroll target height where the swipe action will start. Default 0.7)
+	    EndFractionY: 0.8 (Fraction of the scroll target height where the swipe action will end. Default 0.3)
+	    SwipeSpeedMultiplier: 1.2 (Speed multiplier to apply to the default scroll speed)
+	    SwipePauseDuration: 0.5 (Time in seconds to wait after every swipe action. Default 0.2 for iOS, otherwise 0.1)
+
+Set the scrolling timeout:
+
+	- Type: scroll_until_element_visible
+	  Role: role1
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+	  ScrollTimeout: 90 (In seconds - default is 60)
+
+Instruct the target element to be scrolled into full view. This means that once the element is visible, one additional swipe will be executed from the element location, to either the top or the bottom of the scroll target (depending on the scroll direction configured in the swipe action).
+
+	- Type: scroll_until_element_visible
+	  Role: role1
+	  Strategy: id/css/xpath/uiautomator/class_chain/...
+	  Id: //some/path
+	  FullView: true/false (Default false)
+	  FullViewOffsetY: 150 (Optional - offset in pixels added to either the top or bottom of the scroll target, only when executing the full view swipe action. This can be used to ensure that the element is not scrolled outside the scroll target dimensions. If this is set, FullView is assumed to be true and can be omitted)
 
 ### <a id="swipe_elements"></a>swipe_elements
 
