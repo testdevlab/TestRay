@@ -388,7 +388,7 @@ Both of these lists (Strategy/Id) must have the same size (number of elements):
 		- //some/path2
 	  NoRaise: false/true (Default - false -> will rise error on fail)
 
-By default, the click action will be executed on the element midpoint (width * 0.5, height * 0.5), but it is possible to add offsets. These can be either absolute (in pixels) or relative (in fractions of the element width/height):
+By default, the click action will be executed on the element midpoint (width * 0.5, height * 0.5), but it is possible to add offsets. These can be either absolute (in pixels) or relative (in fractions of the element width/height). While the values are not bound by the element dimensions, if using relative offsets, the [-0.5..0.5] range will cover the entire element width/height.
 
 	- Type: click
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
@@ -811,7 +811,7 @@ Set a specific background element to scroll on (the scroll target). If not speci
 	    RecheckAfterScrolls: 2 (Sometimes the scroll target dimensions may change, e.g. in mobile browsers, the URL bar may auto-hide. Setting this value recalculates the scroll target dimensions after the specified number of swipes)
 
 Customize the swipe action:
-- Adjust the position of the swipe action. By default, the action swipes downwards on the scroll target, at its width * 0.5, from its height * 0.7, to its height * 0.3 (meaning, the swipe distance is the scroll target height * 0.4). This can be changed using offsets relative to the scroll target midpoint (in fractions of its width/height)
+- Adjust the position of the swipe action. By default, the action swipes downwards on the scroll target, at its width * 0.5, from its height * 0.7, to its height * 0.3 (meaning, the swipe distance is the scroll target height * 0.4). This can be changed using offsets relative to the scroll target midpoint (in fractions of its width/height). See the [click](#click) action description for the values that these offsets can take.
 - Change the swipe speed by passing a value which will be multiplied by the default speed value
 - Change the pause duration (time in seconds to wait after every swipe). Default 0.2s for iOS, otherwise 0.1s
 
@@ -858,7 +858,7 @@ Instruct the target element to be scrolled into full view. This means that once 
 
 ### <a id="swipe_on_element"></a>swipe_on_element
 
-Swipe in an arbitrary direction over a single element. By default, the swipe start and endpoints are at the element midpoint (width * 0.5, height * 0.5), which can be changed using offsets. These can be either absolute (in pixels) or relative (in fractions of the element width/height). The swipe duration can also be configured (default is 1 second).
+Swipe in an arbitrary direction over a single element. By default, the swipe start and endpoints are at the element midpoint (width * 0.5, height * 0.5), which can be changed using offsets. These can be either absolute (in pixels) or relative (in fractions of the element width/height). See the [click](#click) action description for the values that these offsets can take. The swipe duration can also be configured (default is 1 second).
 
 	- Type: swipe_on_element
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
