@@ -824,7 +824,7 @@ Example of changing all 5 parameters:
 	  SwipeAction:
 	    OffsetFractionX: 0.3 (Translates to 0.5 + 0.3 = 0.8 * width)
 	    OffsetStartFractionY: -0.3 (Translates to 0.5 - 0.3 = 0.2 * height)
-	    OffsetEndFractionY: 0.3 (Translates to 0.5 + 0.2 = 0.8 * height)
+	    OffsetEndFractionY: 0.3 (Translates to 0.5 + 0.3 = 0.8 * height)
 	    SwipeSpeedMultiplier: 1.2
 	    SwipePauseDuration: 0.5
 
