@@ -804,9 +804,9 @@ class Device
       bg_el = wait_for(action["ScrollTarget"])
       y_top = bg_el.location.y
       y_bottom = bg_el.location.y + bg_el.size.height
-      x_point = bg_el.location.x + (bg_el.size.width * x_frac)
-      y_start = y_top + (bg_el.size.height * y_start_frac)
-      y_end = y_top + (bg_el.size.height * y_end_frac)
+      x_point = bg_el.location.x + (bg_el.size.width * (0.5 + x_frac))
+      y_start = y_top + (bg_el.size.height * (0.5 + y_start_frac))
+      y_end = y_top + (bg_el.size.height * (0.5 + y_end_frac))
     end
     # raise error if timeout exceeded
     return if original_noraise
