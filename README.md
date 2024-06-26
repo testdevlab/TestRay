@@ -834,7 +834,7 @@ Set the scrolling timeout:
 	  Role: role1
 	  Strategy: id/css/xpath/uiautomator/class_chain/...
 	  Id: //some/path
-	  ScrollTimeout: 90 (In seconds - default is 60)
+	  ScrollTimeout: 90 (In seconds - default is the global timeout)
 
 Instruct the target element to be scrolled into full view. This means that once the element is visible, one additional swipe will be executed from the element location, to either the top or the bottom of the scroll target (depending on the scroll direction configured in the swipe action).
 
