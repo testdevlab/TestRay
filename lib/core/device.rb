@@ -743,7 +743,7 @@ class Device
       scroll_mul /= convert_value(sw_action["SwipeSpeedMultiplier"]).to_f if sw_action.key?("SwipeSpeedMultiplier")
       scroll_pause = convert_value(sw_action["SwipePauseDuration"]).to_f if sw_action.key?("SwipePauseDuration")
     end
-    scroll_timeout = action.key?("ScrollTimeout") ? convert_value(action["ScrollTimeout"]).to_f : 60
+    scroll_timeout = action.key?("ScrollTimeout") ? convert_value(action["ScrollTimeout"]).to_f : @timeout
     # calculate the exact coordinates for swiping,
     # depending on whether a specific element to swipe on is provided
     if action.key?("ScrollTarget")
@@ -804,9 +804,9 @@ class Device
       bg_el = wait_for(action["ScrollTarget"])
       y_top = bg_el.location.y
       y_bottom = bg_el.location.y + bg_el.size.height
-      x_point = bg_el.location.x + (bg_el.size.width * x_frac)
-      y_start = y_top + (bg_el.size.height * y_start_frac)
-      y_end = y_top + (bg_el.size.height * y_end_frac)
+      x_point = bg_el.location.x + (bg_el.size.width * (0.5 + x_frac))
+      y_start = y_top + (bg_el.size.height * (0.5 + y_start_frac))
+      y_end = y_top + (bg_el.size.height * (0.5 + y_end_frac))
     end
     # raise error if timeout exceeded
     return if original_noraise
