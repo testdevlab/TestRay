@@ -253,7 +253,7 @@ class Device
   #   Value
   def launch_app(action)
     raise "Please specify the application identifier in the Value field!" unless action.key?("Value")
-    app_id = action["Value"]
+    app_id = convert_value(action["Value"])
     if @platform == "iOS"
       @driver.execute_script('mobile: launchApp', {'bundleId': app_id})
     elsif @platform == "Android"
@@ -267,7 +267,7 @@ class Device
   #   Value
   def terminate_app(action)
     raise "Please specify the application identifier in the Value field!" unless action.key?("Value")
-    app_id = action["Value"]
+    app_id = convert_value(action["Value"])
     if @platform == "iOS"
       @driver.execute_script('mobile: terminateApp', {'bundleId': app_id})
     elsif @platform == "Android"
