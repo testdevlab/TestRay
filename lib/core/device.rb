@@ -243,8 +243,8 @@ class Device
   end
 
   # closes the currently opened app and puts it in the background
-  def close_app(action = nil)
-    @driver.background_app(-1)
+  def close_app(_action)
+    @driver.execute_script('mobile: backgroundApp', {'seconds': -1})
   end
 
   # launches the app specified by the Android app package / iOS bundle ID
