@@ -447,17 +447,17 @@ class Device
   #   OffsetFractionY
   #   NoRaise
   def click(action)
-    start = Time.now
+    before_find = Time.now
     el = wait_for(action)
     return unless el
 
-    now = Time.now
-    log_info("Time to find element: #{now - start}s") if action["CheckTime"]
+    after_find = Time.now
+    log_info("Time to find element: #{after_find - before_find}s") if action["CheckTime"]
     error = nil
 
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
 
-    while (Time.now - start) < wait_time
+    loop do
       begin
         @platform == "iOS" ?
           @driver.action.move_to(el) :
@@ -478,11 +478,12 @@ class Device
         else
           el.click
         end
-        log_info("Time for click: #{Time.now - start}s") if action["CheckTime"]
+        log_info("Time for click: #{Time.now - after_find}s") if action["CheckTime"]
         return
       rescue => e
         error = e
       end
+      break if (Time.now - before_find) >= wait_time
     end
 
     if error && !action["NoRaise"]
@@ -535,24 +536,25 @@ class Device
   #   CheckTime
   #   NoRaise
   def press(action)
-    start = Time.now
+    before_find = Time.now
     el = wait_for(action)
     return unless el
 
-    now = Time.now
-    log_info("Time to find element: #{now - start}s") if action["CheckTime"]
+    after_find = Time.now
+    log_info("Time to find element: #{after_find - before_find}s") if action["CheckTime"]
     error = nil
 
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
 
-    while (Time.now - start) < wait_time
+    loop do
       begin
         @driver.action.move_to(el).pointer_down(:left).release.perform
-        log_info("Time for click: #{Time.now - start}s") if action["CheckTime"]
+        log_info("Time for click: #{Time.now - after_find}s") if action["CheckTime"]
         return
       rescue => e
         error = e
       end
+      break if (Time.now - before_find) >= wait_time
     end
     if error && !action["NoRaise"]
       path = take_error_screenshot()
@@ -568,17 +570,17 @@ class Device
   #   CheckTime
   #   NoRaise
   def click_and_hold(action)
-    start = Time.now
+    before_find = Time.now
     el = wait_for(action)
     return unless el
 
-    now = Time.now
-    log_info("Time to find element: #{now - start}s") if action["CheckTime"]
+    after_find = Time.now
+    log_info("Time to find element: #{after_find - before_find}s") if action["CheckTime"]
     error = nil
 
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
 
-    while (Time.now - start) < wait_time
+    loop do
       begin
         @platform == "iOS" ?
           @driver.action.move_to(el) :
@@ -588,11 +590,12 @@ class Device
       end
       begin
         @driver.action.click_and_hold(el).perform
-        log_info("Time for click and hold: #{Time.now - start}s") if action["CheckTime"]
+        log_info("Time for click and hold: #{Time.now - after_find}s") if action["CheckTime"]
         return
       rescue => e
         error = e
       end
+      break if (Time.now - before_find) >= wait_time
     end
     if error && !action["NoRaise"]
       path = take_error_screenshot()
