@@ -483,7 +483,7 @@ class Device
       rescue => e
         error = e
       end
-      break if (Time.now - after_find) >= wait_time
+      break if (Time.now - before_find) >= wait_time
     end
 
     if error && !action["NoRaise"]
@@ -554,7 +554,7 @@ class Device
       rescue => e
         error = e
       end
-      break if (Time.now - after_find) >= wait_time
+      break if (Time.now - before_find) >= wait_time
     end
     if error && !action["NoRaise"]
       path = take_error_screenshot()
@@ -595,7 +595,7 @@ class Device
       rescue => e
         error = e
       end
-      break if (Time.now - after_find) >= wait_time
+      break if (Time.now - before_find) >= wait_time
     end
     if error && !action["NoRaise"]
       path = take_error_screenshot()
