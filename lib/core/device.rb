@@ -457,7 +457,7 @@ class Device
 
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
 
-    while (Time.now - after_find) < wait_time
+    loop do
       begin
         @platform == "iOS" ?
           @driver.action.move_to(el) :
@@ -483,6 +483,7 @@ class Device
       rescue => e
         error = e
       end
+      break if (Time.now - after_find) >= wait_time
     end
 
     if error && !action["NoRaise"]
@@ -545,7 +546,7 @@ class Device
 
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
 
-    while (Time.now - after_find) < wait_time
+    loop do
       begin
         @driver.action.move_to(el).pointer_down(:left).release.perform
         log_info("Time for click: #{Time.now - after_find}s") if action["CheckTime"]
@@ -553,6 +554,7 @@ class Device
       rescue => e
         error = e
       end
+      break if (Time.now - after_find) >= wait_time
     end
     if error && !action["NoRaise"]
       path = take_error_screenshot()
@@ -578,7 +580,7 @@ class Device
 
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
 
-    while (Time.now - after_find) < wait_time
+    loop do
       begin
         @platform == "iOS" ?
           @driver.action.move_to(el) :
@@ -593,6 +595,7 @@ class Device
       rescue => e
         error = e
       end
+      break if (Time.now - after_find) >= wait_time
     end
     if error && !action["NoRaise"]
       path = take_error_screenshot()
