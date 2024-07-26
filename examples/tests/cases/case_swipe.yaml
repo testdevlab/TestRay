@@ -6,6 +6,12 @@ SwipeElementsTest:
     - Role: $AND_CLI_USER$
       App: PlayStore
   Actions:
+  - Type: swipe_coord
+    StartX: 300
+    StartY: 600
+    EndX: 300
+    EndY: 200
+    Loop: 4
   - Type: click
     Role: $AND_CLI_USER$
     Strategy: xpath

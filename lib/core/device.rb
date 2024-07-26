@@ -895,13 +895,23 @@ class Device
     start_y = action["StartY"]
     end_x = action["EndX"] ? action["EndX"] : 0
     end_y = action["EndY"] ? action["EndY"] : 0
+    loop_times = action["Loop"] ? action["Loop"] : 1
 
-    @driver.action
-      .move_to_location(start_x, start_y)
+    action = @driver.action
+
+    loop_times.times do
+      action.move_to_location(start_x, start_y, duration: 0.2)
       .pointer_down(:left)
       .move_to_location(end_x, end_y, duration: 0.2)
       .release
-      .perform
+    end
+  
+    # Perform all actions after the loop
+    begin
+      action.perform
+    rescue StandardError => e
+      puts "An error occurred: #{e.message}"
+    end
   end
 
   # clicks on the provided coordinates, if not provided then middle of the screen
