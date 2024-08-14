@@ -890,18 +890,20 @@ class Device
   #   StartY
   #   OffsetX
   #   OffsetY
+  #   Duration
   def swipe_coord(action)
-    start_x = action["StartX"]
-    start_y = action["StartY"]
-    end_x = action["EndX"] ? action["EndX"] : 0
-    end_y = action["EndY"] ? action["EndY"] : 0
+  start_x = action["StartX"]
+  start_y = action["StartY"]
+  end_x = action["EndX"] ? action["EndX"] : 0
+  end_y = action["EndY"] ? action["EndY"] : 0
+  duration = action["Duration"] ? action["Duration"] : 0.2
 
-    @driver.action
-      .move_to_location(start_x, start_y)
-      .pointer_down(:left)
-      .move_to_location(end_x, end_y, duration: 0.2)
-      .release
-      .perform
+  @driver.action
+    .move_to_location(start_x, start_y)
+    .pointer_down(:left)
+    .move_to_location(end_x, end_y, duration: duration)
+    .release
+    .perform
   end
 
   # clicks on the provided coordinates, if not provided then middle of the screen
