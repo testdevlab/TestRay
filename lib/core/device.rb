@@ -66,8 +66,8 @@ class Device
         when "edge"
           full_ops = driverclass.merge_edge_ops(@config_caps, @case_caps)
           @driver = driverclass.build_edge_driver(full_ops)
-        else 
-          raise "Chosen browser is \"#{@app_details["Browser"]}\" which is not " + 
+        else
+          raise "Chosen browser is \"#{@app_details["Browser"]}\" which is not " +
           "in the list of available browsers: chrome,firefox,safari,ie,edge"
       end
 
@@ -132,7 +132,7 @@ class Device
     unless log.nil?
       if convert_value(log).to_s == "Reset network"
         $network_state = 0
-      else 
+      else
         $network_state = 1
       end
     end
@@ -359,7 +359,7 @@ class Device
         end
       else
         log_info("Starting recording with default resolution, time_limit: #{timeout}, bit_rate: #{bitrate}")
-        @driver.start_recording_screen_a(time_limit: timeout, bit_rate: bitrate) 
+        @driver.start_recording_screen_a(time_limit: timeout, bit_rate: bitrate)
       end
     else
       video_quality = action["Video_Quality"] ?
@@ -513,7 +513,7 @@ class Device
     end
   end
 
-  # tap_by_coord on the provided element but over its coordinates. Multiple location 
+  # tap_by_coord on the provided element but over its coordinates. Multiple location
   # strategies are accepted - css, xPath, id.
   # Accepts:
   #   Strategy
@@ -657,7 +657,7 @@ class Device
   # Accepts:
   #   Strategy
   #   Id
-  def clear_field(action) 
+  def clear_field(action)
     el = nil
     if !action["Actions"] && action["Strategy"]
       el = wait_for(action)
@@ -892,18 +892,18 @@ class Device
   #   OffsetY
   #   Duration
   def swipe_coord(action)
-  start_x = action["StartX"]
-  start_y = action["StartY"]
-  end_x = action["EndX"] ? action["EndX"] : 0
-  end_y = action["EndY"] ? action["EndY"] : 0
-  duration = action["Duration"] ? action["Duration"] : 0.2
+    start_x = action["StartX"]
+    start_y = action["StartY"]
+    end_x = action["EndX"] ? action["EndX"] : 0
+    end_y = action["EndY"] ? action["EndY"] : 0
+    duration = action["Duration"] ? action["Duration"] : 0.2
 
-  @driver.action
-    .move_to_location(start_x, start_y)
-    .pointer_down(:left)
-    .move_to_location(end_x, end_y, duration: duration)
-    .release
-    .perform
+    @driver.action
+      .move_to_location(start_x, start_y)
+      .pointer_down(:left)
+      .move_to_location(end_x, end_y, duration: duration)
+      .release
+      .perform
   end
 
   # clicks on the provided coordinates, if not provided then middle of the screen
@@ -1072,7 +1072,7 @@ class Device
     else
       begin
       @driver.switch_to.frame index
-      rescue => e 
+      rescue => e
         log_info("#{@role}: There was an error while switching frames: #{e.message}", "error")
       end
     end
@@ -1349,18 +1349,18 @@ class Device
     value = action["Value"]
     action["Value"] = true
     while (Time.now - start) < time.to_f
-      action["Time"] = 0.2 
+      action["Time"] = 0.2
       if visible(action)
         sleep 0.2
       else
         action["Time"] = @timeout
-        # If it wasn't visible from the begining but we expect 
+        # If it wasn't visible from the begining but we expect
         # Value: false (Not visible), then it should return true
         return !value
       end
     end
     action["Time"] = @timeout
-    # If it was visible for the amount of time but we expect 
+    # If it was visible for the amount of time but we expect
     # Value: false (Not visible), then it should return false
     return value
   end
@@ -1655,7 +1655,7 @@ class Device
       sleep(0.1)
       return "Could not take screenshot due to error: #{e.message}"
     end
-  end  
+  end
 
 
   # Reload driver
@@ -1683,7 +1683,7 @@ class Device
     end
 
     # NEW WINDOW HANDLE
-    window_number = -1 # Set  default Window number 
+    window_number = -1 # Set  default Window number
     window_number = convert_value(action['WindowNumber']).to_i if action['WindowNumber'] # Override window number if specified
     time = 30 # Set default timeout value
     time = convert_value(action['Time']) if action['Time'] # Override timeout if specified
@@ -1731,7 +1731,7 @@ class Device
           src_var = src_var.to_i if src_var.to_i.to_s == src_var
           src_var = src_var.to_f if src_var.to_f.to_s == src_var
           unless src_var.is_a?(Numeric)
-            raise "#{@role}: Variables have mismatching types!\n" + 
+            raise "#{@role}: Variables have mismatching types!\n" +
                   "#{src_var} is #{src_var.class}, but #{cmp_var} is #{cmp_var.class}!"
           end
         end
@@ -1768,12 +1768,12 @@ class Device
       unless on_fail_text.empty?
         path = take_error_screenshot unless "command" == @application
         screenshot_error = (path ? "\nError Screenshot: #{path}" : "")
-        raise "#{@role}: The Var was '#{src_var}', but it was expected " + 
+        raise "#{@role}: The Var was '#{src_var}', but it was expected " +
               "to #{on_fail_text} '#{cmp_var}'#{screenshot_error}"
-      end 
+      end
       log_info "#{@role}: Succesful Assert -> '#{src_var}' - #{assert["Type"]} - '#{cmp_var}'"
     end
-  end 
+  end
 
   # call the specified operation method
   # Accepts:
@@ -1794,19 +1794,19 @@ class Device
     log_info "Result from the operation '#{operation_val}' = '#{result}'"
     unless action["ExpectedResult"].nil?
       exp_result = convert_value(action["ExpectedResult"])
-      if (result.is_a?(Numeric) && exp_result.to_f != result) || 
-      (result.is_a?(String) && exp_result != result) || 
+      if (result.is_a?(Numeric) && exp_result.to_f != result) ||
+      (result.is_a?(String) && exp_result != result) ||
       (!!result == result && result.to_s != exp_result.downcase)
         path = take_error_screenshot unless "command" == @application
         screenshot_error = (path ? "\nError Screenshot: #{path}" : "")
-        raise "#{@role}: The Result was '#{result}', but it was expected " + 
+        raise "#{@role}: The Result was '#{result}', but it was expected " +
         "to be '#{exp_result}'.#{screenshot_error}"
       else
         log_info "Successful validation of the operation '#{operation_val}' = '#{exp_result}'"
       end
     end
     ENV[convert_value(action["ResultVar"])] = result.to_s if action["ResultVar"]
-  end 
+  end
 end
 
 # END OF DEVICE CLASS
