@@ -65,7 +65,7 @@ class CaseRunner
       # fail case unless specified otherwise
       unless steps["NoRaise"]
         logger_step_fail(case_name, @main_case, @main_case_id, e.message) if case_name != @main_case
-        raise "There was an error in case '#{case_name}': #{e.message}" 
+        raise "There was an error in case '#{case_name}': #{e.message}"
       end
         
       # error was not raised -> return so that aftercases are not called twice
@@ -85,7 +85,7 @@ class CaseRunner
   end
 
   # method for iterating through the test case actions
-  # and calling the respective execution handlers 
+  # and calling the respective execution handlers
   # Parameters: test case name; parent role; test case steps
   def steps_handler(case_name, parent_role, steps)
     case_threads = {}
@@ -246,7 +246,8 @@ def log_step(role, action)
     log_info("Role: '#{role}', Action: '#{action["Type"]}', " +
     "Body: '#{action["Body"]}', Url: '#{action["Url"]}'")
   elsif action["Type"] == "swipe_coord"
-    log_info("Role: '#{role}', Action: '#{action["Type"]}', " +
+    duration = action["Duration"] ? action["Duration"] : 0.2
+    log_info("Role: '#{role}', Action: '#{action["Type"]}', Duration: '#{duration}', " +
     "Coords: Start -> X:'#{action["StartX"]}', Y: '#{action["StartY"]}' - " +
     "End -> X:'#{action["EndX"]}', Y: '#{action["EndY"]}'")
   elsif action["Type"] == "execute_script" && action.key?("Params")

@@ -891,6 +891,7 @@ If only 1-3 offsets need to be changed, the other offsets can be omitted. Additi
 	  StartY: 200
 	  EndX: 300
 	  EndY: 400
+	  Duration: 0.5 (Optional. if not specified will use 0.2 by default)
 
 ### <a id="click_coord"></a>click_coord
 
