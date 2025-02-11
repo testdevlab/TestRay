@@ -1456,12 +1456,7 @@ class Device
   # Prints and Writes timestamp with given format
   def get_timestamp(action)
     format_t = convert_value(action["Format"])
-
-    if action["LocalTime"]
-        time = Time.now.strftime(format_t)
-    else
-        time = Time.now.utc.strftime(format_t)
-    end
+    time = action["LocalTime"] ? Time.now.strftime(format_t) : Time.now.utc.strftime(format_t)
     log_info("Timestamp is: #{time}")
 
     if action["File"]
