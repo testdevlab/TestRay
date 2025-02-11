@@ -64,7 +64,7 @@ end
 
 def _log(message, level, color, no_date=false, _print=false)
   log_level_array = ["ERROR", "WARN", "INFO", "DEBUG"]
-  time = Time.now.strftime("%Y%m%d-%H%M%S")
+  time = Time.now.strftime("%Y%m%d-%H%M%S.%L")
   log_level, log_file = _load_log_env_vars
   if log_level_array.index(level) <= log_level_array.index(log_level)
     _put_and_write_file(log_file, level, time, message, color, no_date, _print)
@@ -76,7 +76,7 @@ end
 
 def _log_dividers(message, level, color, no_date=false)
   log_level, log_file = _load_log_env_vars
-  time = Time.now.strftime("%Y%m%d-%H%M%S")
+  time = Time.now.strftime("%Y%m%d-%H%M%S.%L")
   line_length = "[#{level}] [#{time}]: #{message}".length > 100 ? message.length : 80
   _put_and_write_file(log_file, level, time, ("="*80), color, true)
   if message.is_a? Array
