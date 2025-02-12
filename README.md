@@ -1037,6 +1037,7 @@ This type retrieves de UTC timestamp when it is executed, and you can write it i
 	- Type: get_timestamp
 	  Role: role1 (Optional. if not specified will use the first one defined in the case Roles)
 	  Format: Date_Format -> DDMMYY -> check https://www.ibm.com/docs/en/zos/2.4.0?topic=functions-strftime-convert-formatted-time
+	  LocalTime: false/true (Default - false; if true, it will retrieve local time instead of UTC)
 	  File: name_of_the_file.txt # relative or full path to the file to write the date (Use when Var is not used)
 	  Var: Variable_Name -> Variable to set with the current timestamp (Use when File is not used)
 
