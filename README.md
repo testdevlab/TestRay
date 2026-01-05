@@ -106,7 +106,9 @@ Apps:
     WinPath: C:\Users\user\AppData\Local\Programs\SomeApp\SomeApp.exe
     UWPAppName: SOMEAPP.1234567890ABC_defghijklmnop!App
     MacAppName: com.someapp
-</pre>
+</pre>  
+> [!NOTE]
+> If `WinPath` is used it assumes that app runs on the same machine where test is launched. To use with `appiumUrl` you may define app path under Appium capabilities within config file  
 
 This will add all the necessary capabilities to run on iOS, MacOS, Windows and Android
 

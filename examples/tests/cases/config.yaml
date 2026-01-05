@@ -6,6 +6,8 @@ Apps:
     Activity: com.android.vending.AssetBrowserActivity
   Settings:
     iOSBundle: com.apple.Preferences
+  RootWindows:
+    WinPath: Root # Not required for appiumURL but must be present for YAML validity
 
 chromeDriverPath: chromedriver
 
@@ -29,6 +31,15 @@ Devices:
   # IOS
   - role: localiOS
     platform: iOS
+  # WINDOWS
+  - role: remoteWindows
+    platform: Windows
+    appiumUrl: http://IP:PORT # Windows device with running Appium server
+    capabilities:
+      automationName: Windows
+      app: Root # Root windows allows to automate everything on windows screen
+  - role: localWindows
+    platform: Windows
 
 #VARS
 
