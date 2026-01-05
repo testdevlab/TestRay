@@ -70,7 +70,8 @@ class AppiumDriver
   # assemble basic capabilities for Windows
   def build_windows_caps
     caps = {
-      'platformName' => 'Windows'
+      'platformName' => 'Windows',
+      'automationName' => 'Windows'
     }
 
     if @app_details.key?("WinPath")
