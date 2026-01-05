@@ -103,7 +103,7 @@ class AppiumDriver
         end
       end
     else # Remote driver
-      log_warn('Neither WinPath or MainWindowHandle is specified! Make sure config file has correct Appium capabilities.')
+      log_info('Remote Appium Windows device mode')
     end
     return caps
   end
