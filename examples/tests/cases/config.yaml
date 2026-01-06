@@ -7,7 +7,7 @@ Apps:
   Settings:
     iOSBundle: com.apple.Preferences
   RootWindows:
-    WinPath: Root # Not required for appiumURL but must be present for YAML validity
+    WinPath: Root # Controls everything on screen
 
 chromeDriverPath: chromedriver
 
@@ -35,9 +35,6 @@ Devices:
   - role: remoteWindows
     platform: Windows
     appiumUrl: http://IP:PORT # Windows device with running Appium server
-    capabilities:
-      automationName: Windows
-      app: Root # Root windows allows to automate everything on windows screen
   - role: localWindows
     platform: Windows
 

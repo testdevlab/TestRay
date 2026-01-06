@@ -70,41 +70,44 @@ class AppiumDriver
   # assemble basic capabilities for Windows
   def build_windows_caps
     caps = {
-      'platformName' => 'Windows',
-      'automationName' => 'Windows'
+      "platformName" => "Windows",
+      "automationName" => "Windows",
+      "newCommandTimeout" => 2000 * 60,
     }
-
     if @app_details.key?("WinPath")
-      path_to_executable = @app_details["WinPath"]
-      caps.merge!({ "app" => "#{path_to_executable}" })
+      caps.merge!({ "app" => @app_details["WinPath"] })
+      return caps # No matter if localhost or remote, because Appium will determine window handle automatically
+    end
+
+    unless @url.include? "localhost"
+      # Either remote or no need to check for windows handle (127.0.0.1)
       return caps
     end
 
-    if @url.nil? # Local driver
-      if !OS.windows?
-        log_abort("Cannot run a local windows role on a non-windows operating system!")
-      else
-        process_check = execute_powershell("Get-Process #{@app}")
-        if process_check.include? "Exception"
-          if @app_details.key?("UWPAppName") # launch UWP app
-            spawn("start shell:AppsFolder\\#{@app_details["UWPAppName"]}")
-          else # launch Win32 app
-            spawn(execute_powershell("where.exe /r $HOME #{@app}.exe"))
-          end
-          sleep(5)
-        end
-        processWindowHandles = execute_powershell("(Get-Process #{@app}).MainWindowHandle").split("\n")
-        appMainWindowHandleList = (processWindowHandles.select { |wh| wh.to_i != 0 })
-        hexMainWindowHandle = appMainWindowHandleList[-1].to_i.to_s(16)
-        if @app_details.key?("WinPath")
-          caps.merge!({ "app" => @app_details["WinPath"] })
-        else
-          caps.merge!({ "appTopLevelWindow" => "#{hexMainWindowHandle.to_s}" })
-        end
-      end
-    else # Remote driver
-      log_info('Remote Appium Windows device mode')
+    # Running on "localhost" with automatic path to app detection in home directory
+    if !OS.windows?
+      log_abort("Cannot run a local windows role on a non-windows operating system!")
     end
+    process_check = execute_powershell("Get-Process \"#{@app}\"")
+    if process_check.include? "Exception"
+      if @app_details.key?("UWPAppName") # launch UWP app
+        spawn("start shell:AppsFolder\\#{@app_details["UWPAppName"]}")
+      else # launch Win32 app
+        app_path = execute_powershell("where.exe /r $HOME \"#{@app}.exe\"").strip
+        log_debug("Found app path: #{app_path}")
+        # Array syntax allows to handle any spaces in the filepath.
+        pid = spawn([app_path, app_path])
+        Process.detach(pid)
+      end
+      sleep(5)
+    end
+    
+    # Note: Capabilities app and appTopLevelWindow cannot work together)
+    processWindowHandles = execute_powershell("(Get-Process \"#{@app}\").MainWindowHandle").split("\n")
+    appMainWindowHandleList = (processWindowHandles.select { |wh| wh.to_i != 0 })
+    hexMainWindowHandle = appMainWindowHandleList[-1].to_i.to_s(16)
+    caps.merge!({ "appTopLevelWindow" => "#{hexMainWindowHandle}" })
+
     return caps
   end
 

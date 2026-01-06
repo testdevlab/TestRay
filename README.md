@@ -107,8 +107,6 @@ Apps:
     UWPAppName: SOMEAPP.1234567890ABC_defghijklmnop!App
     MacAppName: com.someapp
 </pre>  
-> [!NOTE]
-> If `WinPath` is used it assumes that app runs on the same machine where test is launched. To use with `appiumUrl` you may define app path under Appium capabilities within config file  
 
 This will add all the necessary capabilities to run on iOS, MacOS, Windows and Android
 
@@ -169,6 +167,8 @@ Devices:
   - role: localWindows
     platform: Windows
 </pre>
+> [!NOTE]
+> To control all Windows screen elemets you may set `WinPath: Root` under app config. If `WinPath` is not defined and you use `appiumUrl: http://127.0.0.1:PORT` under Windows role you may configure app or hexMainWindowHandle yourself under Windows role below `capabilities:` key, if using `http://localhost:PORT` it will auto search for windows handle (on local Win run). As default (local Win) app to be launched is automatically searched as exe file within Windows home directory which name matches app key name within config.
 
 
 ## <a id="test_case"></a>Create Test Case
