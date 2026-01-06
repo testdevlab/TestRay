@@ -168,7 +168,8 @@ Devices:
     platform: Windows
 </pre>
 > [!NOTE]
-> To control all Windows screen elemets you may set `WinPath: Root` under app config. If `WinPath` is not defined and you use `appiumUrl: http://127.0.0.1:PORT` under Windows role you may configure app or hexMainWindowHandle yourself under Windows role below `capabilities:` key, if using `http://localhost:PORT` it will auto search for windows handle (on local Win run). As default (local Win) app to be launched is automatically searched as exe file within Windows home directory which name matches app key name within config.
+> For Windows apps, you can set `WinPath` under the app config to `Root` in order to control all Windows screen elements.
+If `WinPath` is not provided and `appiumUrl` is either absent or set to `localhost`, the framework will automatically attempt to search for the application window handle on the local machine. You can skip this behavior by setting `appiumUrl` to `127.0.0.1`, which will allow you to manually set the app or `hexMainWindowHandle` inside the role's `capabilities`.
 
 
 ## <a id="test_case"></a>Create Test Case
