@@ -20,8 +20,9 @@ class AppiumServer
       @port = @port + 2
       opened = `netstat -anp tcp | #{grep_cmd} "#{@port}"`.include?("LISTEN")
     end
+    log_debug("Executing: appium --base-path=/wd/hub -p #{@port} >> \"#{folder}/#{@udid}.log\" 2>&1")
 
-    spawn("appium --base-path=/wd/hub -p #{@port} >> #{folder}/#{@udid}.log 2>&1")
+    spawn("appium --base-path=/wd/hub -p #{@port} >> \"#{folder}/#{@udid}.log\" 2>&1")
 
     opened = false
     log_info("Role '#{@role}': Starting Appium server on port #{@port} ", no_date=false, _print=true)

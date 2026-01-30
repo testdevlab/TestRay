@@ -6,6 +6,8 @@ Apps:
     Activity: com.android.vending.AssetBrowserActivity
   Settings:
     iOSBundle: com.apple.Preferences
+  RootWindows:
+    WinPath: Root # Controls everything on screen
 
 chromeDriverPath: chromedriver
 
@@ -29,6 +31,12 @@ Devices:
   # IOS
   - role: localiOS
     platform: iOS
+  # WINDOWS
+  - role: remoteWindows
+    platform: Windows
+    appiumUrl: http://IP:PORT # Windows device with running Appium server
+  - role: localWindows
+    platform: Windows
 
 #VARS
 

@@ -1,0 +1,33 @@
+RemoteWindowsTestExample:
+  Roles:
+    - Role: remoteWindows
+      App: RootWindows
+  Actions:
+    - Type: case
+      Value: WindowsTestExample
+      Role: remoteWindows
+
+LocalWindowsTestExample:
+  Roles:
+    - Role: localWindows
+      App: RootWindows
+  Actions:
+    - Type: case
+      Value: WindowsTestExample
+      Role: localWindows
+
+WindowsTestExample:
+  Actions:
+    - Type: screenshot
+      Name: windows_home_screen
+    - Type: click
+      Strategy: xpath
+      Id: "//Text[@Name=\"Search\"]"
+    - Type: send_keys
+      Strategy: xpath
+      Id: "//Edit[@Name=\"Search box\"]"
+      Value: Settings
+    - Type: sleep
+      Time: 2
+    - Type: screenshot
+      Name: windows_search_done

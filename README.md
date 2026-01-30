@@ -106,7 +106,7 @@ Apps:
     WinPath: C:\Users\user\AppData\Local\Programs\SomeApp\SomeApp.exe
     UWPAppName: SOMEAPP.1234567890ABC_defghijklmnop!App
     MacAppName: com.someapp
-</pre>
+</pre>  
 
 This will add all the necessary capabilities to run on iOS, MacOS, Windows and Android
 
@@ -167,6 +167,9 @@ Devices:
   - role: localWindows
     platform: Windows
 </pre>
+> [!NOTE]
+> For Windows apps, you can set `WinPath` under the app config to `Root` in order to control all Windows screen elements.
+If `WinPath` is not provided and `appiumUrl` is either absent or set to `localhost`, the framework will automatically attempt to search for the application window handle on the local machine. You can skip this behavior by setting `appiumUrl` to `127.0.0.1`, which will allow you to manually set the app or `hexMainWindowHandle` inside the role's `capabilities`.
 
 
 ## <a id="test_case"></a>Create Test Case
