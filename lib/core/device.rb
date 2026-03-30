@@ -468,10 +468,10 @@ class Device
       begin
         if (action.keys & ["OffsetX", "OffsetY", "OffsetFractionX", "OffsetFractionY"]).any?
           x_offset = y_offset = 0
-          x_offset = el.size.width * action["OffsetFractionX"] if action.key?("OffsetFractionX")
-          y_offset = el.size.height * action["OffsetFractionY"] if action.key?("OffsetFractionY")
-          x_offset = action["OffsetX"] if action.key?("OffsetX")
-          y_offset = action["OffsetY"] if action.key?("OffsetY")
+          x_offset = el.size.width * convert_value(action["OffsetFractionX"]).to_f if action.key?("OffsetFractionX")
+          y_offset = el.size.height * convert_value(action["OffsetFractionY"]).to_f if action.key?("OffsetFractionY")
+          x_offset = convert_value(action["OffsetX"]).to_i if action.key?("OffsetX")
+          y_offset = convert_value(action["OffsetY"]).to_i if action.key?("OffsetY")
           @driver.action.move_to(el, x_offset, y_offset)
             .click
             .perform
@@ -600,6 +600,66 @@ class Device
     if error && !action["NoRaise"]
       path = take_error_screenshot()
       raise "#{@role}: #{error.message}\nError Screenshot: #{path}"
+    end
+  end
+
+  # clicks on all provided elements with the same id. Multiple location strategies are
+  # accepted - css, xPath, id.
+  # Accepts:
+  #   Strategy
+  #   Id
+  #   Condition
+  #   CheckTime
+  #   OffsetX
+  #   OffsetY
+  #   NoRaise
+  def click_all_in_list(action)
+    wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
+    loop do
+      before_find = Time.now
+      elements = wait_for_all(action)
+      if elements.empty?
+        log_info("Element array is empty. Array: #{elements}")
+        break
+      end
+
+      after_find = Time.now
+      log_info("Time to find element: #{after_find - before_find}s") if action["CheckTime"]
+      error = nil
+
+      el = elements.shift
+
+      loop do
+        begin
+          @platform == "iOS" ?
+            @driver.action.move_to(el) :
+            @driver.action.move_to(el).perform
+        rescue => e
+          error = e
+        end
+        begin
+          if (action.keys & ["OffsetX", "OffsetY"]).any?
+            x_offset = y_offset = 0
+            x_offset = convert_value(action["OffsetX"]).to_i if action.key?("OffsetX")
+            y_offset = convert_value(action["OffsetY"]).to_i if action.key?("OffsetY")
+            @driver.action.move_to(el, x_offset, y_offset)
+              .click
+              .perform
+          else
+            el.click
+          end
+          log_info("Time for click: #{Time.now - after_find}s") if action["CheckTime"]
+          return
+        rescue => e
+          error = e
+        end
+        break if (Time.now - before_find) >= wait_time
+      end
+
+      if error && !action["NoRaise"]
+        path = take_error_screenshot()
+        raise "#{@role}: Element '#{action["Id"]}': #{error.message}\nError Screenshot: #{path}"
+      end
     end
   end
 
@@ -938,7 +998,7 @@ class Device
   def get_attribute(action)
     el = wait_for(action)
     return unless el
-    
+
     greps = action["Greps"]
 
     return if greps.nil?
@@ -1549,7 +1609,7 @@ class Device
     strategy, idlist, message, app = action["Strategy"], action["Id"], action["Message"], action["App"]
     default_wait_time = (action["Time"] ? action["Time"] : @timeout)
     $network_state = 0
-    
+
     filename = File.join(convert_value(action["Path"]), "network_states.csv")
     seen_list = []
     file = File.open(filename, "w")
@@ -1600,7 +1660,7 @@ class Device
       rows_with_loading = csv.select {|row| row["Call state"] == '2'}
       last = rows_with_loading.last
       last_time = last["Time"]
-        
+
       net_down = csv.find { |row| row["Network state"] == '1' }
       net_down = net_down["Time"]
       prew = nil
@@ -1641,7 +1701,7 @@ class Device
       folder = File.join(Dir.pwd, "Reports", "screenshots")
     end
     path = File.join(folder, "screenshot_#{@role}.png")
-  
+
     begin
       FileUtils.mkdir_p(folder) unless Dir.exist? folder
       if @udid
@@ -1723,7 +1783,7 @@ class Device
       src_var = ENV[convert_value(assert["Var"])]
       cmp_var = assert["Value"].is_a?(Numeric) ? assert["Value"] : convert_value(assert["Value"])
       op = assert["Type"].downcase
-    
+
       # check for class mismatches
       if ["contain", "n_contain"].include?(op)
         raise "#{@role}: Value '#{cmp_var}' should be a String!" unless cmp_var.is_a?(String)
@@ -1744,7 +1804,7 @@ class Device
       else
         raise "#{@role}: Unknown assertion type '#{op}'!"
       end
-    
+
       # do the actual operation
       on_fail_text = ""
       case op
@@ -1765,7 +1825,7 @@ class Device
       when "ge"
         on_fail_text = "be greater or equal to" unless src_var >= cmp_var
       end
-    
+
       unless on_fail_text.empty?
         path = take_error_screenshot unless "command" == @application
         screenshot_error = (path ? "\nError Screenshot: #{path}" : "")
