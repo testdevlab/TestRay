@@ -615,13 +615,9 @@ class Device
   #   NoRaise
   def click_all_in_list(action)
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
-    loop do
-      before_find = Time.now
-      elements = wait_for_all(action)
-      if elements.empty?
-        log_info("Element array is empty. Array: #{elements}")
-        break
-      end
+    before_find = Time.now
+    elements = wait_for_all(action)
+    while elements.any?
 
       after_find = Time.now
       log_info("Time to find element: #{after_find - before_find}s") if action["CheckTime"]
@@ -655,7 +651,8 @@ class Device
         end
         break if (Time.now - before_find) >= wait_time
       end
-
+      before_find = Time.now
+      elements = wait_for_all(action)
       if error && !action["NoRaise"]
         path = take_error_screenshot()
         raise "#{@role}: Element '#{action["Id"]}': #{error.message}\nError Screenshot: #{path}"
