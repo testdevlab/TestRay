@@ -617,6 +617,7 @@ class Device
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
     before_find = Time.now
     elements = wait_for_all(action)
+    log_info("Elements found: #{elements}")
     while elements.any?
 
       after_find = Time.now
@@ -624,6 +625,7 @@ class Device
       error = nil
 
       el = elements.shift
+      log_info("Element to click: #{el}")
 
       loop do
         begin
@@ -645,7 +647,7 @@ class Device
             el.click
           end
           log_info("Time for click: #{Time.now - after_find}s") if action["CheckTime"]
-          return
+          break
         rescue => e
           error = e
         end
@@ -653,6 +655,7 @@ class Device
       end
       before_find = Time.now
       elements = wait_for_all(action)
+      log_info("Elements found: #{elements}")
       if error && !action["NoRaise"]
         path = take_error_screenshot()
         raise "#{@role}: Element '#{action["Id"]}': #{error.message}\nError Screenshot: #{path}"
