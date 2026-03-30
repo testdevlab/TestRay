@@ -1240,6 +1240,59 @@ class Device
     end
   end
 
+  # waits for the provided elements to be present.
+  # Accepts:
+  #   Strategy
+  #   Id
+  #   Index
+  #   Time or CheckTime
+  #   Condition
+  def wait_for_all(action)
+    locator_strategy, id = action["Strategy"], action["Id"]
+    if action["Condition"]
+      return unless check_condition(action)
+    end
+
+    wait_time = (action["Time"] ? action["Time"] : @timeout)
+    wait_time = (action["CheckTime"] ? action["CheckTime"] : wait_time)
+
+    elements = []
+    exception = ""
+    start = Time.now
+
+    if id.is_a?(String)
+      id = convert_value(id)
+      while (Time.now - start) < wait_time
+        begin
+          elements = @driver.find_elements(locator_strategy, id) || []
+          return elements unless elements.empty?
+        rescue => e
+          exception = e
+          sleep(0.2)
+        end
+      end
+    else
+      while (Time.now - start) < wait_time
+        id.each_with_index do |locator, i|
+          locator = convert_value(locator)
+          begin
+            elements += @driver.find_elements(convert_value(locator_strategy[i]), locator) || []
+          rescue => e
+            exception = e
+            sleep(0.1)
+          end
+        end
+        return elements unless elements.empty?
+      end
+    end
+
+    if elements.empty? && !action["NoRaise"]
+      path = take_error_screenshot()
+      raise "\n#{@role}: Element '#{id}' is not visible after #{wait_time} " +
+              "seconds \nException: #{exception}\nError Screenshot: #{path}"
+    end
+  end
+
   # sets provided network condition to driver.
   # Accepts:
   #   Condition
