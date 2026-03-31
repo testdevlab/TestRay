@@ -617,7 +617,7 @@ class Device
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
     before_find = Time.now
     elements = wait_for_all(action)
-
+    log_info("Initial elements found: #{elements}") if elements
     while elements.any?
 
       after_find = Time.now
@@ -640,9 +640,10 @@ class Device
             x_offset = convert_value(action["OffsetX"]).to_i if action.key?("OffsetX")
             y_offset = convert_value(action["OffsetY"]).to_i if action.key?("OffsetY")
             @driver.action.move_to(el, x_offset, y_offset)
-              .click
-              .perform
+            .click
+            .perform
           else
+            scroll_until_element_visible(action)
             el.click
           end
           log_info("Time for click: #{Time.now - after_find}s") if action["CheckTime"]
@@ -656,7 +657,8 @@ class Device
       before_find = Time.now
 
       begin
-        elements = wait_for_all(action)
+        elements = wait_for_all(action, checktime = 10)
+        log_info("Elements found: #{elements}") if elements
       rescue => e
         log_info("No more elements found.")
       end
@@ -1252,7 +1254,7 @@ class Device
   #   Index
   #   Time or CheckTime
   #   Condition
-  def wait_for_all(action)
+  def wait_for_all(action, checktime = nil)
     locator_strategy, id = action["Strategy"], action["Id"]
     if action["Condition"]
       return unless check_condition(action)
@@ -1260,6 +1262,7 @@ class Device
 
     wait_time = (action["Time"] ? action["Time"] : @timeout)
     wait_time = (action["CheckTime"] ? action["CheckTime"] : wait_time)
+    wait_time = (checktime ? checktime : wait_time)
 
     elements = []
     exception = ""
