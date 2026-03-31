@@ -634,6 +634,8 @@ class Device
         rescue => e
           error = e
         end
+        scroll_until_element_visible(actions)
+        sleep(2)
         begin
           if (action.keys & ["OffsetX", "OffsetY"]).any?
             x_offset = y_offset = 0
@@ -643,9 +645,9 @@ class Device
             .click
             .perform
           else
-            scroll_until_element_visible(action)
             el.click
           end
+          log_info("Current element clicked: #{el.id}")
           log_info("Time for click: #{Time.now - after_find}s") if action["CheckTime"]
           break
         rescue => e
@@ -657,6 +659,7 @@ class Device
       before_find = Time.now
 
       begin
+        sleep(2)
         elements = wait_for_all(action, checktime = 10)
         log_info("Elements found: #{elements}") if elements
       rescue => e
