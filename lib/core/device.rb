@@ -634,7 +634,7 @@ class Device
         rescue => e
           error = e
         end
-        scroll_until_element_visible(action)
+        # scroll_until_element_visible(action)
         sleep(2)
         begin
           if (action.keys & ["OffsetX", "OffsetY"]).any?
