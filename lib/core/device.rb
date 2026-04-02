@@ -614,6 +614,7 @@ class Device
   #   OffsetY
   #   NoRaise
   def click_all_in_list(action)
+    log_info("Action: #{action}")
     wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
     before_find = Time.now
     elements = wait_for_all(action)
@@ -634,7 +635,12 @@ class Device
         rescue => e
           error = e
         end
-        # scroll_until_element_visible(action)
+        scroll_action = {
+          "Strategy" => action["Strategy"],
+          "Id" => action["Id"],
+          "FullView" => true
+        }
+        scroll_until_element_visible(scroll_action)
         sleep(2)
         begin
           if (action.keys & ["OffsetX", "OffsetY"]).any?
