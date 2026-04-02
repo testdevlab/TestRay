@@ -635,13 +635,7 @@ class Device
         rescue => e
           error = e
         end
-        scroll_action = {
-          "Strategy" => action["Strategy"],
-          "Id" => action["Id"],
-          "FullView" => true
-        }
-        scroll_until_element_visible(scroll_action)
-        sleep(2)
+
         begin
           if (action.keys & ["OffsetX", "OffsetY"]).any?
             x_offset = y_offset = 0
@@ -667,9 +661,28 @@ class Device
       begin
         sleep(2)
         elements = wait_for_all(action, checktime = 10)
-        log_info("Elements found: #{elements}") if elements
+        log_info("Elements found: #{elements}")
       rescue => e
         log_info("No more elements found.")
+        # Check if there are anymore elements left off screen
+        begin
+          x_point = screen_size.width * 0.5
+          y_start = screen_size.height * 0.5
+
+          @driver.action
+            .move_to_location(x_point, y_start)
+            .pointer_down(:left)
+            .move_to_location(x_point, y_start - 160, duration: 0.3)
+            .release
+            .perform
+
+          sleep(2)
+
+          elements = wait_for_all(action)
+        rescue => e
+          error = e
+          log_info("Error moving to element #{element.id}: #{e.message}")
+        end
       end
 
       if error && !action["NoRaise"]
