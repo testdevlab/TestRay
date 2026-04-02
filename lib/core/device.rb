@@ -681,7 +681,7 @@ class Device
           elements = wait_for_all(action)
         rescue => e
           error = e
-          log_info("Error moving to element #{element.id}: #{e.message}")
+          log_info("Error moving to element: #{e.message}")
         end
       end
 
