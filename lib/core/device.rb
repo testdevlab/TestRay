@@ -666,6 +666,7 @@ class Device
         log_info("No more elements found.")
         # Check if there are anymore elements left off screen
         begin
+          screen_size = @driver.window_size
           x_point = screen_size.width * 0.5
           y_start = screen_size.height * 0.5
 
