@@ -666,14 +666,14 @@ class Device
         log_info("No more elements found.")
         # Check if there are anymore elements left off screen
         begin
-          screen_size = @driver.window_size
-          x_point = screen_size.width * 0.5
-          y_start = screen_size.height * 0.5
+          window_size = @driver.window_size
+          x_middle = window_size.width * 0.5
+          y_middle = window_size.height * 0.5
 
           @driver.action
-            .move_to_location(x_point, y_start)
+            .move_to_location(x_middle, y_middle)
             .pointer_down(:left)
-            .move_to_location(x_point, y_start - 160, duration: 0.3)
+            .move_to_location(x_middle, y_middle - 160, duration: 0.3)
             .release
             .perform
 
