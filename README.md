@@ -38,6 +38,8 @@ Another way to install master is to download this project and use `rake install`
 If you do not need the full YAML test suite alongside TestRay, and have set up the prerequisites, you can install TestRay on its own like so:
 <pre>rake install</pre>
 
+<!--- Maybe have to rewrite this section, as this makes usage section redundant. -->
+
 ## <a id="examples"></a>TestRay Examples
 
 There is a folder `examples` that contains different use cases for TestRay. The basic one, with most of the possible roles and cases is under `examples/tests` folder. In order to execute this tests you can either download this folder into your project as a template, or directly clone TestRay Project and navigate to the folder:
@@ -63,6 +65,7 @@ Run `testray help` to see available commands. Help can also be called for each c
 
 Specifically for execution: To execute a test case called `MyTestCase`, run `testray execute MyTestCase`.
 
+<!--- Some leftover link to a document with all the commands, have to discuss if needs to be delated or it could be beneficial -->
 <!-- [See here for a full list of available commands.]() -->
 
 ## <a id="writing_steps"></a>Writing Steps
@@ -175,6 +178,8 @@ If `WinPath` is not provided and `appiumUrl` is either absent or set to `localho
 ## <a id="test_case"></a>Create Test Case
 
 All the test cases need to be in YAML files called `case_*.yaml` (case_example.yaml), and placed in the `cases` folder in your working directory.
+
+<!--- It can also be placed in the subfolders in the cases folder -->
 
 <pre>
 MyTestDesktopAndroidApp:
