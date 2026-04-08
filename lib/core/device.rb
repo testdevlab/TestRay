@@ -626,6 +626,8 @@ class Device
       error = nil
 
       el = elements.shift
+      el_location = el.location
+      el_size = el.size
 
       loop do
         begin
@@ -666,9 +668,8 @@ class Device
         log_info("No more elements found.")
         # Check if there are anymore elements left off screen
         begin
-          window_size = @driver.window_size
-          x_middle = window_size.width * 0.5
-          y_middle = window_size.height * 0.5
+          x_middle = el_location.x + (el_size.width / 2)
+          y_middle = el_location.y + (el_size.height / 2)
 
           @driver.action
             .move_to_location(x_middle, y_middle)
