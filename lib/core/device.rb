@@ -668,6 +668,7 @@ class Device
         log_info("No more elements found.")
         # Check if there are anymore elements left off screen
         begin
+          log_info("Checking if there are more elements off screen.")
           x_middle = el_location.x + (el_size.width / 2)
           y_middle = el_location.y + (el_size.height / 2)
 
@@ -678,12 +679,21 @@ class Device
             .release
             .perform
 
-          sleep(2)
-
-          elements = wait_for_all(action)
         rescue => e
           error = e
           log_info("Error moving to element: #{e.message}")
+        end
+        sleep(2)
+        begin
+          search_action = {
+            "Strategy" => action["Strategy"],
+            "Id" => action["Id"],
+            "CheckTime" => 10
+          }
+          elements = wait_for_all(search_action)
+          log_info("Elements found: #{elements}")
+        rescue => e
+          log_info("No more elements found after scroll.")
         end
       end
 
