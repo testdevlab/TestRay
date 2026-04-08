@@ -451,6 +451,8 @@ You can also set different Strategies and Ids as in the `click`  Type, and also 
 
 You can also set different Strategies and Ids as in the `click`  Type, and also you can set [Conditions](#condition).
 
+<!--- This should be for browser only -->
+
 ### <a id="navigate"></a>navigate
 
 	- Type: navigate
@@ -466,6 +468,8 @@ You can also set different Strategies and Ids as in the `click`  Type, and also 
 		  condition: nempty (Optional)
 		  remove: google.com/ (Optional)
 		  match: "google.com(.*)"
+
+<!--- Greps should have their own section maybe, same as condition and have a section of their own in the contents -->
 
 Greps explained in `command` Type
 
