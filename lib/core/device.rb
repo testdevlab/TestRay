@@ -468,10 +468,10 @@ class Device
       begin
         if (action.keys & ["OffsetX", "OffsetY", "OffsetFractionX", "OffsetFractionY"]).any?
           x_offset = y_offset = 0
-          x_offset = el.size.width * action["OffsetFractionX"] if action.key?("OffsetFractionX")
-          y_offset = el.size.height * action["OffsetFractionY"] if action.key?("OffsetFractionY")
-          x_offset = action["OffsetX"] if action.key?("OffsetX")
-          y_offset = action["OffsetY"] if action.key?("OffsetY")
+          x_offset = el.size.width * convert_value(action["OffsetFractionX"]).to_f if action.key?("OffsetFractionX")
+          y_offset = el.size.height * convert_value(action["OffsetFractionY"]).to_f if action.key?("OffsetFractionY")
+          x_offset = convert_value(action["OffsetX"]).to_i if action.key?("OffsetX")
+          y_offset = convert_value(action["OffsetY"]).to_i if action.key?("OffsetY")
           @driver.action.move_to(el, x_offset, y_offset)
             .click
             .perform
@@ -600,6 +600,107 @@ class Device
     if error && !action["NoRaise"]
       path = take_error_screenshot()
       raise "#{@role}: #{error.message}\nError Screenshot: #{path}"
+    end
+  end
+
+  # clicks on all provided elements with the same id. Multiple location strategies are
+  # accepted - css, xPath, id.
+  # Accepts:
+  #   Strategy
+  #   Id
+  #   Condition
+  #   CheckTime
+  #   OffsetX
+  #   OffsetY
+  #   NoRaise
+  def click_all_in_list(action)
+    log_info("Action: #{action}")
+    wait_time = (action["CheckTime"] ? action["CheckTime"] : @timeout)
+    before_find = Time.now
+    elements = wait_for_all(action)
+    log_info("Initial elements found: #{elements}") if elements
+    while elements.any?
+
+      after_find = Time.now
+      log_info("Time to find element: #{after_find - before_find}s") if action["CheckTime"]
+      error = nil
+
+      el = elements.shift
+      el_location = el.location
+      el_size = el.size
+
+      loop do
+        begin
+          @platform == "iOS" ?
+            @driver.action.move_to(el) :
+            @driver.action.move_to(el).perform
+        rescue => e
+          error = e
+        end
+
+        begin
+          if (action.keys & ["OffsetX", "OffsetY"]).any?
+            x_offset = y_offset = 0
+            x_offset = convert_value(action["OffsetX"]).to_i if action.key?("OffsetX")
+            y_offset = convert_value(action["OffsetY"]).to_i if action.key?("OffsetY")
+            @driver.action.move_to(el, x_offset, y_offset)
+            .click
+            .perform
+          else
+            el.click
+          end
+          log_info("Current element clicked: #{el.id}")
+          log_info("Time for click: #{Time.now - after_find}s") if action["CheckTime"]
+          break
+        rescue => e
+          error = e
+        end
+        break if (Time.now - before_find) >= wait_time
+      end
+
+      before_find = Time.now
+
+      begin
+        sleep(2)
+        elements = wait_for_all(action, checktime = 10)
+        log_info("Elements found: #{elements}")
+      rescue => e
+        log_info("No more elements found.")
+        # Check if there are anymore elements left off screen
+        begin
+          log_info("Checking if there are more elements off screen.")
+          x_middle = el_location.x + (el_size.width / 2)
+          y_middle = el_location.y + (el_size.height / 2)
+
+          @driver.action
+            .move_to_location(x_middle, y_middle)
+            .pointer_down(:left)
+            .move_to_location(x_middle, y_middle - 160, duration: 0.3)
+            .release
+            .perform
+
+        rescue => e
+          error = e
+          log_info("Error moving to element: #{e.message}")
+        end
+        sleep(2)
+        begin
+          search_action = {
+            "Strategy" => action["Strategy"],
+            "Id" => action["Id"],
+            "CheckTime" => 10
+          }
+          elements = wait_for_all(search_action)
+          log_info("Elements found: #{elements}")
+        rescue => e
+          log_info("No more elements found after scroll.")
+        end
+      end
+
+      if error && !action["NoRaise"]
+        path = take_error_screenshot()
+        raise "#{@role}: Element '#{action["Id"]}': #{error.message}\nError Screenshot: #{path}"
+      end
     end
   end
 
@@ -938,7 +1039,7 @@ class Device
   def get_attribute(action)
     el = wait_for(action)
     return unless el
-    
+
     greps = action["Greps"]
 
     return if greps.nil?
@@ -1174,6 +1275,60 @@ class Device
     end
 
     if !action["NoRaise"]
+      path = take_error_screenshot()
+      raise "\n#{@role}: Element '#{id}' is not visible after #{wait_time} " +
+              "seconds \nException: #{exception}\nError Screenshot: #{path}"
+    end
+  end
+
+  # waits for the provided elements to be present.
+  # Accepts:
+  #   Strategy
+  #   Id
+  #   Index
+  #   Time or CheckTime
+  #   Condition
+  def wait_for_all(action, checktime = nil)
+    locator_strategy, id = action["Strategy"], action["Id"]
+    if action["Condition"]
+      return unless check_condition(action)
+    end
+
+    wait_time = (action["Time"] ? action["Time"] : @timeout)
+    wait_time = (action["CheckTime"] ? action["CheckTime"] : wait_time)
+    wait_time = (checktime ? checktime : wait_time)
+
+    elements = []
+    exception = ""
+    start = Time.now
+
+    if id.is_a?(String)
+      id = convert_value(id)
+      while (Time.now - start) < wait_time
+        begin
+          elements = @driver.find_elements(locator_strategy, id) || []
+          return elements unless elements.empty?
+        rescue => e
+          exception = e
+          sleep(0.2)
+        end
+      end
+    else
+      while (Time.now - start) < wait_time
+        id.each_with_index do |locator, i|
+          locator = convert_value(locator)
+          begin
+            elements += @driver.find_elements(convert_value(locator_strategy[i]), locator) || []
+          rescue => e
+            exception = e
+            sleep(0.1)
+          end
+        end
+        return elements unless elements.empty?
+      end
+    end
+
+    if elements.empty? && !action["NoRaise"]
       path = take_error_screenshot()
       raise "\n#{@role}: Element '#{id}' is not visible after #{wait_time} " +
               "seconds \nException: #{exception}\nError Screenshot: #{path}"
@@ -1549,7 +1704,7 @@ class Device
     strategy, idlist, message, app = action["Strategy"], action["Id"], action["Message"], action["App"]
     default_wait_time = (action["Time"] ? action["Time"] : @timeout)
     $network_state = 0
-    
+
     filename = File.join(convert_value(action["Path"]), "network_states.csv")
     seen_list = []
     file = File.open(filename, "w")
@@ -1600,7 +1755,7 @@ class Device
       rows_with_loading = csv.select {|row| row["Call state"] == '2'}
       last = rows_with_loading.last
       last_time = last["Time"]
-        
+
       net_down = csv.find { |row| row["Network state"] == '1' }
       net_down = net_down["Time"]
       prew = nil
@@ -1641,7 +1796,7 @@ class Device
       folder = File.join(Dir.pwd, "Reports", "screenshots")
     end
     path = File.join(folder, "screenshot_#{@role}.png")
-  
+
     begin
       FileUtils.mkdir_p(folder) unless Dir.exist? folder
       if @udid
@@ -1723,7 +1878,7 @@ class Device
       src_var = ENV[convert_value(assert["Var"])]
       cmp_var = assert["Value"].is_a?(Numeric) ? assert["Value"] : convert_value(assert["Value"])
       op = assert["Type"].downcase
-    
+
       # check for class mismatches
       if ["contain", "n_contain"].include?(op)
         raise "#{@role}: Value '#{cmp_var}' should be a String!" unless cmp_var.is_a?(String)
@@ -1744,7 +1899,7 @@ class Device
       else
         raise "#{@role}: Unknown assertion type '#{op}'!"
       end
-    
+
       # do the actual operation
       on_fail_text = ""
       case op
@@ -1765,7 +1920,7 @@ class Device
       when "ge"
         on_fail_text = "be greater or equal to" unless src_var >= cmp_var
       end
-    
+
       unless on_fail_text.empty?
         path = take_error_screenshot unless "command" == @application
         screenshot_error = (path ? "\nError Screenshot: #{path}" : "")
